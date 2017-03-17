@@ -3,7 +3,7 @@ Google Sheets Script for interacting with EVE ESI
 
 Modified version of Google's https://github.com/googlesamples/apps-script-oauth2 to work with EVE SSO/ESI
 
-As of now the only endpoint avaliable is for skills.  Feel free to create issues or mail me in game (Blacksmoke16) with comments/requests etc.
+To request new endpoints/changes/etc create issues or mail me in game (Blacksmoke16).
 
 ### Setup:
    1. Create a new google sheet or go to the one you want to use the script on.
@@ -25,6 +25,19 @@ As of now the only endpoint avaliable is for skills.  Feel free to create issues
    11. Click 'Authorize' in the sidenav that opens -> login -> select what character you want to authorize -> Authorize.
    12. Close the sidenav.
    13. Done.
+
+### Functions:
+
+###### Skills:
+   * =skillQueue() - Returns the user's current skill queue.
+   * =skills(option) - Returns a list of Skill names, current points in skill and current level or total skill points.
+      * 'List': Returns a list of Skill names, current points in skill and current level
+      * 'Total': Returns total SP.
+
+###### Market:
+   * =marketPrices() - Returns the avgerage and adjusted prices for various itemIDs.
+   * =structureMarketOrders(structure_id) - Returns all market orders in a given structure.
+      
 
      
 ### Contact Info
