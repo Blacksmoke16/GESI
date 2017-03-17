@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.2';
+  app_version = '0.2.1.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -27,6 +27,10 @@
       'CitadelMarketOrders': {
           'version': 1,
           'url': '/markets/structures/{structure_id}/'
+      },
+      'itemTypes': {
+          'version': 2,
+          'url': '/universe/types/{type_id}/'
       }
   };
 
@@ -41,70 +45,6 @@
           .addToUi();
   }
 
-  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  OAth2  Functions                                                                  
-  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-  function getEVEService() {
-      // Create a new service with the given name. The name will be used when
-      // persisting the authorized token, so ensure it is unique within the
-      // scope of the property store.
-      return OAuth2.createService('EVE')
-
-          // Set the endpoint URLs, which are the same for all Google services.
-          .setAuthorizationBaseUrl('https://login.eveonline.com/oauth/authorize/')
-          .setTokenUrl('https://login.eveonline.com/oauth/token')
-
-          // Set the client ID and secret, from the EVE Dev site.
-          .setClientId(CLIENT_ID)
-          .setClientSecret(CLIENT_SECRET)
-
-          // Set the name of the callback function in the script referenced
-          // above that should be invoked to complete the OAuth flow.
-          .setCallbackFunction('authCallback')
-
-          // Set the property store where authorized tokens should be persisted.
-          .setPropertyStore(PropertiesService.getUserProperties())
-
-          // Set the scopes to request (space-separated).
-          .setScope('esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1')
-
-          // Requests offline access.  Allows token to be refreshed when it expires
-          .setParam('access_type', 'offline')
-
-          .setTokenHeaders({
-              'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
-          })
-  }
-
-  function showSidebar() {
-      var eveService = getEVEService();
-      if (!eveService.hasAccess()) {
-          var authorizationUrl = eveService.getAuthorizationUrl();
-          var template = HtmlService.createTemplate(
-              '<a href="<?= authorizationUrl ?>" target="_blank">Authorize</a>.');
-          template.authorizationUrl = authorizationUrl;
-          var page = template.evaluate();
-          SpreadsheetApp.getUi().showSidebar(page);
-      }
-  }
-
-  function authCallback(request) {
-      var eveService = getEVEService();
-      var isAuthorized = eveService.handleCallback(request);
-      if (isAuthorized) {
-          getCharacterDetails_();
-          return HtmlService.createHtmlOutput('Success! You can close this tab.');
-      } else {
-          return HtmlService.createHtmlOutput('Denied. You can close this tab');
-      }
-  }
-
-  function clearService() {
-      OAuth2.createService('EVE')
-          .setPropertyStore(PropertiesService.getUserProperties())
-          .reset();
-  }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                                  Skills                                                                  
@@ -264,7 +204,112 @@
 
       return items;
   }
+  
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Universe                                                                  
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  /**
+   * Returns information about a type.
+   * @param {typeID} Single typeID or list of typeIDs to lookup.
+   * @return Returns information about a type.
+   * @customfunction
+   */
+  function itemTypes(ids) {
+      var eveService = getEVEService();
+      var items = new Array();
+      var typeIDs = new Array();
+      var array_length = ids.length;
+
+      items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Published?']);
+      if (!Array.isArray(ids)) {
+          typeIDs.push(ids);
+          array_length = 1;
+      } else {
+          typeIDs = ids;
+      };
+
+
+      for (var i = 0; i < array_length; i++) {
+          var response = UrlFetchApp.fetch(BASE_URL + endpoints.itemTypes.version + endpoints.itemTypes.url.replace("{type_id}", typeIDs[i]));
+          var response = JSON.parse(response);
+          items.push([
+              response.type_id,
+              response.name,
+              response.volume,
+              response.group_id,
+              response.published
+          ]);
+      }
+
+      return items;;
+  }
+
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  OAth2  Functions                                                                  
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  function getEVEService() {
+      // Create a new service with the given name. The name will be used when
+      // persisting the authorized token, so ensure it is unique within the
+      // scope of the property store.
+      return OAuth2.createService('EVE')
+
+          // Set the endpoint URLs, which are the same for all Google services.
+          .setAuthorizationBaseUrl('https://login.eveonline.com/oauth/authorize/')
+          .setTokenUrl('https://login.eveonline.com/oauth/token')
+
+          // Set the client ID and secret, from the EVE Dev site.
+          .setClientId(CLIENT_ID)
+          .setClientSecret(CLIENT_SECRET)
+
+          // Set the name of the callback function in the script referenced
+          // above that should be invoked to complete the OAuth flow.
+          .setCallbackFunction('authCallback')
+
+          // Set the property store where authorized tokens should be persisted.
+          .setPropertyStore(PropertiesService.getUserProperties())
+
+          // Set the scopes to request (space-separated).
+          .setScope('esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1')
+
+          // Requests offline access.  Allows token to be refreshed when it expires
+          .setParam('access_type', 'offline')
+
+          .setTokenHeaders({
+              'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
+          })
+  }
+
+  function showSidebar() {
+      var eveService = getEVEService();
+      if (!eveService.hasAccess()) {
+          var authorizationUrl = eveService.getAuthorizationUrl();
+          var template = HtmlService.createTemplate(
+              '<a href="<?= authorizationUrl ?>" target="_blank">Authorize</a>.');
+          template.authorizationUrl = authorizationUrl;
+          var page = template.evaluate();
+          SpreadsheetApp.getUi().showSidebar(page);
+      }
+  }
+
+  function authCallback(request) {
+      var eveService = getEVEService();
+      var isAuthorized = eveService.handleCallback(request);
+      if (isAuthorized) {
+          getCharacterDetails_();
+          return HtmlService.createHtmlOutput('Success! You can close this tab.');
+      } else {
+          return HtmlService.createHtmlOutput('Denied. You can close this tab');
+      }
+  }
+
+  function clearService() {
+      OAuth2.createService('EVE')
+          .setPropertyStore(PropertiesService.getUserProperties())
+          .reset();
+  }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                                  Private Functions                                                                  
