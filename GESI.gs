@@ -288,10 +288,14 @@
   }
 
   function id2name_(ids) {
+      var unique_ids = ids.filter(function(item, pos) {
+          return ids.indexOf(item) == pos;
+      });
+
       var options = {
           'method': 'post',
           'contentType': 'application/json',
-          'payload': JSON.stringify(ids)
+          'payload': JSON.stringify(unique_ids)
       }
       var response = UrlFetchApp.fetch('https://esi.tech.ccp.is/v2/universe/names/', options);
       return JSON.parse(response);
