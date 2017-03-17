@@ -16,9 +16,9 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    5. Go to File -> Project Properties and copy the Script ID.
    6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
-        * PERMISSIONS:   esi-skills.read_skills.v1
+        * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
         * CALLBACK URL:  https://script.google.com/macros/d/{CLIENT_ID_COPIED_IN_STEP_FOUR}/usercallback
-   7. Edit the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
+   7. Replace the example CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
    10. Give the script permission to do what it needs.
@@ -28,16 +28,19 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
 
 ### Functions:
 
-###### Skills:
+##### Skills:
    * =skillQueue() - Returns the user's current skill queue.
    * =skills(option) - Returns a list of Skill names, current points in skill and current level or total skill points.
       * 'List': Returns a list of Skill names, current points in skill and current level
       * 'Total': Returns total SP.
 
-###### Market:
+##### Market:
    * =marketPrices() - Returns the avgerage and adjusted prices for various itemIDs.
    * =structureMarketOrders(structure_id) - Returns all market orders in a given structure.
-      
+   
+ ##### GESI Dropdown:
+   * Authorize Sheet - Provides the link to navigate to to login and get your access token
+   * Reset Auth - Clears the OAuth2 service, making all tokens invalid.
 
      
 ### Contact Info
