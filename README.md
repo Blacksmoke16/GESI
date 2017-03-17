@@ -38,6 +38,10 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    * =marketPrices() - Returns the avgerage and adjusted prices for various itemIDs.
    * =structureMarketOrders(structure_id) - Returns all market orders in a given structure.
    
+##### Universe:
+   * =itemTypes(typeID) - Returns Information about a type.
+      * typeID: Either can be a single typeID, or a list of typeIDs.
+      
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
    * Reset Auth - Clears the OAuth2 service, making all tokens invalid.
