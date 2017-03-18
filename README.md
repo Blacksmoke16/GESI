@@ -39,8 +39,9 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    * =structureMarketOrders(structure_id) - Returns all market orders in a given structure.
    
 ##### Universe:
-   * =itemTypes(typeID) - Returns Information about a type.
-      * typeID: Either can be a single typeID, or a list of typeIDs.
+   * =itemTypes(ids, opt_headers) - Returns Information about a type.
+      * ids: Either a single typeID, or a list of typeIDs.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token

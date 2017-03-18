@@ -211,24 +211,20 @@
 
   /**
    * Returns information about a type.
-   * @param {typeID} Single typeID or list of typeIDs to lookup.
+   * @param {ids} ids Single typeID or list of typeIDs to lookup.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
    * @return Returns information about a type.
    * @customfunction
    */
-  function itemTypes(ids) {
+  function itemTypes(ids, opt_headers) {
       var eveService = getEVEService();
       var items = new Array();
       var typeIDs = new Array();
       var array_length = ids.length;
 
-      items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Published?']);
-      if (!Array.isArray(ids)) {
-          typeIDs.push(ids);
-          array_length = 1;
-      } else {
-          typeIDs = ids;
-      };
-
+      if(opt_headers === undefined){ opt_headers = true; };
+      if(opt_headers){ items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Published?']); };
+      if(!Array.isArray(ids)) { typeIDs.push(ids);  array_length = 1; } else { typeIDs = ids; };
 
       for (var i = 0; i < array_length; i++) {
           var response = UrlFetchApp.fetch(BASE_URL + endpoints.itemTypes.version + endpoints.itemTypes.url.replace("{type_id}", typeIDs[i]));
@@ -244,7 +240,6 @@
 
       return items;;
   }
-
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                                  OAth2  Functions                                                                  
