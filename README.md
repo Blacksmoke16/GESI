@@ -17,7 +17,7 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
         * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
-        * CALLBACK URL:  https://script.google.com/macros/d/{CLIENT_ID_COPIED_IN_STEP_FOUR}/usercallback
+        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
    7. Replace the example CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
