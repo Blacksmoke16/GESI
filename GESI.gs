@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.2.1.0';
+  app_version = '0.2.1.1';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -29,7 +29,7 @@
           'url': '/markets/structures/{structure_id}/'
       },
       'itemTypes': {
-          'version': 2,
+          'version': 3,
           'url': '/universe/types/{type_id}/'
       }
   };
@@ -223,7 +223,7 @@
       var array_length = ids.length;
 
       if(opt_headers === undefined){ opt_headers = true; };
-      if(opt_headers){ items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Published?']); };
+      if(opt_headers){ items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Market Group ID', 'Published?']); };
       if(!Array.isArray(ids)) { typeIDs.push(ids);  array_length = 1; } else { typeIDs = ids; };
 
       for (var i = 0; i < array_length; i++) {
@@ -234,6 +234,7 @@
               response.name,
               response.volume,
               response.group_id,
+              response.market_group_id,
               response.published
           ]);
       }
