@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.2.1.1';
+  app_version = '0.3.0.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -31,6 +31,18 @@
       'itemTypes': {
           'version': 3,
           'url': '/universe/types/{type_id}/'
+      },
+      'characterAssets': {
+          'version': 1,
+          'url': '/characters/{character_id}/assets/'
+      },
+      'characterLoyalty': {
+          'version': 1,
+          'url': '/characters/{character_id}/loyalty/points/'
+      },
+      'corporationLoyalty': {
+          'version': 1,
+          'url': '/loyalty/stores/{corporation_id}/offers/'
       }
   };
 
@@ -47,21 +59,23 @@
 
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  Skills                                                                  
+  //                                                                                                  Skills
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
   /**
    * Returns a list of Skill names, current points in skill and current level or total skill points.
    * @param {option} option LIST for list of skills, TOTAL for total skill points.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
    * @return Returns a list of Skill names, current points in skill and current level or total skill points.
    * @customfunction
    */
-  function skills(option) {
+  function skills(option, opt_headers) {
       var userProperties = PropertiesService.getUserProperties();
       var eveService = getEVEService();
       var skills = new Array();
       var ids = new Array();
+
       var response = UrlFetchApp.fetch(BASE_URL + endpoints.skillList.version + endpoints.skillList.url.replace("{character_id}", userProperties.getProperty('character_id')), {
           headers: {
               Authorization: 'Bearer ' + eveService.getAccessToken()
@@ -72,7 +86,9 @@
       option = option.toLowerCase();
 
       if (option == 'list') {
-          skills.push(['Name', 'Level', 'SP In Skill']);
+          if (opt_headers === undefined) { opt_headers = true; };
+          if (opt_headers) { skills.push(['Name', 'Level', 'SP In Skill']); };
+
           for (var i = 0; i < response.skills.length; i++) {
               ids.push(response.skills[i].skill_id);
               skills.push([
@@ -92,22 +108,28 @@
               }
           }
       } else if (option == 'total') {
-          skills[0] = 'Total SP'
-          skills[1] = response.total_sp;
+          if (opt_headers === undefined) { opt_headers = true; };
+          if (opt_headers) { skills.push('Total SP'); };
+          skills.push(response.total_sp);
       }
       return skills;
   }
 
   /**
    * Returns the user's current skill queue.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
    * @return Returns the users' current skill queue.
    * @customfunction
    */
-  function skillsQueue() {
+  function skillsQueue(opt_headers) {
       var userProperties = PropertiesService.getUserProperties();
       var eveService = getEVEService();
       var skills = new Array();
       var ids = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { skills.push(['Name', 'Finished Level', 'Start Date', 'Finish Date', 'Position']); };
+
       var response = UrlFetchApp.fetch(BASE_URL + endpoints.skillQueue.version + endpoints.skillQueue.url.replace("{character_id}", userProperties.getProperty('character_id')), {
           headers: {
               Authorization: 'Bearer ' + eveService.getAccessToken()
@@ -115,7 +137,6 @@
       });
 
       var response = JSON.parse(response);
-      skills.push(['Name', 'Finished Level', 'Start Date', 'Finish Date', 'Position']);
 
       for (var i = 0; i < response.length; i++) {
           ids.push(response[i].skill_id);
@@ -142,21 +163,24 @@
   }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  Market                                                                  
+  //                                                                                                  Market
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   /**
    * Returns the avgerage and adjusted prices for various itemIDs.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
    * @return Returns the avgerage and adjusted prices for various itemIDs.
    * @customfunction
    */
-  function marketPrices() {
+  function marketPrices(opt_headers) {
       var eveService = getEVEService();
       var items = new Array();
-      var response = UrlFetchApp.fetch(BASE_URL + endpoints.marketPrices.version + endpoints.marketPrices.url);
 
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { items.push(['typeID', 'Adjusted Price', 'Average Price']); };
+
+      var response = UrlFetchApp.fetch(BASE_URL + endpoints.marketPrices.version + endpoints.marketPrices.url);
       var response = JSON.parse(response);
-      items.push(['ID', 'Adjusted Price', 'Average Price']);
 
       for (var i = 0; i < response.length; i++) {
           items.push([
@@ -172,19 +196,23 @@
   /**
    * Returns all market orders in a given structure.
    * @param {structure_id} structure_id ID of the structure to get market orders.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
    * @return Returns all market orders in a given structure.
    * @customfunction
    */
-  function structureMarketOrders(structure_id) {
+  function structureMarketOrders(structure_id, opt_headers) {
       var eveService = getEVEService();
       var items = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { items.push(['Order ID', 'Buy Order?', 'Type ID', 'Location ID', 'Price', 'issued', 'Range', 'Duration', 'Min Volume', 'Remaining Volume', 'Total Volume']); };
+
       var response = UrlFetchApp.fetch(BASE_URL + endpoints.CitadelMarketOrders.version + endpoints.CitadelMarketOrders.url.replace("{structure_id}", structure_id), {
           headers: {
               Authorization: 'Bearer ' + eveService.getAccessToken()
           }
       });
       var response = JSON.parse(response);
-      items.push(['Order ID', 'Buy Order?', 'Type ID', 'Location ID', 'Price', 'issued', 'Range', 'Duration', 'Min Volume', 'Remaining Volume', 'Total Volume']);
 
       for (var i = 0; i < response.length; i++) {
           items.push([
@@ -204,9 +232,9 @@
 
       return items;
   }
-  
+
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  Universe                                                                  
+  //                                                                                                  Universe
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   /**
@@ -222,9 +250,10 @@
       var typeIDs = new Array();
       var array_length = ids.length;
 
-      if(opt_headers === undefined){ opt_headers = true; };
-      if(opt_headers){ items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Market Group ID', 'Published?']); };
-      if(!Array.isArray(ids)) { typeIDs.push(ids);  array_length = 1; } else { typeIDs = ids; };
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { items.push(['Type ID', 'Type Name', 'Volume', 'Group ID', 'Market Group ID', 'Published?']); };
+      if (!Array.isArray(ids)) { typeIDs.push(ids);
+          array_length = 1; } else { typeIDs = ids; };
 
       for (var i = 0; i < array_length; i++) {
           var response = UrlFetchApp.fetch(BASE_URL + endpoints.itemTypes.version + endpoints.itemTypes.url.replace("{type_id}", typeIDs[i]));
@@ -243,7 +272,113 @@
   }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  OAth2  Functions                                                                  
+  //                                                                                                  Assets
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Returns a list of the characters assets
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of the characters assets
+   * @customfunction
+   */
+  function characterAssets(opt_headers) {
+      var userProperties = PropertiesService.getUserProperties();
+      var eveService = getEVEService();
+      var items = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { items.push(['ItemID', 'TypeID', 'Quantity', 'LocationID', 'Location Type', 'Location Flag']); };
+
+      var response = UrlFetchApp.fetch(BASE_URL + endpoints.characterAssets.version + endpoints.characterAssets.url.replace("{character_id}", userProperties.getProperty('character_id')), {
+          headers: {
+              Authorization: 'Bearer ' + eveService.getAccessToken()
+          }
+      });
+      var response = JSON.parse(response);
+
+      for (var i = 0; i < response.length; i++) {
+          var quantity = 1;
+          if (!response[i].is_singleton) { quantity = response[i].quantity };
+          items.push([
+              response[i].item_id,
+              response[i].type_id,
+              quantity,
+              response[i].location_id,
+              response[i].location_type,
+              response[i].location_flag
+          ]);
+      }
+      return items;
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Loyalty
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Returns a list of loyalty points for all corporations the character has worked for.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of loyalty points for all corporations the character has worked for.
+   * @customfunction
+   */
+  function characterLoyalty(opt_headers) {
+      var userProperties = PropertiesService.getUserProperties();
+      var eveService = getEVEService();
+      var points = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { points.push(['Corporation ID', 'Loyalty Points']); };
+
+      var response = UrlFetchApp.fetch(BASE_URL + endpoints.characterLoyalty.version + endpoints.characterLoyalty.url.replace("{character_id}", userProperties.getProperty('character_id')), {
+          headers: {
+              Authorization: 'Bearer ' + eveService.getAccessToken()
+          }
+      });
+      var response = JSON.parse(response);
+      for (var i = 0; i < response.length; i++) {
+          points.push([
+              response[i].corporation_id,
+              response[i].loyalty_points
+          ]);
+      }
+      return points;
+  }
+
+  /**
+   * Returns a list of offers from a specific corporation's loyalty store.
+   * @param {corporation_id} corporation_id Corporation ID to get the loyalty point store for.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of offers from a specific corporation's loyalty store.
+   * @customfunction
+   */
+  function corporationLoyalty(corporation_id, opt_headers) {
+      var items = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { items.push(['Type ID', 'Quantity', 'ISK Cost', 'LP Cost', 'Offer ID', 'Required Item', 'Required Quantity']); };
+
+      var response = UrlFetchApp.fetch(BASE_URL + endpoints.corporationLoyalty.version + endpoints.corporationLoyalty.url.replace("{corporation_id}", corporation_id));
+      var response = JSON.parse(response);
+
+      for (var i = 0; i < response.length; i++) {
+          for (var r = 0; r < response[i].required_items.length; r++) {
+
+              items.push([
+                  response[i].type_id,
+                  response[i].quantity,
+                  response[i].isk_cost,
+                  response[i].lp_cost,
+                  response[i].offer_id,
+                  response[i].required_items[r].type_id,
+                  response[i].required_items[r].quantity
+              ]);
+          };
+      };
+      return items;
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  OAth2  Functions
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   function getEVEService() {
@@ -268,7 +403,7 @@
           .setPropertyStore(PropertiesService.getUserProperties())
 
           // Set the scopes to request (space-separated).
-          .setScope('esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1')
+          .setScope('esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1')
 
           // Requests offline access.  Allows token to be refreshed when it expires
           .setParam('access_type', 'offline')
@@ -308,7 +443,7 @@
   }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  //                                                                                                  Private Functions                                                                  
+  //                                                                                                  Private Functions
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   function getCharacterDetails_() {

@@ -29,19 +29,34 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
 ### Functions:
 
 ##### Skills:
-   * =skillQueue() - Returns the user's current skill queue.
-   * =skills(option) - Returns a list of Skill names, current points in skill and current level or total skill points.
+   * =skillQueue(opt_headers) - Returns the user's current skill queue.
+      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
+   * =skills(option, opt_headers) - Returns a list of Skill names, current points in skill and current level or total skill points.
       * 'List': Returns a list of Skill names, current points in skill and current level
       * 'Total': Returns total SP.
-
+      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
 ##### Market:
-   * =marketPrices() - Returns the avgerage and adjusted prices for various itemIDs.
-   * =structureMarketOrders(structure_id) - Returns all market orders in a given structure.
+   * =marketPrices(opt_headers) - Returns the avgerage and adjusted prices for various itemIDs.
+      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
+   * =structureMarketOrders(structure_id, opt_headers) - Returns all market orders in a given structure.
+      * structure_id:  ID of the structure you want to get market orders from.
+      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    
 ##### Universe:
    * =itemTypes(ids, opt_headers) - Returns Information about a type.
       * ids: Either a single typeID, or a list of typeIDs.
       * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+      
+##### Assets:
+   * =characterAssets(opt_headers) - Returns a list of the characters assets.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+      
+##### Loyalty:
+   * =characterLoyalty(opt_headers) - Returns a list of loyalty points for all corporations the character has worked for.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+   * =corporationLoyalty(corporation_id, opt_headers) - Returns a list of offers from a specific corporation's loyalty store.
+      * corporation_id: Corporation ID to get the loyalty point store for.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.      
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
