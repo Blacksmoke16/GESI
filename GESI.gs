@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.3.0.0';
+  app_version = '0.3.1.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -35,6 +35,10 @@
       'characterAssets': {
           'version': 1,
           'url': '/characters/{character_id}/assets/'
+      },
+      'characterWallet': {
+          'version': 1,
+          'url': '/characters/{character_id}/wallets/'
       },
       'characterLoyalty': {
           'version': 1,
@@ -377,6 +381,40 @@
       return items;
   }
 
+    // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Wallet
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * List of your wallets and their balances. Characters typically have only one wallet, with Wallet ID 1000 being the master wallet.
+   * @param {opt_headers} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return List of your wallets and their balances.
+   * @customfunction
+   */
+  function characterWallet(opt_headers) {
+      var userProperties = PropertiesService.getUserProperties();
+      var eveService = getEVEService();
+      var wallet_data = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { wallet_data.push(['Wallet ID', 'Balance']); };
+
+      var response = UrlFetchApp.fetch(BASE_URL + endpoints.characterWallet.version + endpoints.characterWallet.url.replace("{character_id}", userProperties.getProperty('character_id')), {
+          headers: {
+              Authorization: 'Bearer ' + eveService.getAccessToken()
+          }
+      });
+      var response = JSON.parse(response);
+
+      wallet_data.push([response[0].wallet_id, response[0].balance]);
+
+      return wallet_data;
+  }
+
+  function test(cell, value){
+      SpreadsheetApp.getActiveSheet().getRange(cell).setvalue(value);
+  }
+
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                                  OAth2  Functions
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -403,7 +441,7 @@
           .setPropertyStore(PropertiesService.getUserProperties())
 
           // Set the scopes to request (space-separated).
-          .setScope('esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1')
+          .setScope('esi-ui.open_window.v1 esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1 esi-wallet.read_character_wallet.v1 esi-ui.write_waypoint.v1')
 
           // Requests offline access.  Allows token to be refreshed when it expires
           .setParam('access_type', 'offline')

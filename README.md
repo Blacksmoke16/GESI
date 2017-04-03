@@ -56,13 +56,20 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
       * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =corporationLoyalty(corporation_id, opt_headers) - Returns a list of offers from a specific corporation's loyalty store.
       * corporation_id: Corporation ID to get the loyalty point store for.
-      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.      
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.     
+       
+##### Wallet:
+   * =characterWallet(opt_headers) - Returns list of your wallets and their balances.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
    * Reset Auth - Clears the OAuth2 service, making all tokens invalid.
+   
+### Note:  In order to use new functions you will have to re-auth your character.
+   * Use 'Reset Auth' under GESI dropdown window to clear the old token/auth data.
+   * Use 'Authorize Sheet' under GESI dropdown window to re-auth your character with the newly added scopes.
 
-     
 ### Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#1684
