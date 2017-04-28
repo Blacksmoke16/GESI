@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.3.2.0';
+  app_version = '0.3.2.1';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -576,7 +576,7 @@
              .setPropertyStore(PropertiesService.getUserProperties())
 
              // Set the scopes to request (space-separated).
-             .setScope('esi-planets.manage_planets.v1esi-ui.open_window.v1 esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1 esi-wallet.read_character_wallet.v1 esi-ui.write_waypoint.v1')
+             .setScope('esi-planets.manage_planets.v1 esi-ui.open_window.v1 esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1 esi-wallet.read_character_wallet.v1 esi-ui.write_waypoint.v1')
 
              // Requests offline access.  Allows token to be refreshed when it expires
              .setParam('access_type', 'offline')
