@@ -65,6 +65,11 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
 ##### Planets:
  * =characterPlanets(opt_headers) - Returns a list of all planetary colonies owned by a character.
     * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+ * =characterPlanetDetails(planet_id) - Returns full details on the layout of a single planetary colony, including links, pins and routes. 
+    * planet_id: ID of the planet to get details on.
+ * =planetSchematic(schematic_id, opt_headers) - Returns information on a planetary factory schematic.
+    * schematic_id: ID of the schematic to get information on.
+    * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
