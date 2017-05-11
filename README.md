@@ -28,6 +28,9 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
 
 ### Functions:
 
+##### Global:
+   * =help() - Returns infomration on current endpoints.
+
 ##### Skills:
    * =skillQueue(opt_headers) - Returns the user's current skill queue.
       * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
@@ -37,6 +40,8 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
       * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
 ##### Market:
    * =marketPrices(opt_headers) - Returns the avgerage and adjusted prices for various itemIDs.
+      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
+   * =characterMarketOrders(opt_headers) - Returns a list of market orders placed by a character.
       * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =structureMarketOrders(structure_id, opt_headers) - Returns all market orders in a given structure.
       * structure_id:  ID of the structure you want to get market orders from.
@@ -70,6 +75,14 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
  * =planetSchematic(schematic_id, opt_headers) - Returns information on a planetary factory schematic.
     * schematic_id: ID of the schematic to get information on.
     * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+    
+##### Character:
+   * =characterBlueprints(opt_headers) - Returns a list of blueprints the character has.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
+    
+##### Industry:
+   * =characterIndustryJobs(opt_headers) - Returns a list of industry jobs placed by a character.
+      * opt_headers: Optional paramater.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
