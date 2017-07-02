@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.3.4.0';
+  app_version = '0.3.5.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -13,11 +13,11 @@
   // Setup endpoint and version list
   endpoints = {
       'skills': {
-          'version': 3,
+          'version': 4,
           'url': '/characters/{character_id}/skills/',
           'name': 'skills',
           'description': 'Default: LIST, LIST for list of skills, TOTAL for total skill points.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'option', 'description': 'LIST for list of skills, TOTAL for total skill points.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -27,7 +27,7 @@
           'url': '/characters/{character_id}/skillqueue/',
           'name': 'skillQueue',
           'description': 'Returns the user\'s current skill queue.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -36,7 +36,7 @@
           'url': '/markets/prices/',
           'name': 'marketPrices',
           'description': 'Returns the avgerage and adjusted prices for various itemIDs.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -45,7 +45,7 @@
           'url': '/markets/structures/{structure_id}/',
           'name': 'structureMarketOrders',
           'description': 'Returns all market orders in a given structure.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'structure_id', 'description': 'StructureID of the structure to get market orders.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -55,7 +55,7 @@
           'url': '/universe/types/{type_id}/',
           'name': 'itemTypes',
           'description': 'Returns information about a type.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'ids', 'description': 'Single typeID or list of typeIDs to lookup.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -65,7 +65,7 @@
           'url': '/characters/{character_id}/assets/',
           'name': 'characterAssets',
           'description': 'Returns a list of the character\'s assets',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -74,7 +74,7 @@
           'url': '/characters/{character_id}/wallets/',
           'name': 'characterWallet',
           'description': 'List of your wallets and their balances. Characters typically have only one wallet, with Wallet ID 1000 being the master wallet.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -83,7 +83,7 @@
           'url': '/characters/{character_id}/loyalty/points/',
           'name': 'characterLoyalty',
           'description': 'Returns a list of loyalty points for all corporations the character has worked for.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -92,7 +92,7 @@
           'url': '/loyalty/stores/{corporation_id}/offers/',
           'name': 'corporationLoyalty',
           'description': 'Returns a list of offers from a specific corporation\'s loyalty store.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'corporation_id', 'description': 'Corporation ID to get the loyalty point store for.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -102,7 +102,7 @@
           'url': '/characters/{character_id}/planets/',
           'name': 'characterPlanets',
           'description': 'Returns a list of all planetary colonies owned by a character.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -111,7 +111,7 @@
           'url': '/characters/{character_id}/planets/{planet_id}/',
           'name': 'characterPlanetDetails',
           'description': 'Returns full details on the layout of a single planetary colony, including links, pins and routes. ',
-          'paramaters': [
+          'parameters': [
                 {'name': 'planet_id', 'description': 'ID of the planet to get details on.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -121,7 +121,7 @@
           'url': '/universe/schematics/{schematic_id}/',
           'name': 'planetSchematic',
           'description': 'Returns information on a planetary factory schematic.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'schematic_id', 'description': 'ID of the schematic to get information on.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -131,7 +131,7 @@
           'url': '/characters/{character_id}/blueprints/',
           'name': 'characterBlueprints',
           'description': 'Returns a list of blueprints the character has.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -140,7 +140,7 @@
           'url': '/characters/{character_id}/industry/jobs/',
           'name': 'characterIndustryJobs',
           'description': 'Returns a list of industry jobs placed by a character.',
-          'paramaters': [
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       },
@@ -149,7 +149,45 @@
           'url': '/characters/{character_id}/orders/',
           'name': 'characterMarketOrders',
           'description': 'Returns a list of market orders placed by a character.',
-          'paramaters': [
+          'parameters': [
+                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
+              ]
+      },
+      'characterWalletJournal': {
+          'version': 1,
+          'url': '/characters/{character_id}/wallets/journal/',
+          'name': 'characterWalletJournal',
+          'description': 'Returns a character\'s wallet journal.',
+          'parameters': [
+                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
+              ]
+      },
+      'characterContracts': {
+          'version': 1,
+          'url': '/characters/{character_id}/contracts/',
+          'name': 'characterContracts',
+          'description': 'Returns a list of a character\'s contracts.',
+          'parameters': [
+                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
+              ]
+      },
+      'characterContractBids': {
+          'version': 1,
+          'url': '/characters/{character_id}/contracts/{contract_id}/bids/',
+          'name': 'characterContractBids',
+          'description': 'Returns bids on a particular auction contract.',
+          'parameters': [
+                {'name': 'contract_id', 'description': 'ID of the contract to get bids for.'},
+                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
+              ]
+      },
+      'characterContractItems': {
+          'version': 1,
+          'url': '/characters/{character_id}/contracts/{contract_id}/items/',
+          'name': 'characterContractItems',
+          'description': 'Returns Items and details of a particular contract.',
+          'parameters': [
+                {'name': 'contract_id', 'description': 'ID of the contract to get information on.'},
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       }
@@ -189,13 +227,14 @@
 
       if (option == 'list') {
           if (opt_headers === undefined) { opt_headers = true; };
-          if (opt_headers) { skill_list.push(['Name', 'Level', 'SP In Skill']); };
+          if (opt_headers) { skill_list.push(['Name', 'Active Level', 'Trained Level', 'SP In Skill']); };
 
           for (var i = 0; i < response.skills.length; i++) {
               ids.push(response.skills[i].skill_id);
               skill_list.push([
                   response.skills[i].skill_id,
-                  response.skills[i].current_skill_level,
+                  response.skills[i].active_skill_level,
+                  response.skills[i].trained_skill_level,
                   response.skills[i].skillpoints_in_skill
               ]);
           }
@@ -729,6 +768,110 @@
       return job_list;
   }
 
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Contracts
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  /**
+   * Returns contracts available to a character.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress."
+   * @customfunction
+   */
+  function characterContracts(opt_headers) {
+      var contracts = new Array();
+
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) contracts.push(['Contract ID','Availability','Issuer ID','Status','Title','Type','Volume','Price','Buyout','Reward','Collateral','Start Location ID','End Location ID','Acceptor ID','Assignee ID','Date Issued','Date Accepted','Date Completed','Date Expired','Days To Complete','For Corporation','Issuer Corporation ID']);
+
+      var response = JSON.parse(getData_(arguments.callee.name));
+
+      for (var i = 0; i < response.length; i++) {
+          contracts.push([
+              response[i].contract_id,
+              response[i].availability,
+              response[i].issuer_id,
+              response[i].status,
+              response[i].title,
+              response[i].type,
+              response[i].volume,
+              response[i].price,
+              response[i].buyout,
+              response[i].reward,
+              response[i].collateral,
+              response[i].start_location_id,
+              response[i].end_location_id,
+              response[i].acceptor_id,
+              response[i].assignee_id,
+              response[i].date_issued,
+              response[i].date_accepted,
+              response[i].date_completed,
+              response[i].date_expired,
+              response[i].days_to_complete,
+              response[i].for_corporation,
+              response[i].issuer_corporation_id
+          ]);
+      }
+      return contracts;
+
+  }
+
+  /**
+   * Returns bids on a particular auction contract.
+   * @param {integer} contract_id Contract ID to get bids for.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns bids on a particular auction contract.
+   * @customfunction
+   */
+  function characterContractBids(contract_id, opt_headers) {
+      var bids = new Array();
+
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) bids.push(['Bid ID', 'Date Bid', 'Bidder ID', 'Amount']);
+
+      var response = JSON.parse(getData_(arguments.callee.name,contract_id));
+
+      for (var i = 0; i < response.length; i++) {
+          bids.push([
+              response[i].bid_id,
+              response[i].date_bid,
+              response[i].bidder_id,
+              response[i].amount
+          ]);
+      }
+      return bids;
+
+  }
+
+
+  /**
+   * Returns items and details of a particular contract.
+   * @param {integer} contract_id Contract ID to get items for.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns items and details of a particular contract.
+   * @customfunction
+   */
+  function characterContractItems(contract_id, opt_headers) {
+      var items = new Array();
+
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) items.push(['Record ID', 'Type ID', 'Quantity', 'Is Included?', 'Is Singleton?', 'Raw Quantity']);
+
+      var response = JSON.parse(getData_(arguments.callee.name,contract_id));
+
+      for (var i = 0; i < response.length; i++) {
+          items.push([
+              response[i].record_id,
+              response[i].type_id,
+              response[i].quantity,
+              response[i].is_included,
+              response[i].is_singleton,
+              response[i].raw_quantity
+          ]);
+      }
+      return items;
+
+  }
 
 
 
@@ -858,11 +1001,11 @@
         endpoints[key].description
       ]);
 
-      for( var i = 0; i < endpoints[key].paramaters.length; i++){
+      for( var i = 0; i < endpoints[key].parameters.length; i++){
         endpoint_list.push([
           '',
-          endpoints[key].paramaters[i].name,
-          endpoints[key].paramaters[i].description
+          endpoints[key].parameters[i].name,
+          endpoints[key].parameters[i].description
         ]);
       }
 
