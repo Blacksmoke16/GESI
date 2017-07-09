@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.3.5.1';
+  app_version = '0.3.6.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -71,9 +71,9 @@
       },
       'characterWallet': {
           'version': 1,
-          'url': '/characters/{character_id}/wallets/',
+          'url': '/characters/{character_id}/wallet/',
           'name': 'characterWallet',
-          'description': 'List of your wallets and their balances. Characters typically have only one wallet, with Wallet ID 1000 being the master wallet.',
+          'description': 'Returns the balance of your wallet.',
           'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
@@ -155,7 +155,7 @@
       },
       'characterWalletJournal': {
           'version': 1,
-          'url': '/characters/{character_id}/wallets/journal/',
+          'url': '/characters/{character_id}/wallet/journal/',
           'name': 'characterWalletJournal',
           'description': 'Returns a character\'s wallet journal.',
           'parameters': [
@@ -188,6 +188,15 @@
           'description': 'Returns Items and details of a particular contract.',
           'parameters': [
                 {'name': 'contract_id', 'description': 'ID of the contract to get information on.'},
+                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
+              ]
+      },
+      'characterWalletTransactions': {
+          'version': 1,
+          'url': '/characters/{character_id}/wallet/transactions/',
+          'name': 'characterWalletTransactions',
+          'description': 'Returns a character\'s wallet transactions.',
+          'parameters': [
                 {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
               ]
       }
@@ -527,28 +536,106 @@
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   /**
-   * List of your wallets and their balances. Characters typically have only one wallet, with Wallet ID 1000 being the master wallet.
+   * Returns the balance of your wallet.
    * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-   * @return Returns a list of your wallets and their balances.
+   * @return Returns the balance of your wallet.
    * @customfunction
    */
   function characterWallet(opt_headers) {
       var wallet_data = new Array();
 
-      if (opt_headers === undefined) { opt_headers = true; };
-      if (opt_headers) { wallet_data.push(['Wallet ID', 'Balance']); };
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) { wallet_data.push(['Balance']); };
 
-      var response = JSON.parse(getData_(arguments.callee.name));
+      var response = getData_(arguments.callee.name);
 
-      var balance = response[0].balance/100
-
-      wallet_data.push([response[0].wallet_id, balance]);
+      wallet_data.push([parseFloat(response)]);
 
       return wallet_data;
   }
 
+   /**
+   * Retrieve character wallet journal.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Retrieve character wallet journal.
+   * @customfunction
+   */
+  function characterWalletJournal(opt_headers) {
+      var entries = new Array();
 
-    // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) entries.push(['Ref ID', 'Date', 'Ref Type', 'Amount', 'Balance', 'Description', 'Tax Reciver ID', 'First Party Type', 'First Party ID', 'Second Party Type', 'Second Party ID', 'Extra Info:']);
+
+      var response = JSON.parse(getData_(arguments.callee.name));
+
+      for (var i = 0; i < response.length; i++) {
+          entries.push([
+              response[i].ref_id,
+              response[i].date,
+              response[i].ref_type,
+              response[i].amount,
+              response[i].balance,
+              response[i].reason,
+              response[i].tax_reciever_id,
+              response[i].first_party_type,
+              response[i].first_party_id,
+              response[i].second_party_type,
+              response[i].second_party_id
+          ]);
+          if (!(response[i].hasOwnProperty('extra_info'))) continue;
+            if (i === 0) entries[i].push('Alliance ID', 'Character ID', 'Corporation ID', 'Contract ID', 'Destroyed Ship Type ID', 'Job ID', 'Location ID', 'NPC ID', 'NPC Name', 'Planet ID', 'System ID', 'Transaction ID');
+            entries[i].push(
+                '',
+                response[i].extra_info.alliance_id,
+                response[i].extra_info.character_id,
+                response[i].extra_info.corporation_id,
+                response[i].extra_info.contract_id,
+                response[i].extra_info.destroyed_ship_type_id,
+                response[i].extra_info.job_id,
+                response[i].extra_info.location_id,
+                response[i].extra_info.npc_id,
+                response[i].extra_info.npc_name,
+                response[i].extra_info.planet_id,
+                response[i].extra_info.system_id,
+                response[i].extra_info.transaction_id
+            );
+      }
+      return entries;
+  }
+
+   /**
+   * Retrieve character wallet transactions.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Retrieve character wallet transactions.
+   * @customfunction
+   */
+  function characterWalletTransactions(opt_headers) {
+      var transactions = new Array();
+
+      if (opt_headers === undefined) opt_headers = true;
+      if (opt_headers) transactions.push(['Transaction ID', 'Client ID', 'Date', 'Type ID', 'Quantity', 'Unit Price', 'Location ID', 'Is Buy?', 'Is Personal?', 'Journal Ref ID']);
+
+      var response = JSON.parse(getData_(arguments.callee.name));
+
+      for (var i = 0; i < response.length; i++) {
+          transactions.push([
+              response[i].transaction_id,
+              response[i].client_id,
+              response[i].date,
+              response[i].type_id,
+              response[i].quantity,
+              response[i].unit_price,
+              response[i].location_id,
+              response[i].is_buy,
+              response[i].is_personal,
+              response[i].journal_ref_id
+          ]);
+      }
+      return transactions;
+  }
+
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                             Planets
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

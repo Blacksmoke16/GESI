@@ -28,72 +28,58 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
 
 ### Functions:
 
+##### Note:  All functions, unless otherwise stated, have an optional opt_headers parameter that defaults to true and determines if column headers are shown or not.
+
 ##### Global:
    * =help() - Returns information on current endpoints.
 
 ##### Skills:
    * =skillQueue(opt_headers) - Returns the user's current skill queue.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =skills(option, opt_headers) - Returns a list of Skill names, current points in skill and current level or total skill points.
       * 'List': Returns a list of Skill names, current points in skill and current level
       * 'Total': Returns total SP.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
 ##### Market:
    * =marketPrices(opt_headers) - Returns the average and adjusted prices for various itemIDs.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =characterMarketOrders(opt_headers) - Returns a list of market orders placed by a character.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =structureMarketOrders(structure_id, opt_headers) - Returns all market orders in a given structure.
       * structure_id:  ID of the structure you want to get market orders from.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    
 ##### Universe:
    * =itemTypes(ids, opt_headers) - Returns Information about a type.
       * ids: Either a single typeID, or a list of typeIDs.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
 ##### Assets:
    * =characterAssets(opt_headers) - Returns a list of the characters assets.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
 ##### Loyalty:
    * =characterLoyalty(opt_headers) - Returns a list of loyalty points for all corporations the character has worked for.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
    * =corporationLoyalty(corporation_id, opt_headers) - Returns a list of offers from a specific corporation's loyalty store.
       * corporation_id: Corporation ID to get the loyalty point store for.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.     
        
 ##### Wallet:
-   * =characterWallet(opt_headers) - Returns list of your wallets and their balances.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
+   * =characterWallet(opt_headers) - Returns the balance of your wallet.
+   * =characterWalletJournal(opt_headers) - Returns a character's wallet journal.
+   * =characterWalletTransactions(opt_headers) - Returns a character's wallet transactions.
       
 ##### Planets:
  * =characterPlanets(opt_headers) - Returns a list of all planetary colonies owned by a character.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
  * =characterPlanetDetails(planet_id) - Returns full details on the layout of a single planetary colony, including links, pins and routes. 
     * planet_id: ID of the planet to get details on.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
  * =planetSchematic(schematic_id, opt_headers) - Returns information on a planetary factory schematic.
     * schematic_id: ID of the schematic to get information on.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
     
 ##### Character:
    * =characterBlueprints(opt_headers) - Returns a list of blueprints the character has.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
     
 ##### Industry:
    * =characterIndustryJobs(opt_headers) - Returns a list of industry jobs placed by a character.
-      * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
 ##### Contracts:
  * =characterContracts(opt_headers) - Returns a list of a character's contracts.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
  * =characterContractBids(contract_id, opt_headers) - Returns bids on a particular auction contract.
     * contract_id: ID of the contract to get bids for.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
  * =characterContractItems(contract_id, opt_headers) -Returns Items and details of a particular contract.
     * contract_id: ID of the contract to get information on.
-    * opt_headers: Optional parameter.  Defaults to true.  Boolean that determines if column headers are shown or not.
       
  ##### GESI Dropdown:
    * Authorize Sheet - Provides the link to navigate to to login and get your access token
