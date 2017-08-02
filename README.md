@@ -73,6 +73,8 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
     
 ##### Industry:
    * =characterIndustryJobs(opt_headers) - Returns a list of industry jobs placed by a character.
+   * =industryFacilities(opt_headers) - Returns a list of industry facilities.
+   * =industrySystems(opt_headers) - Returns cost indices for solar systems.
       
 ##### Contracts:
  * =characterContracts(opt_headers) - Returns a list of a character's contracts.

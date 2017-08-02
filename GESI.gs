@@ -3,7 +3,7 @@
   //
   // /u/blacksmoke16 @ Reddit
   // @Blacksmoke16#1684 @ Discord
-  app_version = '0.3.6.0';
+  app_version = '0.3.7.0';
 
   // Setup variables used throughout script
   CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -12,204 +12,311 @@
 
   // Setup endpoint and version list
   endpoints = {
-      'skills': {
-          'version': 4,
-          'url': '/characters/{character_id}/skills/',
-          'name': 'skills',
-          'description': 'Default: LIST, LIST for list of skills, TOTAL for total skill points.',
-          'parameters': [
-                {'name': 'option', 'description': 'LIST for list of skills, TOTAL for total skill points.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'skillQueue': {
-          'version': 2,
-          'url': '/characters/{character_id}/skillqueue/',
-          'name': 'skillQueue',
-          'description': 'Returns the user\'s current skill queue.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'marketPrices': {
-          'version': 1,
-          'url': '/markets/prices/',
-          'name': 'marketPrices',
-          'description': 'Returns the avgerage and adjusted prices for various itemIDs.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'structureMarketOrders': {
-          'version': 1,
-          'url': '/markets/structures/{structure_id}/',
-          'name': 'structureMarketOrders',
-          'description': 'Returns all market orders in a given structure.',
-          'parameters': [
-                {'name': 'structure_id', 'description': 'StructureID of the structure to get market orders.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'itemTypes': {
-          'version': 3,
-          'url': '/universe/types/{type_id}/',
-          'name': 'itemTypes',
-          'description': 'Returns information about a type.',
-          'parameters': [
-                {'name': 'ids', 'description': 'Single typeID or list of typeIDs to lookup.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterAssets': {
-          'version': 1,
-          'url': '/characters/{character_id}/assets/',
-          'name': 'characterAssets',
-          'description': 'Returns a list of the character\'s assets',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterWallet': {
-          'version': 1,
-          'url': '/characters/{character_id}/wallet/',
-          'name': 'characterWallet',
-          'description': 'Returns the balance of your wallet.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterLoyalty': {
-          'version': 1,
-          'url': '/characters/{character_id}/loyalty/points/',
-          'name': 'characterLoyalty',
-          'description': 'Returns a list of loyalty points for all corporations the character has worked for.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'corporationLoyalty': {
-          'version': 1,
-          'url': '/loyalty/stores/{corporation_id}/offers/',
-          'name': 'corporationLoyalty',
-          'description': 'Returns a list of offers from a specific corporation\'s loyalty store.',
-          'parameters': [
-                {'name': 'corporation_id', 'description': 'Corporation ID to get the loyalty point store for.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterPlanets': {
-          'version': 1,
-          'url': '/characters/{character_id}/planets/',
-          'name': 'characterPlanets',
-          'description': 'Returns a list of all planetary colonies owned by a character.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterPlanetDetails': {
-          'version': 2,
-          'url': '/characters/{character_id}/planets/{planet_id}/',
-          'name': 'characterPlanetDetails',
-          'description': 'Returns full details on the layout of a single planetary colony, including links, pins and routes. ',
-          'parameters': [
-                {'name': 'planet_id', 'description': 'ID of the planet to get details on.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'planetSchematic': {
-          'version': 1,
-          'url': '/universe/schematics/{schematic_id}/',
-          'name': 'planetSchematic',
-          'description': 'Returns information on a planetary factory schematic.',
-          'parameters': [
-                {'name': 'schematic_id', 'description': 'ID of the schematic to get information on.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterBlueprints': {
-          'version': 1,
-          'url': '/characters/{character_id}/blueprints/',
-          'name': 'characterBlueprints',
-          'description': 'Returns a list of blueprints the character has.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterIndustryJobs': {
-          'version': 1,
-          'url': '/characters/{character_id}/industry/jobs/',
-          'name': 'characterIndustryJobs',
-          'description': 'Returns a list of industry jobs placed by a character.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterMarketOrders': {
-          'version': 1,
-          'url': '/characters/{character_id}/orders/',
-          'name': 'characterMarketOrders',
-          'description': 'Returns a list of market orders placed by a character.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterWalletJournal': {
-          'version': 1,
-          'url': '/characters/{character_id}/wallet/journal/',
-          'name': 'characterWalletJournal',
-          'description': 'Returns a character\'s wallet journal.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterContracts': {
-          'version': 1,
-          'url': '/characters/{character_id}/contracts/',
-          'name': 'characterContracts',
-          'description': 'Returns a list of a character\'s contracts.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterContractBids': {
-          'version': 1,
-          'url': '/characters/{character_id}/contracts/{contract_id}/bids/',
-          'name': 'characterContractBids',
-          'description': 'Returns bids on a particular auction contract.',
-          'parameters': [
-                {'name': 'contract_id', 'description': 'ID of the contract to get bids for.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterContractItems': {
-          'version': 1,
-          'url': '/characters/{character_id}/contracts/{contract_id}/items/',
-          'name': 'characterContractItems',
-          'description': 'Returns Items and details of a particular contract.',
-          'parameters': [
-                {'name': 'contract_id', 'description': 'ID of the contract to get information on.'},
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      },
-      'characterWalletTransactions': {
-          'version': 1,
-          'url': '/characters/{character_id}/wallet/transactions/',
-          'name': 'characterWalletTransactions',
-          'description': 'Returns a character\'s wallet transactions.',
-          'parameters': [
-                {'name': 'opt_headers', 'description': 'Default: True, Boolean if column headings should be listed or not.'}
-              ]
-      }
-  };
+        "skills": {
+          "version": 4,
+          "url": "/characters/{character_id}/skills/",
+          "name": "skills",
+          "description": "Default: LIST, LIST for list of skills, TOTAL for total skill points.",
+          "parameters": [
+            {
+              "name": "option",
+              "description": "LIST for list of skills, TOTAL for total skill points."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "skillQueue": {
+          "version": 2,
+          "url": "/characters/{character_id}/skillqueue/",
+          "name": "skillQueue",
+          "description": "Returns the user\"s current skill queue.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "marketPrices": {
+          "version": 1,
+          "url": "/markets/prices/",
+          "name": "marketPrices",
+          "description": "Returns the avgerage and adjusted prices for various itemIDs.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "structureMarketOrders": {
+          "version": 1,
+          "url": "/markets/structures/{structure_id}/",
+          "name": "structureMarketOrders",
+          "description": "Returns all market orders in a given structure.",
+          "parameters": [
+            {
+              "name": "structure_id",
+              "description": "StructureID of the structure to get market orders."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "itemTypes": {
+          "version": 3,
+          "url": "/universe/types/{type_id}/",
+          "name": "itemTypes",
+          "description": "Returns information about a type.",
+          "parameters": [
+            {
+              "name": "ids",
+              "description": "Single typeID or list of typeIDs to lookup."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterAssets": {
+          "version": 1,
+          "url": "/characters/{character_id}/assets/",
+          "name": "characterAssets",
+          "description": "Returns a list of the character\"s assets",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterWallet": {
+          "version": 1,
+          "url": "/characters/{character_id}/wallet/",
+          "name": "characterWallet",
+          "description": "Returns the balance of your wallet.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterLoyalty": {
+          "version": 1,
+          "url": "/characters/{character_id}/loyalty/points/",
+          "name": "characterLoyalty",
+          "description": "Returns a list of loyalty points for all corporations the character has worked for.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "corporationLoyalty": {
+          "version": 1,
+          "url": "/loyalty/stores/{corporation_id}/offers/",
+          "name": "corporationLoyalty",
+          "description": "Returns a list of offers from a specific corporation\"s loyalty store.",
+          "parameters": [
+            {
+              "name": "corporation_id",
+              "description": "Corporation ID to get the loyalty point store for."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterPlanets": {
+          "version": 1,
+          "url": "/characters/{character_id}/planets/",
+          "name": "characterPlanets",
+          "description": "Returns a list of all planetary colonies owned by a character.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterPlanetDetails": {
+          "version": 2,
+          "url": "/characters/{character_id}/planets/{planet_id}/",
+          "name": "characterPlanetDetails",
+          "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. ",
+          "parameters": [
+            {
+              "name": "planet_id",
+              "description": "ID of the planet to get details on."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "planetSchematic": {
+          "version": 1,
+          "url": "/universe/schematics/{schematic_id}/",
+          "name": "planetSchematic",
+          "description": "Returns information on a planetary factory schematic.",
+          "parameters": [
+            {
+              "name": "schematic_id",
+              "description": "ID of the schematic to get information on."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterBlueprints": {
+          "version": 1,
+          "url": "/characters/{character_id}/blueprints/",
+          "name": "characterBlueprints",
+          "description": "Returns a list of blueprints the character has.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterIndustryJobs": {
+          "version": 1,
+          "url": "/characters/{character_id}/industry/jobs/",
+          "name": "characterIndustryJobs",
+          "description": "Returns a list of industry jobs placed by a character.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterMarketOrders": {
+          "version": 1,
+          "url": "/characters/{character_id}/orders/",
+          "name": "characterMarketOrders",
+          "description": "Returns a list of market orders placed by a character.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterWalletJournal": {
+          "version": 1,
+          "url": "/characters/{character_id}/wallet/journal/",
+          "name": "characterWalletJournal",
+          "description": "Returns a character\"s wallet journal.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterContracts": {
+          "version": 1,
+          "url": "/characters/{character_id}/contracts/",
+          "name": "characterContracts",
+          "description": "Returns a list of a character\"s contracts.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterContractBids": {
+          "version": 1,
+          "url": "/characters/{character_id}/contracts/{contract_id}/bids/",
+          "name": "characterContractBids",
+          "description": "Returns bids on a particular auction contract.",
+          "parameters": [
+            {
+              "name": "contract_id",
+              "description": "ID of the contract to get bids for."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterContractItems": {
+          "version": 1,
+          "url": "/characters/{character_id}/contracts/{contract_id}/items/",
+          "name": "characterContractItems",
+          "description": "Returns Items and details of a particular contract.",
+          "parameters": [
+            {
+              "name": "contract_id",
+              "description": "ID of the contract to get information on."
+            },
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "characterWalletTransactions": {
+          "version": 1,
+          "url": "/characters/{character_id}/wallet/transactions/",
+          "name": "characterWalletTransactions",
+          "description": "Returns a character\"s wallet transactions.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "industryFacilities": {
+          "version": 1,
+          "url": "/industry/facilities/",
+          "name": "industryFacilities",
+          "description": "Return a list of industry facilities.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        },
+        "industrySystems": {
+          "version": 1,
+          "url": "/industry/systems/",
+          "name": "industrySystems",
+          "description": "Return cost indices for solar systems.",
+          "parameters": [
+            {
+              "name": "opt_headers",
+              "description": "Default: True, Boolean if column headings should be listed or not."
+            }
+          ]
+        }
+      };
 
-   function onOpen() {
-       SpreadsheetApp.getUi().createMenu('GESI')
-                 .addItem('Authorize Sheet', 'showSidebar')
-                 .addSeparator()
-                 .addItem('Reset Auth', 'clearService')
-                 .addToUi();
-
-   }
+     function onOpen() {
+         SpreadsheetApp.getUi().createMenu('GESI')
+                   .addItem('Authorize Sheet', 'showSidebar')
+                   .addSeparator()
+                   .addItem('Reset Auth', 'clearService')
+                   .addToUi();
+     }
 
 
 
@@ -853,6 +960,72 @@
           ]);
       }
       return job_list;
+  }
+
+   /**
+   * Return a list of industry facilities.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of industry facilities.
+   * @customfunction
+   */
+  function industryFacilities(opt_headers) {
+      var facilities = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { facilities.push(['Facility ID', 'Owner ID', 'Region ID', 'Solar System ID', 'Tax', 'Type ID']); };
+
+      var response = JSON.parse(getData_(arguments.callee.name));
+
+      for (var i = 0; i < response.length; i++) {
+          facilities.push([
+              response[i].facility_id ,
+              response[i].owner_id ,
+              response[i].region_id,
+              response[i].solar_system_id,
+              response[i].tax,
+              response[i].type_id
+          ]);
+      }
+      return facilities;
+  }
+
+   /**
+   * Return cost indices for solar systems.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Return cost indices for solar systems.
+   * @customfunction
+   */
+  function industrySystems(opt_headers) {
+      var cost_indices = new Array();
+
+      if (opt_headers === undefined) { opt_headers = true; };
+      if (opt_headers) { cost_indices.push(['Solar System ID']); };
+
+      var response = JSON.parse(getData_(arguments.callee.name));
+
+      for (var i = 0; i < response.length; i++) {
+          cost_indices.push([ response[i].solar_system_id ]);
+
+            cost_indices.push([
+                '',
+                response[i].cost_indices[0].activity,
+                response[i].cost_indices[1].activity,
+                response[i].cost_indices[2].activity,
+                response[i].cost_indices[3].activity,
+                response[i].cost_indices[4].activity
+              ]);
+
+            cost_indices.push([
+                '',
+                response[i].cost_indices[0].cost_index,
+                response[i].cost_indices[1].cost_index,
+                response[i].cost_indices[2].cost_index,
+                response[i].cost_indices[3].cost_index,
+                response[i].cost_indices[4].cost_index
+              ]);
+
+      }
+      return cost_indices;
   }
 
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
