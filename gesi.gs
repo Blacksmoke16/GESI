@@ -10,13 +10,102 @@
   CLIENT_SECRET = 'CwcYrVs05AtIbqZkJH8OrBPYps6MAH72qQ1Gf68t';
   BASE_URL = 'https://esi.tech.ccp.is/v'
   
-  CHARACTERS = ['Blacksmoke16', 'Sir Johnson Ostus'];
+CHARACTERS = ['Blacksmoke16'];
   
   AUTHING_CHARACTER = CHARACTERS[0];
+  
+  ENDPOINTS = {
+      "characterAssets": {
+          "version": 1,
+          "url": "/characters/{character_id}/assets/",
+          "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag']
+      },
+      "characterPlanets": {
+          "version": 1,
+          "url": "/characters/{character_id}/planets/",
+          "name": "characterPlanets",
+          "headers": ['planet_id', 'planet_type', 'solar_system_id', 'owner_id', 'upgrade_level', 'last_update', 'num_pins']
+      }
+  };
+  
+  
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Assets
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  /**
+   * Returns a list of the character's assets.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of the characters assets.
+   * @customfunction
+   */
+  function characterAssets(opt_headers) {  
+      return getSimpleResponse_(arguments.callee.name, "Blacksmoke16");
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Planets
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  /**
+   * Returns a list of all planetary colonies owned by a character.
+   * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+   * @return Returns a list of all planetary colonies owned by a character.
+   * @customfunction
+   */
+  function characterPlanets(opt_headers) {
+    return getSimpleResponse_(arguments.callee.name, "Blacksmoke16");
+  }
+  
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //                                                                                                  Private  Functions
+  // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  function getData_(endpoint_name, name){
+      var userProperties = PropertiesService.getUserProperties();
+      var eveService = createOAuthForUser(name);
+      var url = ENDPOINTS[endpoint_name].url
+      
+      if(url.indexOf('{character_id') !== -1){ url = url.replace('{character_id}', parseInt(userProperties.getProperty(name))); }
+
+      return UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url, {
+          headers: {
+              Authorization: 'Bearer ' + eveService.getAccessToken()
+          }
+      });
+  }
+  
+  function getSimpleResponse_(endpoint_name, name) {
+    var response = getData_(endpoint_name, name);
+    var data = JSON.parse(response);
+    var result = [];
+    result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
+    
+    for (var i = 0; i < data.length; i++) {
+    var temp = [];
+      for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
+        data_value = data[i][ENDPOINTS[endpoint_name].headers[k]];
+        temp.push(data_value);
+      }
+      result.push(temp);
+    }
+
+    return result;
+  };
+  
+  
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //                                                                                                  OAth2  Functions
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+   function onOpen() {
+       SpreadsheetApp.getUi().createMenu('GESI')
+                 .addItem('Authorize Sheet', 'showSidebar')
+                 .addSeparator()
+                 .addItem('Reset Auth', 'clearService')
+                 .addToUi();
+
+   }
   
   function showSidebar() {
     var eveService = createOAuthForUser(AUTHING_CHARACTER);
@@ -35,6 +124,7 @@
       var eveService = createOAuthForUser(AUTHING_CHARACTER);
       var isAuthorized = eveService.handleCallback(request);
       if (isAuthorized) {
+          getCharacterDetails_();
           return HtmlService.createHtmlOutput('Success! You can close this tab.');
       } else {
           return HtmlService.createHtmlOutput('Denied. You can close this tab');
@@ -63,15 +153,24 @@ function createOAuthForUser(user){
           .reset();
     }
   }
-  
-  function getCharacterId(name) {
+
+  function getCharacterDetails_() {
       var userProperties = PropertiesService.getUserProperties();
-      var eveService = createOAuthForUser(name);
+      var eveService = createOAuthForUser(AUTHING_CHARACTER);
       var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/verify', {
           headers: {
               Authorization: 'Bearer ' + eveService.getAccessToken()
           }
       });
       response = JSON.parse(response);
-      return response.CharacterID;
- }
+      userProperties.setProperty(AUTHING_CHARACTER, response.CharacterID.toString());
+  }
+  
+  function convertSnakeCase_(headers) {
+    var formatted_headers = [];
+    for (var h = 0; h < headers.length; h++) {
+      str = headers[h].replace(/\_/g,' ');
+      formatted_headers.push(str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}));
+    }
+    return formatted_headers;
+  }
