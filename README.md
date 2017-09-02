@@ -5,7 +5,7 @@ Modified version of Google's https://github.com/googlesamples/apps-script-oauth2
 
 To request new endpoints/changes/etc create issues or mail me in game (Blacksmoke16).
 
-### Setup:
+### Setup for single character use:
    1. Create a new google sheet or go to the one you want to use the script on.
    2. In the menu bar go to Tools -> Script Editor.
    3. Click on the menu item "Resources > Libraries..."
@@ -18,84 +18,49 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
         * Content Type:  Authentication & API Access
         * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
         * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
+        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
    7. Replace the example CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
    10. Give the script permission to do what it needs.
-   11. Click 'Authorize' in the sidenav that opens -> login -> select what character you want to authorize -> Authorize.
+   11. Click 'Authorize Sheet' in the sidenav that opens -> login -> select what character you want to authorize -> Authorize.
    12. Close the sidenav.
    13. Done.
-
-### Functions:
-
-##### Note:  All functions, unless otherwise stated, have an optional opt_headers parameter that defaults to true and determines if column headers are shown or not.
-
-##### Global:
-   * =help() - Returns information on current endpoints.
-
-##### Skills:
-   * =skillQueue(opt_headers) - Returns the user's current skill queue.
-   * =skills(option, opt_headers) - Returns a list of Skill names, current points in skill and current level or total skill points.
-      * 'List': Returns a list of Skill names, current points in skill and current level
-      * 'Total': Returns total SP.
-##### Market:
-   * =marketPrices(opt_headers) - Returns the average and adjusted prices for various itemIDs.
-   * =characterMarketOrders(opt_headers) - Returns a list of market orders placed by a character.
-   * =structureMarketOrders(structure_id, opt_headers) - Returns all market orders in a given structure.
-      * structure_id:  ID of the structure you want to get market orders from.
    
-##### Universe:
-   * =itemTypes(ids, opt_headers) - Returns Information about a type.
-      * ids: Either a single typeID, or a list of typeIDs.
+### Setup for multiple character use:
+   1. Complete steps 1-8 in single character use.
+   2. In the script there is a constant variable called `CHARACTERS` (line 13) which is an array of strings. 
+      * Replace the contents of the array with the names of the characters you wish to authorize.
+      * E.x. `CHARACTERS = ['Blacksmoke16', 'Blacksmoke17', 'Blacksmoke18'];`
+   4. To auth the characters:
+      * In the script there is another constant variable `AUTHING_CHARACTER` (line 15).
+      * Complete steps 9-13 in single character use. 
+      * Add one (1) to the number in brackets.
+      * E.x. `AUTHING_CHARACTER = CHARACTERS[1];`
+   5. Repeat step 4 until all characters are authorized.
+      * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `Blacksmoke17` using steps 9-13 in single character use. 
+      * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `Blacksmoke18` using steps 9-13 in single character use. 
       
-##### Assets:
-   * =characterAssets(opt_headers) - Returns a list of the characters assets.
-      
-##### Loyalty:
-   * =characterLoyalty(opt_headers) - Returns a list of loyalty points for all corporations the character has worked for.
-   * =corporationLoyalty(corporation_id, opt_headers) - Returns a list of offers from a specific corporation's loyalty store.
-      * corporation_id: Corporation ID to get the loyalty point store for.
-       
-##### Wallet:
-   * =characterWallet(opt_headers) - Returns the balance of your wallet.
-   * =characterWalletJournal(opt_headers) - Returns a character's wallet journal.
-   * =characterWalletTransactions(opt_headers) - Returns a character's wallet transactions.
-      
-##### Planets:
- * =characterPlanets(opt_headers) - Returns a list of all planetary colonies owned by a character.
- * =characterPlanetDetails(planet_id) - Returns full details on the layout of a single planetary colony, including links, pins and routes. 
-    * planet_id: ID of the planet to get details on.
- * =planetSchematic(schematic_id, opt_headers) - Returns information on a planetary factory schematic.
-    * schematic_id: ID of the schematic to get information on.
-    
-##### Character:
-   * =characterBlueprints(opt_headers) - Returns a list of blueprints the character has.
-    
-##### Industry:
-   * =characterIndustryJobs(opt_headers) - Returns a list of industry jobs placed by a character.
-   * =industryFacilities(opt_headers) - Returns a list of industry facilities.
-   * =industrySystems(opt_headers) - Returns cost indices for solar systems.
-      
-##### Contracts:
- * =characterContracts(opt_headers) - Returns a list of a character's contracts.
- * =characterContractBids(contract_id, opt_headers) - Returns bids on a particular auction contract.
-    * contract_id: ID of the contract to get bids for.
- * =characterContractItems(contract_id, opt_headers) -Returns Items and details of a particular contract.
-    * contract_id: ID of the contract to get information on.
-      
- ##### GESI Dropdown:
-   * Authorize Sheet - Provides the link to navigate to to login and get your access token
-   * Reset Auth - Clears the OAuth2 service, making all tokens invalid.
-   
-### Note:  In order to use new functions, you will have to re-auth your character.
-   * Use 'Reset Auth' under GESI dropdown window to clear the old token/auth data.
-   * Use 'Authorize Sheet' under GESI dropdown window to re-auth your character with the newly added scopes.
+### Features for advanced users
+
+##### To change order of column headers
+   1. Find the corresponding object in the ENDPOINTS array.
+      * E.x. 
+ ```
+    "allianceNames": {
+        "version": 1,
+        "url": "/alliances/names/",
+        "headers": ['alliance_id', 'alliance_name']
+    }
+ ```
+   2. Re order the values in the `headers` array to the order you want.
+      * The value furthest to the left is first
+        
+### Note:  In order to use functions that use new scopes, you will have to re-auth your character(s).
 
 ### Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#1684
-
-Donations are accepted :)
   
 ### Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
