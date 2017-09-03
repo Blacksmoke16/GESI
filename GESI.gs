@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '2.0.0';
+app_version = '2.1.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -14,7 +14,7 @@ CHARACTERS = ['Blacksmoke16'];
 
 AUTHING_CHARACTER = CHARACTERS[0];
 
-URL_PARAMS = ['{event_id}', '{alliance_id}', '{schematic_id}', '{corporation_id}', '{division}', '{war_id}', '{planet_id}', '{type_id}', '{contract_id}', '{structure_id}'];
+URL_PARAMS = ['{event_id}', '{alliance_id}', '{schematic_id}', '{corporation_id}', '{division}', '{war_id}', '{planet_id}', '{type_id}', '{contract_id}', '{structure_id}', '{region_id}'];
 
 ENDPOINTS = {
     // Alliances
@@ -105,6 +105,7 @@ ENDPOINTS = {
         "headers": ['record_id', 'type_id', 'quantity', 'raw_quantity', 'is_included', 'is_singleton']
     },
 
+
     // Industry
 
     "characterIndustryJobs": {
@@ -151,6 +152,16 @@ ENDPOINTS = {
     "structureOrders": {
         "version": 1,
         "url": "/markets/structures/{structure_id}/",
+        "headers": ['order_id', 'type_id', 'location_id', 'issued', 'is_buy_order', 'price', 'range', 'volume_remain', 'volume_total', 'min_volume', 'duration']
+    },
+    "itemHistory": {
+        "version": 1,
+        "url": "/markets/{region_id}/history/",
+        "headers": ['date', 'average', 'hightest', 'lowest', 'order_count', 'volume']
+    },
+    "regionOrders": {
+        "version": 1,
+        "url": "/markets/{region_id}/orders/",
         "headers": ['order_id', 'type_id', 'location_id', 'issued', 'is_buy_order', 'price', 'range', 'volume_remain', 'volume_total', 'min_volume', 'duration']
     },
 
@@ -243,6 +254,7 @@ ENDPOINTS = {
     }
 };
 
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Alliances
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -303,6 +315,7 @@ function allianceIcons(alliance_id, opt_headers) {
     if (!alliance_id) throw 'alliance_id is required';
     return getObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_id: alliance_id});
 }
+
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Assets
@@ -429,6 +442,7 @@ function characterContractItems(contract_id, name, opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {contract_id: contract_id}, true);
 }
 
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Industry
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -517,13 +531,45 @@ function marketPrices(opt_headers) {
 
 /**
  * Return a list of prices
+ * @param {number} structure_id id of structure to get orders from
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of orders
+ * @customfunction
+ */
+function structureOrders(structure_id, name, page, opt_headers) {
+    if (!structure_id) throw 'structure_id is required';
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {structure_id: structure_id}, true, false, page);
+}
+
+/**
+ * Return a list of historical market statistics for the specified type in a region
+ * @param {number} region_id id of region to get orders from
+ * @param {number} type_id Optional id to limit type_id of orders
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of historical market statistics
+ * @customfunction
+ */
+function itemHistory(region_id, type_id, opt_headers) {
+    if (!region_id) throw 'region_id is required';
+    if (!type_id) throw 'type_id is required';
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {region_id: region_id, type_id: type_id});
+}
+
+/**
+ * Return a list of orders in a region
+ * @param {number} region_id id of region to get orders from
+ * @param {number} type_id Optional id to limit type_id of orders
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return A list of prices
  * @customfunction
  */
-function structureOrders(structure_id, name, opt_headers) {
-    if (!structure_id) throw 'structure_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {structure_id: structure_id}, true);
+function regionOrders(region_id, type_id, page, opt_headers) {
+    if (!region_id) throw 'region_id is required';
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {region_id: region_id, type_id: type_id}, false, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -567,6 +613,7 @@ function planetSchematic(schematic_id, name, opt_headers) {
     return getObjectResponse_(arguments.callee.name, name, opt_headers, {schematic_id: schematic_id})
 }
 
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Skills
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -604,6 +651,7 @@ function characterSkills(name, opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
 
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Universe
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -619,6 +667,7 @@ function typeId(type_id, opt_headers) {
     if (!type_id) throw 'type_id is required';
     return getObjectResponse_(arguments.callee.name, '', opt_headers, {type_id: type_id});
 }
+
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Wallet
@@ -690,6 +739,7 @@ function corporationWalletJournal(corporation_id, division, name, opt_headers) {
     }, true, true);
 }
 
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Wars
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -703,6 +753,7 @@ function corporationWalletJournal(corporation_id, division, name, opt_headers) {
 function wars(opt_headers) {
     return getArrayResponse_(arguments.callee.name, '', opt_headers);
 }
+
 
 /**
  * Return details about a war
@@ -719,20 +770,21 @@ function war(war_id, opt_headers) { // 291410 RVB War ID
 /**
  * Return a list of kills related to a war
  * @param {number} war_id ID of the war to get killmails for
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return A list of killmail IDs and hashes
  * @customfunction
  */
-function warKillmails(war_id, opt_headers) {
+function warKillmails(war_id, page, opt_headers) {
     if (!war_id) throw 'war_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {war_id: war_id});
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {war_id: war_id}, false, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Private  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function getData_(endpoint_name, name, params) {
+function getData_(endpoint_name, name, page, params) {
     var userProperties = PropertiesService.getUserProperties();
     var eveService = createOAuthForUser(name);
     var url = ENDPOINTS[endpoint_name].url
@@ -746,6 +798,10 @@ function getData_(endpoint_name, name, params) {
             url = url.replace(URL_PARAMS[p], params[URL_PARAMS[p].replace('{', '').replace('}', '')]);
         }
     }
+    
+    url = url + '?page=' + page;
+    
+    Logger.log(url);
 
     var response = UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url, {
         headers: {
@@ -758,17 +814,18 @@ function getData_(endpoint_name, name, params) {
     return JSON.parse(response);
 }
 
-function getUnauthedData_(endpoint_name, name, params) {
-    var url = BASE_URL + ENDPOINTS[endpoint_name].version + ENDPOINTS[endpoint_name].url;
+function getUnauthedData_(endpoint_name, name, page, params) {
+    var url = BASE_URL + ENDPOINTS[endpoint_name].version + ENDPOINTS[endpoint_name].url + '?page=' + page + '&';
 
     if (endpoint_name === 'allianceNames') url = url + '?alliance_ids=' + params.join();
+    if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) ==='number') url = url + 'type_id=' + params.type_id
 
     for (var p = 0; p < URL_PARAMS.length; p++) {
         if (url.indexOf(URL_PARAMS[p]) !== -1) {
             url = url.replace(URL_PARAMS[p], params[URL_PARAMS[p].replace('{', '').replace('}', '')]);
         }
     }
-
+    
     var response = UrlFetchApp.fetch(url);
 
     if (!response) throw 'Error getting public ESI data';
@@ -776,12 +833,13 @@ function getUnauthedData_(endpoint_name, name, params) {
     return JSON.parse(response);
 }
 
-function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested) {
+function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested, page) {
     if (!name) name = AUTHING_CHARACTER;
+    if (!page) page = 1;
     if (authed) {
-        var data = getData_(endpoint_name, name, params);
+        var data = getData_(endpoint_name, name, page, params);
     } else {
-        var data = getUnauthedData_(endpoint_name, name, params);
+        var data = getUnauthedData_(endpoint_name, name, page, params);
     }
     if (endpoint_name === 'industrySystems') data = deArrayIndex_(data);
     var result = [];
@@ -797,7 +855,6 @@ function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authe
         }
         result.push(temp);
     }
-    Logger.log(result);
 
     return result;
 };
@@ -885,6 +942,10 @@ function flatten_(ob) {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  OAth2  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function getToken() {
+    return createOAuthForUser(AUTHING_CHARACTER).getAccessToken();
+}
 
 function onOpen() {
     SpreadsheetApp.getUi().createMenu('GESI')
