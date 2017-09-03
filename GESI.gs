@@ -200,7 +200,8 @@ ENDPOINTS = {
         "headers": ['skill_id', 'active_skill_level', 'trained_skill_level', 'skillpoints_in_skill']
     },
 
-    // Universe      
+    // Universe     
+    
     "typeId": {
         "version": 3,
         "url": "/universe/types/{type_id}/",
@@ -253,7 +254,6 @@ ENDPOINTS = {
         "headers": ['killmail_id', 'killmail_hash']
     }
 };
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Alliances
@@ -315,7 +315,6 @@ function allianceIcons(alliance_id, opt_headers) {
     if (!alliance_id) throw 'alliance_id is required';
     return getObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_id: alliance_id});
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Assets
@@ -441,7 +440,6 @@ function characterContractItems(contract_id, name, opt_headers) {
     if (!contract_id) throw 'contract_id is required';
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {contract_id: contract_id}, true);
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Industry
@@ -613,7 +611,6 @@ function planetSchematic(schematic_id, name, opt_headers) {
     return getObjectResponse_(arguments.callee.name, name, opt_headers, {schematic_id: schematic_id})
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Skills
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -651,7 +648,6 @@ function characterSkills(name, opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
 
-
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Universe
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -667,7 +663,6 @@ function typeId(type_id, opt_headers) {
     if (!type_id) throw 'type_id is required';
     return getObjectResponse_(arguments.callee.name, '', opt_headers, {type_id: type_id});
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Wallet
@@ -738,7 +733,6 @@ function corporationWalletJournal(corporation_id, division, name, opt_headers) {
         division: division
     }, true, true);
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Wars
@@ -1114,5 +1108,6 @@ function characterPlanetDetails_(params, name, opt_headers) {
     }
 
 
-    return planets;
+    return planets
+    ;
 }
