@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '2.1.0';
+app_version = '2.2.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -82,7 +82,7 @@ ENDPOINTS = {
     // Characters
 
     "characterBlueprints": {
-        "version": 1,
+        "version": 2,
         "url": "/characters/{character_id}/blueprints/",
         "headers": ['item_id', 'type_id', 'location_id', 'location_flag', 'material_efficiency', 'time_efficiency', 'runs', 'quantity']
     },
@@ -200,6 +200,24 @@ ENDPOINTS = {
         "headers": ['skill_id', 'active_skill_level', 'trained_skill_level', 'skillpoints_in_skill']
     },
 
+    // Sovereignty
+    
+    "sovereigntyCampaigns": {
+        "version": 1,
+        "url": "/sovereignty/campaigns/",
+        "headers": ['campaign_id', 'structure_id', 'solar_system_id', 'constellation_id', 'event_type', 'defender_id', 'defender_score', 'attackers_score', 'start_time']
+    },
+    "sovereigntyMap": {
+        "version": 1,
+        "url": "/sovereignty/map/",
+        "headers": ['system_id', 'corporation_id', 'alliance_id', 'faction_id']
+    },
+    "sovereigntyStructures": {
+        "version": 1,
+        "url": "/sovereignty/structures/",
+        "headers": ['solar_system_id', 'structure_id', 'structure_type_id', 'alliance_id', 'vulnerability_occupancy_level', 'vulnerable_start_time', 'vulnerable_end_time']
+    },
+    
     // Universe     
     
     "typeId": {
@@ -392,12 +410,13 @@ function calenderEvent(event_id, name, opt_headers) {
 /**
  * Return a list of blueprints the character has
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return A list of blueprints
  * @customfunction
  */
-function characterBlueprints(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+function characterBlueprints(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -647,6 +666,40 @@ function skillQueue(name, opt_headers) {
 function characterSkills(name, opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//                                                                                                  Sovereignty
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Shows sovereignty data for campaigns.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of sovereignty campaigns
+ * @customfunction
+ */
+function sovereigntyCampaigns(opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
+ }
+ 
+/**
+ * Shows sovereignty information for solar systems
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of sovereignty information for solar systems in New Eden
+ * @customfunction
+ */
+function sovereigntyMap(opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
+ }
+ 
+/**
+ * Shows sovereignty data for structures.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of sovereignty structures
+ * @customfunction
+ */
+function sovereigntyStructures(opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
+ }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Universe
