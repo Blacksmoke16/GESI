@@ -19,6 +19,8 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
         * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
         * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
         * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
+        * Also be sure to replace the `{` and `}` as well.  Url should look something like this, but with your Script ID:
+        * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
    7. Replace the example CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
