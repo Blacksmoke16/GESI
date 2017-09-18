@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '2.2.0';
+app_version = '2.3.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -181,9 +181,9 @@ ENDPOINTS = {
         "url": "/universe/schematics/{schematic_id}/",
         "headers": ['schematic_name', 'cycle_time']
     },
-
+  
     // Skills
-
+  
     "characterAttributes": {
         "version": 1,
         "url": "/characters/{character_id}/attributes/",
@@ -199,9 +199,9 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/skills/",
         "headers": ['skill_id', 'active_skill_level', 'trained_skill_level', 'skillpoints_in_skill']
     },
-
+  
     // Sovereignty
-    
+  
     "sovereigntyCampaigns": {
         "version": 1,
         "url": "/sovereignty/campaigns/",
@@ -217,7 +217,7 @@ ENDPOINTS = {
         "url": "/sovereignty/structures/",
         "headers": ['solar_system_id', 'structure_id', 'structure_type_id', 'alliance_id', 'vulnerability_occupancy_level', 'vulnerable_start_time', 'vulnerable_end_time']
     },
-    
+
     // Universe     
     
     "typeId": {
@@ -831,14 +831,17 @@ function warKillmails(war_id, page, opt_headers) {
 //                                                                                                  Private  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function getData_(endpoint_name, name, page, params) {
+function getData_(endpoint_name, name, page, params, authed) {
     var userProperties = PropertiesService.getUserProperties();
     var eveService = createOAuthForUser(name);
-    var url = ENDPOINTS[endpoint_name].url
-
-    if (url.indexOf('{character_id}') !== -1) {
-        url = url.replace('{character_id}', parseInt(userProperties.getProperty(name)));
-    }
+    var url = ENDPOINTS[endpoint_name].url + '?';
+    
+    if(page) url += 'page=' + page;
+       
+    if (url.indexOf('{character_id}') !== -1) url = url.replace('{character_id}', parseInt(userProperties.getProperty(name)));
+    if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'object') url = url + '&alliance_ids=' + params.alliance_ids.join();
+    if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'number') url = url + '&alliance_ids=' + params.alliance_ids;
+    if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) === 'number') url = url + '&type_id=' + params.type_id
 
     for (var p = 0; p < URL_PARAMS.length; p++) {
         if (url.indexOf(URL_PARAMS[p]) !== -1) {
@@ -846,9 +849,7 @@ function getData_(endpoint_name, name, page, params) {
         }
     }
     
-    url = url + '?page=' + page;
-    
-    Logger.log(url);
+    if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url));
 
     var response = UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url, {
         headers: {
@@ -856,39 +857,16 @@ function getData_(endpoint_name, name, page, params) {
         }
     });
 
-    if (!response) throw 'Error getting ESI data';
-
-    return JSON.parse(response);
-}
-
-function getUnauthedData_(endpoint_name, name, page, params) {
-    var url = BASE_URL + ENDPOINTS[endpoint_name].version + ENDPOINTS[endpoint_name].url + '?page=' + page + '&';
-
-    if (endpoint_name === 'allianceNames') url = url + '?alliance_ids=' + params.join();
-    if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) ==='number') url = url + 'type_id=' + params.type_id
-
-    for (var p = 0; p < URL_PARAMS.length; p++) {
-        if (url.indexOf(URL_PARAMS[p]) !== -1) {
-            url = url.replace(URL_PARAMS[p], params[URL_PARAMS[p].replace('{', '').replace('}', '')]);
-        }
-    }
-    
-    var response = UrlFetchApp.fetch(url);
-
-    if (!response) throw 'Error getting public ESI data';
-
-    return JSON.parse(response);
+  return JSON.parse(response);
 }
 
 function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested, page) {
     if (!name) name = AUTHING_CHARACTER;
-    if (!page) page = 1;
-    if (authed) {
-        var data = getData_(endpoint_name, name, page, params);
-    } else {
-        var data = getUnauthedData_(endpoint_name, name, page, params);
-    }
+    var data = getData_(endpoint_name, name, page, params, authed);
+    
+    if(endpoint_name === 'characterSkills') data = data['skills'];
     if (endpoint_name === 'industrySystems') data = deArrayIndex_(data);
+    
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
@@ -906,13 +884,11 @@ function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authe
     return result;
 };
 
-function getObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested) {
+function getObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested, page) {
     if (!name) name = AUTHING_CHARACTER;
-    if (authed) {
-        var data = getData_(endpoint_name, name, params);
-    } else {
-        var data = getUnauthedData_(endpoint_name, name, params);
-    }
+    if (!page) page = 1;
+    var data = getData_(endpoint_name, name, page, params, authed);
+    
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
@@ -929,13 +905,9 @@ function getObjectResponse_(endpoint_name, name, opt_headers, params, authed, is
 
 
 // Private function for basic array of value responses
-function getArrayResponse_(endpoint_name, name, opt_headers, params, authed) {
+function getArrayResponse_(endpoint_name, name, opt_headers, params, authed, page) {
     if (!name) name = AUTHING_CHARACTER;
-    if (authed) {
-        var data = getData_(endpoint_name, name, params);
-    } else {
-        var data = getUnauthedData_(endpoint_name, name, params);
-    }
+    var data = getData_(endpoint_name, name, page, params, authed);
 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
@@ -950,13 +922,9 @@ function getArrayResponse_(endpoint_name, name, opt_headers, params, authed) {
 };
 
 // Private function for basic array of value responses
-function getSingleResponse_(endpoint_name, name, opt_headers, params, authed) {
+function getSingleResponse_(endpoint_name, name, opt_headers, params, authed, page) {
     if (!name) name = AUTHING_CHARACTER;
-    if (authed) {
-        var data = getData_(endpoint_name, name, params);
-    } else {
-        var data = getUnauthedData_(endpoint_name, name, params);
-    }
+    var data = getData_(endpoint_name, name, page, params, authed);
 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
@@ -1161,6 +1129,5 @@ function characterPlanetDetails_(params, name, opt_headers) {
     }
 
 
-    return planets
-    ;
+    return planets;
 }
