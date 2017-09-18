@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '2.3.0';
+app_version = '2.3.1';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -295,7 +295,15 @@ function allianceIds(opt_headers) {
  */
 function allianceNames(alliance_ids, opt_headers) {
     if (!alliance_ids) throw 'A range of alliance ids is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_ids: alliance_ids});
+    var names = [];
+    var data = chunkArray_(alliance_ids, 100);
+    for(var d = 0; d < data.length; d++) {
+      var result = getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_ids: data[d]});
+      if(d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift(); 
+      for(var n = 0; n < result.length; n++) names.push(result[n]);
+    }
+
+    return names;
 }
 
 /**
@@ -953,6 +961,14 @@ function flatten_(ob) {
     }
     return toReturn;
 };
+
+function chunkArray_(a, c) {
+    var g = [], i;
+    for (i = 0; i < a.length; i += c) {
+        g.push(a.slice(i, i + c));
+    }
+    return g;
+}
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  OAth2  Functions
