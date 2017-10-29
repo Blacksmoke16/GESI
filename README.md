@@ -31,9 +31,9 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    
 ### Setup for multiple character use:
    1. Complete steps 1-8 in single character use.
-   2. In the script there is a constant variable called `CHARACTERS` (line 13) which is an array of strings. 
-      * Replace the contents of the array with the names of the characters you wish to authorize.
-      * E.x. `CHARACTERS = ['Blacksmoke16', 'Blacksmoke17', 'Blacksmoke18'];`
+   2. In the script there is a constant variable called `CHARACTERS` (line 13) which is an array of objects. 
+      * Replace the contents of the array with the names and corporation_ids of the characters you wish to authorize.
+      * E.x. `CHARACTERS = [{ character_name:  'character1', corporation_id: 123 }, { character_name:  'character2', corporation_id: 456 }];`
    4. To auth the characters:
       * In the script there is another constant variable `AUTHING_CHARACTER` (line 15).
       * Complete steps 9-13 in single character use. 
