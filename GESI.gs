@@ -3,18 +3,23 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '2.3.1';
+app_version = '3.0.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
 CLIENT_SECRET = 'CwcYrVs05AtIbqZkJH8OrBPYps6MAH72qQ1Gf68t';
 BASE_URL = 'https://esi.tech.ccp.is/v'
 
-CHARACTERS = ['Blacksmoke16'];
+CHARACTERS = [
+    {
+      character_name: 'Blacksmoke16',
+      corporation_id: 98019139
+    }
+ ];
 
 AUTHING_CHARACTER = CHARACTERS[0];
 
-URL_PARAMS = ['{event_id}', '{alliance_id}', '{schematic_id}', '{corporation_id}', '{division}', '{war_id}', '{planet_id}', '{type_id}', '{contract_id}', '{structure_id}', '{region_id}'];
+URL_PARAMS = ['{event_id}', '{alliance_id}', '{schematic_id}', '{corporation_id}', '{division}', '{war_id}', '{planet_id}', '{type_id}', '{contract_id}', '{structure_id}', '{region_id}', '{observer_id}'];
 
 ENDPOINTS = {
     // Alliances
@@ -50,7 +55,13 @@ ENDPOINTS = {
     "characterAssets": {
         "version": 1,
         "url": "/characters/{character_id}/assets/",
-        "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag']
+        "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag', 'is_singleton']
+    },
+    
+    "corporationAssets": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/assets/",
+        "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag', 'is_singleton']
     },
 
     // Bookmarks
@@ -104,7 +115,39 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/contracts/{contract_id}/items/",
         "headers": ['record_id', 'type_id', 'quantity', 'raw_quantity', 'is_included', 'is_singleton']
     },
-
+    
+    // Corporation
+    
+    "corporationNames": {
+        "version": 1,
+        "url": "/corporations/names/",
+        "headers": ['corporation_id', 'corporation_name']
+    },
+    "corporationMembers": {
+        "version": 2,
+        "url": "/corporations/{corporation_id}/members/",
+        "headers": ['character_id']
+    },    
+    "corporationMemberLimit": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/members/limit",
+        "headers": ['member_limit']
+    },  
+    "corporationMemberTracking": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/membertracking/",
+        "headers": ['character_id', 'location_id', 'ship_type_id', 'logon_date', 'logoff_date', 'start_date']
+    },    
+    "corporationStandings": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/standings/",
+        "headers": ['from_id', 'from_type', 'standing']
+    },   
+    "corporationStructures": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/structures/",
+        "headers": ['structure_id', 'profile_id', 'system_id', 'type_id', 'corporation_id', 'fuel_expires', 'state_timer_start', 'state_timer_end', 'unanchors_at']
+    },
 
     // Industry
 
@@ -122,6 +165,32 @@ ENDPOINTS = {
         "version": 1,
         "url": "/industry/systems/",
         "headers": ['solar_system_id', 'manufacturing', 'researching_material_efficiency', 'researching_time_efficiency', 'copying', 'invention']
+    },
+    "characterMining": {
+        "version": 1,
+        "url": "/characters/{character_id}/mining",
+        "headers": ['date', 'solar_system_id', 'type_id', 'quantity']
+    },
+    "corporationExtractions": {
+        "version": 1,
+        "url": "/corporation/{corporation_id}/mining/extractions/",
+        "headers": ['date', 'solar_system_id', 'type_id', 'quantity']
+    },
+    "corporationObservers": {
+        "version": 1,
+        "url": "/corporation/{corporation_id}/mining/observers/",
+        "headers": ['observer_id', 'last_updated', 'observer_type']
+    },
+    "corporationObserverMining": {
+        "version": 1,
+        "url": "/corporation/{corporation_id}/mining/observers/{observer_id}/",
+        "headers": ['character_id', 'recorded_corporation_id', 'type_id', 'quantity', 'last_updated']
+    },
+    
+    "corporationIndustryJobs": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/industry/jobs/",
+        "headers": ['job_id', 'activity_id', 'blueprint_id', 'blueprint_location_id', 'blueprint_type_id', 'completed_character_id', 'completed_date', 'cost', 'duration', 'end_date', 'facility_id', 'installer_id', 'licensed_runs', 'output_location_id', 'pause_date', 'probability', 'product_type_id', 'runs', 'start_date', 'station_id', 'status', 'successful_runs']
     },
 
     // Loyalty
@@ -181,9 +250,9 @@ ENDPOINTS = {
         "url": "/universe/schematics/{schematic_id}/",
         "headers": ['schematic_name', 'cycle_time']
     },
-  
+
     // Skills
-  
+
     "characterAttributes": {
         "version": 1,
         "url": "/characters/{character_id}/attributes/",
@@ -199,9 +268,9 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/skills/",
         "headers": ['skill_id', 'active_skill_level', 'trained_skill_level', 'skillpoints_in_skill']
     },
-  
+    
     // Sovereignty
-  
+    
     "sovereigntyCampaigns": {
         "version": 1,
         "url": "/sovereignty/campaigns/",
@@ -298,6 +367,8 @@ function allianceNames(alliance_ids, opt_headers) {
     var names = [];
     var data = chunkArray_(alliance_ids, 100);
     for(var d = 0; d < data.length; d++) {
+      data[d] = data[d].filter(function(str) { return /\S/.test(str) });
+      if (data[d].length === 0) continue;
       var result = getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_ids: data[d]});
       if(d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift(); 
       for(var n = 0; n < result.length; n++) names.push(result[n]);
@@ -349,12 +420,25 @@ function allianceIcons(alliance_id, opt_headers) {
 /**
  * Returns a list of the character's assets.
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Returns a list of the characters assets.
  * @customfunction
  */
-function characterAssets(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+function characterAssets(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * Return a list of the corporation assets
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Returns a list of the corporation's assets.
+ * @customfunction
+ */
+function corporationAssets(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -469,6 +553,88 @@ function characterContractItems(contract_id, name, opt_headers) {
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//                                                                                                  Corporations
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Resolve a set of corporation IDs to corporation names
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Returns a list of id/name associations.
+ * @customfunction
+ */
+function corporationNames(corporation_ids, opt_headers) {
+    if (!corporation_ids) throw 'A range of corporation ids is required';
+    var names = [];
+    var data = chunkArray_(corporation_ids, 100);
+    for(var d = 0; d < data.length; d++) {
+      data[d] = data[d].filter(function(str) { return /\S/.test(str) });
+      if (data[d].length === 0) continue;
+      var result = getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {corporation_ids: data[d]});
+      if(d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift(); 
+      for(var n = 0; n < result.length; n++) names.push(result[n]);
+    }
+
+    return names;
+}
+
+/**
+ * Read the current list of members if the calling character is a member.
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of member character IDs
+ * @customfunction
+ */
+function corporationMembers(name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+}
+
+/**
+ * Return a corporation's member limit, not including CEO himself
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Member limit
+ * @customfunction
+ */
+function corporationMemberLimit(name, opt_headers) {
+    return getSingleResponse_(arguments.callee.name, name, opt_headers, {}, true);
+}
+
+/**
+ * Returns additional information about a corporation's members which helps tracking their activities
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of member information
+ * @customfunction
+ */
+function corporationMemberTracking(name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+}
+
+/**
+ * Return corporation standings from agents, NPC corporations, and factions
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of standings
+ * @customfunction
+ */
+function corporationStandings(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * Get a list of corporation structures
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of corporation structures' information
+ * @customfunction
+ */
+function corporationStructures(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, true, page);
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Industry
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -501,6 +667,67 @@ function industryFacilities(opt_headers) {
  */
 function industrySystems(opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {}, false, true);
+}
+
+/**
+ * Paginated record of all mining done by a character for the past 30 days
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Mining ledger of a character
+ * @customfunction
+ */
+function characterMining(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of chunk timers
+ * @customfunction
+ */
+function corporationExtractions(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * Paginated list of all entities capable of observing and recording mining for a corporation
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Observer list of a corporation
+ * @customfunction
+ */
+function corporationObservers(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * Paginated record of all mining seen by an observer
+ * @param {number} observer_id ID of the observer to get mining ledger from
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Mining ledger of an observer
+ * @customfunction
+ */
+function corporationObserverMining(observer_id, name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {observer_id: observer_id}, true, false, page);
+}
+
+/**
+ * List industry jobs run by a corporation
+ * @param {number} corporation_id ID of the corporation of the character used.
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of corporation industry jobs
+ * @customfunction
+ */
+function corporationIndustryJobs(name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -764,35 +991,26 @@ function characterWalletTransactions(name, opt_headers) {
 
 /**
  * Get a corporation's wallets
- * @param {number} corporation_id ID of the corporation to get wallets for
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return List of corporation wallets
  * @customfunction
  */
-function corporationWallets(corporation_id, name, opt_headers) {
-    if (!corporation_id) throw 'corporation_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {corporation_id: corporation_id}, true);
+function corporationWallets(name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
 
 /**
  * Retrieve corporation wallet journal
- * @param {number} corporation_id ID of the corporation to get wallet journal for
  * @param {number} division ID of the division to get wallet journal from
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Journal entries
  * @customfunction
  */
-function corporationWalletJournal(corporation_id, division, name, opt_headers) {
-    if (!corporation_id) throw 'corporation_id is required';
+function corporationWalletJournal(division, name, opt_headers) {
     if (!division) throw 'division is required';
-    corporation_id = 98019139;
-    division = 1;
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
-        corporation_id: corporation_id,
-        division: division
-    }, true, true);
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {division: division}, true, true);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -839,16 +1057,21 @@ function warKillmails(war_id, page, opt_headers) {
 //                                                                                                  Private  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-function getData_(endpoint_name, name, page, params, authed) {
+function getData_(endpoint_name, character, page, params, authed) {
+    character = (!character) ? AUTHING_CHARACTER : findUser_(character);
+
     var userProperties = PropertiesService.getUserProperties();
-    var eveService = createOAuthForUser(name);
+    var eveService = createOAuthForUser(character.character_name);
     var url = ENDPOINTS[endpoint_name].url + '?';
     
     if(page) url += 'page=' + page;
        
-    if (url.indexOf('{character_id}') !== -1) url = url.replace('{character_id}', parseInt(userProperties.getProperty(name)));
+    if (url.indexOf('{character_id}') !== -1) url = url.replace('{character_id}', parseInt(userProperties.getProperty(character.character_name)));
+    if (url.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') url = url.replace('{corporation_id}', parseInt(character.corporation_id));
     if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'object') url = url + '&alliance_ids=' + params.alliance_ids.join();
     if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'number') url = url + '&alliance_ids=' + params.alliance_ids;
+    if (endpoint_name === 'corporationNames' && typeof(params.corporation_ids) === 'object') url = url + '&corporation_ids=' + params.corporation_ids.join();
+    if (endpoint_name === 'corporationNames' && typeof(params.corporation_ids) === 'number') url = url + '&corporation_ids=' + params.corporation_ids;
     if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) === 'number') url = url + '&type_id=' + params.type_id
 
     for (var p = 0; p < URL_PARAMS.length; p++) {
@@ -868,9 +1091,8 @@ function getData_(endpoint_name, name, page, params, authed) {
   return JSON.parse(response);
 }
 
-function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested, page) {
-    if (!name) name = AUTHING_CHARACTER;
-    var data = getData_(endpoint_name, name, page, params, authed);
+function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
+    var data = getData_(endpoint_name, character, page, params, authed);
     
     if(endpoint_name === 'characterSkills') data = data['skills'];
     if (endpoint_name === 'industrySystems') data = deArrayIndex_(data);
@@ -892,10 +1114,9 @@ function getArrayObjectResponse_(endpoint_name, name, opt_headers, params, authe
     return result;
 };
 
-function getObjectResponse_(endpoint_name, name, opt_headers, params, authed, isNested, page) {
-    if (!name) name = AUTHING_CHARACTER;
+function getObjectResponse_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
     if (!page) page = 1;
-    var data = getData_(endpoint_name, name, page, params, authed);
+    var data = getData_(endpoint_name, character, page, params, authed);
     
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
@@ -913,9 +1134,8 @@ function getObjectResponse_(endpoint_name, name, opt_headers, params, authed, is
 
 
 // Private function for basic array of value responses
-function getArrayResponse_(endpoint_name, name, opt_headers, params, authed, page) {
-    if (!name) name = AUTHING_CHARACTER;
-    var data = getData_(endpoint_name, name, page, params, authed);
+function getArrayResponse_(endpoint_name, character, opt_headers, params, authed, page) {
+    var data = getData_(endpoint_name, character, page, params, authed);
 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
@@ -929,10 +1149,9 @@ function getArrayResponse_(endpoint_name, name, opt_headers, params, authed, pag
     return result;
 };
 
-// Private function for basic array of value responses
-function getSingleResponse_(endpoint_name, name, opt_headers, params, authed, page) {
-    if (!name) name = AUTHING_CHARACTER;
-    var data = getData_(endpoint_name, name, page, params, authed);
+// Private function for single value responses
+function getSingleResponse_(endpoint_name, character, opt_headers, params, authed, page) {
+    var data = getData_(endpoint_name, character, page, params, authed);
 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
@@ -970,12 +1189,18 @@ function chunkArray_(a, c) {
     return g;
 }
 
+function findUser_(name) {
+  for(var i = 0; i < CHARACTERS.length; i++) {
+    if (name === CHARACTERS[i].character_name) return CHARACTERS[i];
+  }
+}
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  OAth2  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function getToken() {
-    return createOAuthForUser(AUTHING_CHARACTER).getAccessToken();
+    return createOAuthForUser(AUTHING_CHARACTER.character_name).getAccessToken();
 }
 
 function onOpen() {
@@ -988,20 +1213,20 @@ function onOpen() {
 }
 
 function showSidebar() {
-    var eveService = createOAuthForUser(AUTHING_CHARACTER);
+    var eveService = createOAuthForUser(AUTHING_CHARACTER.character_name);
     if (!eveService.hasAccess()) {
         var authorizationUrl = eveService.getAuthorizationUrl();
         var template = HtmlService.createTemplate(
             '<br><a href="<?= authorizationUrl ?>" target="_blank">Authorize:  <?= character ?></a>.');
         template.authorizationUrl = authorizationUrl;
-        template.character = AUTHING_CHARACTER;
+        template.character = AUTHING_CHARACTER.character_name;
         var page = template.evaluate();
         SpreadsheetApp.getUi().showSidebar(page);
     }
 }
 
 function authCallback(request) {
-    var eveService = createOAuthForUser(AUTHING_CHARACTER);
+    var eveService = createOAuthForUser(AUTHING_CHARACTER.character_name);
     var isAuthorized = eveService.handleCallback(request);
     if (isAuthorized) {
         getCharacterDetails_();
@@ -1019,7 +1244,33 @@ function createOAuthForUser(user) {
         .setClientSecret(CLIENT_SECRET)
         .setCallbackFunction('authCallback')
         .setPropertyStore(PropertiesService.getUserProperties())
-        .setScope('esi-universe.read_structures.v1 esi-wallet.read_corporation_wallets.v1 esi-calendar.read_calendar_events.v1 esi-bookmarks.read_character_bookmarks.v1 esi-contracts.read_character_contracts.v1 esi-industry.read_character_jobs.v1 esi-characters.read_blueprints.v1 esi-markets.read_character_orders.v1 esi-planets.manage_planets.v1 esi-ui.open_window.v1 esi-skills.read_skills.v1 esi-skills.read_skillqueue.v1 esi-markets.structure_markets.v1 esi-characters.read_contacts.v1 esi-assets.read_assets.v1 esi-characters.read_loyalty.v1 esi-wallet.read_character_wallet.v1 esi-ui.write_waypoint.v1')
+        .setScope(' \
+            esi-corporations.read_standings.v1 \
+            esi-corporations.read_corporation_membership.v1 \
+            esi-corporations.track_members.v1 \
+            esi-industry.read_corporation_jobs.v1 \
+            esi-corporations.read_structures.v1 \
+            esi-industry.read_corporation_mining.v1 \
+            esi-industry.read_character_mining.v1 \
+            esi-assets.read_corporation_assets.v1 \
+            esi-universe.read_structures.v1 \
+            esi-wallet.read_corporation_wallets.v1  \
+            esi-calendar.read_calendar_events.v1 \
+            esi-bookmarks.read_character_bookmarks.v1 \
+            esi-contracts.read_character_contracts.v1 \
+            esi-industry.read_character_jobs.v1 \
+            esi-characters.read_blueprints.v1 \
+            esi-markets.read_character_orders.v1 \
+            esi-planets.manage_planets.v1 \
+            esi-skills.read_skills.v1 \
+            esi-skills.read_skillqueue.v1 \
+            esi-markets.structure_markets.v1 \
+            esi-characters.read_contacts.v1 \
+            esi-assets.read_assets.v1 \
+            esi-characters.read_loyalty.v1 \
+            esi-wallet.read_character_wallet.v1 \
+            esi-ui.write_waypoint.v1 \
+        ')
         .setParam('access_type', 'offline')
         .setTokenHeaders({
             'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
@@ -1028,8 +1279,8 @@ function createOAuthForUser(user) {
 
 function clearService() {
     for (var i = 0; i < CHARACTERS.length; i++) {
-        Logger.log(CHARACTERS[i]);
-        OAuth2.createService(CHARACTERS[i])
+        Logger.log(CHARACTERS[i].character_name);
+        OAuth2.createService(CHARACTERS[i].character_name)
             .setPropertyStore(PropertiesService.getUserProperties())
             .reset();
     }
@@ -1037,14 +1288,14 @@ function clearService() {
 
 function getCharacterDetails_() {
     var userProperties = PropertiesService.getUserProperties();
-    var eveService = createOAuthForUser(AUTHING_CHARACTER);
+    var eveService = createOAuthForUser(AUTHING_CHARACTER.character_name);
     var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/verify', {
         headers: {
             Authorization: 'Bearer ' + eveService.getAccessToken()
         }
     });
     response = JSON.parse(response);
-    userProperties.setProperty(AUTHING_CHARACTER, response.CharacterID.toString());
+    userProperties.setProperty(AUTHING_CHARACTER.character_name, response.CharacterID.toString());
 }
 
 function convertSnakeCase_(headers) {
@@ -1070,7 +1321,7 @@ function deArrayIndex_(data) {
 
 function characterPlanetDetails_(params, name, opt_headers) {
     var planets = new Array();
-    if (!name) name = AUTHING_CHARACTER;
+    if (!name) name = AUTHING_CHARACTER.character_name;
 
     var response = getData_('characterPlanetDetails', name, params);
 
