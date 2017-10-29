@@ -33,15 +33,15 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    1. Complete steps 1-8 in single character use.
    2. In the script there is a constant variable called `CHARACTERS` (line 13) which is an array of objects. 
       * Replace the contents of the array with the names and corporation_ids of the characters you wish to authorize.
-      * E.x. `CHARACTERS = [{ character_name:  'character1', corporation_id: 123 }, { character_name:  'character2', corporation_id: 456 }];`
+      * E.x. `CHARACTERS = [{ character_name:  'character1', corporation_id: 123 }, { character_name:  'character2', corporation_id: 456 }, { character_name:  'character3', corporation_id: 789 }];`
    4. To auth the characters:
-      * In the script there is another constant variable `AUTHING_CHARACTER` (line 15).
+      * In the script there is another constant variable `AUTHING_CHARACTER` (line 20).
       * Complete steps 9-13 in single character use. 
       * Add one (1) to the number in brackets.
       * E.x. `AUTHING_CHARACTER = CHARACTERS[1];`
    5. Repeat step 4 until all characters are authorized.
-      * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `Blacksmoke17` using steps 9-13 in single character use. 
-      * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `Blacksmoke18` using steps 9-13 in single character use. 
+      * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `character2` using steps 9-13 in single character use. 
+      * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `character3` using steps 9-13 in single character use. 
       
 ### Features for advanced users
 
