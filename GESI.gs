@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.0.0';
+app_version = '3.0.1';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -849,7 +849,7 @@ function characterPlanets(name, opt_headers) {
  */
 function characterPlanetDetails(planet_id, name, opt_headers) {
     if (!planet_id) throw 'planet_id is required';
-    return characterPlanetDetails_({planet_id: planet_id}, name, opt_headers, true);
+    return characterPlanetDetails_(arguments.callee.name, name, opt_headers, {planet_id: planet_id}, true);
 }
 
 /**
@@ -1319,11 +1319,10 @@ function deArrayIndex_(data) {
     return data;
 }
 
-function characterPlanetDetails_(params, name, opt_headers) {
+function characterPlanetDetails_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
     var planets = new Array();
-    if (!name) name = AUTHING_CHARACTER.character_name;
 
-    var response = getData_('characterPlanetDetails', name, params);
+    var response = getData_(endpoint_name, character, page, params, authed);
 
     // Inserting header for Links
     planets.push(['Links']);
