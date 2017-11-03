@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.0.1';
+app_version = '3.1.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -57,7 +57,7 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/assets/",
         "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag', 'is_singleton']
     },
-    
+
     "corporationAssets": {
         "version": 1,
         "url": "/corporations/{corporation_id}/assets/",
@@ -100,6 +100,11 @@ ENDPOINTS = {
 
     // Contracts
 
+    "characterNames": {
+        "version": 1,
+        "url": "/characters/names/",
+        "headers": ['character_id', 'character_name']
+    },
     "characterContracts": {
         "version": 1,
         "url": "/characters/{character_id}/contracts/",
@@ -115,9 +120,9 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/contracts/{contract_id}/items/",
         "headers": ['record_id', 'type_id', 'quantity', 'raw_quantity', 'is_included', 'is_singleton']
     },
-    
+
     // Corporation
-    
+
     "corporationNames": {
         "version": 1,
         "url": "/corporations/names/",
@@ -127,22 +132,22 @@ ENDPOINTS = {
         "version": 2,
         "url": "/corporations/{corporation_id}/members/",
         "headers": ['character_id']
-    },    
+    },
     "corporationMemberLimit": {
         "version": 1,
         "url": "/corporations/{corporation_id}/members/limit",
         "headers": ['member_limit']
-    },  
+    },
     "corporationMemberTracking": {
         "version": 1,
         "url": "/corporations/{corporation_id}/membertracking/",
         "headers": ['character_id', 'location_id', 'ship_type_id', 'logon_date', 'logoff_date', 'start_date']
-    },    
+    },
     "corporationStandings": {
         "version": 1,
         "url": "/corporations/{corporation_id}/standings/",
         "headers": ['from_id', 'from_type', 'standing']
-    },   
+    },
     "corporationStructures": {
         "version": 1,
         "url": "/corporations/{corporation_id}/structures/",
@@ -186,7 +191,7 @@ ENDPOINTS = {
         "url": "/corporation/{corporation_id}/mining/observers/{observer_id}/",
         "headers": ['character_id', 'recorded_corporation_id', 'type_id', 'quantity', 'last_updated']
     },
-    
+
     "corporationIndustryJobs": {
         "version": 1,
         "url": "/corporations/{corporation_id}/industry/jobs/",
@@ -268,9 +273,9 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/skills/",
         "headers": ['skill_id', 'active_skill_level', 'trained_skill_level', 'skillpoints_in_skill']
     },
-    
+
     // Sovereignty
-    
+
     "sovereigntyCampaigns": {
         "version": 1,
         "url": "/sovereignty/campaigns/",
@@ -287,8 +292,18 @@ ENDPOINTS = {
         "headers": ['solar_system_id', 'structure_id', 'structure_type_id', 'alliance_id', 'vulnerability_occupancy_level', 'vulnerable_start_time', 'vulnerable_end_time']
     },
 
-    // Universe     
-    
+    // Universe   
+
+    "structures": {
+        "version": 1,
+        "url": "/universe/structures/",
+        "headers": ['structure_ids']
+    },
+    "structure": {
+        "version": 1,
+        "url": "/universe/structures/{structure_id}/",
+        "headers": ['solar_system_id', 'type_id', 'name', 'position-x', 'position-y', 'position-z']
+    },
     "typeId": {
         "version": 3,
         "url": "/universe/types/{type_id}/",
@@ -305,7 +320,7 @@ ENDPOINTS = {
     "characterWalletJournal": {
         "version": 1,
         "url": "/characters/{character_id}/wallet/journal",
-        "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id ', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
+        "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
     },
     "characterWalletTransactions": {
         "version": 1,
@@ -320,7 +335,12 @@ ENDPOINTS = {
     "corporationWalletJournal": {
         "version": 1,
         "url": "/corporations/{corporation_id}/wallets/{division}/journal/",
-        "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id ', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
+        "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
+    },
+    "corporationWalletTransactions": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/wallets/{division}/transactions/",
+        "headers": ['transaction_id', 'date', 'client_id', 'location_id', 'type_id', 'quantity', 'unit_price', 'is_buy', 'journal_ref_id']
     },
 
     // Wars
@@ -358,23 +378,14 @@ function allianceIds(opt_headers) {
 
 /**
  * Resolve a set of alliance IDs to alliance names
+ * @param {number|Array.<number>} alliance_ids alliance_id(s) to resolve
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Returns a list of id/name associations.
  * @customfunction
  */
 function allianceNames(alliance_ids, opt_headers) {
-    if (!alliance_ids) throw 'A range of alliance ids is required';
-    var names = [];
-    var data = chunkArray_(alliance_ids, 100);
-    for(var d = 0; d < data.length; d++) {
-      data[d] = data[d].filter(function(str) { return /\S/.test(str) });
-      if (data[d].length === 0) continue;
-      var result = getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_ids: data[d]});
-      if(d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift(); 
-      for(var n = 0; n < result.length; n++) names.push(result[n]);
-    }
-
-    return names;
+    if (!alliance_ids) throw 'A value or range of alliance ids is required';
+    return getNames_(alliance_ids, arguments.callee.name, 'alliance_ids', opt_headers);
 }
 
 /**
@@ -386,7 +397,9 @@ function allianceNames(alliance_ids, opt_headers) {
  */
 function allianceId(alliance_id, opt_headers) {
     if (!alliance_id) throw 'alliance_id is required';
-    return getObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_id: alliance_id});
+    return getObjectResponse_(arguments.callee.name, '', opt_headers, {
+        alliance_id: alliance_id
+    });
 }
 
 /**
@@ -398,7 +411,9 @@ function allianceId(alliance_id, opt_headers) {
  */
 function allianceCorporations(alliance_id, opt_headers) {
     if (!alliance_id) throw 'alliance_id is required';
-    return getArrayResponse_(arguments.callee.name, '', opt_headers, {alliance_id: alliance_id});
+    return getArrayResponse_(arguments.callee.name, '', opt_headers, {
+        alliance_id: alliance_id
+    });
 }
 
 /**
@@ -410,7 +425,9 @@ function allianceCorporations(alliance_id, opt_headers) {
  */
 function allianceIcons(alliance_id, opt_headers) {
     if (!alliance_id) throw 'alliance_id is required';
-    return getObjectResponse_(arguments.callee.name, '', opt_headers, {alliance_id: alliance_id});
+    return getObjectResponse_(arguments.callee.name, '', opt_headers, {
+        alliance_id: alliance_id
+    });
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -492,12 +509,26 @@ function calenderEvents(name, opt_headers) {
  */
 function calenderEvent(event_id, name, opt_headers) {
     if (!event_id) throw 'An event id is required';
-    return getObjectResponse_(arguments.callee.name, name, opt_headers, {event_id: event_id}, true);
+    return getObjectResponse_(arguments.callee.name, name, opt_headers, {
+        event_id: event_id
+    }, true);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Character
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Resolve a set of character IDs to character names 
+ * @param {number|Array.<number>} character_id(s) to resolve
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of id/name associations.
+ * @customfunction
+ */
+function characterNames(character_ids, opt_headers) {
+    if (!character_ids) throw 'A value or range of character ids is required';
+    return getNames_(character_ids, arguments.callee.name, 'character_ids', opt_headers);
+}
 
 /**
  * Return a list of blueprints the character has
@@ -558,23 +589,14 @@ function characterContractItems(contract_id, name, opt_headers) {
 
 /**
  * Resolve a set of corporation IDs to corporation names
+ * @param {number|Array.<number>} corporation_id(s) to resolve
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Returns a list of id/name associations.
  * @customfunction
  */
 function corporationNames(corporation_ids, opt_headers) {
     if (!corporation_ids) throw 'A range of corporation ids is required';
-    var names = [];
-    var data = chunkArray_(corporation_ids, 100);
-    for(var d = 0; d < data.length; d++) {
-      data[d] = data[d].filter(function(str) { return /\S/.test(str) });
-      if (data[d].length === 0) continue;
-      var result = getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {corporation_ids: data[d]});
-      if(d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift(); 
-      for(var n = 0; n < result.length; n++) names.push(result[n]);
-    }
-
-    return names;
+    return getNames_(corporation_ids, arguments.callee.name, 'corporation_ids', opt_headers);
 }
 
 /**
@@ -715,7 +737,9 @@ function corporationObservers(name, page, opt_headers) {
  * @customfunction
  */
 function corporationObserverMining(observer_id, name, page, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {observer_id: observer_id}, true, false, page);
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        observer_id: observer_id
+    }, true, false, page);
 }
 
 /**
@@ -753,7 +777,9 @@ function characterLoyalty(name, opt_headers) {
  */
 function corporationLoyalty(corporation_id, opt_headers) {
     if (!corporation_id) throw 'corporation_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {corporation_id: corporation_id}, false);
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {
+        corporation_id: corporation_id
+    }, false);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -792,7 +818,9 @@ function marketPrices(opt_headers) {
  */
 function structureOrders(structure_id, name, page, opt_headers) {
     if (!structure_id) throw 'structure_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {structure_id: structure_id}, true, false, page);
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        structure_id: structure_id
+    }, true, false, page);
 }
 
 /**
@@ -807,7 +835,10 @@ function structureOrders(structure_id, name, page, opt_headers) {
 function itemHistory(region_id, type_id, opt_headers) {
     if (!region_id) throw 'region_id is required';
     if (!type_id) throw 'type_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {region_id: region_id, type_id: type_id});
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {
+        region_id: region_id,
+        type_id: type_id
+    });
 }
 
 /**
@@ -821,7 +852,10 @@ function itemHistory(region_id, type_id, opt_headers) {
  */
 function regionOrders(region_id, type_id, page, opt_headers) {
     if (!region_id) throw 'region_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {region_id: region_id, type_id: type_id}, false, false, page);
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {
+        region_id: region_id,
+        type_id: type_id
+    }, false, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -849,7 +883,9 @@ function characterPlanets(name, opt_headers) {
  */
 function characterPlanetDetails(planet_id, name, opt_headers) {
     if (!planet_id) throw 'planet_id is required';
-    return characterPlanetDetails_(arguments.callee.name, name, opt_headers, {planet_id: planet_id}, true);
+    return characterPlanetDetails_(arguments.callee.name, name, opt_headers, {
+        planet_id: planet_id
+    }, true);
 }
 
 /**
@@ -862,7 +898,9 @@ function characterPlanetDetails(planet_id, name, opt_headers) {
  */
 function planetSchematic(schematic_id, name, opt_headers) {
     if (!schematic_id) throw 'schematic_id is required';
-    return getObjectResponse_(arguments.callee.name, name, opt_headers, {schematic_id: schematic_id})
+    return getObjectResponse_(arguments.callee.name, name, opt_headers, {
+        schematic_id: schematic_id
+    })
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -914,8 +952,8 @@ function characterSkills(name, opt_headers) {
  */
 function sovereigntyCampaigns(opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
- }
- 
+}
+
 /**
  * Shows sovereignty information for solar systems
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -924,8 +962,8 @@ function sovereigntyCampaigns(opt_headers) {
  */
 function sovereigntyMap(opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
- }
- 
+}
+
 /**
  * Shows sovereignty data for structures.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -934,11 +972,35 @@ function sovereigntyMap(opt_headers) {
  */
 function sovereigntyStructures(opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, '', opt_headers);
- }
+}
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Universe
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * List all public structures
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of public structure IDs
+ * @customfunction
+ */
+function structures(opt_headers) {
+    return getArrayResponse_(arguments.callee.name, '', opt_headers);
+}
+
+/**
+ * Returns information on requested structure, if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
+ * @param {string} structure_id structure_id of structure to get information on
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Data about a structure
+ * @customfunction
+ */
+function structure(structure_id, opt_headers) {
+    if (!structure_id) throw 'structure_id is required';
+    return getObjectResponse_(arguments.callee.name, '', opt_headers, {
+        structure_id: structure_id
+    }, true, true);
+}
 
 /**
  * Get information on a type
@@ -949,7 +1011,9 @@ function sovereigntyStructures(opt_headers) {
  */
 function typeId(type_id, opt_headers) {
     if (!type_id) throw 'type_id is required';
-    return getObjectResponse_(arguments.callee.name, '', opt_headers, {type_id: type_id});
+    return getObjectResponse_(arguments.callee.name, '', opt_headers, {
+        type_id: type_id
+    });
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -969,24 +1033,30 @@ function characterWallet(name, opt_headers) {
 
 /**
  * Retrieve character wallet journal
+ * @param {number} from_id Only show transactions happened before the one referenced by this id
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Journal entries
  * @customfunction
  */
-function characterWalletJournal(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+function characterWalletJournal(from_id, name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        from_id: from_id
+    }, true);
 }
 
 /**
  * Get wallet transactions of a character
+ * @param {number} from_id Only show transactions happened before the one referenced by this id
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Wallet transactions
  * @customfunction
  */
-function characterWalletTransactions(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+function characterWalletTransactions(from_id, name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        from_id: from_id
+    }, true);
 }
 
 /**
@@ -1003,14 +1073,35 @@ function corporationWallets(name, opt_headers) {
 /**
  * Retrieve corporation wallet journal
  * @param {number} division ID of the division to get wallet journal from
+ * @param {number} from_id Only show journal entries that happened before the one referenced by this id
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Journal entries
  * @customfunction
  */
-function corporationWalletJournal(division, name, opt_headers) {
+function corporationWalletJournal(division, from_id, name, opt_headers) {
     if (!division) throw 'division is required';
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {division: division}, true, true);
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        division: division,
+        from_id: from_id
+    }, true, true);
+}
+
+/**
+ * Get wallet transactions of a corporation
+ * @param {number} division ID of the division to get wallet transactions from
+ * @param {number} from_id Only show transactions happened before the one referenced by this id
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Wallet transactions
+ * @customfunction
+ */
+function corporationWalletTransactions(division, from_id, name, opt_headers) {
+    if (!division) throw 'division is required';
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {
+        division: division,
+        from_id: from_id
+    }, true, false);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1037,7 +1128,9 @@ function wars(opt_headers) {
  */
 function war(war_id, opt_headers) { // 291410 RVB War ID
     if (!war_id) throw 'war_id is required';
-    return getObjectResponse_(arguments.callee.name, '', opt_headers, {war_id: war_id}, false, true);
+    return getObjectResponse_(arguments.callee.name, '', opt_headers, {
+        war_id: war_id
+    }, false, true);
 }
 
 /**
@@ -1050,7 +1143,9 @@ function war(war_id, opt_headers) { // 291410 RVB War ID
  */
 function warKillmails(war_id, page, opt_headers) {
     if (!war_id) throw 'war_id is required';
-    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {war_id: war_id}, false, false, page);
+    return getArrayObjectResponse_(arguments.callee.name, '', opt_headers, {
+        war_id: war_id
+    }, false, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1063,23 +1158,27 @@ function getData_(endpoint_name, character, page, params, authed) {
     var userProperties = PropertiesService.getUserProperties();
     var eveService = createOAuthForUser(character.character_name);
     var url = ENDPOINTS[endpoint_name].url + '?';
-    
-    if(page) url += 'page=' + page;
-       
+
+    if (page) url += 'page=' + page;
+
     if (url.indexOf('{character_id}') !== -1) url = url.replace('{character_id}', parseInt(userProperties.getProperty(character.character_name)));
     if (url.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') url = url.replace('{corporation_id}', parseInt(character.corporation_id));
-    if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'object') url = url + '&alliance_ids=' + params.alliance_ids.join();
-    if (endpoint_name === 'allianceNames' && typeof(params.alliance_ids) === 'number') url = url + '&alliance_ids=' + params.alliance_ids;
-    if (endpoint_name === 'corporationNames' && typeof(params.corporation_ids) === 'object') url = url + '&corporation_ids=' + params.corporation_ids.join();
-    if (endpoint_name === 'corporationNames' && typeof(params.corporation_ids) === 'number') url = url + '&corporation_ids=' + params.corporation_ids;
-    if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) === 'number') url = url + '&type_id=' + params.type_id
+
+    if ((endpoint_name === 'regionOrders' || endpoint_name === 'itemHistory') && typeof(params.type_id) === 'number') url = url + '&type_id=' + params.type_id;
+    if (endpoint_name.indexOf('Wallet') !== -1 && typeof(params.from_id) === 'number') url = url + '&from_id=' + params.from_id;
+
+    if (endpoint_name.indexOf('Names') !== -1) {
+        var key = Object.keys(params)[0];
+        var values = params[Object.keys(params)[0]];
+        url = url + '&' + key + '=' + values.join();
+    }
 
     for (var p = 0; p < URL_PARAMS.length; p++) {
         if (url.indexOf(URL_PARAMS[p]) !== -1) {
             url = url.replace(URL_PARAMS[p], params[URL_PARAMS[p].replace('{', '').replace('}', '')]);
         }
     }
-    
+
     if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url));
 
     var response = UrlFetchApp.fetch(BASE_URL + ENDPOINTS[endpoint_name].version + url, {
@@ -1088,15 +1187,15 @@ function getData_(endpoint_name, character, page, params, authed) {
         }
     });
 
-  return JSON.parse(response);
+    return JSON.parse(response);
 }
 
 function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
     var data = getData_(endpoint_name, character, page, params, authed);
-    
-    if(endpoint_name === 'characterSkills') data = data['skills'];
+
+    if (endpoint_name === 'characterSkills') data = data['skills'];
     if (endpoint_name === 'industrySystems') data = deArrayIndex_(data);
-    
+
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
@@ -1117,7 +1216,7 @@ function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, 
 function getObjectResponse_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
     if (!page) page = 1;
     var data = getData_(endpoint_name, character, page, params, authed);
-    
+
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
@@ -1143,8 +1242,7 @@ function getArrayResponse_(endpoint_name, character, opt_headers, params, authed
 
     for (var i = 0; i < data.length; i++) {
         result.push(data[i]);
-    }
-    ;
+    };
 
     return result;
 };
@@ -1190,9 +1288,30 @@ function chunkArray_(a, c) {
 }
 
 function findUser_(name) {
-  for(var i = 0; i < CHARACTERS.length; i++) {
-    if (name === CHARACTERS[i].character_name) return CHARACTERS[i];
-  }
+    for (var i = 0; i < CHARACTERS.length; i++) {
+        if (name === CHARACTERS[i].character_name) return CHARACTERS[i];
+    }
+}
+
+
+function getNames_(ids, function_name, type, opt_headers) {
+    var names = [];
+    var params = {}
+    var data = Array.isArray(ids) ? chunkArray_(ids, 100) : [
+        [ids]
+    ];
+    for (var d = 0; d < data.length; d++) {
+        data[d] = data[d].filter(function(str) {
+            return /\S/.test(str)
+        });
+        if (data[d].length === 0) continue;
+        params[type] = data[d];
+        var result = getArrayObjectResponse_(function_name, '', opt_headers, params);
+        if (d >= 1 && (opt_headers === true || opt_headers === undefined)) result.shift();
+        names = names.concat(result);
+    }
+
+    return names;
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1302,7 +1421,7 @@ function convertSnakeCase_(headers) {
     var formatted_headers = [];
     for (var h = 0; h < headers.length; h++) {
         str = headers[h].replace(/\_/g, ' ');
-        formatted_headers.push(str.replace(/\w\S*/g, function (txt) {
+        formatted_headers.push(str.replace(/\w\S*/g, function(txt) {
             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
         }));
     }
