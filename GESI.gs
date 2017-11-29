@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.1.0';
+app_version = '3.1.1';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -1391,9 +1391,9 @@ function createOAuthForUser(user) {
             esi-ui.write_waypoint.v1 \
         ')
         .setParam('access_type', 'offline')
-        .setTokenHeaders({
-            'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
-        })
+//         .setTokenHeaders({
+//             'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
+//         })
 }
 
 function clearService() {
