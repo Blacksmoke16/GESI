@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.1.1';
+app_version = '3.1.2';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -179,7 +179,7 @@ ENDPOINTS = {
     "corporationExtractions": {
         "version": 1,
         "url": "/corporation/{corporation_id}/mining/extractions/",
-        "headers": ['date', 'solar_system_id', 'type_id', 'quantity']
+        "headers": ['structure_id', 'moon_id', 'extraction_start_time', 'chunk_arrival_time', 'natural_decay_time']
     },
     "corporationObservers": {
         "version": 1,
@@ -1199,6 +1199,8 @@ function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
+    if (result.length === 0) return null;
+    if (data.length === 0) return result;
 
     for (var i = 0; i < data.length; i++) {
         var temp = [];
@@ -1391,9 +1393,6 @@ function createOAuthForUser(user) {
             esi-ui.write_waypoint.v1 \
         ')
         .setParam('access_type', 'offline')
-//         .setTokenHeaders({
-//             'Authorization': 'Basic ' + Utilities.base64Encode(CLIENT_ID + ':' + CLIENT_SECRET)
-//         })
 }
 
 function clearService() {
