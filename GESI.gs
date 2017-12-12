@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.1.2';
+app_version = '3.2.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -35,9 +35,9 @@ ENDPOINTS = {
         "headers": ['alliance_id', 'alliance_name']
     },
     "allianceId": {
-        "version": 2,
+        "version": 3,
         "url": "/alliances/{alliance_id}/",
-        "headers": ['alliance_name', 'ticker', 'executor_corp', 'date_founded']
+        "headers": ['name', 'ticker', 'executor_corporation_id', 'date_founded', 'creator_corporation_id', 'creator_id']
     },
     "allianceCorporations": {
         "version": 1,
@@ -53,13 +53,13 @@ ENDPOINTS = {
     // Assets
 
     "characterAssets": {
-        "version": 1,
+        "version": 3,
         "url": "/characters/{character_id}/assets/",
         "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag', 'is_singleton']
     },
 
     "corporationAssets": {
-        "version": 1,
+        "version": 2,
         "url": "/corporations/{corporation_id}/assets/",
         "headers": ['item_id', 'type_id', 'quantity', 'location_id', 'location_type', 'location_flag', 'is_singleton']
     },
@@ -67,14 +67,24 @@ ENDPOINTS = {
     // Bookmarks
 
     "characterBookmarks": {
-        "version": 1,
+        "version": 2,
         "url": "/characters/{character_id}/bookmarks/",
-        "headers": ['bookmark_id', 'target-location_id', 'memo', 'create_date', 'creator_id', 'note', 'owner_id', 'folder_id', 'target-item-item_id', 'target-item-type_id']
+        "headers": ['bookmark_id', 'location_id', 'creator_id', 'created', 'notes', 'label', 'folder_id', 'item-item_id', 'item-type_id', 'coordinates-x', 'coordinates-y', 'coordinates-z']
     },
     "characterBookmarkFolders": {
         "version": 1,
         "url": "/characters/{character_id}/bookmarks/folders",
         "headers": ['folder_id', 'name', 'owner_id']
+    },
+    "corporationBookmarks": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/bookmarks/",
+        "headers": ['bookmark_id', 'location_id', 'creator_id', 'created', 'notes', 'label', 'folder_id', 'item-item_id', 'item-type_id', 'coordinates-x', 'coordinates-y', 'coordinates-z']
+    },
+    "corporationBookmarkFolders": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/bookmarks/folders",
+        "headers": ['folder_id', 'name', 'creator_id']
     },
 
     // Calendar
@@ -97,14 +107,14 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/blueprints/",
         "headers": ['item_id', 'type_id', 'location_id', 'location_flag', 'material_efficiency', 'time_efficiency', 'runs', 'quantity']
     },
-
-    // Contracts
-
     "characterNames": {
         "version": 1,
         "url": "/characters/names/",
         "headers": ['character_id', 'character_name']
     },
+
+    // Contracts
+
     "characterContracts": {
         "version": 1,
         "url": "/characters/{character_id}/contracts/",
@@ -120,16 +130,31 @@ ENDPOINTS = {
         "url": "/characters/{character_id}/contracts/{contract_id}/items/",
         "headers": ['record_id', 'type_id', 'quantity', 'raw_quantity', 'is_included', 'is_singleton']
     },
+    "corporationContracts": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/contracts/",
+        "headers": ['contract_id', 'issuer_id', 'assignee_id', 'acceptor_id', 'availability', 'type', 'title', 'status', 'issuer_corporation_id', 'for_corporation', 'date_issued', 'date_accepted', 'date_completed', 'date_expired', 'price', 'buyout', 'reward', 'collateral', 'volume', 'days_to_complete', 'start_location_id', 'end_location_id']
+    },
+    "corporationContractsBids": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/contracts/{contract_id}/bids/",
+        "headers": ['bid_id', 'date_bid', 'bidder_id', 'amount']
+    },
+    "corporationContractItems": {
+        "version": 1,
+        "url": "/corporations/{corporation_id}/contracts/{contract_id}/items/",
+        "headers": ['record_id', 'type_id', 'quantity', 'raw_quantity', 'is_included', 'is_singleton']
+    },
 
     // Corporation
 
     "corporationNames": {
-        "version": 1,
+        "version": 2,
         "url": "/corporations/names/",
         "headers": ['corporation_id', 'corporation_name']
     },
     "corporationMembers": {
-        "version": 2,
+        "version": 3,
         "url": "/corporations/{corporation_id}/members/",
         "headers": ['character_id']
     },
@@ -318,7 +343,7 @@ ENDPOINTS = {
         "headers": ['balance']
     },
     "characterWalletJournal": {
-        "version": 1,
+        "version": 3,
         "url": "/characters/{character_id}/wallet/journal",
         "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
     },
@@ -333,7 +358,7 @@ ENDPOINTS = {
         "headers": ['division', 'balance']
     },
     "corporationWalletJournal": {
-        "version": 1,
+        "version": 2,
         "url": "/corporations/{corporation_id}/wallets/{division}/journal/",
         "headers": ['ref_id', 'date', 'amount', 'balance', 'first_party_id', 'first_party_type', 'reason', 'ref_type', 'second_party_id', 'second_party_type', 'tax', 'tax_reciever_id', 'extra_info-alliance_id', 'extra_info-character_id', 'extra_info-contract_id', 'extra_info-destroyed_ship_type_id', 'extra_info-job_id', 'extra_info-location_id', 'extra_info-npc_id', 'extra_info-npc_name', 'extra_info-planet_id', 'extra_info-system_id', 'extra_info-transaction_id']
     },
@@ -465,23 +490,49 @@ function corporationAssets(name, page, opt_headers) {
 /**
  * List your character's personal bookmarks
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return A list of bookmarks
  * @customfunction
  */
-function characterBookmarks(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, true);
+function characterBookmarks(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, true, page);
 }
 
 /**
  * List your character's personal bookmark folders
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return List of bookmark folders
  * @customfunction
  */
-function characterBookmarkFolders(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+function characterBookmarkFolders(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+/**
+ * A list of your corporation’s bookmarks
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of bookmarks
+ * @customfunction
+ */
+function corporationBookmarks(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, true, page);
+}
+
+/**
+ * List your corporation's bookmark folders
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return List of bookmark folders
+ * @customfunction
+ */
+function corporationBookmarkFolders(name, page, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -558,7 +609,7 @@ function characterContracts(name, opt_headers) {
 }
 
 /**
- * Return cost indices for solar systems
+ * Lists bids on a particular auction contract
  * @param {number} contract_id of the contract to get bids for
  * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -579,6 +630,43 @@ function characterContractBids(contract_id, name, opt_headers) {
  * @customfunction
  */
 function characterContractItems(contract_id, name, opt_headers) {
+    if (!contract_id) throw 'contract_id is required';
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {contract_id: contract_id}, true);
+}
+
+/**
+ * Returns contracts available to a coporation, only if the corporation is issuer, acceptor or assignee. 
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of contracts
+ * @customfunction
+ */
+function corporationContracts(name, opt_headers) {
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+}
+
+/**
+ * Lists bids on a particular auction contract
+ * @param {number} contract_id of the contract to get bids for
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of bids
+ * @customfunction
+ */
+function corporationContractBids(contract_id, name, opt_headers) {
+    if (!contract_id) throw 'contract_id is required';
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {contract_id: contract_id}, true);
+}
+
+/**
+ * Lists Items and details of a particular contract
+ * @param {number} contract_id of the contract to get items for
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of items
+ * @customfunction
+ */
+function corporationContractItems(contract_id, name, opt_headers) {
     if (!contract_id) throw 'contract_id is required';
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {contract_id: contract_id}, true);
 }
@@ -607,7 +695,7 @@ function corporationNames(corporation_ids, opt_headers) {
  * @customfunction
  */
 function corporationMembers(name, opt_headers) {
-    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true);
+    return getArrayResponse_(arguments.callee.name, name, opt_headers, {}, true);
 }
 
 /**
@@ -1391,6 +1479,8 @@ function createOAuthForUser(user) {
             esi-characters.read_loyalty.v1 \
             esi-wallet.read_character_wallet.v1 \
             esi-ui.write_waypoint.v1 \
+            esi-bookmarks.read_corporation_bookmarks.v1 \
+            esi-contracts.read_corporation_contracts.v1 \
         ')
         .setParam('access_type', 'offline')
 }
