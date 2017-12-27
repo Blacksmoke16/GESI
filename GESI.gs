@@ -3,7 +3,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '3.2.0';
+app_version = '3.3.0';
 
 // Setup variables used throughout script
 CLIENT_ID = '7c382c66a6c8487d8b64e50daad86f9b';
@@ -111,6 +111,14 @@ ENDPOINTS = {
         "version": 1,
         "url": "/characters/names/",
         "headers": ['character_id', 'character_name']
+    },
+    
+    // Contacts
+
+    "allianceContacts": {
+        "version": 1,
+        "url": "/alliances/{alliance_id}/contacts/",
+        "headers": ['contact_id', 'contact_type', 'standing', 'label_id']
     },
 
     // Contracts
@@ -591,6 +599,25 @@ function characterNames(character_ids, opt_headers) {
  */
 function characterBlueprints(name, page, opt_headers) {
     return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {}, true, false, page);
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//                                                                                                  Contacts
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Return contacts of an alliance.
+ * @param {number} alliance_id of the alliance to get standings for
+ * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+ * @param {number} page page number of response to fetch.  Defauts to page 1
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return A list of contacts
+ * @customfunction
+ */
+function allianceContacts(alliance_id, name, page, opt_headers) {
+    if (!alliance_id) throw 'alliance_idis required';
+    return getArrayObjectResponse_(arguments.callee.name, name, opt_headers, {alliance_id: alliance_id}, true, false, page);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1287,8 +1314,11 @@ function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, 
     var result = [];
     if (opt_headers === undefined) opt_headers = true;
     if (opt_headers) result.push(convertSnakeCase_(ENDPOINTS[endpoint_name].headers));
-    if (result.length === 0) return null;
-    if (data.length === 0) return result;
+    if (data.length === 0 && result.length > 0) {
+      return result;
+    } else if (data.length === 0 && result.length === 0) {
+      return null;
+    }
 
     for (var i = 0; i < data.length; i++) {
         var temp = [];
@@ -1304,7 +1334,6 @@ function getArrayObjectResponse_(endpoint_name, character, opt_headers, params, 
 };
 
 function getObjectResponse_(endpoint_name, character, opt_headers, params, authed, isNested, page) {
-    if (!page) page = 1;
     var data = getData_(endpoint_name, character, page, params, authed);
 
     var result = [];
@@ -1481,6 +1510,7 @@ function createOAuthForUser(user) {
             esi-ui.write_waypoint.v1 \
             esi-bookmarks.read_corporation_bookmarks.v1 \
             esi-contracts.read_corporation_contracts.v1 \
+            esi-alliances.read_contacts.v1 \
         ')
         .setParam('access_type', 'offline')
 }
