@@ -264,7 +264,7 @@ ENDPOINTS = {
     "itemHistory": {
         "version": 1,
         "url": "/markets/{region_id}/history/",
-        "headers": ['date', 'average', 'hightest', 'lowest', 'order_count', 'volume']
+        "headers": ['date', 'average', 'highest', 'lowest', 'order_count', 'volume']
     },
     "regionOrders": {
         "version": 1,
