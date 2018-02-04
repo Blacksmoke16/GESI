@@ -143,6 +143,82 @@ function resetAuth() {
 //                                                                                                  Utility Private  Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+function getData_(endpoint_name, character, params) {
+    var authed = ENDPOINTS[endpoint_name].authed;
+    var path = ENDPOINTS[endpoint_name].path;
+    
+    for (var p = 0; p < ENDPOINTS['params'].length; p++) {
+      Logger.log(ENDPOINTS['params'][p]);
+        if (path.indexOf(ENDPOINTS['params'][p]) !== -1) {
+            path = path.replace(ENDPOINTS['params'][p], params[ENDPOINTS['params'][p].replace('{', '').replace('}', '')]);
+        }
+    }
+    if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
+
+    var response = UrlFetchApp.fetch(BASE_URL + path, {
+        headers: {
+            Authorization: 'Bearer ' + eveService.getAccessToken()
+        }
+    });
+    
+    return JSON.parse(response);
+}
+
+// Private function for basic array of value responses
+function getArrayResponse_(endpoint_name, params, character, opt_headers) {
+    var data = getData_(endpoint_name, character, params);
+
+    var result = [];
+    if (opt_headers === undefined) opt_headers = true;
+    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
+
+    for (var i = 0; i < data.length; i++) {
+        result.push(data[i]);
+    };
+
+    return result;
+};
+
+function getArrayObjectResponse_(endpoint_name, params, character, opt_headers) {
+    var data = getData_(endpoint_name, character, params);
+
+    var result = [];
+    if (opt_headers === undefined) opt_headers = true;
+    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
+    if (data.length === 0 && result.length > 0) {
+      return result;
+    } else if (data.length === 0 && result.length === 0) {
+      return null;
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        var temp = [];
+        for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
+            data_value = data[i][ENDPOINTS[endpoint_name].headers[k]];
+            temp.push(data_value);
+        }
+        result.push(temp);
+    }
+
+    return result;
+};
+
+function getObjectResponse_(endpoint_name, params, character, opt_headers) {
+    var data = getData_(endpoint_name, character, params);
+
+    var result = [];
+    if (opt_headers === undefined) opt_headers = true;
+    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
+
+    var temp = [];
+    for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
+        temp.push(data[ENDPOINTS[endpoint_name].headers[k]]);
+    }
+    result.push(temp);
+
+    return result;
+};
+
 function extend_(obj, src) {
   for (var key in src) {
     if (src.hasOwnProperty(key)) obj[key] = src[key];
