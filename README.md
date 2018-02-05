@@ -14,9 +14,9 @@ Google Sheets Script for interacting with EVE ESI
        * Update the SCRIPT_ID variable towards the top with your copied value.
    5. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
-        * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
-        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
-        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
+        * PERMISSIONS:   Select all ESI endpoints.
+        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FOUR}/usercallback
+        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FOUR}` in the URL with YOUR script ID!
         * Also be sure to replace the `{` and `}` as well.  Url should look something like this, but with your Script ID:
         * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
    6. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
@@ -38,7 +38,7 @@ Google Sheets Script for interacting with EVE ESI
       * Complete steps 9-13 in single character use. 
       * Add one (1) to the number in brackets.
       * E.x. `AUTHING_CHARACTER = CHARACTERS[1];`
-   4. Repeat step 4 until all characters are authorized.
+   4. Repeat step 3 until all characters are authorized.
       * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `character2` using steps 9-13 in single character use. 
       * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `character3` using steps 9-13 in single character use. 
       
@@ -72,6 +72,7 @@ Google Sheets Script for interacting with EVE ESI
         "description": "An EVE alliance ID",
         "required": true,
         "type": "integer"
+        "in": "path"
       }
     ],
     "paginated": false
