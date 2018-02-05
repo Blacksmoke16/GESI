@@ -29,41 +29,83 @@ AUTHING_CHARACTER = CHARACTERS[0];
 
 // List of scopes to request
 SCOPES = [
-  'esi-corporations.read_standings.v1',
-  'esi-corporations.read_corporation_membership.v1',
-  'esi-corporations.track_members.v1',
-  'esi-industry.read_corporation_jobs.v1',
-  'esi-corporations.read_structures.v1',
-  'esi-industry.read_corporation_mining.v1',
-  'esi-industry.read_character_mining.v1',
-  'esi-assets.read_corporation_assets.v1',
-  'esi-universe.read_structures.v1',
-  'esi-wallet.read_corporation_wallets.v1',
-  'esi-calendar.read_calendar_events.v1',
-  'esi-bookmarks.read_character_bookmarks.v1',
-  'esi-contracts.read_character_contracts.v1',
-  'esi-industry.read_character_jobs.v1',
-  'esi-characters.read_blueprints.v1',
-  'esi-markets.read_character_orders.v1',
-  'esi-planets.manage_planets.v1',
-  'esi-skills.read_skills.v1',
-  'esi-skills.read_skillqueue.v1',
-  'esi-markets.structure_markets.v1',
-  'esi-characters.read_contacts.v1',
-  'esi-assets.read_assets.v1',
-  'esi-characters.read_loyalty.v1',
-  'esi-wallet.read_character_wallet.v1',
-  'esi-ui.write_waypoint.v1',
-  'esi-bookmarks.read_corporation_bookmarks.v1',
-  'esi-contracts.read_corporation_contracts.v1',
-  'esi-alliances.read_contacts.v1'
+  "esi-alliances.read_contacts.v1",
+  "esi-assets.read_assets.v1",
+  "esi-assets.read_corporation_assets.v1",
+  "esi-bookmarks.read_character_bookmarks.v1",
+  "esi-bookmarks.read_corporation_bookmarks.v1",
+  "esi-calendar.read_calendar_events.v1",
+  "esi-calendar.respond_calendar_events.v1",
+  "esi-characters.read_agents_research.v1",
+  "esi-characters.read_blueprints.v1",
+  "esi-characters.read_chat_channels.v1",
+  "esi-characters.read_contacts.v1",
+  "esi-characters.read_corporation_roles.v1",
+  "esi-characters.read_fatigue.v1",
+  "esi-characters.read_fw_stats.v1",
+  "esi-characters.read_loyalty.v1",
+  "esi-characters.read_medals.v1",
+  "esi-characters.read_notifications.v1",
+  "esi-characters.read_opportunities.v1",
+  "esi-characters.read_standings.v1",
+  "esi-characters.read_titles.v1",
+  "esi-characters.write_contacts.v1",
+  "esi-characterstats.read.v1",
+  "esi-clones.read_clones.v1",
+  "esi-clones.read_implants.v1",
+  "esi-contracts.read_character_contracts.v1",
+  "esi-contracts.read_corporation_contracts.v1",
+  "esi-corporations.read_blueprints.v1",
+  "esi-corporations.read_contacts.v1",
+  "esi-corporations.read_container_logs.v1",
+  "esi-corporations.read_corporation_membership.v1",
+  "esi-corporations.read_divisions.v1",
+  "esi-corporations.read_facilities.v1",
+  "esi-corporations.read_fw_stats.v1",
+  "esi-corporations.read_medals.v1",
+  "esi-corporations.read_outposts.v1",
+  "esi-corporations.read_standings.v1",
+  "esi-corporations.read_starbases.v1",
+  "esi-corporations.read_structures.v1",
+  "esi-corporations.read_titles.v1",
+  "esi-corporations.track_members.v1",
+  "esi-corporations.write_structures.v1",
+  "esi-fittings.read_fittings.v1",
+  "esi-fittings.write_fittings.v1",
+  "esi-fleets.read_fleet.v1",
+  "esi-fleets.write_fleet.v1",
+  "esi-industry.read_character_jobs.v1",
+  "esi-industry.read_character_mining.v1",
+  "esi-industry.read_corporation_jobs.v1",
+  "esi-industry.read_corporation_mining.v1",
+  "esi-killmails.read_corporation_killmails.v1",
+  "esi-killmails.read_killmails.v1",
+  "esi-location.read_location.v1",
+  "esi-location.read_online.v1",
+  "esi-location.read_ship_type.v1",
+  "esi-mail.organize_mail.v1",
+  "esi-mail.read_mail.v1",
+  "esi-mail.send_mail.v1",
+  "esi-markets.read_character_orders.v1",
+  "esi-markets.read_corporation_orders.v1",
+  "esi-markets.structure_markets.v1",
+  "esi-planets.manage_planets.v1",
+  "esi-planets.read_customs_offices.v1",
+  "esi-search.search_structures.v1",
+  "esi-skills.read_skillqueue.v1",
+  "esi-skills.read_skills.v1",
+  "esi-ui.open_window.v1",
+  "esi-ui.write_waypoint.v1",
+  "esi-universe.read_structures.v1",
+  "esi-wallet.read_character_wallet.v1",
+  "esi-wallet.read_corporation_wallets.v1"
 ];
  
 function onOpen() {
     SpreadsheetApp.getUi().createMenu('GESI')
         .addItem('Authorize Sheet', 'showSidebar')
         .addSeparator()
-        .addItem('Reset Auth', 'clearService')
+        .addItem('Reset Auth', 'resetAuth')
         .addToUi();
 
 }
@@ -80,14 +122,18 @@ function getData_(endpoint_name, params) {
     var name = params.name;
     if (!name) name = AUTHING_CHARACTER;
     
+    ENDPOINTS[endpoint_name].parameters.forEach(function(param) {
+        if (param['in'] === 'path' && params[param.name]) {
+          path = path.replace('{' + param.name + '}', params[param.name])
+        } else if (param['in'] === 'query' && params[param.name]) {
+          path += path.indexOf('?') !== -1 ? '&' : '?';
+          path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
+        }
+    });
+    
     if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(documentProperties.getProperty(name + '_character_id')));
     if (path.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') path = path.replace('{corporation_id}', parseInt(documentProperties.getProperty(name + '_corporation_id')));
 
-    for (var p = 0; p < ENDPOINTS['params'].length; p++) {
-        if (path.indexOf(ENDPOINTS['params'][p]) !== -1) {
-            path = path.replace(ENDPOINTS['params'][p], params[ENDPOINTS['params'][p].replace('{', '').replace('}', '')]);
-        }
-    }
     if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
     
     var token = cache.get(name + '_access_token');
@@ -154,6 +200,17 @@ function getObjectResponse_(endpoint_name, params) {
         temp.push(data[ENDPOINTS[endpoint_name].headers[k]]);
     }
     result.push(temp);
+    return result;
+};
+
+// Private function for single value responses
+function getSingleResponse_(endpoint_name, params) {
+    var data = getData_(endpoint_name, params);
+
+    var result = [];
+    var opt_headers = params.opt_headers;
+    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
+    result.push(data);
 
     return result;
 };
@@ -214,7 +271,7 @@ function refreshToken_(name) {
     },
     'payload' : JSON.stringify({"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')})
   });
-  cache.put(name + '_access_token', JSON.parse(response)['access_token'], 1200);
+  cache.put(name + '_access_token', JSON.parse(response)['access_token'], 900);
   return JSON.parse(response);
 }
 
@@ -250,7 +307,7 @@ function cacheData_(userData) {
   prefix = userData['CharacterName'] + '_';
   ['character_id', 'corporation_id', 'alliance_id', 'CharacterName', 'refresh_token']
     .forEach(function(param) { userProperties[prefix + param] = userData[param]; });
-  cache.put(prefix + 'access_token', userData['access_token'], 1200);
+  cache.put(prefix + 'access_token', userData['access_token'], 900);
   documentProperties.setProperties(userProperties );
 }
 
