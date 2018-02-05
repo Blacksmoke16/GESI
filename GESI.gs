@@ -5,6 +5,12 @@
 app_version = '4.0.0';
 BASE_URL = 'https://esi.tech.ccp.is/v'
 
+// Your email address
+// This is used and sent in the User-Agent header on ESI requests so that CCP know who that request came from.
+// In the case of a users' specific script is putting too much load on their servers they have a way to contact you.
+// I do not see this or use it in any way.
+EMAIL = 'YOUR_EMAIL';
+
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
 CLIENT_ID = 'YOUR_CLIENT_ID';
@@ -61,7 +67,6 @@ function onOpen() {
         .addToUi();
 
 }
-
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Private Utility Functions
@@ -187,7 +192,7 @@ function getAccessToken_(code) {
   var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/token', {
     'method' : 'post',
     headers: {
-      'User-Agent': 'GESI ' + Session.getEffectiveUser().getEmail(),
+      'User-Agent': 'GESI user ' + EMAIL,
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
     },
@@ -203,7 +208,7 @@ function refreshToken_(name) {
   var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/token', {
     'method' : 'post',
     headers: {
-      'User-Agent': 'GESI ' + Session.getEffectiveUser().getEmail(),
+      'User-Agent': 'GESI user ' + EMAIL,
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
     },
@@ -216,7 +221,7 @@ function refreshToken_(name) {
 function getCharacterDetails_(token) {
   var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/verify', {
       headers: {
-        'User-Agent': 'GESI user: ' + Session.getEffectiveUser().getEmail(),
+        'User-Agent': 'GESI user ' + EMAIL,
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + token
       }
@@ -230,7 +235,7 @@ function getCharacterAffiliation_(character_id) {
   var response = UrlFetchApp.fetch(BASE_URL + '/v1/characters/affiliation/', {
     'method' : 'post',
     headers: {
-      'User-Agent': 'GESI ' + Session.getEffectiveUser().getEmail(),
+      'User-Agent': 'GESI user ' + EMAIL,
       'Content-Type': 'application/json',
       },
      'payload' : JSON.stringify(character_ids)
