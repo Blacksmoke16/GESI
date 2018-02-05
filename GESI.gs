@@ -52,7 +52,7 @@ SCOPES = [
   'esi-contracts.read_corporation_contracts.v1',
   'esi-alliances.read_contacts.v1'
 ];
-
+ 
 function onOpen() {
     SpreadsheetApp.getUi().createMenu('GESI')
         .addItem('Authorize Sheet', 'showSidebar')
@@ -60,6 +60,104 @@ function onOpen() {
         .addItem('Reset Auth', 'clearService')
         .addToUi();
 
+}
+
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//                                                                                                  Private Utility Functions
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function getData_(endpoint_name, params) {
+    var authed = ENDPOINTS[endpoint_name].authed;
+    var documentProperties = PropertiesService.getDocumentProperties();
+    var path = ENDPOINTS[endpoint_name].path;
+    var cache = CacheService.getDocumentCache();
+    var name = params.name;
+    if (!name) name = AUTHING_CHARACTER;
+    
+    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(documentProperties.getProperty(name + '_character_id')));
+    if (path.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') path = path.replace('{corporation_id}', parseInt(documentProperties.getProperty(name + '_corporation_id')));
+
+    for (var p = 0; p < ENDPOINTS['params'].length; p++) {
+        if (path.indexOf(ENDPOINTS['params'][p]) !== -1) {
+            path = path.replace(ENDPOINTS['params'][p], params[ENDPOINTS['params'][p].replace('{', '').replace('}', '')]);
+        }
+    }
+    if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
+    
+    var token = cache.get(name + '_access_token');
+    if (!token) token = refreshToken_(name);
+
+    var response = UrlFetchApp.fetch(BASE_URL + path, {
+        headers: {
+            Authorization: 'Bearer ' + token
+        }
+    });
+        
+    return JSON.parse(response);
+}
+
+// Private function for basic array of value responses
+function getArrayResponse_(endpoint_name, params) {
+    var data = getData_(endpoint_name, params);
+
+    var result = [];
+    var opt_headers = params.opt_headers;
+    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
+
+    for (var i = 0; i < data.length; i++) {
+        result.push(data[i]);
+    };
+
+    return result;
+};
+
+function getArrayObjectResponse_(endpoint_name, params) {
+    var data = getData_(endpoint_name, params);
+
+    var result = [];
+    var opt_headers = params.opt_headers;
+    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
+
+    if (data.length === 0 && result.length > 0) {
+      return result;
+    } else if (data.length === 0 && result.length === 0) {
+      return null;
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        var temp = [];
+        for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
+            data_value = data[i][ENDPOINTS[endpoint_name].headers[k]];
+            temp.push(data_value);
+        }
+        result.push(temp);
+    }
+
+    return result;
+};
+
+function getObjectResponse_(endpoint_name, params) {
+    var data = getData_(endpoint_name, params);
+
+    var result = [];
+    var opt_headers = params.opt_headers;
+    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
+
+    var temp = [];
+    for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
+        temp.push(data[ENDPOINTS[endpoint_name].headers[k]]);
+    }
+    result.push(temp);
+
+    return result;
+};
+
+function extend_(obj, src) {
+  for (var key in src) {
+    if (src.hasOwnProperty(key)) obj[key] = src[key];
+  }
+  return obj;
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -98,6 +196,23 @@ function getAccessToken_(code) {
   return JSON.parse(response);
 }
 
+function refreshToken_(name) {
+  var documentProperties = PropertiesService.getDocumentProperties();
+  var cache = CacheService.getDocumentCache();
+
+  var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/token', {
+    'method' : 'post',
+    headers: {
+      'User-Agent': 'GESI ' + Session.getEffectiveUser().getEmail(),
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
+    },
+    'payload' : JSON.stringify({"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')})
+  });
+  cache.put(name + '_access_token', JSON.parse(response)['access_token'], 1200);
+  return JSON.parse(response);
+}
+
 function getCharacterDetails_(token) {
   var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/verify', {
       headers: {
@@ -112,7 +227,7 @@ function getCharacterDetails_(token) {
 function getCharacterAffiliation_(character_id) {
   var character_ids = [];
   character_ids.push(character_id);
-  var response = UrlFetchApp.fetch(BASE_URL + '1/characters/affiliation/', {
+  var response = UrlFetchApp.fetch(BASE_URL + '/v1/characters/affiliation/', {
     'method' : 'post',
     headers: {
       'User-Agent': 'GESI ' + Session.getEffectiveUser().getEmail(),
@@ -137,91 +252,4 @@ function cacheData_(userData) {
 function resetAuth() {
   var documentProperties = PropertiesService.getDocumentProperties();
   documentProperties.deleteAllProperties();
-}
-
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//                                                                                                  Utility Private  Functions
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-function getData_(endpoint_name, character, params) {
-    var authed = ENDPOINTS[endpoint_name].authed;
-    var path = ENDPOINTS[endpoint_name].path;
-    
-    for (var p = 0; p < ENDPOINTS['params'].length; p++) {
-      Logger.log(ENDPOINTS['params'][p]);
-        if (path.indexOf(ENDPOINTS['params'][p]) !== -1) {
-            path = path.replace(ENDPOINTS['params'][p], params[ENDPOINTS['params'][p].replace('{', '').replace('}', '')]);
-        }
-    }
-    if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
-
-    var response = UrlFetchApp.fetch(BASE_URL + path, {
-        headers: {
-            Authorization: 'Bearer ' + eveService.getAccessToken()
-        }
-    });
-    
-    return JSON.parse(response);
-}
-
-// Private function for basic array of value responses
-function getArrayResponse_(endpoint_name, params, character, opt_headers) {
-    var data = getData_(endpoint_name, character, params);
-
-    var result = [];
-    if (opt_headers === undefined) opt_headers = true;
-    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
-
-    for (var i = 0; i < data.length; i++) {
-        result.push(data[i]);
-    };
-
-    return result;
-};
-
-function getArrayObjectResponse_(endpoint_name, params, character, opt_headers) {
-    var data = getData_(endpoint_name, character, params);
-
-    var result = [];
-    if (opt_headers === undefined) opt_headers = true;
-    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
-    if (data.length === 0 && result.length > 0) {
-      return result;
-    } else if (data.length === 0 && result.length === 0) {
-      return null;
-    }
-
-    for (var i = 0; i < data.length; i++) {
-        var temp = [];
-        for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
-            data_value = data[i][ENDPOINTS[endpoint_name].headers[k]];
-            temp.push(data_value);
-        }
-        result.push(temp);
-    }
-
-    return result;
-};
-
-function getObjectResponse_(endpoint_name, params, character, opt_headers) {
-    var data = getData_(endpoint_name, character, params);
-
-    var result = [];
-    if (opt_headers === undefined) opt_headers = true;
-    if (opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
-
-    var temp = [];
-    for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
-        temp.push(data[ENDPOINTS[endpoint_name].headers[k]]);
-    }
-    result.push(temp);
-
-    return result;
-};
-
-function extend_(obj, src) {
-  for (var key in src) {
-    if (src.hasOwnProperty(key)) obj[key] = src[key];
-  }
-  return obj;
 }
