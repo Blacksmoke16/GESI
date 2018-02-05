@@ -1,27 +1,26 @@
 # GESI
 Google Sheets Script for interacting with EVE ESI
 
-Modified version of Google's https://github.com/googlesamples/apps-script-oauth2 to work with EVE SSO/ESI
-
-To request new endpoints/changes/etc create issues or mail me in game (Blacksmoke16).
-
 ### Setup for single character use:
    1. Create a new google sheet or go to the one you want to use the script on.
    2. In the menu bar go to Tools -> Script Editor.
-   3. Click on the menu item "Resources > Libraries..."
-       * In the "Add a Library" text box, enter 1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF and click the "Add" button.
-       * Choose a version in the dropdown box (usually best to pick the latest version).
-       * Click the "Save" button.
-   4. Copy the contents of GESI.gs into the editor window and save the script. You may need to name the project to save it, so use any name.
-   5. Go to File -> Project Properties and copy the Script ID.
-   6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
+   3. Copy the GESI files.  You may need to name the project to save it, so use any name.
+       * Copy the contents of GESI.gs into the Code.gs script file and save the script.  (Can rename Code.gs to GESI.gs if you want)
+       * Create a new script file (File -> New -> Script File) and name it `endpoints`.
+           * Copy the contents of `endpoints.gs` into this file and save the script
+       * Create a new script file (File -> New -> Script File) and name it `functions`.
+           * Copy the contents of `functions.gs` into this file and save the script
+   4. Go to File -> Project Properties and copy the Script ID.
+       * Update the SCRIPT_ID variable towards the top with your copied value.
+   5. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
         * PERMISSIONS:   Select all ESI endpoints so you wont' have to edit the app each time a new endpoint is added for GESI.
         * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
         * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
         * Also be sure to replace the `{` and `}` as well.  Url should look something like this, but with your Script ID:
         * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
-   7. Replace the example CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save.
+   6. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
+   7. Replace `YOUR_CHARACTER_NAME` with the name of your character in the CHARACTERS array, and save the script.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
    10. Give the script permission to do what it needs.
@@ -31,32 +30,55 @@ To request new endpoints/changes/etc create issues or mail me in game (Blacksmok
    
 ### Setup for multiple character use:
    1. Complete steps 1-8 in single character use.
-   2. In the script there is a constant variable called `CHARACTERS` (line 13) which is an array of objects. 
-      * Replace the contents of the array with the names and corporation_ids of the characters you wish to authorize.
-      * E.x. `CHARACTERS = [{ character_name:  'character1', corporation_id: 123 }, { character_name:  'character2', corporation_id: 456 }, { character_name:  'character3', corporation_id: 789 }];`
-   4. To auth the characters:
-      * In the script there is another constant variable `AUTHING_CHARACTER` (line 20).
+   2. In the script there is a constant variable called `CHARACTERS` towards the top which is an array of strings. 
+      * Add the names of the other characters you want to auth to the contents of the array with the names and corporation_ids of the characters you wish to authorize.
+      * E.x. `CHARACTERS = ['character1', 'character2', 'character3'];`
+   3. To auth the characters:
+      * In the script there is another constant variable `AUTHING_CHARACTER` below the `CHARACTERS` constant.
       * Complete steps 9-13 in single character use. 
       * Add one (1) to the number in brackets.
       * E.x. `AUTHING_CHARACTER = CHARACTERS[1];`
-   5. Repeat step 4 until all characters are authorized.
+   4. Repeat step 4 until all characters are authorized.
       * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `character2` using steps 9-13 in single character use. 
       * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `character3` using steps 9-13 in single character use. 
       
-### Features for advanced users
+### More Advanced Features
 
 ##### To change order of column headers
-   1. Find the corresponding object in the ENDPOINTS array.
+   1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
  ```
-    "allianceNames": {
-        "version": 1,
-        "url": "/alliances/names/",
-        "headers": ['alliance_id', 'alliance_name']
-    }
+  "alliances_alliance": {
+    "description": "Public information about an alliance",
+    "summary": "Get alliance information",
+    "request": "get",
+    "version": 3,
+    "headers": [
+      "name",
+      "creator_id",
+      "creator_corporation_id",
+      "ticker",
+      "executor_corporation_id",
+      "date_founded",
+      "faction_id"
+    ],
+    "path": "/v3/alliances/{alliance_id}/",
+    "authed": false,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "alliance_id",
+        "description": "An EVE alliance ID",
+        "required": true,
+        "type": "integer"
+      }
+    ],
+    "paginated": false
+  }
  ```
    2. Re order the values in the `headers` array to the order you want.
-      * The value furthest to the left is first
+      * The first value in the array is the first column on the sheet
         
 ### Note:  In order to use functions that use new scopes, you will have to re-auth your character(s).
 
