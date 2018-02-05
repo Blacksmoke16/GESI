@@ -3,7 +3,7 @@
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
 app_version = '4.0.0';
-BASE_URL = 'https://esi.tech.ccp.is/v'
+BASE_URL = 'https://esi.tech.ccp.is/'
 
 // Your email address
 // This is used and sent in the User-Agent header on ESI requests so that CCP know who that request came from.
@@ -14,7 +14,7 @@ EMAIL = 'YOUR_EMAIL';
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
 CLIENT_ID = 'YOUR_CLIENT_ID';
-CLIENT_SECRET = 'YOUR_CLIENT_SECRET;
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 // From the script editor -> file -> project properties -> Script ID
 SCRIPT_ID = 'YOUR_SCRIPT_ID';
