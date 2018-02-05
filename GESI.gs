@@ -3,7 +3,7 @@
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
 app_version = '4.0.0';
-BASE_URL = 'https://esi.tech.ccp.is/'
+BASE_URL = 'https://esi.tech.ccp.is'
 
 // Your email address
 // This is used and sent in the User-Agent header on ESI requests so that CCP know who that request came from.
@@ -21,7 +21,7 @@ SCRIPT_ID = 'YOUR_SCRIPT_ID';
 
 // Array of character names
 // Used for authing
-CHARACTERS = ['Blacksmoke16'];
+CHARACTERS = ['YOUR_CHARACTER_NAME'];
 
 // Current 'main' character used when a function is called without a character name as a param
 // Also acts as what character from the CHARACTERS array will be authed
