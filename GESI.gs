@@ -174,7 +174,7 @@ function authCallback(request) {
 }
 
 function showSidebar() {
-  var scriptUrl = 'https://script.google.com/macros/d/1Lw-OdHtIxbokIng4ZcjwWYnHgLU_tmx6KnyHtZ9aR9QaT7TH6Ru9eQZv/usercallback';
+  var scriptUrl = 'https://script.google.com/macros/d/' + SCRIPT_ID + '/usercallback';
   var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(3600).createToken();
   var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
   var template = HtmlService.createTemplate('<br><a href="<?= authorizationUrl ?>" target="_blank">Authorize:  <?= character ?></a>.');
