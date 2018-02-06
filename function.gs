@@ -58,74 +58,74 @@ function alliances(opt_headers) {
 
 /** 
 * Return a list of the characters assets
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get character assets.
 * @customfunction
 */
-function characters_character_assets(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_assets(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Return a list of the corporation assets
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation assets.
 * @customfunction
 */
-function corporations_corporation_assets(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_assets(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * A list of your character's personal bookmarks
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List bookmarks.
 * @customfunction
 */
-function characters_character_bookmarks(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_bookmarks(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * A list of your character's personal bookmark folders
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List bookmark folders.
 * @customfunction
 */
-function characters_character_bookmarks_folders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_bookmarks_folders(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * A list of your corporation's bookmarks
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List corporation bookmarks.
 * @customfunction
 */
-function corporations_corporation_bookmarks(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_bookmarks(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * A list of your corporation's bookmark folders
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List corporation bookmark folders.
 * @customfunction
 */
-function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_bookmarks_folders(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -260,14 +260,14 @@ function characters_character_agents_research(name, opt_headers) {
 
 /** 
 * Return a list of blueprints the character owns
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get blueprints.
 * @customfunction
 */
-function characters_character_blueprints(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_blueprints(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -360,38 +360,38 @@ function characters_character_implants(name, opt_headers) {
 
 /** 
 * Return contacts of a character
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get contacts.
 * @customfunction
 */
-function characters_character_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_contacts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Return contacts of a corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation contacts.
 * @customfunction
 */
-function corporations_corporation_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_contacts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Return contacts of an alliance
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get alliance contacts.
 * @customfunction
 */
-function alliances_alliance_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function alliances_alliance_contacts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -407,14 +407,14 @@ function characters_character_contacts_labels(name, opt_headers) {
 
 /** 
 * Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get contracts.
 * @customfunction
 */
-function characters_character_contracts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_contracts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -445,14 +445,14 @@ function characters_character_contracts_contract_bids(contract_id, name, opt_hea
 
 /** 
 * Returns contracts available to a coporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get coporation contracts.
 * @customfunction
 */
-function corporations_corporation_contracts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_contracts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -471,15 +471,15 @@ function corporations_corporation_contracts_contract_items(contract_id, name, op
 /** 
 * Lists bids on a particular auction contract
 * @param {integer} contract_id (Required) ID of a contract.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation contract bids.
 * @customfunction
 */
-function corporations_corporation_contracts_contract_bids(contract_id, name, page, opt_headers) {
+function corporations_corporation_contracts_contract_bids(contract_id, page, name, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
-  return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{contract_id:contract_id,page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -542,14 +542,14 @@ function corporations_corporation_roles(name, opt_headers) {
 
 /** 
 * Return how roles have changed for a coporation's members, up to a month
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation member roles history.
 * @customfunction
 */
-function corporations_corporation_roles_history(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_roles_history(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -577,14 +577,14 @@ function corporations_npccorps(opt_headers) {
 /** 
 * Get a list of corporation structures
 * @param {string} language  Language to use in the response.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation structures.
 * @customfunction
 */
-function corporations_corporation_structures(language, name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{language:language,name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_structures(language, page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{language:language,page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -644,38 +644,38 @@ function corporations_corporation_members_titles(name, opt_headers) {
 
 /** 
 * Returns a list of blueprints the corporation owns
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation blueprints.
 * @customfunction
 */
-function corporations_corporation_blueprints(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_blueprints(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Return corporation standings from agents, NPC corporations, and factions
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation standings.
 * @customfunction
 */
-function corporations_corporation_standings(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_standings(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Returns list of corporation starbases (POSes)
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation starbases (POSes).
 * @customfunction
 */
-function corporations_corporation_starbases(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_starbases(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -695,14 +695,14 @@ function corporations_corporation_starbases_starbase(starbase_id, system_id, nam
 
 /** 
 * Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get all corporation ALSC logs.
 * @customfunction
 */
-function corporations_corporation_containers_logs(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_containers_logs(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -718,38 +718,38 @@ function corporations_corporation_facilities(name, opt_headers) {
 
 /** 
 * Returns a corporation's medals
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation medals.
 * @customfunction
 */
-function corporations_corporation_medals(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_medals(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Returns medals issued by a corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation issued medals.
 * @customfunction
 */
-function corporations_corporation_medals_issue(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_medals_issue(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation outposts.
 * @customfunction
 */
-function corporations_corporation_outposts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_outposts(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -767,14 +767,14 @@ function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers
 
 /** 
 * Return the current shareholders of a corporation.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation shareholders.
 * @customfunction
 */
-function corporations_corporation_shareholders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_shareholders(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -1010,53 +1010,53 @@ function characters_character_industry_jobs(include_completed, name, opt_headers
 
 /** 
 * Paginated record of all mining done by a character for the past 30 days
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Character mining ledger.
 * @customfunction
 */
-function characters_character_mining(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_mining(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Paginated list of all entities capable of observing and recording mining for a corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Corporation mining observers.
 * @customfunction
 */
-function corporation_corporation_mining_observers(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporation_corporation_mining_observers(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Paginated record of all mining seen by an observer
 * @param {integer} observer_id (Required) A mining observer id.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Observed corporation mining.
 * @customfunction
 */
-function corporation_corporation_mining_observers_observer(observer_id, name, page, opt_headers) {
+function corporation_corporation_mining_observers_observer(observer_id, page, name, opt_headers) {
   if(!observer_id) throw 'observer_id is required';
-  return parseData_(arguments.callee.name,{observer_id:observer_id,name:name,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{observer_id:observer_id,page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * List industry jobs run by a corporation
-* @param {boolean} include_completed  Whether retrieve completed character industry jobs as well.
+* @param {boolean} include_completed  Whether retrieve completed industry jobs as well.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List corporation industry jobs.
 * @customfunction
 */
-function corporations_corporation_industry_jobs(include_completed, name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{include_completed:include_completed,name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_industry_jobs(include_completed, page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{include_completed:include_completed,page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -1112,7 +1112,6 @@ function characters_character_killmails_recent(max_count, max_kill_id, name, opt
 /** 
 * Get a list of corporation's recent kills and losses
 * @param {integer} max_kill_id  Only return killmails with ID smaller than this.
-.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation kills and losses.
@@ -1239,44 +1238,45 @@ function markets_prices(opt_headers) {
 /** 
 * Return a list of orders in a region
 * @param {string} order_type (Required) Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders..
+* @param {integer} page  Which page of results to return.
 * @param {integer} region_id (Required) Return orders in this region.
 * @param {integer} type_id  Return orders only for this type.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List orders in a region.
 * @customfunction
 */
-function markets_region_orders(order_type, region_id, type_id, page, opt_headers) {
+function markets_region_orders(order_type, page, region_id, type_id, opt_headers) {
   if(!order_type) throw 'order_type is required';
   if(!region_id) throw 'region_id is required';
-  return parseData_(arguments.callee.name,{order_type:order_type,region_id:region_id,type_id:type_id,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{order_type:order_type,page:page,region_id:region_id,type_id:type_id,opt_headers:opt_headers});
 }
 
 /** 
 * Return a list of historical market statistics for the specified type in a region
-* @param {integer} region_id (Required) Return orders in this region.
-* @param {integer} type_id  Return orders only for this type.
+* @param {integer} region_id (Required) Return statistics in this region.
+* @param {integer} type_id (Required) Return statistics for this type.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List historical market statistics in a region.
 * @customfunction
 */
 function markets_region_history(region_id, type_id, opt_headers) {
   if(!region_id) throw 'region_id is required';
+  if(!type_id) throw 'type_id is required';
   return parseData_(arguments.callee.name,{region_id:region_id,type_id:type_id,opt_headers:opt_headers});
 }
 
 /** 
 * Return all orders in a structure
+* @param {integer} page  Which page of results to return.
 * @param {integer} structure_id (Required) Return orders in this structure.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List orders in a structure.
 * @customfunction
 */
-function markets_structures_structure(structure_id, name, page, opt_headers) {
+function markets_structures_structure(page, structure_id, name, opt_headers) {
   if(!structure_id) throw 'structure_id is required';
-  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{page:page,structure_id:structure_id,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -1315,51 +1315,51 @@ function characters_character_orders(name, opt_headers) {
 
 /** 
 * List cancelled and expired market orders placed by a character up to 90 days in the past.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List historical orders by a character.
 * @customfunction
 */
-function characters_character_orders_history(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function characters_character_orders_history(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * Return a list of type IDs that have active orders in the region, for efficient market indexing.
-* @param {integer} region_id (Required) Return orders in this region.
-* @param {integer} page Which page of results to return.
+* @param {integer} page  Which page of results to return.
+* @param {integer} region_id (Required) Return statistics in this region.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List type IDs relevant to a market.
 * @customfunction
 */
-function markets_region_types(region_id, page, opt_headers) {
+function markets_region_types(page, region_id, opt_headers) {
   if(!region_id) throw 'region_id is required';
-  return parseData_(arguments.callee.name,{region_id:region_id,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{page:page,region_id:region_id,opt_headers:opt_headers});
 }
 
 /** 
 * List open market orders placed on behalf of a corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List open orders from a corporation.
 * @customfunction
 */
-function corporations_corporation_orders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_orders(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
 * List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List historical orders from a corporation.
 * @customfunction
 */
-function corporations_corporation_orders_history(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_orders_history(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -1456,14 +1456,14 @@ function universe_schematics_schematic(schematic_id, opt_headers) {
 
 /** 
 * List customs offices owned by a corporation
+* @param {integer} page  Which page of results to return.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List corporation customs offices.
 * @customfunction
 */
-function corporations_corporation_customs_offices(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
+function corporations_corporation_customs_offices(page, name, opt_headers) {
+  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
 }
 
 /** 
@@ -1591,7 +1591,7 @@ function status(opt_headers) {
 
 /** 
 * Get information on a planet
-* @param {integer} planet_id (Required) Planet id of the target planet.
+* @param {integer} planet_id (Required) planet_id integer.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get planet information.
 * @customfunction
@@ -1615,7 +1615,7 @@ function universe_stations_station(station_id, opt_headers) {
 
 /** 
 * Returns information on requested structure, if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
-* @param {integer} structure_id (Required) Return orders in this structure.
+* @param {integer} structure_id (Required) An Eve structure ID.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get structure information.
@@ -1629,7 +1629,7 @@ function universe_structures_structure(structure_id, name, opt_headers) {
 /** 
 * Get information on a solar system
 * @param {string} language  Language to use in the response.
-* @param {integer} system_id (Required) The solar system this starbase (POS) is located in,.
+* @param {integer} system_id (Required) system_id integer.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get solar system information.
 * @customfunction
@@ -1652,18 +1652,19 @@ function universe_systems(opt_headers) {
 /** 
 * Get information on a type
 * @param {string} language  Language to use in the response.
-* @param {integer} type_id  Return orders only for this type.
+* @param {integer} type_id (Required) An Eve item type ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get type information.
 * @customfunction
 */
 function universe_types_type(language, type_id, opt_headers) {
+  if(!type_id) throw 'type_id is required';
   return parseData_(arguments.callee.name,{language:language,type_id:type_id,opt_headers:opt_headers});
 }
 
 /** 
 * Get a list of type ids
-* @param {integer} page Which page of results to return.
+* @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get types.
 * @customfunction
@@ -1674,7 +1675,7 @@ function universe_types(page, opt_headers) {
 
 /** 
 * Get a list of item groups
-* @param {integer} page Which page of results to return.
+* @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get item groups.
 * @customfunction
@@ -1685,7 +1686,7 @@ function universe_groups(page, opt_headers) {
 
 /** 
 * Get information on an item group
-* @param {integer} group_id (Required) ID of an opportunities group.
+* @param {integer} group_id (Required) An Eve item group ID.
 * @param {string} language  Language to use in the response.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get item group information.
@@ -1775,7 +1776,7 @@ function universe_regions(opt_headers) {
 /** 
 * Get information on a region
 * @param {string} language  Language to use in the response.
-* @param {integer} region_id (Required) Return orders in this region.
+* @param {integer} region_id (Required) region_id integer.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get region information.
 * @customfunction
@@ -1911,7 +1912,7 @@ function characters_character_wallet_journal(from_id, name, opt_headers) {
 
 /** 
 * Get wallet transactions of a character
-* @param {integer} from_id  Only show journal entries happened before the transaction referenced by this id.
+* @param {integer} from_id  Only show transactions happened before the one referenced by this id.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get wallet transactions.
@@ -1985,13 +1986,13 @@ function wars_war(war_id, opt_headers) {
 
 /** 
 * Return a list of kills related to a war
-* @param {integer} war_id (Required) ID for a war.
-* @param {integer} page Which page of results to return.
+* @param {integer} page  Which page of results to return.
+* @param {integer} war_id (Required) A valid war ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List kills for a war.
 * @customfunction
 */
-function wars_war_killmails(war_id, page, opt_headers) {
+function wars_war_killmails(page, war_id, opt_headers) {
   if(!war_id) throw 'war_id is required';
-  return parseData_(arguments.callee.name,{war_id:war_id,page:page,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{page:page,war_id:war_id,opt_headers:opt_headers});
 }
