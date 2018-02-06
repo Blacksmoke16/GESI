@@ -224,7 +224,6 @@ function getAccessToken_(code) {
     return doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"authorization_code", "code": code});
 }
 
-
 function getCharacterDetails_(token) {
     return doRequest_('https://login.eveonline.com/oauth/verify', 'get', token);
 }
