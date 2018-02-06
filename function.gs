@@ -64,8 +64,8 @@ function alliances(opt_headers) {
 * @return Get character assets.
 * @customfunction
 */
-function characters_character_assets(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_assets(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -76,8 +76,8 @@ function characters_character_assets(page, name, opt_headers) {
 * @return Get corporation assets.
 * @customfunction
 */
-function corporations_corporation_assets(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_assets(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -88,8 +88,8 @@ function corporations_corporation_assets(page, name, opt_headers) {
 * @return List bookmarks.
 * @customfunction
 */
-function characters_character_bookmarks(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_bookmarks(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -100,8 +100,8 @@ function characters_character_bookmarks(page, name, opt_headers) {
 * @return List bookmark folders.
 * @customfunction
 */
-function characters_character_bookmarks_folders(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_bookmarks_folders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -112,8 +112,8 @@ function characters_character_bookmarks_folders(page, name, opt_headers) {
 * @return List corporation bookmarks.
 * @customfunction
 */
-function corporations_corporation_bookmarks(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_bookmarks(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -124,8 +124,8 @@ function corporations_corporation_bookmarks(page, name, opt_headers) {
 * @return List corporation bookmark folders.
 * @customfunction
 */
-function corporations_corporation_bookmarks_folders(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -266,8 +266,8 @@ function characters_character_agents_research(name, opt_headers) {
 * @return Get blueprints.
 * @customfunction
 */
-function characters_character_blueprints(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_blueprints(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -366,8 +366,8 @@ function characters_character_implants(name, opt_headers) {
 * @return Get contacts.
 * @customfunction
 */
-function characters_character_contacts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -378,8 +378,8 @@ function characters_character_contacts(page, name, opt_headers) {
 * @return Get corporation contacts.
 * @customfunction
 */
-function corporations_corporation_contacts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -390,8 +390,8 @@ function corporations_corporation_contacts(page, name, opt_headers) {
 * @return Get alliance contacts.
 * @customfunction
 */
-function alliances_alliance_contacts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function alliances_alliance_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -413,8 +413,8 @@ function characters_character_contacts_labels(name, opt_headers) {
 * @return Get contracts.
 * @customfunction
 */
-function characters_character_contracts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_contracts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -451,8 +451,8 @@ function characters_character_contracts_contract_bids(contract_id, name, opt_hea
 * @return Get coporation contracts.
 * @customfunction
 */
-function corporations_corporation_contracts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_contracts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -477,9 +477,9 @@ function corporations_corporation_contracts_contract_items(contract_id, name, op
 * @return Get corporation contract bids.
 * @customfunction
 */
-function corporations_corporation_contracts_contract_bids(contract_id, page, name, opt_headers) {
+function corporations_corporation_contracts_contract_bids(contract_id, name, page, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
-  return parseData_(arguments.callee.name,{contract_id:contract_id,page:page,name:name,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -548,8 +548,8 @@ function corporations_corporation_roles(name, opt_headers) {
 * @return Get corporation member roles history.
 * @customfunction
 */
-function corporations_corporation_roles_history(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_roles_history(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -583,8 +583,8 @@ function corporations_npccorps(opt_headers) {
 * @return Get corporation structures.
 * @customfunction
 */
-function corporations_corporation_structures(language, page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{language:language,page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_structures(language, name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{language:language,name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -650,8 +650,8 @@ function corporations_corporation_members_titles(name, opt_headers) {
 * @return Get corporation blueprints.
 * @customfunction
 */
-function corporations_corporation_blueprints(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_blueprints(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -662,8 +662,8 @@ function corporations_corporation_blueprints(page, name, opt_headers) {
 * @return Get corporation standings.
 * @customfunction
 */
-function corporations_corporation_standings(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_standings(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -674,8 +674,8 @@ function corporations_corporation_standings(page, name, opt_headers) {
 * @return Get corporation starbases (POSes).
 * @customfunction
 */
-function corporations_corporation_starbases(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_starbases(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -701,8 +701,8 @@ function corporations_corporation_starbases_starbase(starbase_id, system_id, nam
 * @return Get all corporation ALSC logs.
 * @customfunction
 */
-function corporations_corporation_containers_logs(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_containers_logs(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -724,8 +724,8 @@ function corporations_corporation_facilities(name, opt_headers) {
 * @return Get corporation medals.
 * @customfunction
 */
-function corporations_corporation_medals(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_medals(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -736,8 +736,8 @@ function corporations_corporation_medals(page, name, opt_headers) {
 * @return Get corporation issued medals.
 * @customfunction
 */
-function corporations_corporation_medals_issue(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_medals_issue(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -748,8 +748,8 @@ function corporations_corporation_medals_issue(page, name, opt_headers) {
 * @return Get corporation outposts.
 * @customfunction
 */
-function corporations_corporation_outposts(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_outposts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -773,8 +773,8 @@ function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers
 * @return Get corporation shareholders.
 * @customfunction
 */
-function corporations_corporation_shareholders(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_shareholders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1016,8 +1016,8 @@ function characters_character_industry_jobs(include_completed, name, opt_headers
 * @return Character mining ledger.
 * @customfunction
 */
-function characters_character_mining(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_mining(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1028,8 +1028,8 @@ function characters_character_mining(page, name, opt_headers) {
 * @return Corporation mining observers.
 * @customfunction
 */
-function corporation_corporation_mining_observers(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporation_corporation_mining_observers(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1041,9 +1041,9 @@ function corporation_corporation_mining_observers(page, name, opt_headers) {
 * @return Observed corporation mining.
 * @customfunction
 */
-function corporation_corporation_mining_observers_observer(observer_id, page, name, opt_headers) {
+function corporation_corporation_mining_observers_observer(observer_id, name, page, opt_headers) {
   if(!observer_id) throw 'observer_id is required';
-  return parseData_(arguments.callee.name,{observer_id:observer_id,page:page,name:name,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{observer_id:observer_id,name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1055,8 +1055,8 @@ function corporation_corporation_mining_observers_observer(observer_id, page, na
 * @return List corporation industry jobs.
 * @customfunction
 */
-function corporations_corporation_industry_jobs(include_completed, page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{include_completed:include_completed,page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_industry_jobs(include_completed, name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{include_completed:include_completed,name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1245,10 +1245,10 @@ function markets_prices(opt_headers) {
 * @return List orders in a region.
 * @customfunction
 */
-function markets_region_orders(order_type, page, region_id, type_id, opt_headers) {
+function markets_region_orders(order_type, region_id, type_id, page, opt_headers) {
   if(!order_type) throw 'order_type is required';
   if(!region_id) throw 'region_id is required';
-  return parseData_(arguments.callee.name,{order_type:order_type,page:page,region_id:region_id,type_id:type_id,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{order_type:order_type,region_id:region_id,type_id:type_id,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1274,9 +1274,9 @@ function markets_region_history(region_id, type_id, opt_headers) {
 * @return List orders in a structure.
 * @customfunction
 */
-function markets_structures_structure(page, structure_id, name, opt_headers) {
+function markets_structures_structure(structure_id, name, page, opt_headers) {
   if(!structure_id) throw 'structure_id is required';
-  return parseData_(arguments.callee.name,{page:page,structure_id:structure_id,name:name,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1321,8 +1321,8 @@ function characters_character_orders(name, opt_headers) {
 * @return List historical orders by a character.
 * @customfunction
 */
-function characters_character_orders_history(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function characters_character_orders_history(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1333,9 +1333,9 @@ function characters_character_orders_history(page, name, opt_headers) {
 * @return List type IDs relevant to a market.
 * @customfunction
 */
-function markets_region_types(page, region_id, opt_headers) {
+function markets_region_types(region_id, page, opt_headers) {
   if(!region_id) throw 'region_id is required';
-  return parseData_(arguments.callee.name,{page:page,region_id:region_id,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{region_id:region_id,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1346,8 +1346,8 @@ function markets_region_types(page, region_id, opt_headers) {
 * @return List open orders from a corporation.
 * @customfunction
 */
-function corporations_corporation_orders(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_orders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1358,8 +1358,8 @@ function corporations_corporation_orders(page, name, opt_headers) {
 * @return List historical orders from a corporation.
 * @customfunction
 */
-function corporations_corporation_orders_history(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_orders_history(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1462,8 +1462,8 @@ function universe_schematics_schematic(schematic_id, opt_headers) {
 * @return List corporation customs offices.
 * @customfunction
 */
-function corporations_corporation_customs_offices(page, name, opt_headers) {
-  return parseData_(arguments.callee.name,{page:page,name:name,opt_headers:opt_headers});
+function corporations_corporation_customs_offices(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1992,7 +1992,7 @@ function wars_war(war_id, opt_headers) {
 * @return List kills for a war.
 * @customfunction
 */
-function wars_war_killmails(page, war_id, opt_headers) {
+function wars_war_killmails(war_id, page, opt_headers) {
   if(!war_id) throw 'war_id is required';
-  return parseData_(arguments.callee.name,{page:page,war_id:war_id,opt_headers:opt_headers});
+  return parseData_(arguments.callee.name,{war_id:war_id,page:page,opt_headers:opt_headers});
 }
