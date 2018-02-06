@@ -161,8 +161,7 @@ function parseData_(endpoint_name, params) {
         data.forEach(function(obj) {
             var temp = [];
             ENDPOINTS[endpoint_name].headers.forEach(function(header) {
-                var data_value = obj[header];
-                temp.push(data_value);
+                temp.push(obj[header]);
             });
            result.push(temp);
         });
