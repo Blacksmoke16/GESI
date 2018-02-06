@@ -6,7 +6,6 @@
 * @customfunction
 */
 function alliances_alliance(alliance_id, opt_headers) {
-  if(!alliance_id) throw 'alliance_id is required';
   return parseData_(arguments.callee.name,{alliance_id:alliance_id,opt_headers:opt_headers});
 }
 
@@ -18,7 +17,6 @@ function alliances_alliance(alliance_id, opt_headers) {
 * @customfunction
 */
 function alliances_alliance_corporations(alliance_id, opt_headers) {
-  if(!alliance_id) throw 'alliance_id is required';
   return parseData_(arguments.callee.name,{alliance_id:alliance_id,opt_headers:opt_headers});
 }
 
@@ -42,7 +40,6 @@ function alliances_names(alliance_ids, opt_headers) {
 * @customfunction
 */
 function alliances_alliance_icons(alliance_id, opt_headers) {
-  if(!alliance_id) throw 'alliance_id is required';
   return parseData_(arguments.callee.name,{alliance_id:alliance_id,opt_headers:opt_headers});
 }
 
@@ -168,12 +165,13 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 
 /** 
 * Public information about a character
+* @param {integer} character_id (Required) An EVE character ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get character's public information.
 * @customfunction
 */
-function characters_character(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function characters_character(character_id, opt_headers) {
+  return parseData_(arguments.callee.name,{character_id:character_id,opt_headers:opt_headers});
 }
 
 /** 
@@ -190,22 +188,24 @@ function characters_names(character_ids, opt_headers) {
 
 /** 
 * Get portrait urls for a character
+* @param {integer} character_id (Required) An EVE character ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get character portraits.
 * @customfunction
 */
-function characters_character_portrait(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function characters_character_portrait(character_id, opt_headers) {
+  return parseData_(arguments.callee.name,{character_id:character_id,opt_headers:opt_headers});
 }
 
 /** 
 * Get a list of all the corporations a character has been a member of
+* @param {integer} character_id (Required) An EVE character ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation history.
 * @customfunction
 */
-function characters_character_corporationhistory(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function characters_character_corporationhistory(character_id, opt_headers) {
+  return parseData_(arguments.callee.name,{character_id:character_id,opt_headers:opt_headers});
 }
 
 /** 
@@ -386,7 +386,6 @@ function corporations_corporation_contacts(name, page, opt_headers) {
 * @customfunction
 */
 function alliances_alliance_contacts(alliance_id, name, page, opt_headers) {
-  if(!alliance_id) throw 'alliance_id is required';
   return parseData_(arguments.callee.name,{alliance_id:alliance_id,name:name,page:page,opt_headers:opt_headers});
 }
 
@@ -480,22 +479,24 @@ function corporations_corporation_contracts_contract_bids(contract_id, name, pag
 
 /** 
 * Public information about a corporation
+* @param {integer} corporation_id (Required) An EVE corporation ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation information.
 * @customfunction
 */
-function corporations_corporation(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function corporations_corporation(corporation_id, opt_headers) {
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers});
 }
 
 /** 
 * Get a list of all the alliances a corporation has been a member of
+* @param {integer} corporation_id (Required) An EVE corporation ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get alliance history.
 * @customfunction
 */
-function corporations_corporation_alliancehistory(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function corporations_corporation_alliancehistory(corporation_id, opt_headers) {
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers});
 }
 
 /** 
@@ -546,12 +547,13 @@ function corporations_corporation_roles_history(name, page, opt_headers) {
 
 /** 
 * Get the icon urls for a corporation
+* @param {integer} corporation_id (Required) An EVE corporation ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get corporation icon.
 * @customfunction
 */
-function corporations_corporation_icons(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function corporations_corporation_icons(corporation_id, opt_headers) {
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers});
 }
 
 /** 
@@ -1147,12 +1149,13 @@ function characters_character_online(name, opt_headers) {
 
 /** 
 * Return a list of offers from a specific corporation's loyalty store
+* @param {integer} corporation_id (Required) An EVE corporation ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List loyalty store offers.
 * @customfunction
 */
-function loyalty_stores_corporation_offers(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers});
+function loyalty_stores_corporation_offers(corporation_id, opt_headers) {
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers});
 }
 
 /** 
