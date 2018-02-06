@@ -184,10 +184,10 @@ function parseData_(endpoint_name, params) {
 }
 
 function extend_(obj, src) {
-  for (var key in src) {
-    if (src.hasOwnProperty(key)) obj[key] = src[key];
-  }
-  return obj;
+    for (var key in src) {
+      if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -195,91 +195,65 @@ function extend_(obj, src) {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function authCallback(request) {
-  var tokenData = getAccessToken_(request.parameter.code);
-  var characterData = extend_(tokenData, getCharacterDetails_(tokenData['access_token']));
-  var affiliationData = getCharacterAffiliation_(characterData['CharacterID'])[0];
-  var userData =   extend_(characterData, affiliationData);
-  cacheData_(userData);
-  return HtmlService.createHtmlOutput('Thank you for using GESI ' + userData['CharacterName']);
+    var tokenData = getAccessToken_(request.parameter.code);
+    var characterData = extend_(tokenData, getCharacterDetails_(tokenData['access_token']));
+    var affiliationData = getCharacterAffiliation_(characterData['CharacterID'])[0];
+    var userData =   extend_(characterData, affiliationData);
+    cacheData_(userData);
+    return HtmlService.createHtmlOutput('Thank you for using GESI ' + userData['CharacterName']);
 }
 
 function showSidebar() {
-  var scriptUrl = 'https://script.google.com/macros/d/' + SCRIPT_ID + '/usercallback';
-  var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(3600).createToken();
-  var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
-  var template = HtmlService.createTemplate('<br><a href="<?= authorizationUrl ?>" target="_blank">Authorize:  <?= character ?></a>.');
-  template.authorizationUrl = authorizationUrl;
-  template.character = AUTHING_CHARACTER;
-  SpreadsheetApp.getUi().showSidebar(template.evaluate());
+    var scriptUrl = 'https://script.google.com/macros/d/' + SCRIPT_ID + '/usercallback';
+    var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(3600).createToken();
+    var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
+    var template = HtmlService.createTemplate('<br><a href="<?= authorizationUrl ?>" target="_blank">Authorize:  <?= character ?></a>.');
+    template.authorizationUrl = authorizationUrl;
+    template.character = AUTHING_CHARACTER;
+    SpreadsheetApp.getUi().showSidebar(template.evaluate());
+}
+
+function doRequest_(path, method, token, data) {
+    var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
+    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + EMAIL,'Content-Type': 'application/json','Authorization': auth}};
+    if (data) options['payload'] = JSON.stringify(data);
+    return JSON.parse(UrlFetchApp.fetch(path, options));
 }
 
 function getAccessToken_(code) {
-  var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/token', {
-    'method' : 'post',
-    headers: {
-      'User-Agent': 'GESI user ' + EMAIL,
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    },
-    'payload' : JSON.stringify({"grant_type":"authorization_code", "code": code})
-  });
-  return JSON.parse(response);
+    return doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"authorization_code", "code": code});
 }
 
-function refreshToken_(name) {
-  var documentProperties = PropertiesService.getDocumentProperties();
-  var cache = CacheService.getDocumentCache();
-
-  var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/token', {
-    'method' : 'post',
-    headers: {
-      'User-Agent': 'GESI user ' + EMAIL,
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    },
-    'payload' : JSON.stringify({"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')})
-  });
-  cache.put(name + '_access_token', JSON.parse(response)['access_token'], 900);
-  return JSON.parse(response);
-}
 
 function getCharacterDetails_(token) {
-  var response = UrlFetchApp.fetch('https://login.eveonline.com/oauth/verify', {
-      headers: {
-        'User-Agent': 'GESI user ' + EMAIL,
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-  });
-  return JSON.parse(response);
+    return doRequest_('https://login.eveonline.com/oauth/verify', 'get', token);
 }
 
 function getCharacterAffiliation_(character_id) {
-  var character_ids = [];
-  character_ids.push(character_id);
-  var response = UrlFetchApp.fetch(BASE_URL + '/v1/characters/affiliation/', {
-    'method' : 'post',
-    headers: {
-      'User-Agent': 'GESI user ' + EMAIL,
-      'Content-Type': 'application/json',
-      },
-     'payload' : JSON.stringify(character_ids)
-  });
-  return JSON.parse(response);
+    var character_ids = [character_id];
+    return doRequest_(BASE_URL + '/v1/characters/affiliation/', 'post', null, character_ids);
+}
+
+function refreshToken_(name) {
+    var documentProperties = PropertiesService.getDocumentProperties();
+    var cache = CacheService.getDocumentCache();
+    var response = JSON.parse(doRequest('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')}));
+    cache.put(name + '_access_token', response['access_token'], 900);
+    return response;
 }
 
 function cacheData_(userData) {
-  var documentProperties = PropertiesService.getDocumentProperties();
-  var cache = CacheService.getDocumentCache();
-  var userProperties = {};
-  prefix = userData['CharacterName'] + '_';
-  ['character_id', 'corporation_id', 'alliance_id', 'CharacterName', 'refresh_token']
-    .forEach(function(param) { userProperties[prefix + param] = userData[param]; });
-  cache.put(prefix + 'access_token', userData['access_token'], 900);
-  documentProperties.setProperties(userProperties );
+    var documentProperties = PropertiesService.getDocumentProperties();
+    var cache = CacheService.getDocumentCache();
+    var userProperties = {};
+    prefix = userData['CharacterName'] + '_';
+    ['character_id', 'corporation_id', 'alliance_id', 'CharacterName', 'refresh_token']
+      .forEach(function(param) { userProperties[prefix + param] = userData[param]; });
+    cache.put(prefix + 'access_token', userData['access_token'], 900);
+    documentProperties.setProperties(userProperties );
 }
 
 function resetAuth() {
-  var documentProperties = PropertiesService.getDocumentProperties();
-  documentProperties.deleteAllProperties();
+    var documentProperties = PropertiesService.getDocumentProperties();
+    documentProperties.deleteAllProperties();
 }
