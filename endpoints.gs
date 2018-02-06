@@ -355,7 +355,13 @@ ENDPOINTS = {
     "response_type": "object",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -399,7 +405,13 @@ ENDPOINTS = {
     "response_type": "object",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -419,7 +431,13 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -764,13 +782,7 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-      {
-        "name": "alliance_id",
-        "description": "An EVE alliance ID",
-        "required": true,
-        "type": "integer",
-        "in": "path"
-      }
+
     ],
     "paginated": true
   },
@@ -1001,7 +1013,13 @@ ENDPOINTS = {
     "response_type": "object",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "corporation_id",
+        "description": "An EVE corporation ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -1021,7 +1039,13 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "corporation_id",
+        "description": "An EVE corporation ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -1128,7 +1152,13 @@ ENDPOINTS = {
     "response_type": "object",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "corporation_id",
+        "description": "An EVE corporation ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -1230,12 +1260,12 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "object"
+      "integer"
     ],
     "path": "/v1/corporations/{corporation_id}/members/limit/",
     "authed": true,
     "response_type": "integer",
-    "item_type": "object",
+    "item_type": "integer",
     "parameters": [
 
     ],
@@ -2389,7 +2419,13 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "corporation_id",
+        "description": "An EVE corporation ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
     ],
     "paginated": false
   },
@@ -4064,12 +4100,12 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "object"
+      "number"
     ],
     "path": "/v1/characters/{character_id}/wallet/",
     "authed": true,
     "response_type": "number",
-    "item_type": "object",
+    "item_type": "number",
     "parameters": [
 
     ],
