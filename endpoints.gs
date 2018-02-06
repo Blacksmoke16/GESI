@@ -25,8 +25,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "alliances_alliance_corporations": {
     "description": "List all current member corporations of an alliance",
@@ -48,8 +47,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "alliances_names": {
     "description": "Resolve a set of alliance IDs to alliance names",
@@ -72,8 +70,7 @@ ENDPOINTS = {
         "type": "array",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "alliances_alliance_icons": {
     "description": "Get the icon urls for a alliance",
@@ -96,8 +93,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "alliances": {
     "description": "List all active player alliances",
@@ -113,8 +109,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_assets": {
     "description": "Return a list of the characters assets",
@@ -135,9 +130,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_assets": {
     "description": "Return a list of the corporation assets",
@@ -158,9 +158,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_bookmarks": {
     "description": "A list of your character's personal bookmarks",
@@ -183,9 +188,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_bookmarks_folders": {
     "description": "A list of your character's personal bookmark folders",
@@ -201,9 +211,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_bookmarks": {
     "description": "A list of your corporation's bookmarks",
@@ -226,9 +241,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_bookmarks_folders": {
     "description": "A list of your corporation's bookmark folders",
@@ -245,9 +265,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_calendar": {
     "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event.",
@@ -273,8 +298,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_calendar_event": {
     "description": "Get all the information for a specific event",
@@ -305,8 +329,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_calendar_event_attendees": {
     "description": "Get all invited attendees for a given event",
@@ -329,8 +352,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character": {
     "description": "Public information about a character",
@@ -362,8 +384,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_names": {
     "description": "Resolve a set of character IDs to character names",
@@ -386,8 +407,7 @@ ENDPOINTS = {
         "type": "array",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_portrait": {
     "description": "Get portrait urls for a character",
@@ -412,8 +432,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_corporationhistory": {
     "description": "Get a list of all the corporations a character has been a member of",
@@ -438,8 +457,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_chat_channels": {
     "description": "Return chat channels that a character is the owner or operator of",
@@ -464,8 +482,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_medals": {
     "description": "Return a list of medals the character has",
@@ -489,8 +506,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_standings": {
     "description": "Return character standings from agents, NPC corporations, and factions",
@@ -508,8 +524,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_agents_research": {
     "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
@@ -529,8 +544,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_blueprints": {
     "description": "Return a list of blueprints the character owns",
@@ -552,9 +566,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_fatigue": {
     "description": "Return a character's jump activation and fatigue information",
@@ -572,8 +591,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_notifications_contacts": {
     "description": "Return notifications about having been added to someone's contact list",
@@ -593,8 +611,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_notifications": {
     "description": "Return character notifications",
@@ -616,8 +633,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_roles": {
     "description": "Returns a character's corporation roles",
@@ -636,8 +652,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_titles": {
     "description": "Returns a character's titles",
@@ -654,8 +669,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_stats": {
     "description": "Returns aggregate yearly stats for a character",
@@ -683,8 +697,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_clones": {
     "description": "A list of the character's clones",
@@ -703,8 +716,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_implants": {
     "description": "Return implants on the active clone of a character",
@@ -720,8 +732,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_contacts": {
     "description": "Return contacts of a character",
@@ -741,9 +752,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_contacts": {
     "description": "Return contacts of a corporation",
@@ -762,9 +778,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "alliances_alliance_contacts": {
     "description": "Return contacts of an alliance",
@@ -782,9 +803,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_contacts_labels": {
     "description": "Return custom labels for contacts the character defined",
@@ -801,8 +827,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_contracts": {
     "description": "Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -838,9 +863,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "characters_character_contracts_contract_items": {
     "description": "Lists items of a particular contract",
@@ -867,8 +897,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_contracts_contract_bids": {
     "description": "Lists bids on a particular auction contract",
@@ -893,8 +922,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_contracts": {
     "description": "Returns contracts available to a coporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -930,9 +958,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_contracts_contract_items": {
     "description": "Lists items of a particular contract",
@@ -959,8 +992,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_contracts_contract_bids": {
     "description": "Lists bids on a particular auction contract",
@@ -984,9 +1016,15 @@ ENDPOINTS = {
         "required": true,
         "type": "integer",
         "in": "path"
+      },
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
       }
-    ],
-    "paginated": true
+    ]
   },
   "corporations_corporation": {
     "description": "Public information about a corporation",
@@ -1020,8 +1058,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_alliancehistory": {
     "description": "Get a list of all the alliances a corporation has been a member of",
@@ -1046,8 +1083,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_names": {
     "description": "Resolve a set of corporation IDs to corporation names",
@@ -1070,8 +1106,7 @@ ENDPOINTS = {
         "type": "array",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_members": {
     "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
@@ -1087,8 +1122,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_roles": {
     "description": "Return the roles of all members if the character has the personnel manager role or any grantable role.",
@@ -1112,8 +1146,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_roles_history": {
     "description": "Return how roles have changed for a coporation's members, up to a month",
@@ -1133,9 +1166,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_icons": {
     "description": "Get the icon urls for a corporation",
@@ -1159,8 +1197,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_npccorps": {
     "description": "Get a list of npc corporations",
@@ -1176,8 +1213,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_structures": {
     "description": "Get a list of corporation structures",
@@ -1209,9 +1245,15 @@ ENDPOINTS = {
         "required": null,
         "type": "string",
         "in": "query"
+      },
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
       }
-    ],
-    "paginated": true
+    ]
   },
   "corporations_corporation_membertracking": {
     "description": "Returns additional information about a corporation's members which helps tracking their activities",
@@ -1233,8 +1275,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_divisions": {
     "description": "Return corporation hangar and wallet division names, only show if a division is not using the default name",
@@ -1251,8 +1292,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_members_limit": {
     "description": "Return a corporation's member limit, not including CEO himself",
@@ -1268,8 +1308,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_titles": {
     "description": "Returns a corporation's titles",
@@ -1294,8 +1333,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_members_titles": {
     "description": "Returns a corporation's members' titles",
@@ -1312,8 +1350,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_blueprints": {
     "description": "Returns a list of blueprints the corporation owns",
@@ -1335,9 +1372,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_standings": {
     "description": "Return corporation standings from agents, NPC corporations, and factions",
@@ -1354,9 +1396,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_starbases": {
     "description": "Returns list of corporation starbases (POSes)",
@@ -1378,9 +1425,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_starbases_starbase": {
     "description": "Returns various settings and fuels of a starbase (POS)",
@@ -1422,8 +1474,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_containers_logs": {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
@@ -1449,9 +1500,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_facilities": {
     "description": "Return a corporation's facilities",
@@ -1469,8 +1525,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_medals": {
     "description": "Returns a corporation's medals",
@@ -1489,9 +1544,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_medals_issue": {
     "description": "Returns medals issued by a corporation",
@@ -1511,9 +1571,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_outposts": {
     "description": "Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
@@ -1528,9 +1593,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "integer",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_outposts_outpost": {
     "description": "Get details about a given outpost. Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
@@ -1561,8 +1631,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_shareholders": {
     "description": "Return the current shareholders of a corporation.",
@@ -1579,9 +1648,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "dogma_attributes": {
     "description": "Get a list of dogma attribute ids",
@@ -1597,8 +1671,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "dogma_attributes_attribute": {
     "description": "Get information on a dogma attribute",
@@ -1629,8 +1702,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "dogma_effects": {
     "description": "Get a list of dogma effect ids",
@@ -1646,8 +1718,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "dogma_effects_effect": {
     "description": "Get information on a dogma effect",
@@ -1689,8 +1760,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "fw_wars": {
     "description": "Data about which NPC factions are at war",
@@ -1707,8 +1777,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fw_stats": {
     "description": "Statistical overviews of factions involved in faction warfare",
@@ -1728,8 +1797,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fw_systems": {
     "description": "An overview of the current ownership of faction warfare solar systems",
@@ -1750,8 +1818,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fw_leaderboards": {
     "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday.",
@@ -1768,8 +1835,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fw_leaderboards_characters": {
     "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday.",
@@ -1786,8 +1852,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fw_leaderboards_corporations": {
     "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday.",
@@ -1804,8 +1869,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_fw_stats": {
     "description": "Statistics about a corporation involved in faction warfare",
@@ -1825,8 +1889,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_fw_stats": {
     "description": "Statistical overview of a character involved in faction warfare",
@@ -1847,8 +1910,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_fittings": {
     "description": "Return fittings of a character",
@@ -1868,8 +1930,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fleets_fleet": {
     "description": "Return details about a fleet",
@@ -1894,8 +1955,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_fleet": {
     "description": "Return the fleet ID the character is in, if any.",
@@ -1914,8 +1974,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "fleets_fleet_members": {
     "description": "Return information about fleet members",
@@ -1953,8 +2012,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "fleets_fleet_wings": {
     "description": "Return information about wings in a fleet",
@@ -1985,8 +2043,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "incursions": {
     "description": "Return a list of current incursions",
@@ -2009,8 +2066,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "industry_facilities": {
     "description": "Return a list of industry facilities",
@@ -2031,8 +2087,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "industry_systems": {
     "description": "Return cost indices for solar systems",
@@ -2049,8 +2104,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_industry_jobs": {
     "description": "List industry jobs placed by a character",
@@ -2093,8 +2147,7 @@ ENDPOINTS = {
         "type": "boolean",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_mining": {
     "description": "Paginated record of all mining done by a character for the past 30 days",
@@ -2112,9 +2165,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporation_corporation_mining_observers": {
     "description": "Paginated list of all entities capable of observing and recording mining for a corporation",
@@ -2131,9 +2189,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporation_corporation_mining_observers_observer": {
     "description": "Paginated record of all mining seen by an observer",
@@ -2158,9 +2221,15 @@ ENDPOINTS = {
         "required": true,
         "type": "integer",
         "in": "path"
+      },
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
       }
-    ],
-    "paginated": true
+    ]
   },
   "corporations_corporation_industry_jobs": {
     "description": "List industry jobs run by a corporation",
@@ -2198,13 +2267,19 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "include_completed",
-        "description": "Whether retrieve completed character industry jobs as well",
+        "description": "Whether retrieve completed industry jobs as well",
         "required": false,
         "type": "boolean",
         "in": "query"
+      },
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
       }
-    ],
-    "paginated": true
+    ]
   },
   "corporation_corporation_mining_extractions": {
     "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
@@ -2224,8 +2299,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "insurance_prices": {
     "description": "Return available insurance levels for all ship types",
@@ -2248,8 +2322,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "killmails_killmail_killmail_hash": {
     "description": "Return a single killmail from its ID and hash",
@@ -2284,8 +2357,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_killmails_recent": {
     "description": "Return a list of character's recent kills and losses",
@@ -2315,8 +2387,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_killmails_recent": {
     "description": "Get a list of corporation's recent kills and losses",
@@ -2334,13 +2405,12 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "max_kill_id",
-        "description": "Only return killmails with ID smaller than this.\n",
+        "description": "Only return killmails with ID smaller than this",
         "required": false,
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_location": {
     "description": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.",
@@ -2358,8 +2428,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_ship": {
     "description": "Get the current ship type, name and id",
@@ -2377,8 +2446,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
@@ -2397,8 +2465,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "loyalty_stores_corporation_offers": {
     "description": "Return a list of offers from a specific corporation's loyalty store",
@@ -2426,8 +2493,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_loyalty_points": {
     "description": "Return a list of loyalty points for all corporations the character has worked for",
@@ -2444,8 +2510,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_mail": {
     "description": "Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards.",
@@ -2480,8 +2545,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_mail_labels": {
     "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
@@ -2498,8 +2562,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_mail_lists": {
     "description": "Return all mailing lists that the character is subscribed to",
@@ -2516,8 +2579,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_mail_mail": {
     "description": "Return the contents of an EVE mail",
@@ -2545,8 +2607,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "markets_prices": {
     "description": "Return a list of prices",
@@ -2564,8 +2625,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "markets_region_orders": {
     "description": "Return a list of orders in a region",
@@ -2598,6 +2658,13 @@ ENDPOINTS = {
         "in": "query"
       },
       {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      },
+      {
         "name": "region_id",
         "description": "Return orders in this region",
         "required": true,
@@ -2611,8 +2678,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": true
+    ]
   },
   "markets_region_history": {
     "description": "Return a list of historical market statistics for the specified type in a region",
@@ -2634,20 +2700,19 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "region_id",
-        "description": "Return orders in this region",
+        "description": "Return statistics in this region",
         "required": true,
         "type": "integer",
         "in": "path"
       },
       {
         "name": "type_id",
-        "description": "Return orders only for this type",
-        "required": false,
+        "description": "Return statistics for this type",
+        "required": true,
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "markets_structures_structure": {
     "description": "Return all orders in a structure",
@@ -2673,14 +2738,20 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
       {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      },
+      {
         "name": "structure_id",
         "description": "Return orders in this structure",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": true
+    ]
   },
   "markets_groups": {
     "description": "Get a list of item groups",
@@ -2696,8 +2767,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "markets_groups_market_group": {
     "description": "Get information on an item group",
@@ -2730,8 +2800,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_orders": {
     "description": "List market orders placed by a character",
@@ -2762,8 +2831,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_orders_history": {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
@@ -2792,9 +2860,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "markets_region_types": {
     "description": "Return a list of type IDs that have active orders in the region, for efficient market indexing.",
@@ -2810,14 +2883,20 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
       {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      },
+      {
         "name": "region_id",
-        "description": "Return orders in this region",
+        "description": "Return statistics in this region",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": true
+    ]
   },
   "corporations_corporation_orders": {
     "description": "List open market orders placed on behalf of a corporation",
@@ -2846,9 +2925,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "corporations_corporation_orders_history": {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
@@ -2877,9 +2961,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "opportunities_groups": {
     "description": "Return a list of opportunities groups",
@@ -2895,8 +2984,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "opportunities_groups_group": {
     "description": "Return information of an opportunities group",
@@ -2930,8 +3018,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "opportunities_tasks": {
     "description": "Return a list of opportunities tasks",
@@ -2947,8 +3034,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "opportunities_tasks_task": {
     "description": "Return information of an opportunities task",
@@ -2973,8 +3059,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_opportunities": {
     "description": "Return a list of tasks finished by a character",
@@ -2991,8 +3076,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_planets": {
     "description": "Returns a list of all planetary colonies owned by a character.",
@@ -3014,8 +3098,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
@@ -3039,8 +3122,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_schematics_schematic": {
     "description": "Get information on a planetary factory schematic",
@@ -3063,8 +3145,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_customs_offices": {
     "description": "List customs offices owned by a corporation",
@@ -3092,9 +3173,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "route_origin_destination": {
     "description": "Get the systems between origin and destination",
@@ -3144,8 +3230,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_search": {
     "description": "Search for entities that match a given sub",
@@ -3198,8 +3283,7 @@ ENDPOINTS = {
         "type": "boolean",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "eve_search": {
     "description": "Search for entities that match a given sub",
@@ -3251,8 +3335,7 @@ ENDPOINTS = {
         "type": "boolean",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_skillqueue": {
     "description": "List the configured skill queue for the given character",
@@ -3275,8 +3358,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_skills": {
     "description": "List all trained skills for the given character",
@@ -3294,8 +3376,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_attributes": {
     "description": "Return attributes of a character",
@@ -3318,8 +3399,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "sovereignty_structures": {
     "description": "Shows sovereignty data for structures.",
@@ -3341,8 +3421,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "sovereignty_campaigns": {
     "description": "Shows sovereignty data for campaigns.",
@@ -3367,8 +3446,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "sovereignty_map": {
     "description": "Shows sovereignty information for solar systems",
@@ -3387,8 +3465,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "status": {
     "description": "EVE Server status",
@@ -3407,8 +3484,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_planets_planet": {
     "description": "Get information on a planet",
@@ -3429,13 +3505,12 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "planet_id",
-        "description": "Planet id of the target planet",
+        "description": "planet_id integer",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_stations_station": {
     "description": "Get information on a station",
@@ -3468,8 +3543,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_structures_structure": {
     "description": "Returns information on requested structure, if you are on the ACL. Otherwise, returns \"Forbidden\" for all inputs.",
@@ -3489,13 +3563,12 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "structure_id",
-        "description": "Return orders in this structure",
+        "description": "An Eve structure ID",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_systems_system": {
     "description": "Get information on a solar system",
@@ -3528,13 +3601,12 @@ ENDPOINTS = {
       },
       {
         "name": "system_id",
-        "description": "The solar system this starbase (POS) is located in,",
+        "description": "system_id integer",
         "required": true,
         "type": "integer",
-        "in": "query"
+        "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_systems": {
     "description": "Get a list of solar systems",
@@ -3550,8 +3622,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_types_type": {
     "description": "Get information on a type",
@@ -3590,13 +3661,12 @@ ENDPOINTS = {
       },
       {
         "name": "type_id",
-        "description": "Return orders only for this type",
-        "required": false,
+        "description": "An Eve item type ID",
+        "required": true,
         "type": "integer",
-        "in": "query"
+        "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_types": {
     "description": "Get a list of type ids",
@@ -3611,9 +3681,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "integer",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "universe_groups": {
     "description": "Get a list of item groups",
@@ -3628,9 +3703,14 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "integer",
     "parameters": [
-
-    ],
-    "paginated": true
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
   },
   "universe_groups_group": {
     "description": "Get information on an item group",
@@ -3651,7 +3731,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "group_id",
-        "description": "ID of an opportunities group",
+        "description": "An Eve item group ID",
         "required": true,
         "type": "integer",
         "in": "path"
@@ -3663,8 +3743,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_categories": {
     "description": "Get a list of item categories",
@@ -3680,8 +3759,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_categories_category": {
     "description": "Get information of an item category",
@@ -3713,8 +3791,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_structures": {
     "description": "List all public structures",
@@ -3730,8 +3807,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_races": {
     "description": "Get a list of character races",
@@ -3756,8 +3832,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_factions": {
     "description": "Get a list of factions",
@@ -3788,8 +3863,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_bloodlines": {
     "description": "Get a list of bloodlines",
@@ -3821,8 +3895,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_regions": {
     "description": "Get a list of regions",
@@ -3838,8 +3911,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_regions_region": {
     "description": "Get information on a region",
@@ -3866,13 +3938,12 @@ ENDPOINTS = {
       },
       {
         "name": "region_id",
-        "description": "Return orders in this region",
+        "description": "region_id integer",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_constellations": {
     "description": "Get a list of constellations",
@@ -3888,8 +3959,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_constellations_constellation": {
     "description": "Get information on a constellation",
@@ -3922,8 +3992,7 @@ ENDPOINTS = {
         "type": "string",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_moons_moon": {
     "description": "Get information on a moon",
@@ -3948,8 +4017,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_stargates_stargate": {
     "description": "Get information on a stargate",
@@ -3976,8 +4044,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_graphics": {
     "description": "Get a list of graphics",
@@ -3993,8 +4060,7 @@ ENDPOINTS = {
     "item_type": "integer",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_graphics_graphic": {
     "description": "Get information on a graphic",
@@ -4023,8 +4089,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "universe_system_jumps": {
     "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
@@ -4041,8 +4106,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_system_kills": {
     "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
@@ -4061,8 +4125,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "universe_stars_star": {
     "description": "Get information on a star",
@@ -4091,8 +4154,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",
@@ -4108,8 +4170,7 @@ ENDPOINTS = {
     "item_type": "number",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_wallet_journal": {
     "description": "Retrieve character wallet journal",
@@ -4143,8 +4204,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "characters_character_wallet_transactions": {
     "description": "Get wallet transactions of a character",
@@ -4170,13 +4230,12 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "from_id",
-        "description": "Only show journal entries happened before the transaction referenced by this id",
+        "description": "Only show transactions happened before the one referenced by this id",
         "required": false,
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_wallets": {
     "description": "Get a corporation's wallets",
@@ -4193,8 +4252,7 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
 
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_wallets_division_journal": {
     "description": "Retrieve corporation wallet journal",
@@ -4235,8 +4293,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "corporations_corporation_wallets_division_transactions": {
     "description": "Get wallet transactions of a corporation",
@@ -4273,8 +4330,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "wars": {
     "description": "Return a list of wars",
@@ -4296,8 +4352,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "query"
       }
-    ],
-    "paginated": false
+    ]
   },
   "wars_war": {
     "description": "Return details about a war",
@@ -4328,8 +4383,7 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   },
   "wars_war_killmails": {
     "description": "Return a list of kills related to a war",
@@ -4346,13 +4400,19 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
       {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      },
+      {
         "name": "war_id",
-        "description": "ID for a war",
+        "description": "A valid war ID",
         "required": true,
         "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": true
+    ]
   }
 };
