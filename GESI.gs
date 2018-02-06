@@ -132,6 +132,7 @@ function getData_(endpoint_name, params) {
     });
     
     if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(documentProperties.getProperty(name + '_character_id')));
+    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(documentProperties.getProperty(name + '_alliance_id')));
     if (path.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') path = path.replace('{corporation_id}', parseInt(documentProperties.getProperty(name + '_corporation_id')));
 
     if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
@@ -148,72 +149,39 @@ function getData_(endpoint_name, params) {
     return JSON.parse(response);
 }
 
-// Private function for basic array of value responses
-function getArrayResponse_(endpoint_name, params) {
+function parseData_(endpoint_name, params) {
     var data = getData_(endpoint_name, params);
-
+    var endpoint = ENDPOINTS[endpoint_name];
     var result = [];
+    
     var opt_headers = params.opt_headers;
-    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
-
-    for (var i = 0; i < data.length; i++) {
-        result.push(data[i]);
-    };
-
-    return result;
-};
-
-function getArrayObjectResponse_(endpoint_name, params) {
-    var data = getData_(endpoint_name, params);
-
-    var result = [];
-    var opt_headers = params.opt_headers;
-    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers);
-
-    if (data.length === 0 && result.length > 0) {
-      return result;
-    } else if (data.length === 0 && result.length === 0) {
-      return null;
-    }
-
-    for (var i = 0; i < data.length; i++) {
+    if (opt_headers || undefined === opt_headers) result.push(endpoint.headers)
+    
+    if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
+        data.forEach(function(obj) {
+            var temp = [];
+            ENDPOINTS[endpoint_name].headers.forEach(function(header) {
+                var data_value = obj[header];
+                temp.push(data_value);
+            });
+           result.push(temp);
+        });
+    } else if (endpoint.response_type === 'object' && endpoint.item_type === 'object') {
         var temp = [];
-        for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
-            data_value = data[i][ENDPOINTS[endpoint_name].headers[k]];
-            temp.push(data_value);
-        }
-        result.push(temp);
+        endpoint.headers.forEach(function(header) {
+            temp.push(data[header]);
+        });
+      result.push(temp);
+    } else if (endpoint.response_type === 'array' && endpoint.item_type === 'integer') {
+        data.forEach(function(dp) {
+            result.push(dp);
+        });
+    } else if (endpoint.response_type === 'integer' || endpoint.response_type === 'number') {
+        result.push(data);        
     }
-
+      
     return result;
-};
-
-function getObjectResponse_(endpoint_name, params) {
-    var data = getData_(endpoint_name, params);
-
-    var result = [];
-    var opt_headers = params.opt_headers;
-    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
-
-    var temp = [];
-    for (var k = 0; k < ENDPOINTS[endpoint_name].headers.length; k++) {
-        temp.push(data[ENDPOINTS[endpoint_name].headers[k]]);
-    }
-    result.push(temp);
-    return result;
-};
-
-// Private function for single value responses
-function getSingleResponse_(endpoint_name, params) {
-    var data = getData_(endpoint_name, params);
-
-    var result = [];
-    var opt_headers = params.opt_headers;
-    if (opt_headers || undefined === opt_headers) result.push(ENDPOINTS[endpoint_name].headers)
-    result.push(data);
-
-    return result;
-};
+}
 
 function extend_(obj, src) {
   for (var key in src) {
