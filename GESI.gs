@@ -121,7 +121,7 @@ function getData_(endpoint_name, params) {
     var cache = CacheService.getDocumentCache();
     var name = params.name;
     if (!name) name = AUTHING_CHARACTER;
-    
+        
     ENDPOINTS[endpoint_name].parameters.forEach(function(param) {
         if (param['in'] === 'path' && params[param.name]) {
           path = path.replace('{' + param.name + '}', params[param.name])
@@ -130,7 +130,7 @@ function getData_(endpoint_name, params) {
           path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
         }
     });
-    
+        
     if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(documentProperties.getProperty(name + '_character_id')));
     if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(documentProperties.getProperty(name + '_alliance_id')));
     if (path.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') path = path.replace('{corporation_id}', parseInt(documentProperties.getProperty(name + '_corporation_id')));
@@ -160,7 +160,7 @@ function parseData_(endpoint_name, params) {
     if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
         data.forEach(function(obj) {
             var temp = [];
-            ENDPOINTS[endpoint_name].headers.forEach(function(header) {
+            endpoint.headers.forEach(function(header) {
                 temp.push(obj[header]);
             });
            result.push(temp);
@@ -235,7 +235,7 @@ function getCharacterAffiliation_(character_id) {
 function refreshToken_(name) {
     var documentProperties = PropertiesService.getDocumentProperties();
     var cache = CacheService.getDocumentCache();
-    var response = JSON.parse(doRequest('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')}));
+    var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')});
     cache.put(name + '_access_token', response['access_token'], 900);
     return response;
 }
