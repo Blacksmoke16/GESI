@@ -42,9 +42,20 @@ Google Sheets Script for interacting with EVE ESI
       * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `character2` using steps 9-13 in single character use. 
       * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `character3` using steps 9-13 in single character use. 
       
-### More Advanced Features
+### Usage Tips
 
-##### To change order of column headers
+##### Parameter datatype samples
+| Type    | Description                          | Sample                 |
+|---------|--------------------------------------|------------------------|
+| array   | A string with comma seperated values | "value1,value2,value3" |
+| boolean | True or False                        | true                   |
+| integer | An integer                           | 16                     |
+| string  | A string                             | "value"                |
+
+##### Using the parseArray function
+As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.  See the documentation above the function in GESI.gs right above the private utility functions header below the scopes list. 
+
+##### Changing order of column headers
    1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
  ```
@@ -98,8 +109,9 @@ Google Sheets Script for interacting with EVE ESI
     ]
   }
  ```
-   2. Re order the values in the `headers` array to the order you want.
-      * The first value in the array is the first column on the sheet
+   2. Re order the objects in the `headers` array to the order you want.
+      * The first object in the array is the first column on the sheet
+   3. If a header has a `sub_headers` array, the first value in that array is first as well.
         
 ### Note:  In order to use functions that use new scopes, you will have to re-auth your character(s).
 
