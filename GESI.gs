@@ -110,6 +110,29 @@ function onOpen() {
 
 }
 
+/** 
+* Parses array data into more readable format
+* @param {string} endpoint_name Name of the endpoint data to be parsed is from.
+* @param {string} column_name Name of the column to be parsed.
+* @param {array} array Cell that holds the array data to be parsed.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Parsed array data.
+* @customfunction
+*/
+function parseArray(endpoint_name, column_name, array, opt_headers) {
+    var headers = [];
+    var result = [];
+    var endpoint = findObjectByKey(ENDPOINTS[endpoint_name].headers, 'name', column_name);
+    if (opt_headers || undefined === opt_headers) result.push(endpoint.sub_headers.map(function(h) { return h }));
+
+    JSON.parse(array).forEach(function(a) {
+        var temp = [];
+        endpoint.sub_headers.forEach(function(k) { temp.push(a[k]) });
+        result.push(temp);
+    });
+    return result;
+}
+
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //                                                                                                  Private Utility Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -153,22 +176,23 @@ function parseData_(endpoint_name, params) {
     var data = getData_(endpoint_name, params);
     var endpoint = ENDPOINTS[endpoint_name];
     var result = [];
+    var headers = [];
     
     var opt_headers = params.opt_headers;
-    if (opt_headers || undefined === opt_headers) result.push(endpoint.headers)
-    
+    if (opt_headers || undefined === opt_headers) result.push(endpoint.headers.map(function(h) { return h.name }));
+        
     if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
         data.forEach(function(obj) {
             var temp = [];
             endpoint.headers.forEach(function(header) {
-                temp.push(obj[header]);
+                temp.push(parseObject_(obj, header));
             });
            result.push(temp);
         });
     } else if (endpoint.response_type === 'object' && endpoint.item_type === 'object') {
         var temp = [];
         endpoint.headers.forEach(function(header) {
-            temp.push(data[header]);
+                temp.push(parseObject_(data, header));
         });
       result.push(temp);
     } else if (endpoint.response_type === 'array' && endpoint.item_type === 'integer') {
@@ -182,11 +206,50 @@ function parseData_(endpoint_name, params) {
     return result;
 }
 
+function parseObject_(source, header) {
+    if (header.type === 'array') {
+      return JSON.stringify(source[header.name]);
+    } else if (typeof source === 'object') {
+      var flat_obj = flatten_(source);
+      return flat_obj[header.name];
+    } else {
+      return source[header.name];
+    }
+}
+
 function extend_(obj, src) {
     for (var key in src) {
       if (src.hasOwnProperty(key)) obj[key] = src[key];
     }
     return obj;
+}
+
+function flatten_(ob) {
+    var toReturn = {};
+    for (var i in ob) {
+        if (!ob.hasOwnProperty(i)) continue;
+
+        if ((typeof ob[i]) == 'object') {
+            var flatObject = flatten_(ob[i]);
+            for (var x in flatObject) {
+                if (!flatObject.hasOwnProperty(x)) continue;
+
+                toReturn[i + '-' + x] = flatObject[x];
+            }
+        } else {
+            toReturn[i] = ob[i];
+        }
+    }
+    return toReturn;
+};
+
+function findObjectByKey(array, key, value) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i][key] === value) {
+            return array[i];
+        }
+    }
+    return null;
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -237,7 +300,7 @@ function refreshToken_(name) {
     var cache = CacheService.getDocumentCache();
     var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')});
     cache.put(name + '_access_token', response['access_token'], 900);
-    return response;
+    return response['access_token'];
 }
 
 function cacheData_(userData) {
