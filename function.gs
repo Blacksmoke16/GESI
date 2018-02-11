@@ -167,6 +167,17 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 }
 
 /** 
+* Returns aggregate yearly stats for a character
+* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Yearly aggregate stats.
+* @customfunction
+*/
+function characters_character_stats(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
+}
+
+/** 
 * Public information about a character
 * @param {integer} character_id (Required) An EVE character ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -326,17 +337,6 @@ function characters_character_titles(name, opt_headers) {
 }
 
 /** 
-* Returns aggregate yearly stats for a character
-* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Yearly aggregate stats.
-* @customfunction
-*/
-function characters_character_stats(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
-}
-
-/** 
 * A list of the character's clones
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -480,6 +480,18 @@ function corporations_corporation_contracts_contract_items(contract_id, name, op
 function corporations_corporation_contracts_contract_bids(contract_id, name, page, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
   return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,page:page,opt_headers:opt_headers});
+}
+
+/** 
+* Return the current shareholders of a corporation.
+* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Get corporation shareholders.
+* @customfunction
+*/
+function corporations_corporation_shareholders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -763,18 +775,6 @@ function corporations_corporation_outposts(name, page, opt_headers) {
 function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers) {
   if(!outpost_id) throw 'outpost_id is required';
   return parseData_(arguments.callee.name,{outpost_id:outpost_id,name:name,opt_headers:opt_headers});
-}
-
-/** 
-* Return the current shareholders of a corporation.
-* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return.
-* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Get corporation shareholders.
-* @customfunction
-*/
-function corporations_corporation_shareholders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -1885,6 +1885,17 @@ function universe_system_kills(opt_headers) {
 function universe_stars_star(star_id, opt_headers) {
   if(!star_id) throw 'star_id is required';
   return parseData_(arguments.callee.name,{star_id:star_id,opt_headers:opt_headers});
+}
+
+/** 
+* Get all character ancestries
+* @param {string} language  Language to use in the response.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Get ancestries.
+* @customfunction
+*/
+function universe_ancestries(language, opt_headers) {
+  return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers});
 }
 
 /** 
