@@ -48,19 +48,40 @@ Google Sheets Script for interacting with EVE ESI
    1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
  ```
-  "alliances_alliance": {
+"alliances_alliance": {
     "description": "Public information about an alliance",
     "summary": "Get alliance information",
     "request": "get",
     "version": 3,
     "headers": [
-      "name",
-      "creator_id",
-      "creator_corporation_id",
-      "ticker",
-      "executor_corporation_id",
-      "date_founded",
-      "faction_id"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "creator_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "ticker",
+        "type": "string"
+      },
+      {
+        "name": "executor_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "date_founded",
+        "type": "string"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      }
     ],
     "path": "/v3/alliances/{alliance_id}/",
     "authed": false,
@@ -71,11 +92,10 @@ Google Sheets Script for interacting with EVE ESI
         "name": "alliance_id",
         "description": "An EVE alliance ID",
         "required": true,
-        "type": "integer"
+        "type": "integer",
         "in": "path"
       }
-    ],
-    "paginated": false
+    ]
   }
  ```
    2. Re order the values in the `headers` array to the order you want.
