@@ -5,13 +5,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "name",
-      "creator_id",
-      "creator_corporation_id",
-      "ticker",
-      "executor_corporation_id",
-      "date_founded",
-      "faction_id"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "creator_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "ticker",
+        "type": "string"
+      },
+      {
+        "name": "executor_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "date_founded",
+        "type": "string"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      }
     ],
     "path": "/v3/alliances/{alliance_id}/",
     "authed": false,
@@ -33,7 +54,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "corporation_ids"
+      {
+        "name": "corporation_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/alliances/{alliance_id}/corporations/",
     "authed": false,
@@ -55,8 +79,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "alliance_id",
-      "alliance_name"
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "alliance_name",
+        "type": "string"
+      }
     ],
     "path": "/v2/alliances/names/",
     "authed": false,
@@ -78,8 +108,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "px64x64",
-      "px128x128"
+      {
+        "name": "px64x64",
+        "type": "string"
+      },
+      {
+        "name": "px128x128",
+        "type": "string"
+      }
     ],
     "path": "/v1/alliances/{alliance_id}/icons/",
     "authed": false,
@@ -101,7 +137,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "alliance_ids"
+      {
+        "name": "alliance_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/alliances/",
     "authed": false,
@@ -117,13 +156,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "type_id",
-      "quantity",
-      "location_id",
-      "location_type",
-      "item_id",
-      "location_flag",
-      "is_singleton"
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_type",
+        "type": "string"
+      },
+      {
+        "name": "item_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "is_singleton",
+        "type": "boolean"
+      }
     ],
     "path": "/v3/characters/{character_id}/assets/",
     "authed": true,
@@ -145,13 +205,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "type_id",
-      "quantity",
-      "location_id",
-      "location_type",
-      "item_id",
-      "location_flag",
-      "is_singleton"
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_type",
+        "type": "string"
+      },
+      {
+        "name": "item_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "is_singleton",
+        "type": "boolean"
+      }
     ],
     "path": "/v2/corporations/{corporation_id}/assets/",
     "authed": true,
@@ -173,15 +254,54 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "bookmark_id",
-      "folder_id",
-      "created",
-      "label",
-      "notes",
-      "location_id",
-      "creator_id",
-      "item",
-      "coordinates"
+      {
+        "name": "bookmark_id",
+        "type": "integer"
+      },
+      {
+        "name": "folder_id",
+        "type": "integer"
+      },
+      {
+        "name": "created",
+        "type": "string"
+      },
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "notes",
+        "type": "string"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "item-item_id",
+        "type": "integer"
+      },
+      {
+        "name": "item-type_id",
+        "type": "integer"
+      },
+      {
+        "name": "coordinates-x",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-y",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-z",
+        "type": "number"
+      }
     ],
     "path": "/v2/characters/{character_id}/bookmarks/",
     "authed": true,
@@ -203,8 +323,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "folder_id",
-      "name"
+      {
+        "name": "folder_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
     ],
     "path": "/v2/characters/{character_id}/bookmarks/folders/",
     "authed": true,
@@ -226,15 +352,54 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "bookmark_id",
-      "creator_id",
-      "folder_id",
-      "created",
-      "label",
-      "notes",
-      "location_id",
-      "item",
-      "coordinates"
+      {
+        "name": "bookmark_id",
+        "type": "integer"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "folder_id",
+        "type": "integer"
+      },
+      {
+        "name": "created",
+        "type": "string"
+      },
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "notes",
+        "type": "string"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "item-item_id",
+        "type": "integer"
+      },
+      {
+        "name": "item-type_id",
+        "type": "integer"
+      },
+      {
+        "name": "coordinates-x",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-y",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-z",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/",
     "authed": true,
@@ -256,9 +421,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "folder_id",
-      "name",
-      "creator_id"
+      {
+        "name": "folder_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
     "authed": true,
@@ -280,11 +454,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "event_id",
-      "event_date",
-      "title",
-      "importance",
-      "event_response"
+      {
+        "name": "event_id",
+        "type": "integer"
+      },
+      {
+        "name": "event_date",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "importance",
+        "type": "integer"
+      },
+      {
+        "name": "event_response",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/calendar/",
     "authed": true,
@@ -306,16 +495,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "event_id",
-      "owner_id",
-      "owner_name",
-      "date",
-      "title",
-      "duration",
-      "importance",
-      "response",
-      "text",
-      "owner_type"
+      {
+        "name": "event_id",
+        "type": "integer"
+      },
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "owner_name",
+        "type": "string"
+      },
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "importance",
+        "type": "integer"
+      },
+      {
+        "name": "response",
+        "type": "string"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "owner_type",
+        "type": "string"
+      }
     ],
     "path": "/v3/characters/{character_id}/calendar/{event_id}/",
     "authed": true,
@@ -337,8 +556,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "event_response"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "event_response",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/calendar/{event_id}/attendees/",
     "authed": true,
@@ -354,23 +579,1239 @@ ENDPOINTS = {
       }
     ]
   },
+  "characters_character_stats": {
+    "description": "Returns aggregate yearly stats for a character",
+    "summary": "Yearly aggregate stats",
+    "request": "get",
+    "version": 2,
+    "headers": [
+      {
+        "name": "year",
+        "type": "integer"
+      },
+      {
+        "name": "character-days_of_activity",
+        "type": "integer"
+      },
+      {
+        "name": "character-minutes",
+        "type": "integer"
+      },
+      {
+        "name": "character-sessions_started",
+        "type": "integer"
+      },
+      {
+        "name": "combat-cap_drainedby_npc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-cap_drainedby_pc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-cap_draining_pc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-criminal_flag_set",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_np_cs_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_np_cs_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_bomb_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_bomb_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_combat_drone_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_combat_drone_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_energy_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_energy_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_fighter_bomber_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_fighter_bomber_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_fighter_drone_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_fighter_drone_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_hybrid_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_hybrid_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_missile_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_missile_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_projectile_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_projectile_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_smart_bomb_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_smart_bomb_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_super_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_players_super_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_structures_total_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_from_structures_total_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_bomb_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_bomb_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_combat_drone_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_combat_drone_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_energy_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_energy_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_fighter_bomber_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_fighter_bomber_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_fighter_drone_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_fighter_drone_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_hybrid_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_hybrid_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_missile_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_missile_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_projectile_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_projectile_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_smart_bomb_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_smart_bomb_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_super_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_players_super_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_structures_total_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-damage_to_structures_total_num_shots",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_pod_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_pod_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_pod_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_pod_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "combat-deaths_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "combat-drone_engage",
+        "type": "integer"
+      },
+      {
+        "name": "combat-dscans",
+        "type": "integer"
+      },
+      {
+        "name": "combat-duel_requested",
+        "type": "integer"
+      },
+      {
+        "name": "combat-engagement_register",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_assists",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_pod_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_pod_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_pod_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_pod_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "combat-kills_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "combat-npc_flag_set",
+        "type": "integer"
+      },
+      {
+        "name": "combat-probe_scans",
+        "type": "integer"
+      },
+      {
+        "name": "combat-pvp_flag_set",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_armor_by_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_armor_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_armor_self_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_capacitor_by_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_capacitor_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_capacitor_self_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_hull_by_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_hull_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_hull_self_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_shield_by_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_shield_remote_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-repair_shield_self_amount",
+        "type": "integer"
+      },
+      {
+        "name": "combat-self_destructs",
+        "type": "integer"
+      },
+      {
+        "name": "combat-warp_scramble_pc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-warp_scrambledby_npc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-warp_scrambledby_pc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-weapon_flag_set",
+        "type": "integer"
+      },
+      {
+        "name": "combat-webifiedby_npc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-webifiedby_pc",
+        "type": "integer"
+      },
+      {
+        "name": "combat-webifying_pc",
+        "type": "integer"
+      },
+      {
+        "name": "industry-hacking_successes",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_cancelled",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_copy_blueprint",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_invention",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_asteroid",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_asteroid_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_charge",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_charge_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_commodity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_commodity_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_deployable",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_deployable_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_drone",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_drone_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_implant",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_implant_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_module",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_module_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_other",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_other_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_ship",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_ship_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_structure",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_structure_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_subsystem",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_manufacture_subsystem_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_material_productivity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_completed_time_productivity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_started_copy_blueprint",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_started_invention",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_started_manufacture",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_started_material_productivity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-jobs_started_time_productivity",
+        "type": "integer"
+      },
+      {
+        "name": "industry-reprocess_item",
+        "type": "integer"
+      },
+      {
+        "name": "industry-reprocess_item_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "inventory-abandon_loot_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "inventory-trash_item_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "isk-in",
+        "type": "integer"
+      },
+      {
+        "name": "isk-out",
+        "type": "integer"
+      },
+      {
+        "name": "market-accept_contracts_courier",
+        "type": "integer"
+      },
+      {
+        "name": "market-accept_contracts_item_exchange",
+        "type": "integer"
+      },
+      {
+        "name": "market-buy_orders_placed",
+        "type": "integer"
+      },
+      {
+        "name": "market-cancel_market_order",
+        "type": "integer"
+      },
+      {
+        "name": "market-create_contracts_auction",
+        "type": "integer"
+      },
+      {
+        "name": "market-create_contracts_courier",
+        "type": "integer"
+      },
+      {
+        "name": "market-create_contracts_item_exchange",
+        "type": "integer"
+      },
+      {
+        "name": "market-deliver_courier_contract",
+        "type": "integer"
+      },
+      {
+        "name": "market-isk_gained",
+        "type": "integer"
+      },
+      {
+        "name": "market-isk_spent",
+        "type": "integer"
+      },
+      {
+        "name": "market-modify_market_order",
+        "type": "integer"
+      },
+      {
+        "name": "market-search_contracts",
+        "type": "integer"
+      },
+      {
+        "name": "market-sell_orders_placed",
+        "type": "integer"
+      },
+      {
+        "name": "mining-drone_mine",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_arkonor",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_bistot",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_crokite",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_dark_ochre",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_gneiss",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_harvestable_cloud",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_hedbergite",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_hemorphite",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_ice",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_jaspet",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_kernite",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_mercoxit",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_omber",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_plagioclase",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_pyroxeres",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_scordite",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_spodumain",
+        "type": "integer"
+      },
+      {
+        "name": "mining-ore_veldspar",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_armor_hardener",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_armor_repair_unit",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_armor_resistance_shift_hardener",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_automated_targeting_system",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_bastion",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_bomb_launcher",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_capacitor_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_cargo_scanner",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_cloaking_device",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_clone_vat_bay",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_cynosural_field",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_damage_control",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_data_miners",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_drone_control_unit",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_drone_tracking_modules",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_eccm",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_ecm",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_ecm_burst",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_energy_destabilizer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_energy_vampire",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_energy_weapon",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_festival_launcher",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_frequency_mining_laser",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_fueled_armor_repairer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_fueled_shield_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_gang_coordinator",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_gas_cloud_harvester",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_hull_repair_unit",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_hybrid_weapon",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_industrial_core",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_interdiction_sphere_launcher",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_micro_jump_drive",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_mining_laser",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_missile_launcher",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_passive_targeting_system",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_probe_launcher",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_projected_eccm",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_projectile_weapon",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_propulsion_module",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_armor_repairer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_capacitor_transmitter",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_ecm_burst",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_hull_repairer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_sensor_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_sensor_damper",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_shield_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_remote_tracking_computer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_salvager",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_sensor_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_shield_booster",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_shield_hardener",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_ship_scanner",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_siege",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_smart_bomb",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_stasis_web",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_strip_miner",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_super_weapon",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_survey_scanner",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_target_breaker",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_target_painter",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_tracking_computer",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_tracking_disruptor",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_tractor_beam",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_triage",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_warp_disrupt_field_generator",
+        "type": "integer"
+      },
+      {
+        "name": "module-activations_warp_scrambler",
+        "type": "integer"
+      },
+      {
+        "name": "module-link_weapons",
+        "type": "integer"
+      },
+      {
+        "name": "module-overload",
+        "type": "integer"
+      },
+      {
+        "name": "module-repairs",
+        "type": "integer"
+      },
+      {
+        "name": "orbital-strike_characters_killed",
+        "type": "integer"
+      },
+      {
+        "name": "orbital-strike_damage_to_players_armor_amount",
+        "type": "integer"
+      },
+      {
+        "name": "orbital-strike_damage_to_players_shield_amount",
+        "type": "integer"
+      },
+      {
+        "name": "pve-dungeons_completed_agent",
+        "type": "integer"
+      },
+      {
+        "name": "pve-dungeons_completed_distribution",
+        "type": "integer"
+      },
+      {
+        "name": "pve-missions_succeeded",
+        "type": "integer"
+      },
+      {
+        "name": "pve-missions_succeeded_epic_arc",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_contact_bad",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_contact_good",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_contact_high",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_contact_horrible",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_contact_neutral",
+        "type": "integer"
+      },
+      {
+        "name": "social-add_note",
+        "type": "integer"
+      },
+      {
+        "name": "social-added_as_contact_bad",
+        "type": "integer"
+      },
+      {
+        "name": "social-added_as_contact_good",
+        "type": "integer"
+      },
+      {
+        "name": "social-added_as_contact_high",
+        "type": "integer"
+      },
+      {
+        "name": "social-added_as_contact_horrible",
+        "type": "integer"
+      },
+      {
+        "name": "social-added_as_contact_neutral",
+        "type": "integer"
+      },
+      {
+        "name": "social-calendar_event_created",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_alliance",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_constellation",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_corporation",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_fleet",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_region",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_solarsystem",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_messages_warfaction",
+        "type": "integer"
+      },
+      {
+        "name": "social-chat_total_message_length",
+        "type": "integer"
+      },
+      {
+        "name": "social-direct_trades",
+        "type": "integer"
+      },
+      {
+        "name": "social-fleet_broadcasts",
+        "type": "integer"
+      },
+      {
+        "name": "social-fleet_joins",
+        "type": "integer"
+      },
+      {
+        "name": "social-mails_received",
+        "type": "integer"
+      },
+      {
+        "name": "social-mails_sent",
+        "type": "integer"
+      },
+      {
+        "name": "travel-acceleration_gate_activations",
+        "type": "integer"
+      },
+      {
+        "name": "travel-align_to",
+        "type": "integer"
+      },
+      {
+        "name": "travel-distance_warped_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-distance_warped_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-distance_warped_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-distance_warped_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "travel-docks_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-docks_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-docks_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-jumps_stargate_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-jumps_stargate_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-jumps_stargate_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-jumps_wormhole",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_high_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_low_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_null_sec",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_to_bookmark",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_to_celestial",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_to_fleet_member",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_to_scan_result",
+        "type": "integer"
+      },
+      {
+        "name": "travel-warps_wormhole",
+        "type": "integer"
+      }
+    ],
+    "path": "/v2/characters/{character_id}/stats/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
   "characters_character": {
     "description": "Public information about a character",
     "summary": "Get character's public information",
     "request": "get",
     "version": 4,
     "headers": [
-      "name",
-      "description",
-      "corporation_id",
-      "alliance_id",
-      "birthday",
-      "gender",
-      "race_id",
-      "bloodline_id",
-      "ancestry_id",
-      "security_status",
-      "faction_id"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "birthday",
+        "type": "string"
+      },
+      {
+        "name": "gender",
+        "type": "string"
+      },
+      {
+        "name": "race_id",
+        "type": "integer"
+      },
+      {
+        "name": "bloodline_id",
+        "type": "integer"
+      },
+      {
+        "name": "ancestry_id",
+        "type": "integer"
+      },
+      {
+        "name": "security_status",
+        "type": "number"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      }
     ],
     "path": "/v4/characters/{character_id}/",
     "authed": false,
@@ -392,8 +1833,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "character_name"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "character_name",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/names/",
     "authed": false,
@@ -415,10 +1862,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "px64x64",
-      "px128x128",
-      "px256x256",
-      "px512x512"
+      {
+        "name": "px64x64",
+        "type": "string"
+      },
+      {
+        "name": "px128x128",
+        "type": "string"
+      },
+      {
+        "name": "px256x256",
+        "type": "string"
+      },
+      {
+        "name": "px512x512",
+        "type": "string"
+      }
     ],
     "path": "/v2/characters/{character_id}/portrait/",
     "authed": false,
@@ -440,10 +1899,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "start_date",
-      "corporation_id",
-      "is_deleted",
-      "record_id"
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_deleted",
+        "type": "boolean"
+      },
+      {
+        "name": "record_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/corporationhistory/",
     "authed": false,
@@ -465,16 +1936,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "channel_id",
-      "name",
-      "owner_id",
-      "comparison_key",
-      "has_password",
-      "motd",
-      "allowed",
-      "operators",
-      "blocked",
-      "muted"
+      {
+        "name": "channel_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "comparison_key",
+        "type": "string"
+      },
+      {
+        "name": "has_password",
+        "type": "boolean"
+      },
+      {
+        "name": "motd",
+        "type": "string"
+      },
+      {
+        "name": "allowed",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type"
+        ]
+      },
+      {
+        "name": "operators",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type"
+        ]
+      },
+      {
+        "name": "blocked",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type",
+          "reason",
+          "end_at"
+        ]
+      },
+      {
+        "name": "muted",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type",
+          "reason",
+          "end_at"
+        ]
+      }
     ],
     "path": "/v1/characters/{character_id}/chat_channels/",
     "authed": true,
@@ -490,15 +2011,48 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "medal_id",
-      "title",
-      "description",
-      "corporation_id",
-      "issuer_id",
-      "date",
-      "reason",
-      "status",
-      "graphics"
+      {
+        "name": "medal_id",
+        "type": "integer"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "graphics",
+        "type": "array",
+        "sub_headers": [
+          "part",
+          "layer",
+          "graphic",
+          "color"
+        ]
+      }
     ],
     "path": "/v1/characters/{character_id}/medals/",
     "authed": true,
@@ -514,9 +2068,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "from_id",
-      "from_type",
-      "standing"
+      {
+        "name": "from_id",
+        "type": "integer"
+      },
+      {
+        "name": "from_type",
+        "type": "string"
+      },
+      {
+        "name": "standing",
+        "type": "number"
+      }
     ],
     "path": "/v1/characters/{character_id}/standings/",
     "authed": true,
@@ -532,11 +2095,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "agent_id",
-      "skill_type_id",
-      "started_at",
-      "points_per_day",
-      "remainder_points"
+      {
+        "name": "agent_id",
+        "type": "integer"
+      },
+      {
+        "name": "skill_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "started_at",
+        "type": "string"
+      },
+      {
+        "name": "points_per_day",
+        "type": "number"
+      },
+      {
+        "name": "remainder_points",
+        "type": "number"
+      }
     ],
     "path": "/v1/characters/{character_id}/agents_research/",
     "authed": true,
@@ -552,14 +2130,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "item_id",
-      "type_id",
-      "location_id",
-      "location_flag",
-      "quantity",
-      "time_efficiency",
-      "material_efficiency",
-      "runs"
+      {
+        "name": "item_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "time_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "material_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "runs",
+        "type": "integer"
+      }
     ],
     "path": "/v2/characters/{character_id}/blueprints/",
     "authed": true,
@@ -581,9 +2183,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "last_jump_date",
-      "jump_fatigue_expire_date",
-      "last_update_date"
+      {
+        "name": "last_jump_date",
+        "type": "string"
+      },
+      {
+        "name": "jump_fatigue_expire_date",
+        "type": "string"
+      },
+      {
+        "name": "last_update_date",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/fatigue/",
     "authed": true,
@@ -599,11 +2210,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "notification_id",
-      "send_date",
-      "standing_level",
-      "message",
-      "sender_character_id"
+      {
+        "name": "notification_id",
+        "type": "integer"
+      },
+      {
+        "name": "send_date",
+        "type": "string"
+      },
+      {
+        "name": "standing_level",
+        "type": "number"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "sender_character_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/notifications/contacts/",
     "authed": true,
@@ -619,13 +2245,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "notification_id",
-      "type",
-      "sender_id",
-      "sender_type",
-      "timestamp",
-      "is_read",
-      "text"
+      {
+        "name": "notification_id",
+        "type": "integer"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "sender_id",
+        "type": "integer"
+      },
+      {
+        "name": "sender_type",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "string"
+      },
+      {
+        "name": "is_read",
+        "type": "boolean"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/notifications/",
     "authed": true,
@@ -641,10 +2288,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "roles",
-      "roles_at_hq",
-      "roles_at_base",
-      "roles_at_other"
+      {
+        "name": "roles",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_other",
+        "type": "array"
+      }
     ],
     "path": "/v2/characters/{character_id}/roles/",
     "authed": true,
@@ -660,38 +2319,16 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "title_id",
-      "name"
+      {
+        "name": "title_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/titles/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_stats": {
-    "description": "Returns aggregate yearly stats for a character",
-    "summary": "Yearly aggregate stats",
-    "request": "get",
-    "version": 2,
-    "headers": [
-      "year",
-      "character",
-      "combat",
-      "industry",
-      "inventory",
-      "isk",
-      "market",
-      "mining",
-      "module",
-      "orbital",
-      "pve",
-      "social",
-      "travel"
-    ],
-    "path": "/v2/characters/{character_id}/stats/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -705,10 +2342,33 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "last_clone_jump_date",
-      "home_location",
-      "last_station_change_date",
-      "jump_clones"
+      {
+        "name": "last_clone_jump_date",
+        "type": "string"
+      },
+      {
+        "name": "home_location-location_id",
+        "type": "integer"
+      },
+      {
+        "name": "home_location-location_type",
+        "type": "string"
+      },
+      {
+        "name": "last_station_change_date",
+        "type": "string"
+      },
+      {
+        "name": "jump_clones",
+        "type": "array",
+        "sub_headers": [
+          "jump_clone_id",
+          "name",
+          "location_id",
+          "location_type",
+          "implants"
+        ]
+      }
     ],
     "path": "/v3/characters/{character_id}/clones/",
     "authed": true,
@@ -724,7 +2384,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "implant_ids"
+      {
+        "name": "implant_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/implants/",
     "authed": true,
@@ -740,12 +2403,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "standing",
-      "contact_type",
-      "contact_id",
-      "is_watched",
-      "is_blocked",
-      "label_id"
+      {
+        "name": "standing",
+        "type": "number"
+      },
+      {
+        "name": "contact_type",
+        "type": "string"
+      },
+      {
+        "name": "contact_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_watched",
+        "type": "boolean"
+      },
+      {
+        "name": "is_blocked",
+        "type": "boolean"
+      },
+      {
+        "name": "label_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/contacts/",
     "authed": true,
@@ -767,11 +2448,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "standing",
-      "contact_type",
-      "contact_id",
-      "is_watched",
-      "label_id"
+      {
+        "name": "standing",
+        "type": "number"
+      },
+      {
+        "name": "contact_type",
+        "type": "string"
+      },
+      {
+        "name": "contact_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_watched",
+        "type": "boolean"
+      },
+      {
+        "name": "label_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/contacts/",
     "authed": true,
@@ -793,10 +2489,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "standing",
-      "contact_type",
-      "contact_id",
-      "label_id"
+      {
+        "name": "standing",
+        "type": "number"
+      },
+      {
+        "name": "contact_type",
+        "type": "string"
+      },
+      {
+        "name": "contact_id",
+        "type": "integer"
+      },
+      {
+        "name": "label_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/alliances/{alliance_id}/contacts/",
     "authed": true,
@@ -818,8 +2526,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "label_id",
-      "label_name"
+      {
+        "name": "label_id",
+        "type": "integer"
+      },
+      {
+        "name": "label_name",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/contacts/labels/",
     "authed": true,
@@ -835,28 +2549,94 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "contract_id",
-      "issuer_id",
-      "issuer_corporation_id",
-      "assignee_id",
-      "acceptor_id",
-      "start_location_id",
-      "end_location_id",
-      "type",
-      "status",
-      "title",
-      "for_corporation",
-      "availability",
-      "date_issued",
-      "date_expired",
-      "date_accepted",
-      "days_to_complete",
-      "date_completed",
-      "price",
-      "reward",
-      "collateral",
-      "buyout",
-      "volume"
+      {
+        "name": "contract_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "assignee_id",
+        "type": "integer"
+      },
+      {
+        "name": "acceptor_id",
+        "type": "integer"
+      },
+      {
+        "name": "start_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "end_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "for_corporation",
+        "type": "boolean"
+      },
+      {
+        "name": "availability",
+        "type": "string"
+      },
+      {
+        "name": "date_issued",
+        "type": "string"
+      },
+      {
+        "name": "date_expired",
+        "type": "string"
+      },
+      {
+        "name": "date_accepted",
+        "type": "string"
+      },
+      {
+        "name": "days_to_complete",
+        "type": "integer"
+      },
+      {
+        "name": "date_completed",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "reward",
+        "type": "number"
+      },
+      {
+        "name": "collateral",
+        "type": "number"
+      },
+      {
+        "name": "buyout",
+        "type": "number"
+      },
+      {
+        "name": "volume",
+        "type": "number"
+      }
     ],
     "path": "/v1/characters/{character_id}/contracts/",
     "authed": true,
@@ -878,12 +2658,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "record_id",
-      "type_id",
-      "quantity",
-      "raw_quantity",
-      "is_singleton",
-      "is_included"
+      {
+        "name": "record_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "raw_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "is_singleton",
+        "type": "boolean"
+      },
+      {
+        "name": "is_included",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/items/",
     "authed": true,
@@ -905,10 +2703,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "bid_id",
-      "bidder_id",
-      "date_bid",
-      "amount"
+      {
+        "name": "bid_id",
+        "type": "integer"
+      },
+      {
+        "name": "bidder_id",
+        "type": "integer"
+      },
+      {
+        "name": "date_bid",
+        "type": "string"
+      },
+      {
+        "name": "amount",
+        "type": "number"
+      }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/bids/",
     "authed": true,
@@ -930,28 +2740,94 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "contract_id",
-      "issuer_id",
-      "issuer_corporation_id",
-      "assignee_id",
-      "acceptor_id",
-      "start_location_id",
-      "end_location_id",
-      "type",
-      "status",
-      "title",
-      "for_corporation",
-      "availability",
-      "date_issued",
-      "date_expired",
-      "date_accepted",
-      "days_to_complete",
-      "date_completed",
-      "price",
-      "reward",
-      "collateral",
-      "buyout",
-      "volume"
+      {
+        "name": "contract_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "assignee_id",
+        "type": "integer"
+      },
+      {
+        "name": "acceptor_id",
+        "type": "integer"
+      },
+      {
+        "name": "start_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "end_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "for_corporation",
+        "type": "boolean"
+      },
+      {
+        "name": "availability",
+        "type": "string"
+      },
+      {
+        "name": "date_issued",
+        "type": "string"
+      },
+      {
+        "name": "date_expired",
+        "type": "string"
+      },
+      {
+        "name": "date_accepted",
+        "type": "string"
+      },
+      {
+        "name": "days_to_complete",
+        "type": "integer"
+      },
+      {
+        "name": "date_completed",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "reward",
+        "type": "number"
+      },
+      {
+        "name": "collateral",
+        "type": "number"
+      },
+      {
+        "name": "buyout",
+        "type": "number"
+      },
+      {
+        "name": "volume",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/",
     "authed": true,
@@ -973,12 +2849,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "record_id",
-      "type_id",
-      "quantity",
-      "raw_quantity",
-      "is_singleton",
-      "is_included"
+      {
+        "name": "record_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "raw_quantity",
+        "type": "integer"
+      },
+      {
+        "name": "is_singleton",
+        "type": "boolean"
+      },
+      {
+        "name": "is_included",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/items/",
     "authed": true,
@@ -1000,10 +2894,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "bid_id",
-      "bidder_id",
-      "date_bid",
-      "amount"
+      {
+        "name": "bid_id",
+        "type": "integer"
+      },
+      {
+        "name": "bidder_id",
+        "type": "integer"
+      },
+      {
+        "name": "date_bid",
+        "type": "string"
+      },
+      {
+        "name": "amount",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/bids/",
     "authed": true,
@@ -1026,25 +2932,97 @@ ENDPOINTS = {
       }
     ]
   },
+  "corporations_corporation_shareholders": {
+    "description": "Return the current shareholders of a corporation.",
+    "summary": "Get corporation shareholders",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "shareholder_id",
+        "type": "integer"
+      },
+      {
+        "name": "shareholder_type",
+        "type": "string"
+      },
+      {
+        "name": "share_count",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/corporations/{corporation_id}/shareholders/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
+  },
   "corporations_corporation": {
     "description": "Public information about a corporation",
     "summary": "Get corporation information",
     "request": "get",
     "version": 4,
     "headers": [
-      "name",
-      "ticker",
-      "member_count",
-      "ceo_id",
-      "alliance_id",
-      "description",
-      "tax_rate",
-      "date_founded",
-      "creator_id",
-      "url",
-      "faction_id",
-      "home_station_id",
-      "shares"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "ticker",
+        "type": "string"
+      },
+      {
+        "name": "member_count",
+        "type": "integer"
+      },
+      {
+        "name": "ceo_id",
+        "type": "integer"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "date_founded",
+        "type": "string"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "url",
+        "type": "string"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "home_station_id",
+        "type": "integer"
+      },
+      {
+        "name": "shares",
+        "type": "integer"
+      }
     ],
     "path": "/v4/corporations/{corporation_id}/",
     "authed": false,
@@ -1066,10 +3044,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "start_date",
-      "alliance_id",
-      "is_deleted",
-      "record_id"
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_deleted",
+        "type": "boolean"
+      },
+      {
+        "name": "record_id",
+        "type": "integer"
+      }
     ],
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
     "authed": false,
@@ -1091,8 +3081,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "corporation_id",
-      "corporation_name"
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_name",
+        "type": "string"
+      }
     ],
     "path": "/v2/corporations/names/",
     "authed": false,
@@ -1114,7 +3110,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "member_ids"
+      {
+        "name": "member_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v3/corporations/{corporation_id}/members/",
     "authed": true,
@@ -1130,15 +3129,42 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "roles",
-      "grantable_roles",
-      "roles_at_hq",
-      "grantable_roles_at_hq",
-      "roles_at_base",
-      "grantable_roles_at_base",
-      "roles_at_other",
-      "grantable_roles_at_other"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "roles",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_other",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_other",
+        "type": "array"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/roles/",
     "authed": true,
@@ -1154,12 +3180,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "changed_at",
-      "issuer_id",
-      "role_type",
-      "old_roles",
-      "new_roles"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "changed_at",
+        "type": "string"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "role_type",
+        "type": "string"
+      },
+      {
+        "name": "old_roles",
+        "type": "array"
+      },
+      {
+        "name": "new_roles",
+        "type": "array"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/roles/history/",
     "authed": true,
@@ -1181,9 +3225,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "px64x64",
-      "px128x128",
-      "px256x256"
+      {
+        "name": "px64x64",
+        "type": "string"
+      },
+      {
+        "name": "px128x128",
+        "type": "string"
+      },
+      {
+        "name": "px256x256",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/icons/",
     "authed": false,
@@ -1205,7 +3258,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "npccorp_ids"
+      {
+        "name": "npccorp_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/npccorps/",
     "authed": false,
@@ -1221,18 +3277,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "structure_id",
-      "type_id",
-      "corporation_id",
-      "system_id",
-      "profile_id",
-      "current_vul",
-      "next_vul",
-      "fuel_expires",
-      "services",
-      "state_timer_start",
-      "state_timer_end",
-      "unanchors_at"
+      {
+        "name": "structure_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "profile_id",
+        "type": "integer"
+      },
+      {
+        "name": "fuel_expires",
+        "type": "string"
+      },
+      {
+        "name": "services",
+        "type": "array",
+        "sub_headers": [
+          "name",
+          "state"
+        ]
+      },
+      {
+        "name": "state_timer_start",
+        "type": "string"
+      },
+      {
+        "name": "state_timer_end",
+        "type": "string"
+      },
+      {
+        "name": "unanchors_at",
+        "type": "string"
+      },
+      {
+        "name": "current_vul",
+        "type": "array",
+        "sub_headers": [
+          "day",
+          "hour"
+        ]
+      },
+      {
+        "name": "next_vul",
+        "type": "array",
+        "sub_headers": [
+          "day",
+          "hour"
+        ]
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/structures/",
     "authed": true,
@@ -1261,13 +3365,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "start_date",
-      "base_id",
-      "logon_date",
-      "logoff_date",
-      "location_id",
-      "ship_type_id"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "base_id",
+        "type": "integer"
+      },
+      {
+        "name": "logon_date",
+        "type": "string"
+      },
+      {
+        "name": "logoff_date",
+        "type": "string"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_type_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/membertracking/",
     "authed": true,
@@ -1283,8 +3408,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "hangar",
-      "wallet"
+      {
+        "name": "hangar",
+        "type": "array",
+        "sub_headers": [
+          "division",
+          "name"
+        ]
+      },
+      {
+        "name": "wallet",
+        "type": "array",
+        "sub_headers": [
+          "division",
+          "name"
+        ]
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/divisions/",
     "authed": true,
@@ -1300,7 +3439,7 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "integer"
+
     ],
     "path": "/v1/corporations/{corporation_id}/members/limit/",
     "authed": true,
@@ -1316,16 +3455,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "title_id",
-      "name",
-      "roles",
-      "grantable_roles",
-      "roles_at_hq",
-      "grantable_roles_at_hq",
-      "roles_at_base",
-      "grantable_roles_at_base",
-      "roles_at_other",
-      "grantable_roles_at_other"
+      {
+        "name": "title_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "roles",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_other",
+        "type": "array"
+      },
+      {
+        "name": "grantable_roles_at_other",
+        "type": "array"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/titles/",
     "authed": true,
@@ -1341,8 +3510,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "titles"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "titles",
+        "type": "array"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/members/titles/",
     "authed": true,
@@ -1358,14 +3533,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "item_id",
-      "type_id",
-      "location_id",
-      "location_flag",
-      "quantity",
-      "time_efficiency",
-      "material_efficiency",
-      "runs"
+      {
+        "name": "item_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "time_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "material_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "runs",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/blueprints/",
     "authed": true,
@@ -1387,9 +3586,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "from_id",
-      "from_type",
-      "standing"
+      {
+        "name": "from_id",
+        "type": "integer"
+      },
+      {
+        "name": "from_type",
+        "type": "string"
+      },
+      {
+        "name": "standing",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/standings/",
     "authed": true,
@@ -1411,14 +3619,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "starbase_id",
-      "type_id",
-      "system_id",
-      "moon_id",
-      "state",
-      "unanchor_at",
-      "reinforced_until",
-      "onlined_since"
+      {
+        "name": "starbase_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "moon_id",
+        "type": "integer"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "unanchor_at",
+        "type": "string"
+      },
+      {
+        "name": "reinforced_until",
+        "type": "string"
+      },
+      {
+        "name": "onlined_since",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/starbases/",
     "authed": true,
@@ -1440,20 +3672,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "fuel_bay_view",
-      "fuel_bay_take",
-      "anchor",
-      "unanchor",
-      "online",
-      "offline",
-      "allow_corporation_members",
-      "allow_alliance_members",
-      "use_alliance_standings",
-      "attack_standing_threshold",
-      "attack_security_status_threshold",
-      "attack_if_other_security_status_dropping",
-      "attack_if_at_war",
-      "fuels"
+      {
+        "name": "fuel_bay_view",
+        "type": "string"
+      },
+      {
+        "name": "fuel_bay_take",
+        "type": "string"
+      },
+      {
+        "name": "anchor",
+        "type": "string"
+      },
+      {
+        "name": "unanchor",
+        "type": "string"
+      },
+      {
+        "name": "online",
+        "type": "string"
+      },
+      {
+        "name": "offline",
+        "type": "string"
+      },
+      {
+        "name": "allow_corporation_members",
+        "type": "boolean"
+      },
+      {
+        "name": "allow_alliance_members",
+        "type": "boolean"
+      },
+      {
+        "name": "use_alliance_standings",
+        "type": "boolean"
+      },
+      {
+        "name": "attack_standing_threshold",
+        "type": "number"
+      },
+      {
+        "name": "attack_security_status_threshold",
+        "type": "number"
+      },
+      {
+        "name": "attack_if_other_security_status_dropping",
+        "type": "boolean"
+      },
+      {
+        "name": "attack_if_at_war",
+        "type": "boolean"
+      },
+      {
+        "name": "fuels",
+        "type": "array",
+        "sub_headers": [
+          "type_id",
+          "quantity"
+        ]
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/starbases/{starbase_id}/",
     "authed": true,
@@ -1482,18 +3760,54 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "logged_at",
-      "container_id",
-      "container_type_id",
-      "character_id",
-      "location_id",
-      "location_flag",
-      "action",
-      "password_type",
-      "type_id",
-      "quantity",
-      "old_config_bitmask",
-      "new_config_bitmask"
+      {
+        "name": "logged_at",
+        "type": "string"
+      },
+      {
+        "name": "container_id",
+        "type": "integer"
+      },
+      {
+        "name": "container_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "action",
+        "type": "string"
+      },
+      {
+        "name": "password_type",
+        "type": "string"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "old_config_bitmask",
+        "type": "integer"
+      },
+      {
+        "name": "new_config_bitmask",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/containers/logs/",
     "authed": true,
@@ -1515,9 +3829,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "facility_id",
-      "type_id",
-      "system_id"
+      {
+        "name": "facility_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/facilities/",
     "authed": true,
@@ -1533,11 +3856,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "medal_id",
-      "title",
-      "description",
-      "creator_id",
-      "created_at"
+      {
+        "name": "medal_id",
+        "type": "integer"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "creator_id",
+        "type": "integer"
+      },
+      {
+        "name": "created_at",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/",
     "authed": true,
@@ -1559,12 +3897,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "medal_id",
-      "character_id",
-      "reason",
-      "status",
-      "issuer_id",
-      "issued_at"
+      {
+        "name": "medal_id",
+        "type": "integer"
+      },
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "issued_at",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/issued/",
     "authed": true,
@@ -1586,7 +3942,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "outpost_ids"
+      {
+        "name": "outpost_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/outposts/",
     "authed": true,
@@ -1608,16 +3967,60 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "owner_id",
-      "system_id",
-      "docking_cost_per_ship_volume",
-      "office_rental_cost",
-      "type_id",
-      "reprocessing_efficiency",
-      "reprocessing_station_take",
-      "standing_owner_id",
-      "coordinates",
-      "services"
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "docking_cost_per_ship_volume",
+        "type": "number"
+      },
+      {
+        "name": "office_rental_cost",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "reprocessing_efficiency",
+        "type": "number"
+      },
+      {
+        "name": "reprocessing_station_take",
+        "type": "number"
+      },
+      {
+        "name": "standing_owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "coordinates-x",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-y",
+        "type": "number"
+      },
+      {
+        "name": "coordinates-z",
+        "type": "number"
+      },
+      {
+        "name": "services",
+        "type": "array",
+        "sub_headers": [
+          "service_name",
+          "minimum_standing",
+          "surcharge_per_bad_standing",
+          "discount_per_good_standing"
+        ]
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/outposts/{outpost_id}/",
     "authed": true,
@@ -1633,37 +4036,16 @@ ENDPOINTS = {
       }
     ]
   },
-  "corporations_corporation_shareholders": {
-    "description": "Return the current shareholders of a corporation.",
-    "summary": "Get corporation shareholders",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      "shareholder_id",
-      "shareholder_type",
-      "share_count"
-    ],
-    "path": "/v1/corporations/{corporation_id}/shareholders/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "page",
-        "description": "Which page of results to return",
-        "required": null,
-        "type": "integer",
-        "in": "query"
-      }
-    ]
-  },
   "dogma_attributes": {
     "description": "Get a list of dogma attribute ids",
     "summary": "Get attributes",
     "request": "get",
     "version": 1,
     "headers": [
-      "attribute_ids"
+      {
+        "name": "attribute_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/dogma/attributes/",
     "authed": false,
@@ -1679,16 +4061,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "attribute_id",
-      "name",
-      "description",
-      "icon_id",
-      "default_value",
-      "published",
-      "display_name",
-      "unit_id",
-      "stackable",
-      "high_is_good"
+      {
+        "name": "attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "icon_id",
+        "type": "integer"
+      },
+      {
+        "name": "default_value",
+        "type": "number"
+      },
+      {
+        "name": "published",
+        "type": "boolean"
+      },
+      {
+        "name": "display_name",
+        "type": "string"
+      },
+      {
+        "name": "unit_id",
+        "type": "integer"
+      },
+      {
+        "name": "stackable",
+        "type": "boolean"
+      },
+      {
+        "name": "high_is_good",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/dogma/attributes/{attribute_id}/",
     "authed": false,
@@ -1710,7 +4122,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "effect_ids"
+      {
+        "name": "effect_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/dogma/effects/",
     "authed": false,
@@ -1726,27 +4141,98 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "effect_id",
-      "name",
-      "display_name",
-      "description",
-      "icon_id",
-      "effect_category",
-      "pre_expression",
-      "post_expression",
-      "is_offensive",
-      "is_assistance",
-      "disallow_auto_repeat",
-      "published",
-      "is_warp_safe",
-      "range_chance",
-      "electronic_chance",
-      "duration_attribute_id",
-      "tracking_speed_attribute_id",
-      "discharge_attribute_id",
-      "range_attribute_id",
-      "falloff_attribute_id",
-      "modifiers"
+      {
+        "name": "effect_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "display_name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "icon_id",
+        "type": "integer"
+      },
+      {
+        "name": "effect_category",
+        "type": "integer"
+      },
+      {
+        "name": "pre_expression",
+        "type": "integer"
+      },
+      {
+        "name": "post_expression",
+        "type": "integer"
+      },
+      {
+        "name": "is_offensive",
+        "type": "boolean"
+      },
+      {
+        "name": "is_assistance",
+        "type": "boolean"
+      },
+      {
+        "name": "disallow_auto_repeat",
+        "type": "boolean"
+      },
+      {
+        "name": "published",
+        "type": "boolean"
+      },
+      {
+        "name": "is_warp_safe",
+        "type": "boolean"
+      },
+      {
+        "name": "range_chance",
+        "type": "boolean"
+      },
+      {
+        "name": "electronic_chance",
+        "type": "boolean"
+      },
+      {
+        "name": "duration_attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "tracking_speed_attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "discharge_attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "range_attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "falloff_attribute_id",
+        "type": "integer"
+      },
+      {
+        "name": "modifiers",
+        "type": "array",
+        "sub_headers": [
+          "func",
+          "domain",
+          "modified_attribute_id",
+          "modifying_attribute_id",
+          "effect_id",
+          "operator"
+        ]
+      }
     ],
     "path": "/v2/dogma/effects/{effect_id}/",
     "authed": false,
@@ -1768,8 +4254,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "faction_id",
-      "against_id"
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "against_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/fw/wars/",
     "authed": false,
@@ -1785,11 +4277,42 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "faction_id",
-      "pilots",
-      "systems_controlled",
-      "kills",
-      "victory_points"
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "pilots",
+        "type": "integer"
+      },
+      {
+        "name": "systems_controlled",
+        "type": "integer"
+      },
+      {
+        "name": "kills-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "kills-total",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-total",
+        "type": "integer"
+      }
     ],
     "path": "/v1/fw/stats/",
     "authed": false,
@@ -1805,12 +4328,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "solar_system_id",
-      "owner_faction_id",
-      "occupier_faction_id",
-      "victory_points",
-      "victory_points_threshold",
-      "contested"
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "owner_faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "occupier_faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points_threshold",
+        "type": "integer"
+      },
+      {
+        "name": "contested",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/fw/systems/",
     "authed": false,
@@ -1826,8 +4367,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "kills",
-      "victory_points"
+      {
+        "name": "kills-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "array"
+      },
+      {
+        "name": "kills-active_total",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-active_total",
+        "type": "array"
+      }
     ],
     "path": "/v1/fw/leaderboards/",
     "authed": false,
@@ -1843,8 +4406,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "kills",
-      "victory_points"
+      {
+        "name": "kills-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "array"
+      },
+      {
+        "name": "kills-active_total",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-active_total",
+        "type": "array"
+      }
     ],
     "path": "/v1/fw/leaderboards/characters/",
     "authed": false,
@@ -1860,8 +4445,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "kills",
-      "victory_points"
+      {
+        "name": "kills-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "array"
+      },
+      {
+        "name": "kills-active_total",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "array"
+      },
+      {
+        "name": "victory_points-active_total",
+        "type": "array"
+      }
     ],
     "path": "/v1/fw/leaderboards/corporations/",
     "authed": false,
@@ -1877,11 +4484,42 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "faction_id",
-      "enlisted_on",
-      "pilots",
-      "kills",
-      "victory_points"
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "enlisted_on",
+        "type": "string"
+      },
+      {
+        "name": "pilots",
+        "type": "integer"
+      },
+      {
+        "name": "kills-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "kills-total",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-total",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/fw/stats/",
     "authed": true,
@@ -1897,12 +4535,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "faction_id",
-      "enlisted_on",
-      "current_rank",
-      "highest_rank",
-      "kills",
-      "victory_points"
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "enlisted_on",
+        "type": "string"
+      },
+      {
+        "name": "current_rank",
+        "type": "integer"
+      },
+      {
+        "name": "highest_rank",
+        "type": "integer"
+      },
+      {
+        "name": "kills-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "kills-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "kills-total",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-yesterday",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-last_week",
+        "type": "integer"
+      },
+      {
+        "name": "victory_points-total",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/fw/stats/",
     "authed": true,
@@ -1918,11 +4590,31 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "fitting_id",
-      "name",
-      "description",
-      "ship_type_id",
-      "items"
+      {
+        "name": "fitting_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "items",
+        "type": "array",
+        "sub_headers": [
+          "type_id",
+          "flag",
+          "quantity"
+        ]
+      }
     ],
     "path": "/v1/characters/{character_id}/fittings/",
     "authed": true,
@@ -1938,10 +4630,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "motd",
-      "is_free_move",
-      "is_registered",
-      "is_voice_enabled"
+      {
+        "name": "motd",
+        "type": "string"
+      },
+      {
+        "name": "is_free_move",
+        "type": "boolean"
+      },
+      {
+        "name": "is_registered",
+        "type": "boolean"
+      },
+      {
+        "name": "is_voice_enabled",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/fleets/{fleet_id}/",
     "authed": true,
@@ -1963,10 +4667,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "fleet_id",
-      "wing_id",
-      "squad_id",
-      "role"
+      {
+        "name": "fleet_id",
+        "type": "integer"
+      },
+      {
+        "name": "wing_id",
+        "type": "integer"
+      },
+      {
+        "name": "squad_id",
+        "type": "integer"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/fleet/",
     "authed": true,
@@ -1982,16 +4698,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "character_id",
-      "ship_type_id",
-      "wing_id",
-      "squad_id",
-      "role",
-      "role_name",
-      "join_time",
-      "takes_fleet_warp",
-      "solar_system_id",
-      "station_id"
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "wing_id",
+        "type": "integer"
+      },
+      {
+        "name": "squad_id",
+        "type": "integer"
+      },
+      {
+        "name": "role",
+        "type": "string"
+      },
+      {
+        "name": "role_name",
+        "type": "string"
+      },
+      {
+        "name": "join_time",
+        "type": "string"
+      },
+      {
+        "name": "takes_fleet_warp",
+        "type": "boolean"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "station_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/fleets/{fleet_id}/members/",
     "authed": true,
@@ -2020,9 +4766,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "name",
-      "id",
-      "squads"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "integer"
+      },
+      {
+        "name": "squads",
+        "type": "array",
+        "sub_headers": [
+          "name",
+          "id"
+        ]
+      }
     ],
     "path": "/v1/fleets/{fleet_id}/wings/",
     "authed": true,
@@ -2051,14 +4810,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "type",
-      "state",
-      "influence",
-      "has_boss",
-      "faction_id",
-      "constellation_id",
-      "staging_solar_system_id",
-      "infested_solar_systems"
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "influence",
+        "type": "number"
+      },
+      {
+        "name": "has_boss",
+        "type": "boolean"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "constellation_id",
+        "type": "integer"
+      },
+      {
+        "name": "staging_solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "infested_solar_systems",
+        "type": "array"
+      }
     ],
     "path": "/v1/incursions/",
     "authed": false,
@@ -2074,12 +4857,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "facility_id",
-      "tax",
-      "owner_id",
-      "type_id",
-      "solar_system_id",
-      "region_id"
+      {
+        "name": "facility_id",
+        "type": "integer"
+      },
+      {
+        "name": "tax",
+        "type": "number"
+      },
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/industry/facilities/",
     "authed": false,
@@ -2095,8 +4896,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "solar_system_id",
-      "cost_indices"
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "cost_indices",
+        "type": "array",
+        "sub_headers": [
+          "activity",
+          "cost_index"
+        ]
+      }
     ],
     "path": "/v1/industry/systems/",
     "authed": false,
@@ -2112,28 +4923,94 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "job_id",
-      "installer_id",
-      "facility_id",
-      "station_id",
-      "activity_id",
-      "blueprint_id",
-      "blueprint_type_id",
-      "blueprint_location_id",
-      "output_location_id",
-      "runs",
-      "cost",
-      "licensed_runs",
-      "probability",
-      "product_type_id",
-      "status",
-      "duration",
-      "start_date",
-      "end_date",
-      "pause_date",
-      "completed_date",
-      "completed_character_id",
-      "successful_runs"
+      {
+        "name": "job_id",
+        "type": "integer"
+      },
+      {
+        "name": "installer_id",
+        "type": "integer"
+      },
+      {
+        "name": "facility_id",
+        "type": "integer"
+      },
+      {
+        "name": "station_id",
+        "type": "integer"
+      },
+      {
+        "name": "activity_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "output_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "runs",
+        "type": "integer"
+      },
+      {
+        "name": "cost",
+        "type": "number"
+      },
+      {
+        "name": "licensed_runs",
+        "type": "integer"
+      },
+      {
+        "name": "probability",
+        "type": "number"
+      },
+      {
+        "name": "product_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "end_date",
+        "type": "string"
+      },
+      {
+        "name": "pause_date",
+        "type": "string"
+      },
+      {
+        "name": "completed_date",
+        "type": "string"
+      },
+      {
+        "name": "completed_character_id",
+        "type": "integer"
+      },
+      {
+        "name": "successful_runs",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/industry/jobs/",
     "authed": true,
@@ -2155,10 +5032,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "date",
-      "solar_system_id",
-      "type_id",
-      "quantity"
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/mining/",
     "authed": true,
@@ -2180,9 +5069,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "last_updated",
-      "observer_id",
-      "observer_type"
+      {
+        "name": "last_updated",
+        "type": "string"
+      },
+      {
+        "name": "observer_id",
+        "type": "integer"
+      },
+      {
+        "name": "observer_type",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/observers/",
     "authed": true,
@@ -2204,11 +5102,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "last_updated",
-      "character_id",
-      "recorded_corporation_id",
-      "type_id",
-      "quantity"
+      {
+        "name": "last_updated",
+        "type": "string"
+      },
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "recorded_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/observers/{observer_id}/",
     "authed": true,
@@ -2237,28 +5150,94 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "job_id",
-      "installer_id",
-      "facility_id",
-      "location_id",
-      "activity_id",
-      "blueprint_id",
-      "blueprint_type_id",
-      "blueprint_location_id",
-      "output_location_id",
-      "runs",
-      "cost",
-      "licensed_runs",
-      "probability",
-      "product_type_id",
-      "status",
-      "duration",
-      "start_date",
-      "end_date",
-      "pause_date",
-      "completed_date",
-      "completed_character_id",
-      "successful_runs"
+      {
+        "name": "job_id",
+        "type": "integer"
+      },
+      {
+        "name": "installer_id",
+        "type": "integer"
+      },
+      {
+        "name": "facility_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "activity_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "blueprint_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "output_location_id",
+        "type": "integer"
+      },
+      {
+        "name": "runs",
+        "type": "integer"
+      },
+      {
+        "name": "cost",
+        "type": "number"
+      },
+      {
+        "name": "licensed_runs",
+        "type": "integer"
+      },
+      {
+        "name": "probability",
+        "type": "number"
+      },
+      {
+        "name": "product_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "end_date",
+        "type": "string"
+      },
+      {
+        "name": "pause_date",
+        "type": "string"
+      },
+      {
+        "name": "completed_date",
+        "type": "string"
+      },
+      {
+        "name": "completed_character_id",
+        "type": "integer"
+      },
+      {
+        "name": "successful_runs",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/industry/jobs/",
     "authed": true,
@@ -2287,11 +5266,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "structure_id",
-      "moon_id",
-      "extraction_start_time",
-      "chunk_arrival_time",
-      "natural_decay_time"
+      {
+        "name": "structure_id",
+        "type": "integer"
+      },
+      {
+        "name": "moon_id",
+        "type": "integer"
+      },
+      {
+        "name": "extraction_start_time",
+        "type": "string"
+      },
+      {
+        "name": "chunk_arrival_time",
+        "type": "string"
+      },
+      {
+        "name": "natural_decay_time",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/extractions/",
     "authed": true,
@@ -2307,8 +5301,19 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "type_id",
-      "levels"
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "levels",
+        "type": "array",
+        "sub_headers": [
+          "cost",
+          "payout",
+          "name"
+        ]
+      }
     ],
     "path": "/v1/insurance/prices/",
     "authed": false,
@@ -2330,13 +5335,73 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "killmail_id",
-      "killmail_time",
-      "victim",
-      "attackers",
-      "solar_system_id",
-      "moon_id",
-      "war_id"
+      {
+        "name": "killmail_id",
+        "type": "integer"
+      },
+      {
+        "name": "killmail_time",
+        "type": "string"
+      },
+      {
+        "name": "victim-character_id",
+        "type": "integer"
+      },
+      {
+        "name": "victim-corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "victim-alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "victim-faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "victim-damage_taken",
+        "type": "integer"
+      },
+      {
+        "name": "victim-ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "victim-items",
+        "type": "array"
+      },
+      {
+        "name": "victim-position",
+        "type": "object"
+      },
+      {
+        "name": "attackers",
+        "type": "array",
+        "sub_headers": [
+          "character_id",
+          "corporation_id",
+          "alliance_id",
+          "faction_id",
+          "security_status",
+          "final_blow",
+          "damage_done",
+          "ship_type_id",
+          "weapon_type_id"
+        ]
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "moon_id",
+        "type": "integer"
+      },
+      {
+        "name": "war_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/killmails/{killmail_id}/{killmail_hash}/",
     "authed": false,
@@ -2365,8 +5430,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "killmail_id",
-      "killmail_hash"
+      {
+        "name": "killmail_id",
+        "type": "integer"
+      },
+      {
+        "name": "killmail_hash",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/killmails/recent/",
     "authed": true,
@@ -2395,8 +5466,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "killmail_id",
-      "killmail_hash"
+      {
+        "name": "killmail_id",
+        "type": "integer"
+      },
+      {
+        "name": "killmail_hash",
+        "type": "string"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/killmails/recent/",
     "authed": true,
@@ -2418,9 +5495,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "solar_system_id",
-      "station_id",
-      "structure_id"
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "station_id",
+        "type": "integer"
+      },
+      {
+        "name": "structure_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/location/",
     "authed": true,
@@ -2436,9 +5522,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "ship_type_id",
-      "ship_item_id",
-      "ship_name"
+      {
+        "name": "ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_item_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_name",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/ship/",
     "authed": true,
@@ -2454,10 +5549,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "online",
-      "last_login",
-      "last_logout",
-      "logins"
+      {
+        "name": "online",
+        "type": "boolean"
+      },
+      {
+        "name": "last_login",
+        "type": "string"
+      },
+      {
+        "name": "last_logout",
+        "type": "string"
+      },
+      {
+        "name": "logins",
+        "type": "integer"
+      }
     ],
     "path": "/v2/characters/{character_id}/online/",
     "authed": true,
@@ -2473,13 +5580,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "offer_id",
-      "type_id",
-      "quantity",
-      "lp_cost",
-      "isk_cost",
-      "ak_cost",
-      "required_items"
+      {
+        "name": "offer_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "lp_cost",
+        "type": "integer"
+      },
+      {
+        "name": "isk_cost",
+        "type": "integer"
+      },
+      {
+        "name": "ak_cost",
+        "type": "integer"
+      },
+      {
+        "name": "required_items",
+        "type": "array",
+        "sub_headers": [
+          "type_id",
+          "quantity"
+        ]
+      }
     ],
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
     "authed": false,
@@ -2501,8 +5633,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "corporation_id",
-      "loyalty_points"
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "loyalty_points",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/loyalty/points/",
     "authed": true,
@@ -2518,13 +5656,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "mail_id",
-      "subject",
-      "from",
-      "timestamp",
-      "labels",
-      "recipients",
-      "is_read"
+      {
+        "name": "mail_id",
+        "type": "integer"
+      },
+      {
+        "name": "subject",
+        "type": "string"
+      },
+      {
+        "name": "from",
+        "type": "integer"
+      },
+      {
+        "name": "timestamp",
+        "type": "string"
+      },
+      {
+        "name": "labels",
+        "type": "array"
+      },
+      {
+        "name": "recipients",
+        "type": "array",
+        "sub_headers": [
+          "recipient_type",
+          "recipient_id"
+        ]
+      },
+      {
+        "name": "is_read",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/characters/{character_id}/mail/",
     "authed": true,
@@ -2553,8 +5716,20 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "total_unread_count",
-      "labels"
+      {
+        "name": "total_unread_count",
+        "type": "integer"
+      },
+      {
+        "name": "labels",
+        "type": "array",
+        "sub_headers": [
+          "unread_count",
+          "label_id",
+          "name",
+          "color"
+        ]
+      }
     ],
     "path": "/v3/characters/{character_id}/mail/labels/",
     "authed": true,
@@ -2570,8 +5745,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "mailing_list_id",
-      "name"
+      {
+        "name": "mailing_list_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/mail/lists/",
     "authed": true,
@@ -2587,13 +5768,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "subject",
-      "from",
-      "timestamp",
-      "recipients",
-      "body",
-      "labels",
-      "read"
+      {
+        "name": "subject",
+        "type": "string"
+      },
+      {
+        "name": "from",
+        "type": "integer"
+      },
+      {
+        "name": "timestamp",
+        "type": "string"
+      },
+      {
+        "name": "recipients",
+        "type": "array",
+        "sub_headers": [
+          "recipient_type",
+          "recipient_id"
+        ]
+      },
+      {
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "name": "labels",
+        "type": "array"
+      },
+      {
+        "name": "read",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/characters/{character_id}/mail/{mail_id}/",
     "authed": true,
@@ -2615,9 +5821,18 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "type_id",
-      "average_price",
-      "adjusted_price"
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "average_price",
+        "type": "number"
+      },
+      {
+        "name": "adjusted_price",
+        "type": "number"
+      }
     ],
     "path": "/v1/markets/prices/",
     "authed": false,
@@ -2633,17 +5848,50 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "location_id",
-      "volume_total",
-      "volume_remain",
-      "min_volume",
-      "price",
-      "is_buy_order",
-      "duration",
-      "issued",
-      "range"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      }
     ],
     "path": "/v1/markets/{region_id}/orders/",
     "authed": false,
@@ -2686,12 +5934,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "date",
-      "order_count",
-      "volume",
-      "highest",
-      "average",
-      "lowest"
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "order_count",
+        "type": "integer"
+      },
+      {
+        "name": "volume",
+        "type": "integer"
+      },
+      {
+        "name": "highest",
+        "type": "number"
+      },
+      {
+        "name": "average",
+        "type": "number"
+      },
+      {
+        "name": "lowest",
+        "type": "number"
+      }
     ],
     "path": "/v1/markets/{region_id}/history/",
     "authed": false,
@@ -2720,17 +5986,50 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "location_id",
-      "volume_total",
-      "volume_remain",
-      "min_volume",
-      "price",
-      "is_buy_order",
-      "duration",
-      "issued",
-      "range"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      }
     ],
     "path": "/v1/markets/structures/{structure_id}/",
     "authed": true,
@@ -2759,7 +6058,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "group_ids"
+      {
+        "name": "group_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/markets/groups/",
     "authed": false,
@@ -2775,11 +6077,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "market_group_id",
-      "name",
-      "description",
-      "types",
-      "parent_group_id"
+      {
+        "name": "market_group_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "types",
+        "type": "array"
+      },
+      {
+        "name": "parent_group_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/markets/groups/{market_group_id}/",
     "authed": false,
@@ -2808,22 +6125,70 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "region_id",
-      "location_id",
-      "range",
-      "is_buy_order",
-      "price",
-      "volume_total",
-      "volume_remain",
-      "issued",
-      "state",
-      "min_volume",
-      "account_id",
-      "duration",
-      "is_corp",
-      "escrow"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "account_id",
+        "type": "integer"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "is_corp",
+        "type": "boolean"
+      },
+      {
+        "name": "escrow",
+        "type": "number"
+      }
     ],
     "path": "/v1/characters/{character_id}/orders/",
     "authed": true,
@@ -2839,21 +6204,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "region_id",
-      "location_id",
-      "range",
-      "price",
-      "volume_total",
-      "volume_remain",
-      "issued",
-      "is_buy_order",
-      "min_volume",
-      "escrow",
-      "duration",
-      "state",
-      "is_corporation"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "escrow",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "is_corporation",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/characters/{character_id}/orders/history/",
     "authed": true,
@@ -2875,7 +6285,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "type_ids"
+      {
+        "name": "type_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/markets/{region_id}/types/",
     "authed": false,
@@ -2904,21 +6317,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "region_id",
-      "location_id",
-      "range",
-      "is_buy_order",
-      "price",
-      "volume_total",
-      "volume_remain",
-      "issued",
-      "state",
-      "min_volume",
-      "wallet_division",
-      "duration",
-      "escrow"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "wallet_division",
+        "type": "integer"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "escrow",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/orders/",
     "authed": true,
@@ -2940,21 +6398,66 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "order_id",
-      "type_id",
-      "region_id",
-      "location_id",
-      "range",
-      "price",
-      "volume_total",
-      "volume_remain",
-      "issued",
-      "is_buy_order",
-      "min_volume",
-      "escrow",
-      "duration",
-      "state",
-      "wallet_division"
+      {
+        "name": "order_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "range",
+        "type": "string"
+      },
+      {
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "name": "volume_total",
+        "type": "integer"
+      },
+      {
+        "name": "volume_remain",
+        "type": "integer"
+      },
+      {
+        "name": "issued",
+        "type": "string"
+      },
+      {
+        "name": "is_buy_order",
+        "type": "boolean"
+      },
+      {
+        "name": "min_volume",
+        "type": "integer"
+      },
+      {
+        "name": "escrow",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "integer"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "wallet_division",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/orders/history/",
     "authed": true,
@@ -2976,7 +6479,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "group_ids"
+      {
+        "name": "group_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/opportunities/groups/",
     "authed": false,
@@ -2992,12 +6498,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "group_id",
-      "name",
-      "description",
-      "notification",
-      "required_tasks",
-      "connected_groups"
+      {
+        "name": "group_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "notification",
+        "type": "string"
+      },
+      {
+        "name": "required_tasks",
+        "type": "array"
+      },
+      {
+        "name": "connected_groups",
+        "type": "array"
+      }
     ],
     "path": "/v1/opportunities/groups/{group_id}/",
     "authed": false,
@@ -3026,7 +6550,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "task_ids"
+      {
+        "name": "task_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/opportunities/tasks/",
     "authed": false,
@@ -3042,10 +6569,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "task_id",
-      "name",
-      "description",
-      "notification"
+      {
+        "name": "task_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "notification",
+        "type": "string"
+      }
     ],
     "path": "/v1/opportunities/tasks/{task_id}/",
     "authed": false,
@@ -3067,8 +6606,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "task_id",
-      "completed_at"
+      {
+        "name": "task_id",
+        "type": "integer"
+      },
+      {
+        "name": "completed_at",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/opportunities/",
     "authed": true,
@@ -3084,13 +6629,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "solar_system_id",
-      "planet_id",
-      "owner_id",
-      "upgrade_level",
-      "num_pins",
-      "last_update",
-      "planet_type"
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "planet_id",
+        "type": "integer"
+      },
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "upgrade_level",
+        "type": "integer"
+      },
+      {
+        "name": "num_pins",
+        "type": "integer"
+      },
+      {
+        "name": "last_update",
+        "type": "string"
+      },
+      {
+        "name": "planet_type",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/planets/",
     "authed": true,
@@ -3106,9 +6672,44 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "links",
-      "pins",
-      "routes"
+      {
+        "name": "links",
+        "type": "array",
+        "sub_headers": [
+          "source_pin_id",
+          "destination_pin_id",
+          "link_level"
+        ]
+      },
+      {
+        "name": "pins",
+        "type": "array",
+        "sub_headers": [
+          "latitude",
+          "longitude",
+          "pin_id",
+          "type_id",
+          "schematic_id",
+          "extractor_details",
+          "factory_details",
+          "contents",
+          "install_time",
+          "expiry_time",
+          "last_cycle_start"
+        ]
+      },
+      {
+        "name": "routes",
+        "type": "array",
+        "sub_headers": [
+          "route_id",
+          "source_pin_id",
+          "destination_pin_id",
+          "content_type_id",
+          "quantity",
+          "waypoints"
+        ]
+      }
     ],
     "path": "/v3/characters/{character_id}/planets/{planet_id}/",
     "authed": true,
@@ -3130,8 +6731,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "schematic_name",
-      "cycle_time"
+      {
+        "name": "schematic_name",
+        "type": "string"
+      },
+      {
+        "name": "cycle_time",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/schematics/{schematic_id}/",
     "authed": false,
@@ -3153,20 +6760,62 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "office_id",
-      "system_id",
-      "reinforce_exit_start",
-      "reinforce_exit_end",
-      "corporation_tax_rate",
-      "allow_alliance_access",
-      "alliance_tax_rate",
-      "allow_access_with_standings",
-      "standing_level",
-      "excellent_standing_tax_rate",
-      "good_standing_tax_rate",
-      "neutral_standing_tax_rate",
-      "bad_standing_tax_rate",
-      "terrible_standing_tax_rate"
+      {
+        "name": "office_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "reinforce_exit_start",
+        "type": "integer"
+      },
+      {
+        "name": "reinforce_exit_end",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "allow_alliance_access",
+        "type": "boolean"
+      },
+      {
+        "name": "alliance_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "allow_access_with_standings",
+        "type": "boolean"
+      },
+      {
+        "name": "standing_level",
+        "type": "string"
+      },
+      {
+        "name": "excellent_standing_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "good_standing_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "neutral_standing_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "bad_standing_tax_rate",
+        "type": "number"
+      },
+      {
+        "name": "terrible_standing_tax_rate",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/customs_offices/",
     "authed": true,
@@ -3188,7 +6837,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "integer"
+      {
+        "name": "integer",
+        "type": "integer"
+      }
     ],
     "path": "/v1/route/{origin}/{destination}/",
     "authed": false,
@@ -3238,17 +6890,50 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "agent",
-      "alliance",
-      "character",
-      "constellation",
-      "corporation",
-      "faction",
-      "inventory_type",
-      "region",
-      "solar_system",
-      "station",
-      "structure"
+      {
+        "name": "agent",
+        "type": "array"
+      },
+      {
+        "name": "alliance",
+        "type": "array"
+      },
+      {
+        "name": "character",
+        "type": "array"
+      },
+      {
+        "name": "constellation",
+        "type": "array"
+      },
+      {
+        "name": "corporation",
+        "type": "array"
+      },
+      {
+        "name": "faction",
+        "type": "array"
+      },
+      {
+        "name": "inventory_type",
+        "type": "array"
+      },
+      {
+        "name": "region",
+        "type": "array"
+      },
+      {
+        "name": "solar_system",
+        "type": "array"
+      },
+      {
+        "name": "station",
+        "type": "array"
+      },
+      {
+        "name": "structure",
+        "type": "array"
+      }
     ],
     "path": "/v3/characters/{character_id}/search/",
     "authed": true,
@@ -3291,16 +6976,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "agent",
-      "alliance",
-      "character",
-      "constellation",
-      "corporation",
-      "faction",
-      "inventory_type",
-      "region",
-      "solar_system",
-      "station"
+      {
+        "name": "agent",
+        "type": "array"
+      },
+      {
+        "name": "alliance",
+        "type": "array"
+      },
+      {
+        "name": "character",
+        "type": "array"
+      },
+      {
+        "name": "constellation",
+        "type": "array"
+      },
+      {
+        "name": "corporation",
+        "type": "array"
+      },
+      {
+        "name": "faction",
+        "type": "array"
+      },
+      {
+        "name": "inventory_type",
+        "type": "array"
+      },
+      {
+        "name": "region",
+        "type": "array"
+      },
+      {
+        "name": "solar_system",
+        "type": "array"
+      },
+      {
+        "name": "station",
+        "type": "array"
+      }
     ],
     "path": "/v2/search/",
     "authed": false,
@@ -3343,14 +7058,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "skill_id",
-      "finish_date",
-      "start_date",
-      "finished_level",
-      "queue_position",
-      "training_start_sp",
-      "level_end_sp",
-      "level_start_sp"
+      {
+        "name": "skill_id",
+        "type": "integer"
+      },
+      {
+        "name": "finish_date",
+        "type": "string"
+      },
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "finished_level",
+        "type": "integer"
+      },
+      {
+        "name": "queue_position",
+        "type": "integer"
+      },
+      {
+        "name": "training_start_sp",
+        "type": "integer"
+      },
+      {
+        "name": "level_end_sp",
+        "type": "integer"
+      },
+      {
+        "name": "level_start_sp",
+        "type": "integer"
+      }
     ],
     "path": "/v2/characters/{character_id}/skillqueue/",
     "authed": true,
@@ -3366,9 +7105,24 @@ ENDPOINTS = {
     "request": "get",
     "version": 4,
     "headers": [
-      "skills",
-      "total_sp",
-      "unallocated_sp"
+      {
+        "name": "skills",
+        "type": "array",
+        "sub_headers": [
+          "skill_id",
+          "skillpoints_in_skill",
+          "trained_skill_level",
+          "active_skill_level"
+        ]
+      },
+      {
+        "name": "total_sp",
+        "type": "integer"
+      },
+      {
+        "name": "unallocated_sp",
+        "type": "integer"
+      }
     ],
     "path": "/v4/characters/{character_id}/skills/",
     "authed": true,
@@ -3384,14 +7138,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "charisma",
-      "intelligence",
-      "memory",
-      "perception",
-      "willpower",
-      "bonus_remaps",
-      "last_remap_date",
-      "accrued_remap_cooldown_date"
+      {
+        "name": "charisma",
+        "type": "integer"
+      },
+      {
+        "name": "intelligence",
+        "type": "integer"
+      },
+      {
+        "name": "memory",
+        "type": "integer"
+      },
+      {
+        "name": "perception",
+        "type": "integer"
+      },
+      {
+        "name": "willpower",
+        "type": "integer"
+      },
+      {
+        "name": "bonus_remaps",
+        "type": "integer"
+      },
+      {
+        "name": "last_remap_date",
+        "type": "string"
+      },
+      {
+        "name": "accrued_remap_cooldown_date",
+        "type": "string"
+      }
     ],
     "path": "/v1/characters/{character_id}/attributes/",
     "authed": true,
@@ -3407,13 +7185,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "alliance_id",
-      "solar_system_id",
-      "structure_id",
-      "structure_type_id",
-      "vulnerability_occupancy_level",
-      "vulnerable_start_time",
-      "vulnerable_end_time"
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "structure_id",
+        "type": "integer"
+      },
+      {
+        "name": "structure_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "vulnerability_occupancy_level",
+        "type": "number"
+      },
+      {
+        "name": "vulnerable_start_time",
+        "type": "string"
+      },
+      {
+        "name": "vulnerable_end_time",
+        "type": "string"
+      }
     ],
     "path": "/v1/sovereignty/structures/",
     "authed": false,
@@ -3429,16 +7228,50 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "campaign_id",
-      "structure_id",
-      "solar_system_id",
-      "constellation_id",
-      "event_type",
-      "start_time",
-      "defender_id",
-      "defender_score",
-      "attackers_score",
-      "participants"
+      {
+        "name": "campaign_id",
+        "type": "integer"
+      },
+      {
+        "name": "structure_id",
+        "type": "integer"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "constellation_id",
+        "type": "integer"
+      },
+      {
+        "name": "event_type",
+        "type": "string"
+      },
+      {
+        "name": "start_time",
+        "type": "string"
+      },
+      {
+        "name": "defender_id",
+        "type": "integer"
+      },
+      {
+        "name": "defender_score",
+        "type": "number"
+      },
+      {
+        "name": "attackers_score",
+        "type": "number"
+      },
+      {
+        "name": "participants",
+        "type": "array",
+        "sub_headers": [
+          "alliance_id",
+          "score"
+        ]
+      }
     ],
     "path": "/v1/sovereignty/campaigns/",
     "authed": false,
@@ -3454,10 +7287,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "system_id",
-      "alliance_id",
-      "corporation_id",
-      "faction_id"
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/sovereignty/map/",
     "authed": false,
@@ -3473,10 +7318,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "start_time",
-      "players",
-      "server_version",
-      "vip"
+      {
+        "name": "start_time",
+        "type": "string"
+      },
+      {
+        "name": "players",
+        "type": "integer"
+      },
+      {
+        "name": "server_version",
+        "type": "string"
+      },
+      {
+        "name": "vip",
+        "type": "boolean"
+      }
     ],
     "path": "/v1/status/",
     "authed": false,
@@ -3492,11 +7349,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "planet_id",
-      "name",
-      "type_id",
-      "position",
-      "system_id"
+      {
+        "name": "planet_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/planets/{planet_id}/",
     "authed": false,
@@ -3518,18 +7398,62 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "station_id",
-      "name",
-      "owner",
-      "type_id",
-      "race_id",
-      "position",
-      "system_id",
-      "reprocessing_efficiency",
-      "reprocessing_stations_take",
-      "max_dockable_ship_volume",
-      "office_rental_cost",
-      "services"
+      {
+        "name": "station_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "owner",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "race_id",
+        "type": "integer"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "reprocessing_efficiency",
+        "type": "number"
+      },
+      {
+        "name": "reprocessing_stations_take",
+        "type": "number"
+      },
+      {
+        "name": "max_dockable_ship_volume",
+        "type": "number"
+      },
+      {
+        "name": "office_rental_cost",
+        "type": "number"
+      },
+      {
+        "name": "services",
+        "type": "array"
+      }
     ],
     "path": "/v2/universe/stations/{station_id}/",
     "authed": false,
@@ -3551,10 +7475,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "name",
-      "solar_system_id",
-      "type_id",
-      "position"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      }
     ],
     "path": "/v1/universe/structures/{structure_id}/",
     "authed": true,
@@ -3576,16 +7520,58 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "star_id",
-      "system_id",
-      "name",
-      "position",
-      "security_status",
-      "security_class",
-      "constellation_id",
-      "planets",
-      "stargates",
-      "stations"
+      {
+        "name": "star_id",
+        "type": "integer"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "security_status",
+        "type": "number"
+      },
+      {
+        "name": "security_class",
+        "type": "string"
+      },
+      {
+        "name": "constellation_id",
+        "type": "integer"
+      },
+      {
+        "name": "planets",
+        "type": "array",
+        "sub_headers": [
+          "planet_id",
+          "moons"
+        ]
+      },
+      {
+        "name": "stargates",
+        "type": "array"
+      },
+      {
+        "name": "stations",
+        "type": "array"
+      }
     ],
     "path": "/v3/universe/systems/{system_id}/",
     "authed": false,
@@ -3614,7 +7600,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "system_ids"
+      {
+        "name": "system_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/systems/",
     "authed": false,
@@ -3630,22 +7619,78 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "type_id",
-      "name",
-      "description",
-      "published",
-      "group_id",
-      "market_group_id",
-      "radius",
-      "volume",
-      "packaged_volume",
-      "icon_id",
-      "capacity",
-      "portion_size",
-      "mass",
-      "graphic_id",
-      "dogma_attributes",
-      "dogma_effects"
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "published",
+        "type": "boolean"
+      },
+      {
+        "name": "group_id",
+        "type": "integer"
+      },
+      {
+        "name": "market_group_id",
+        "type": "integer"
+      },
+      {
+        "name": "radius",
+        "type": "number"
+      },
+      {
+        "name": "volume",
+        "type": "number"
+      },
+      {
+        "name": "packaged_volume",
+        "type": "number"
+      },
+      {
+        "name": "icon_id",
+        "type": "integer"
+      },
+      {
+        "name": "capacity",
+        "type": "number"
+      },
+      {
+        "name": "portion_size",
+        "type": "integer"
+      },
+      {
+        "name": "mass",
+        "type": "number"
+      },
+      {
+        "name": "graphic_id",
+        "type": "integer"
+      },
+      {
+        "name": "dogma_attributes",
+        "type": "array",
+        "sub_headers": [
+          "attribute_id",
+          "value"
+        ]
+      },
+      {
+        "name": "dogma_effects",
+        "type": "array",
+        "sub_headers": [
+          "effect_id",
+          "is_default"
+        ]
+      }
     ],
     "path": "/v3/universe/types/{type_id}/",
     "authed": false,
@@ -3674,7 +7719,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "type_ids"
+      {
+        "name": "type_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/types/",
     "authed": false,
@@ -3696,7 +7744,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "group_ids"
+      {
+        "name": "group_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/groups/",
     "authed": false,
@@ -3718,11 +7769,26 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "group_id",
-      "name",
-      "published",
-      "category_id",
-      "types"
+      {
+        "name": "group_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "published",
+        "type": "boolean"
+      },
+      {
+        "name": "category_id",
+        "type": "integer"
+      },
+      {
+        "name": "types",
+        "type": "array"
+      }
     ],
     "path": "/v1/universe/groups/{group_id}/",
     "authed": false,
@@ -3751,7 +7817,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "categorie_ids"
+      {
+        "name": "categorie_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/categories/",
     "authed": false,
@@ -3767,10 +7836,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "category_id",
-      "name",
-      "published",
-      "groups"
+      {
+        "name": "category_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "published",
+        "type": "boolean"
+      },
+      {
+        "name": "groups",
+        "type": "array"
+      }
     ],
     "path": "/v1/universe/categories/{category_id}/",
     "authed": false,
@@ -3799,7 +7880,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "structure_ids"
+      {
+        "name": "structure_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/structures/",
     "authed": false,
@@ -3815,10 +7899,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "race_id",
-      "name",
-      "description",
-      "alliance_id"
+      {
+        "name": "race_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/races/",
     "authed": false,
@@ -3840,16 +7936,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "faction_id",
-      "name",
-      "description",
-      "solar_system_id",
-      "corporation_id",
-      "militia_corporation_id",
-      "size_factor",
-      "station_count",
-      "station_system_count",
-      "is_unique"
+      {
+        "name": "faction_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "militia_corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "size_factor",
+        "type": "number"
+      },
+      {
+        "name": "station_count",
+        "type": "integer"
+      },
+      {
+        "name": "station_system_count",
+        "type": "integer"
+      },
+      {
+        "name": "is_unique",
+        "type": "boolean"
+      }
     ],
     "path": "/v2/universe/factions/",
     "authed": false,
@@ -3871,17 +7997,50 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "bloodline_id",
-      "name",
-      "description",
-      "race_id",
-      "ship_type_id",
-      "corporation_id",
-      "perception",
-      "willpower",
-      "charisma",
-      "memory",
-      "intelligence"
+      {
+        "name": "bloodline_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "race_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "perception",
+        "type": "integer"
+      },
+      {
+        "name": "willpower",
+        "type": "integer"
+      },
+      {
+        "name": "charisma",
+        "type": "integer"
+      },
+      {
+        "name": "memory",
+        "type": "integer"
+      },
+      {
+        "name": "intelligence",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/bloodlines/",
     "authed": false,
@@ -3903,7 +8062,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "region_ids"
+      {
+        "name": "region_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/regions/",
     "authed": false,
@@ -3919,10 +8081,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "region_id",
-      "name",
-      "description",
-      "constellations"
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "constellations",
+        "type": "array"
+      }
     ],
     "path": "/v1/universe/regions/{region_id}/",
     "authed": false,
@@ -3951,7 +8125,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "constellation_ids"
+      {
+        "name": "constellation_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/constellations/",
     "authed": false,
@@ -3967,11 +8144,34 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "constellation_id",
-      "name",
-      "position",
-      "region_id",
-      "systems"
+      {
+        "name": "constellation_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "region_id",
+        "type": "integer"
+      },
+      {
+        "name": "systems",
+        "type": "array"
+      }
     ],
     "path": "/v1/universe/constellations/{constellation_id}/",
     "authed": false,
@@ -4000,10 +8200,30 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "moon_id",
-      "name",
-      "position",
-      "system_id"
+      {
+        "name": "moon_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/moons/{moon_id}/",
     "authed": false,
@@ -4025,12 +8245,42 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "stargate_id",
-      "name",
-      "type_id",
-      "position",
-      "system_id",
-      "destination"
+      {
+        "name": "stargate_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "destination-system_id",
+        "type": "integer"
+      },
+      {
+        "name": "destination-stargate_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/stargates/{stargate_id}/",
     "authed": false,
@@ -4052,7 +8302,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "graphic_ids"
+      {
+        "name": "graphic_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/graphics/",
     "authed": false,
@@ -4068,14 +8321,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "graphic_id",
-      "graphic_file",
-      "sof_race_name",
-      "sof_fation_name",
-      "sof_dna",
-      "sof_hull_name",
-      "collision_file",
-      "icon_folder"
+      {
+        "name": "graphic_id",
+        "type": "integer"
+      },
+      {
+        "name": "graphic_file",
+        "type": "string"
+      },
+      {
+        "name": "sof_race_name",
+        "type": "string"
+      },
+      {
+        "name": "sof_fation_name",
+        "type": "string"
+      },
+      {
+        "name": "sof_dna",
+        "type": "string"
+      },
+      {
+        "name": "sof_hull_name",
+        "type": "string"
+      },
+      {
+        "name": "collision_file",
+        "type": "string"
+      },
+      {
+        "name": "icon_folder",
+        "type": "string"
+      }
     ],
     "path": "/v1/universe/graphics/{graphic_id}/",
     "authed": false,
@@ -4097,8 +8374,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "system_id",
-      "ship_jumps"
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_jumps",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/system_jumps/",
     "authed": false,
@@ -4114,10 +8397,22 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "system_id",
-      "ship_kills",
-      "npc_kills",
-      "pod_kills"
+      {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
+        "name": "ship_kills",
+        "type": "integer"
+      },
+      {
+        "name": "npc_kills",
+        "type": "integer"
+      },
+      {
+        "name": "pod_kills",
+        "type": "integer"
+      }
     ],
     "path": "/v2/universe/system_kills/",
     "authed": false,
@@ -4133,14 +8428,38 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "name",
-      "solar_system_id",
-      "type_id",
-      "age",
-      "luminosity",
-      "radius",
-      "spectral_class",
-      "temperature"
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "solar_system_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "age",
+        "type": "integer"
+      },
+      {
+        "name": "luminosity",
+        "type": "number"
+      },
+      {
+        "name": "radius",
+        "type": "integer"
+      },
+      {
+        "name": "spectral_class",
+        "type": "string"
+      },
+      {
+        "name": "temperature",
+        "type": "integer"
+      }
     ],
     "path": "/v1/universe/stars/{star_id}/",
     "authed": false,
@@ -4156,13 +8475,58 @@ ENDPOINTS = {
       }
     ]
   },
+  "universe_ancestries": {
+    "description": "Get all character ancestries",
+    "summary": "Get ancestries",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "bloodline_id",
+        "type": "integer"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "short_description",
+        "type": "string"
+      },
+      {
+        "name": "icon_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/universe/ancestries/",
+    "authed": false,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "language",
+        "description": "Language to use in the response",
+        "required": null,
+        "type": "string",
+        "in": "query"
+      }
+    ]
+  },
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",
     "summary": "Get a character's wallet balance",
     "request": "get",
     "version": 1,
     "headers": [
-      "number"
+
     ],
     "path": "/v1/characters/{character_id}/wallet/",
     "authed": true,
@@ -4178,19 +8542,102 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
-      "date",
-      "ref_id",
-      "ref_type",
-      "first_party_id",
-      "first_party_type",
-      "second_party_id",
-      "second_party_type",
-      "amount",
-      "balance",
-      "reason",
-      "tax_receiver_id",
-      "tax",
-      "extra_info"
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "ref_id",
+        "type": "integer"
+      },
+      {
+        "name": "ref_type",
+        "type": "string"
+      },
+      {
+        "name": "first_party_id",
+        "type": "integer"
+      },
+      {
+        "name": "first_party_type",
+        "type": "string"
+      },
+      {
+        "name": "second_party_id",
+        "type": "integer"
+      },
+      {
+        "name": "second_party_type",
+        "type": "string"
+      },
+      {
+        "name": "amount",
+        "type": "number"
+      },
+      {
+        "name": "balance",
+        "type": "number"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "tax_receiver_id",
+        "type": "integer"
+      },
+      {
+        "name": "tax",
+        "type": "number"
+      },
+      {
+        "name": "extra_info-location_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-transaction_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-npc_name",
+        "type": "string"
+      },
+      {
+        "name": "extra_info-npc_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-destroyed_ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-character_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-job_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-contract_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-system_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-planet_id",
+        "type": "integer"
+      }
     ],
     "path": "/v3/characters/{character_id}/wallet/journal/",
     "authed": true,
@@ -4212,16 +8659,46 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "transaction_id",
-      "date",
-      "type_id",
-      "location_id",
-      "unit_price",
-      "quantity",
-      "client_id",
-      "is_buy",
-      "is_personal",
-      "journal_ref_id"
+      {
+        "name": "transaction_id",
+        "type": "integer"
+      },
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "unit_price",
+        "type": "number"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "client_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_buy",
+        "type": "boolean"
+      },
+      {
+        "name": "is_personal",
+        "type": "boolean"
+      },
+      {
+        "name": "journal_ref_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/characters/{character_id}/wallet/transactions/",
     "authed": true,
@@ -4243,8 +8720,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "division",
-      "balance"
+      {
+        "name": "division",
+        "type": "integer"
+      },
+      {
+        "name": "balance",
+        "type": "number"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/",
     "authed": true,
@@ -4260,19 +8743,102 @@ ENDPOINTS = {
     "request": "get",
     "version": 2,
     "headers": [
-      "date",
-      "ref_id",
-      "ref_type",
-      "first_party_id",
-      "first_party_type",
-      "second_party_id",
-      "second_party_type",
-      "amount",
-      "balance",
-      "reason",
-      "tax_receiver_id",
-      "tax",
-      "extra_info"
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "ref_id",
+        "type": "integer"
+      },
+      {
+        "name": "ref_type",
+        "type": "string"
+      },
+      {
+        "name": "first_party_id",
+        "type": "integer"
+      },
+      {
+        "name": "first_party_type",
+        "type": "string"
+      },
+      {
+        "name": "second_party_id",
+        "type": "integer"
+      },
+      {
+        "name": "second_party_type",
+        "type": "string"
+      },
+      {
+        "name": "amount",
+        "type": "number"
+      },
+      {
+        "name": "balance",
+        "type": "number"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "tax_receiver_id",
+        "type": "integer"
+      },
+      {
+        "name": "tax",
+        "type": "number"
+      },
+      {
+        "name": "extra_info-location_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-transaction_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-npc_name",
+        "type": "string"
+      },
+      {
+        "name": "extra_info-npc_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-destroyed_ship_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-character_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-job_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-contract_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-system_id",
+        "type": "integer"
+      },
+      {
+        "name": "extra_info-planet_id",
+        "type": "integer"
+      }
     ],
     "path": "/v2/corporations/{corporation_id}/wallets/{division}/journal/",
     "authed": true,
@@ -4301,15 +8867,42 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "transaction_id",
-      "date",
-      "type_id",
-      "location_id",
-      "unit_price",
-      "quantity",
-      "client_id",
-      "is_buy",
-      "journal_ref_id"
+      {
+        "name": "transaction_id",
+        "type": "integer"
+      },
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "unit_price",
+        "type": "number"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "client_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_buy",
+        "type": "boolean"
+      },
+      {
+        "name": "journal_ref_id",
+        "type": "integer"
+      }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/{division}/transactions/",
     "authed": true,
@@ -4338,7 +8931,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "war_ids"
+      {
+        "name": "war_ids",
+        "type": "integer"
+      }
     ],
     "path": "/v1/wars/",
     "authed": false,
@@ -4360,16 +8956,74 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "id",
-      "declared",
-      "started",
-      "retracted",
-      "finished",
-      "mutual",
-      "open_for_allies",
-      "aggressor",
-      "defender",
-      "allies"
+      {
+        "name": "id",
+        "type": "integer"
+      },
+      {
+        "name": "declared",
+        "type": "string"
+      },
+      {
+        "name": "started",
+        "type": "string"
+      },
+      {
+        "name": "retracted",
+        "type": "string"
+      },
+      {
+        "name": "finished",
+        "type": "string"
+      },
+      {
+        "name": "mutual",
+        "type": "boolean"
+      },
+      {
+        "name": "open_for_allies",
+        "type": "boolean"
+      },
+      {
+        "name": "aggressor-corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "aggressor-alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "aggressor-ships_killed",
+        "type": "integer"
+      },
+      {
+        "name": "aggressor-isk_destroyed",
+        "type": "number"
+      },
+      {
+        "name": "defender-corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "defender-alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "defender-ships_killed",
+        "type": "integer"
+      },
+      {
+        "name": "defender-isk_destroyed",
+        "type": "number"
+      },
+      {
+        "name": "allies",
+        "type": "array",
+        "sub_headers": [
+          "corporation_id",
+          "alliance_id"
+        ]
+      }
     ],
     "path": "/v1/wars/{war_id}/",
     "authed": false,
@@ -4391,8 +9045,14 @@ ENDPOINTS = {
     "request": "get",
     "version": 1,
     "headers": [
-      "killmail_id",
-      "killmail_hash"
+      {
+        "name": "killmail_id",
+        "type": "integer"
+      },
+      {
+        "name": "killmail_hash",
+        "type": "string"
+      }
     ],
     "path": "/v1/wars/{war_id}/killmails/",
     "authed": false,
