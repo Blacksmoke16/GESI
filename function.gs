@@ -587,7 +587,7 @@ function corporations_npccorps(opt_headers) {
 }
 
 /** 
-* Get a list of corporation structures
+* Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
 * @param {string} language  Language to use in the response.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return.

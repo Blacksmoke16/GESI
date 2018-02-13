@@ -3272,10 +3272,10 @@ ENDPOINTS = {
     ]
   },
   "corporations_corporation_structures": {
-    "description": "Get a list of corporation structures",
+    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
     "summary": "Get corporation structures",
     "request": "get",
-    "version": 1,
+    "version": 2,
     "headers": [
       {
         "name": "structure_id",
@@ -3322,23 +3322,31 @@ ENDPOINTS = {
         "type": "string"
       },
       {
-        "name": "current_vul",
-        "type": "array",
-        "sub_headers": [
-          "day",
-          "hour"
-        ]
+        "name": "state",
+        "type": "string"
       },
       {
-        "name": "next_vul",
-        "type": "array",
-        "sub_headers": [
-          "day",
-          "hour"
-        ]
+        "name": "reinforce_weekday",
+        "type": "integer"
+      },
+      {
+        "name": "reinforce_hour",
+        "type": "integer"
+      },
+      {
+        "name": "next_reinforce_weekday",
+        "type": "integer"
+      },
+      {
+        "name": "next_reinforce_hour",
+        "type": "integer"
+      },
+      {
+        "name": "next_reinforce_apply",
+        "type": "string"
       }
     ],
-    "path": "/v1/corporations/{corporation_id}/structures/",
+    "path": "/v2/corporations/{corporation_id}/structures/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",

@@ -2,7 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#1684 @ Discord
-app_version = '4.0.0';
+app_version = '4.1.0';
 BASE_URL = 'https://esi.tech.ccp.is'
 
 // Your email address
@@ -29,77 +29,80 @@ AUTHING_CHARACTER = CHARACTERS[0];
 
 // List of scopes to request
 SCOPES = [
-  "esi-alliances.read_contacts.v1",
-  "esi-assets.read_assets.v1",
-  "esi-assets.read_corporation_assets.v1",
-  "esi-bookmarks.read_character_bookmarks.v1",
-  "esi-bookmarks.read_corporation_bookmarks.v1",
-  "esi-calendar.read_calendar_events.v1",
-  "esi-calendar.respond_calendar_events.v1",
-  "esi-characters.read_agents_research.v1",
-  "esi-characters.read_blueprints.v1",
-  "esi-characters.read_chat_channels.v1",
-  "esi-characters.read_contacts.v1",
-  "esi-characters.read_corporation_roles.v1",
-  "esi-characters.read_fatigue.v1",
-  "esi-characters.read_fw_stats.v1",
-  "esi-characters.read_loyalty.v1",
-  "esi-characters.read_medals.v1",
-  "esi-characters.read_notifications.v1",
-  "esi-characters.read_opportunities.v1",
-  "esi-characters.read_standings.v1",
-  "esi-characters.read_titles.v1",
-  "esi-characters.write_contacts.v1",
-  "esi-characterstats.read.v1",
-  "esi-clones.read_clones.v1",
-  "esi-clones.read_implants.v1",
-  "esi-contracts.read_character_contracts.v1",
-  "esi-contracts.read_corporation_contracts.v1",
-  "esi-corporations.read_blueprints.v1",
-  "esi-corporations.read_contacts.v1",
-  "esi-corporations.read_container_logs.v1",
-  "esi-corporations.read_corporation_membership.v1",
-  "esi-corporations.read_divisions.v1",
-  "esi-corporations.read_facilities.v1",
-  "esi-corporations.read_fw_stats.v1",
-  "esi-corporations.read_medals.v1",
-  "esi-corporations.read_outposts.v1",
-  "esi-corporations.read_standings.v1",
-  "esi-corporations.read_starbases.v1",
-  "esi-corporations.read_structures.v1",
-  "esi-corporations.read_titles.v1",
-  "esi-corporations.track_members.v1",
-  "esi-corporations.write_structures.v1",
-  "esi-fittings.read_fittings.v1",
-  "esi-fittings.write_fittings.v1",
-  "esi-fleets.read_fleet.v1",
-  "esi-fleets.write_fleet.v1",
-  "esi-industry.read_character_jobs.v1",
-  "esi-industry.read_character_mining.v1",
-  "esi-industry.read_corporation_jobs.v1",
-  "esi-industry.read_corporation_mining.v1",
-  "esi-killmails.read_corporation_killmails.v1",
-  "esi-killmails.read_killmails.v1",
-  "esi-location.read_location.v1",
-  "esi-location.read_online.v1",
-  "esi-location.read_ship_type.v1",
-  "esi-mail.organize_mail.v1",
-  "esi-mail.read_mail.v1",
-  "esi-mail.send_mail.v1",
-  "esi-markets.read_character_orders.v1",
-  "esi-markets.read_corporation_orders.v1",
-  "esi-markets.structure_markets.v1",
-  "esi-planets.manage_planets.v1",
-  "esi-planets.read_customs_offices.v1",
-  "esi-search.search_structures.v1",
-  "esi-skills.read_skillqueue.v1",
-  "esi-skills.read_skills.v1",
-  "esi-ui.open_window.v1",
-  "esi-ui.write_waypoint.v1",
-  "esi-universe.read_structures.v1",
-  "esi-wallet.read_character_wallet.v1",
-  "esi-wallet.read_corporation_wallets.v1"
+    "esi-alliances.read_contacts.v1",
+    "esi-assets.read_assets.v1",
+    "esi-assets.read_corporation_assets.v1",
+    "esi-bookmarks.read_character_bookmarks.v1",
+    "esi-bookmarks.read_corporation_bookmarks.v1",
+    "esi-calendar.read_calendar_events.v1",
+    "esi-calendar.respond_calendar_events.v1",
+    "esi-characters.read_agents_research.v1",
+    "esi-characters.read_blueprints.v1",
+    "esi-characters.read_chat_channels.v1",
+    "esi-characters.read_contacts.v1",
+    "esi-characters.read_corporation_roles.v1",
+    "esi-characters.read_fatigue.v1",
+    "esi-characters.read_fw_stats.v1",
+    "esi-characters.read_loyalty.v1",
+    "esi-characters.read_medals.v1",
+    "esi-characters.read_notifications.v1",
+    "esi-characters.read_opportunities.v1",
+    "esi-characters.read_standings.v1",
+    "esi-characters.read_titles.v1",
+    "esi-characters.write_contacts.v1",
+    "esi-characterstats.read.v1",
+    "esi-clones.read_clones.v1",
+    "esi-clones.read_implants.v1",
+    "esi-contracts.read_character_contracts.v1",
+    "esi-contracts.read_corporation_contracts.v1",
+    "esi-corporations.read_blueprints.v1",
+    "esi-corporations.read_contacts.v1",
+    "esi-corporations.read_container_logs.v1",
+    "esi-corporations.read_corporation_membership.v1",
+    "esi-corporations.read_divisions.v1",
+    "esi-corporations.read_facilities.v1",
+    "esi-corporations.read_fw_stats.v1",
+    "esi-corporations.read_medals.v1",
+    "esi-corporations.read_outposts.v1",
+    "esi-corporations.read_standings.v1",
+    "esi-corporations.read_starbases.v1",
+    "esi-corporations.read_structures.v1",
+    "esi-corporations.read_titles.v1",
+    "esi-corporations.track_members.v1",
+    "esi-corporations.write_structures.v1",
+    "esi-fittings.read_fittings.v1",
+    "esi-fittings.write_fittings.v1",
+    "esi-fleets.read_fleet.v1",
+    "esi-fleets.write_fleet.v1",
+    "esi-industry.read_character_jobs.v1",
+    "esi-industry.read_character_mining.v1",
+    "esi-industry.read_corporation_jobs.v1",
+    "esi-industry.read_corporation_mining.v1",
+    "esi-killmails.read_corporation_killmails.v1",
+    "esi-killmails.read_killmails.v1",
+    "esi-location.read_location.v1",
+    "esi-location.read_online.v1",
+    "esi-location.read_ship_type.v1",
+    "esi-mail.organize_mail.v1",
+    "esi-mail.read_mail.v1",
+    "esi-mail.send_mail.v1",
+    "esi-markets.read_character_orders.v1",
+    "esi-markets.read_corporation_orders.v1",
+    "esi-markets.structure_markets.v1",
+    "esi-planets.manage_planets.v1",
+    "esi-planets.read_customs_offices.v1",
+    "esi-search.search_structures.v1",
+    "esi-skills.read_skillqueue.v1",
+    "esi-skills.read_skills.v1",
+    "esi-ui.open_window.v1",
+    "esi-ui.write_waypoint.v1",
+    "esi-universe.read_structures.v1",
+    "esi-wallet.read_character_wallet.v1",
+    "esi-wallet.read_corporation_wallets.v1"
 ];
+
+    DOCUMENT_PROPERTIES = PropertiesService.getDocumentProperties();
+    CACHE = CacheService.getDocumentCache();
  
 function onOpen() {
     SpreadsheetApp.getUi().createMenu('GESI')
@@ -107,7 +110,6 @@ function onOpen() {
         .addSeparator()
         .addItem('Reset Auth', 'resetAuth')
         .addToUi();
-
 }
 
 /** 
@@ -139,9 +141,7 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 
 function getData_(endpoint_name, params) {
     var authed = ENDPOINTS[endpoint_name].authed;
-    var documentProperties = PropertiesService.getDocumentProperties();
     var path = ENDPOINTS[endpoint_name].path;
-    var cache = CacheService.getDocumentCache();
     var name = params.name;
     if (!name) name = AUTHING_CHARACTER;
         
@@ -154,32 +154,39 @@ function getData_(endpoint_name, params) {
         }
     });
         
-    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(documentProperties.getProperty(name + '_character_id')));
-    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(documentProperties.getProperty(name + '_alliance_id')));
-    if (path.indexOf('{corporation_id}') !== -1 && endpoint_name !== 'corporationLoyalty') path = path.replace('{corporation_id}', parseInt(documentProperties.getProperty(name + '_corporation_id')));
+    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_character_id')));
+    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_alliance_id')));
+    if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_corporation_id')));
 
-    if (!authed) return JSON.parse(UrlFetchApp.fetch(BASE_URL + path));
-    
-    var token = cache.get(name + '_access_token');
+    var token = CACHE.get(name + '_access_token');
     if (!token) token = refreshToken_(name);
+    
+    var response = doRequest_(BASE_URL + path, 'get', token);
 
-    var response = UrlFetchApp.fetch(BASE_URL + path, {
-        headers: {
-            Authorization: 'Bearer ' + token
-        }
-    });
-        
-    return JSON.parse(response);
+    return {data: response.data, headers: response.headers};
 }
 
 function parseData_(endpoint_name, params) {
-    var data = getData_(endpoint_name, params);
+    var response = getData_(endpoint_name, params);
     var endpoint = ENDPOINTS[endpoint_name];
+    var data = [];
     var result = [];
-    var headers = [];
     
     var opt_headers = params.opt_headers;
     if (opt_headers || undefined === opt_headers) result.push(endpoint.headers.map(function(h) { return h.name }));
+    
+    if (params.page === -1) {
+        data = data.concat(response.data);
+        var page = 2;
+        var pages = parseInt(response.headers['x-pages']);
+        for (var p = page; p <= pages; p++) {
+            params.page = p;
+            data = data.concat(getData_(endpoint_name, params).data);
+        }        
+    } else {
+         data = response.data;
+    }
+    
         
     if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
         data.forEach(function(obj) {
@@ -204,6 +211,14 @@ function parseData_(endpoint_name, params) {
     }
       
     return result;
+}
+
+function doRequest_(path, method, token, data) {
+    var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
+    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + EMAIL,'Content-Type': 'application/json','Authorization': auth}};
+    if (data) options['payload'] = JSON.stringify(data)
+    var response = UrlFetchApp.fetch(path, options);
+    return {data: JSON.parse(response), headers: response.getHeaders()};
 }
 
 function parseObject_(source, header) {
@@ -253,7 +268,7 @@ function findObjectByKey(array, key, value) {
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//                                                                                                  Auth  Functions
+//                                                                                                  Auth Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function authCallback(request) {
@@ -275,46 +290,37 @@ function showSidebar() {
     SpreadsheetApp.getUi().showSidebar(template.evaluate());
 }
 
-function doRequest_(path, method, token, data) {
-    var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + EMAIL,'Content-Type': 'application/json','Authorization': auth}};
-    if (data) options['payload'] = JSON.stringify(data);
-    return JSON.parse(UrlFetchApp.fetch(path, options));
-}
-
 function getAccessToken_(code) {
-    return doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"authorization_code", "code": code});
+    return doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"authorization_code", "code": code}).data;
 }
 
 function getCharacterDetails_(token) {
-    return doRequest_('https://login.eveonline.com/oauth/verify', 'get', token);
+    return doRequest_('https://login.eveonline.com/oauth/verify', 'get', token).data;
 }
 
 function getCharacterAffiliation_(character_id) {
     var character_ids = [character_id];
-    return doRequest_(BASE_URL + '/v1/characters/affiliation/', 'post', null, character_ids);
+    return doRequest_(BASE_URL + '/v1/characters/affiliation/', 'post', null, character_ids).data;
 }
 
 function refreshToken_(name) {
-    var documentProperties = PropertiesService.getDocumentProperties();
-    var cache = CacheService.getDocumentCache();
-    var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": documentProperties.getProperty(name + '_refresh_token')});
-    cache.put(name + '_access_token', response['access_token'], 900);
+    var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": DOCUMENT_PROPERTIES.getProperty(name + '_refresh_token')}).data;
+    CACHE.put(name + '_access_token', response['access_token'], 900);
     return response['access_token'];
 }
 
 function cacheData_(userData) {
-    var documentProperties = PropertiesService.getDocumentProperties();
-    var cache = CacheService.getDocumentCache();
     var userProperties = {};
     prefix = userData['CharacterName'] + '_';
     ['character_id', 'corporation_id', 'alliance_id', 'CharacterName', 'refresh_token']
       .forEach(function(param) { userProperties[prefix + param] = userData[param]; });
-    cache.put(prefix + 'access_token', userData['access_token'], 900);
-    documentProperties.setProperties(userProperties );
+    CACHE.put(prefix + 'access_token', userData['access_token'], 900);
+    DOCUMENT_PROPERTIES.setProperties(userProperties );
 }
 
 function resetAuth() {
-    var documentProperties = PropertiesService.getDocumentProperties();
-    documentProperties.deleteAllProperties();
+    DOCUMENT_PROPERTIES.deleteAllProperties();
+    CHARACTERS.forEach(function(character) {
+      CACHE.remove(character + '_access_token');
+    });
 }
