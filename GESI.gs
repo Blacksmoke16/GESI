@@ -161,9 +161,7 @@ function getData_(endpoint_name, params) {
     var token = CACHE.get(name + '_access_token');
     if (!token) token = refreshToken_(name);
     
-    var response = doRequest_(BASE_URL + path, 'get', token);
-
-    return {data: response.data, headers: response.headers};
+    return doRequest_(BASE_URL + path, 'get', token);
 }
 
 function parseData_(endpoint_name, params) {
