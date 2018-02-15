@@ -117,7 +117,7 @@ As of now if an endpoint returns a property that is an array of objects nested i
 
 ### Contact Info
 In-game:  Blacksmoke16  
-Discord:  Blacksmoke16#1684
+Discord:  Blacksmoke16#0016
   
 ### Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 

@@ -1,7 +1,7 @@
 // Google ESI (GESI)
 //
 // /u/blacksmoke16 @ Reddit
-// @Blacksmoke16#1684 @ Discord
+// @Blacksmoke16#0016 @ Discord
 app_version = '4.1.0';
 BASE_URL = 'https://esi.tech.ccp.is'
 
