@@ -2,7 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-app_version = '4.1.1';
+app_version = '4.1.2';
 BASE_URL = 'https://esi.tech.ccp.is'
 
 // Your email address
@@ -166,7 +166,6 @@ function getData_(endpoint_name, params) {
 }
 
 function parseData_(endpoint_name, params) {
-    var response = getData_(endpoint_name, params);
     var endpoint = ENDPOINTS[endpoint_name];
     var data = [];
     var result = [];
@@ -175,17 +174,17 @@ function parseData_(endpoint_name, params) {
     if (opt_headers || undefined === opt_headers) result.push(endpoint.headers.map(function(h) { return h.name }));
     
     if (params.page === -1) {
+        params.page = 1;
+        var response = getData_(endpoint_name, params)
         data = data.concat(response.data);
-        var page = 2;
         var pages = parseInt(response.headers['x-pages']);
-        for (var p = page; p <= pages; p++) {
+        for (var p = 2; p <= pages; p++) {
             params.page = p;
             data = data.concat(getData_(endpoint_name, params).data);
         }        
     } else {
-         data = response.data;
+         data = getData_(endpoint_name, params).data;
     }
-    
         
     if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
         data.forEach(function(obj) {
