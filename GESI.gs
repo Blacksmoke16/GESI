@@ -2,7 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-app_version = '4.1.0';
+app_version = '4.1.1';
 BASE_URL = 'https://esi.tech.ccp.is'
 
 // Your email address
@@ -144,6 +144,7 @@ function getData_(endpoint_name, params) {
     var path = ENDPOINTS[endpoint_name].path;
     var name = params.name;
     if (!name) name = AUTHING_CHARACTER;
+    if (params.page === -1) params.page = 1;
         
     ENDPOINTS[endpoint_name].parameters.forEach(function(param) {
         if (param['in'] === 'path' && params[param.name]) {
