@@ -197,7 +197,7 @@ function parseData_(endpoint_name, params) {
 
 function doRequest_(path, method, token, data) {
     var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + EMAIL,'Content-Type': 'application/json','Authorization': auth}};
+    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
     if (data) options['payload'] = JSON.stringify(data)
     var response = UrlFetchApp.fetch(path, options);
     if (response.getResponseCode() !== 200) throw 'Invalid response.  Please mail this to Blacksmoke16@eve.tools. ' + JSON.stringify(response);
@@ -310,7 +310,7 @@ function cacheData_(userData, access_token) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var authSheet = ss.getSheetByName('Auth Data');
     if (authSheet === null) {
-        authSheet = ss.insertSheet('Auth Data').hide();
+        authSheet = ss.insertSheet('Auth Data').hideSheet();
         authSheet.deleteRows(1, authSheet.getMaxRows()-1);
         authSheet.deleteColumns(6, authSheet.getMaxColumns()-5);
         var protectedData = authSheet.protect().setDescription('Only sheet owner can view auth data');
