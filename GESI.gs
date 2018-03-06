@@ -125,12 +125,12 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function getData_(endpoint_name, params) {
-    var authed = ENDPOINTS[endpoint_name].authed;
-    var path = ENDPOINTS[endpoint_name].path;
+    var endpoint = ENDPOINTS[endpoint_name]
+    var path = endpoint.path;
     var name = params.name;
     if (!name) name = MAIN_CHARACTER;
         
-    ENDPOINTS[endpoint_name].parameters.forEach(function(param) {
+    endpoint.parameters.forEach(function(param) {
         if (param['in'] === 'path' && params[param.name]) {
           path = path.replace('{' + param.name + '}', params[param.name])
         } else if (param['in'] === 'query' && params[param.name]) {
@@ -139,12 +139,12 @@ function getData_(endpoint_name, params) {
         }
     });
         
-    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(getProperty_(name, 'character_id')));
-    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(getProperty_(name, 'alliance_id')));
-    if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', parseInt(getProperty_(name, 'corporation_id')));
-
+    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', getProperty_(name, 'character_id'));
+    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', getProperty_(name, 'alliance_id'));
+    if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(name, 'corporation_id'));
+    
     var token = CACHE.get(name + '_access_token');
-    if (!token) token = refreshToken_(name);
+    if (!token && endpoint.authed) token = refreshToken_(name);
 
     return doRequest_(BASE_URL + path, 'get', token);
 }
@@ -197,10 +197,10 @@ function parseData_(endpoint_name, params) {
 
 function doRequest_(path, method, token, data) {
     var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
+    var options = {'method': method, 'muteHttpExceptions': true, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
     if (data) options['payload'] = JSON.stringify(data)
     var response = UrlFetchApp.fetch(path, options);
-    if (response.getResponseCode() !== 200) throw 'Invalid response.  Please mail this to Blacksmoke16@eve.tools. ' + JSON.stringify(response);
+    if (response.getResponseCode() !== 200) throw 'ESI response error:  ' + JSON.parse(response.getContentText())['error'];
     return {data: JSON.parse(response), headers: response.getHeaders()};
 }
 
