@@ -1,7 +1,7 @@
 # GESI
 Google Sheets Script for interacting with EVE ESI
 
-### Setup for single character use:
+## Setup:
    1. Create a new google sheet or go to the one you want to use the script on.
    2. In the menu bar go to Tools -> Script Editor.
    3. Copy the GESI files.  You may need to name the project to save it, so use any name.
@@ -14,37 +14,30 @@ Google Sheets Script for interacting with EVE ESI
        * Update the SCRIPT_ID variable towards the top with your copied value.
    5. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
-        * PERMISSIONS:   Select all ESI endpoints.
+        * PERMISSIONS:   Select all esi-* endpoints.
         * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FOUR}/usercallback
         * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FOUR}` in the URL with YOUR script ID!
         * Also be sure to replace the `{` and `}` as well.  Url should look something like this, but with your Script ID:
         * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
    6. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
-   7. Replace `YOUR_CHARACTER_NAME` with the name of your character in the CHARACTERS array, and save the script.
+   7. Replace `YOUR_MAIN_CHARACTER_NAME` with the name of your main (the character to default to if no name is given with a function) character in the MAIN_CHARACTER constant, and save the script.
    8. Close the script and refresh the spreadsheet.
    9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
    10. Give the script permission to do what it needs.
-   11. Click 'Authorize Sheet' in the sidenav that opens -> login -> select what character you want to authorize -> Authorize.
-   12. Close the sidenav.
+   11. Click 'Authorize with EVE SSO' in the modal that opens -> login -> select what character you want to authorize -> Authorize.
+   12. Close the modal.
+   13. (Optional) Repeat step 11 to authorize other characters.
    13. Done.
    
-### Setup for multiple character use:
-   1. Complete steps 1-8 in single character use.
-   2. In the script there is a constant variable called `CHARACTERS` towards the top which is an array of strings. 
-      * Add the names of the other characters you want to auth to the contents of the array with the names and corporation_ids of the characters you wish to authorize.
-      * E.x. `CHARACTERS = ['character1', 'character2', 'character3'];`
-   3. To auth the characters:
-      * In the script there is another constant variable `AUTHING_CHARACTER` below the `CHARACTERS` constant.
-      * Complete steps 9-13 in single character use. 
-      * Add one (1) to the number in brackets.
-      * E.x. `AUTHING_CHARACTER = CHARACTERS[1];`
-   4. Repeat step 3 until all characters are authorized.
-      * `AUTHING_CHARACTER = CHARACTERS[1];` -> authorize `character2` using steps 9-13 in single character use. 
-      * `AUTHING_CHARACTER = CHARACTERS[2];` -> authorize `character3` using steps 9-13 in single character use. 
-      
-### Usage Tips
+## Usage Tips
 
-##### Parameter datatype samples
+### Checking the version
+Use the GESI option in the menu bar and click the `Check for updates` option.  Explanations of the types of updates are below:
+* New major version - Indicates a major rework of the script, there will most likely be breaking changes that require reauth/edits of your sheet.
+* New minor version - New features/additions to the script that will work with current auths.  Just copy paste new code in.
+* New patch version - Bug fixes and minor improvements that will work with current auths.  Just copy paste new code in.
+
+### Parameter datatype samples
 | Type    | Description                          | Sample                 |
 |---------|--------------------------------------|------------------------|
 | array   | A string with comma seperated values | "value1,value2,value3" |
@@ -52,10 +45,10 @@ Google Sheets Script for interacting with EVE ESI
 | integer | An integer                           | 16                     |
 | string  | A string                             | "value"                |
 
-##### Using the parseArray function
+### Using the parseArray function
 As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.  See the documentation above the function in GESI.gs right above the private utility functions header below the scopes list. 
 
-##### Changing order of column headers
+### Changing order of column headers
    1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
  ```
@@ -113,12 +106,15 @@ As of now if an endpoint returns a property that is an array of objects nested i
       * The first object in the array is the first column on the sheet
    3. If a header has a `sub_headers` array, the first value in that array is first as well.
         
-### Note:  In order to use functions that use new scopes, you will have to re-auth your character(s).
+## Troubleshooting
 
-### Contact Info
+### Login failed. Possible reasons can be: Your login session has expired. Please try again.
+* Remove scopes you are not using and try again.  Happens because sometime the state token + scopes is too long and causes issues.
+
+## Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#0016
   
-### Copyright
+## Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
  trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.    CCP hf. has granted permission to GESI to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, the GESI. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.

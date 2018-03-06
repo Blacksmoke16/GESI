@@ -11,7 +11,7 @@ CLIENT_ID = 'YOUR_CLIENT_ID';
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 // Name of your 'main' character to use when a function is called without a character name as a param
-MAIN_CHARACTER = 'Blacksmoke16';
+MAIN_CHARACTER = 'YOUR_MAIN_CHARACTER_NAME';
 
 // List of scopes to request
 SCOPES = [
@@ -327,21 +327,18 @@ function cacheData_(userData, access_token) {
 
 function checkForUpdates()
 {
-  var newVersion = JSON.parse(UrlFetchApp.fetch('https://api.github.com/repos/Blacksmoke16/GESI/releases/latest'))['tag_name'];
-  if (newVersion != null)
-  {
-    var message = 'You are using the latest version of GESI.';
-    var title = 'No updates found';
-    if (newVersion > APP_VERSION)
-    {
-      message = 'A new ';
-      var newSplit = newVersion.split('.');
-      var currentSplit = APP_VERSION.split('.');
-      // TODO add to readme what the diff versions means
-      if (newSplit[0] > currentSplit[0]) { message += 'major'; } else if (newSplit[1] > currentSplit[1]) { message += 'minor'; } else if (newSplit[2] > currentSplit[2]) { message += 'patch'; }
-      message += ' version of GESI is available on GitHub.';
-      title = 'GESI version ' + newVersion + ' is available!';
+    var newVersion = JSON.parse(UrlFetchApp.fetch('https://api.github.com/repos/Blacksmoke16/GESI/releases/latest'))['tag_name'];
+    if (newVersion != null) {
+      var message = 'You are using the latest version of GESI.';
+      var title = 'No updates found';
+      if (newVersion > APP_VERSION) {
+        message = 'A new ';
+        var newSplit = newVersion.split('.');
+        var currentSplit = APP_VERSION.split('.');
+        if (newSplit[0] > currentSplit[0]) { message += 'major'; } else if (newSplit[1] > currentSplit[1]) { message += 'minor'; } else if (newSplit[2] > currentSplit[2]) { message += 'patch'; }
+        message += ' version of GESI is available on GitHub.';
+        title = 'GESI version ' + newVersion + ' is available!';
+      }
+      SpreadsheetApp.getActiveSpreadsheet().toast(message, title, 5);
     }
-    SpreadsheetApp.getActiveSpreadsheet().toast(message, title, 5);
-  }
 }
