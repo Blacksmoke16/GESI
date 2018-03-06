@@ -2,30 +2,16 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-app_version = '4.1.2';
+app_version = '5.0.0';
 BASE_URL = 'https://esi.tech.ccp.is'
-
-// Your email address
-// This is used and sent in the User-Agent header on ESI requests so that CCP know who that request came from.
-// In the case of a users' specific script is putting too much load on their servers they have a way to contact you.
-// I do not see this or use it in any way.
-EMAIL = 'YOUR_EMAIL';
 
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
 CLIENT_ID = 'YOUR_CLIENT_ID';
 CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
-// From the script editor -> file -> project properties -> Script ID
-SCRIPT_ID = 'YOUR_SCRIPT_ID';
-
-// Array of character names
-// Used for authing
-CHARACTERS = ['YOUR_CHARACTER_NAME'];
-
-// Current 'main' character used when a function is called without a character name as a param
-// Also acts as what character from the CHARACTERS array will be authed
-AUTHING_CHARACTER = CHARACTERS[0];
+// Name of your 'main' character to use when a function is called without a character name as a param
+MAIN_CHARACTER = 'YOUR_MAIN_CHARACTER_NAME';
 
 // List of scopes to request
 SCOPES = [
@@ -100,15 +86,14 @@ SCOPES = [
     "esi-wallet.read_character_wallet.v1",
     "esi-wallet.read_corporation_wallets.v1"
 ];
-
-    DOCUMENT_PROPERTIES = PropertiesService.getDocumentProperties();
-    CACHE = CacheService.getDocumentCache();
- 
+    
+CACHE = CacheService.getDocumentCache();
+         
 function onOpen() {
     SpreadsheetApp.getUi().createMenu('GESI')
         .addItem('Authorize Sheet', 'showSidebar')
         .addSeparator()
-        .addItem('Reset Auth', 'resetAuth')
+        .addItem('Check for updates', 'checkForUpdates')
         .addToUi();
 }
 
@@ -124,7 +109,7 @@ function onOpen() {
 function parseArray(endpoint_name, column_name, array, opt_headers) {
     var headers = [];
     var result = [];
-    var endpoint = findObjectByKey(ENDPOINTS[endpoint_name].headers, 'name', column_name);
+    var endpoint = findObjectByKey_(ENDPOINTS[endpoint_name].headers, 'name', column_name);
     if (opt_headers || undefined === opt_headers) result.push(endpoint.sub_headers.map(function(h) { return h }));
 
     JSON.parse(array).forEach(function(a) {
@@ -140,13 +125,12 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function getData_(endpoint_name, params) {
-    var authed = ENDPOINTS[endpoint_name].authed;
-    var path = ENDPOINTS[endpoint_name].path;
+    var endpoint = ENDPOINTS[endpoint_name]
+    var path = endpoint.path;
     var name = params.name;
-    if (!name) name = AUTHING_CHARACTER;
-    if (params.page === -1) params.page = 1;
+    if (!name) name = MAIN_CHARACTER;
         
-    ENDPOINTS[endpoint_name].parameters.forEach(function(param) {
+    endpoint.parameters.forEach(function(param) {
         if (param['in'] === 'path' && params[param.name]) {
           path = path.replace('{' + param.name + '}', params[param.name])
         } else if (param['in'] === 'query' && params[param.name]) {
@@ -155,13 +139,13 @@ function getData_(endpoint_name, params) {
         }
     });
         
-    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_character_id')));
-    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_alliance_id')));
-    if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', parseInt(DOCUMENT_PROPERTIES.getProperty(name + '_corporation_id')));
-
-    var token = CACHE.get(name + '_access_token');
-    if (!token) token = refreshToken_(name);
+    if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', getProperty_(name, 'character_id'));
+    if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', getProperty_(name, 'alliance_id'));
+    if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(name, 'corporation_id'));
     
+    var token = CACHE.get(name + '_access_token');
+    if (!token && endpoint.authed) token = refreshToken_(name);
+
     return doRequest_(BASE_URL + path, 'get', token);
 }
 
@@ -169,10 +153,10 @@ function parseData_(endpoint_name, params) {
     var endpoint = ENDPOINTS[endpoint_name];
     var data = [];
     var result = [];
-    
+
     var opt_headers = params.opt_headers;
     if (opt_headers || undefined === opt_headers) result.push(endpoint.headers.map(function(h) { return h.name }));
-    
+
     if (params.page === -1) {
         params.page = 1;
         var response = getData_(endpoint_name, params)
@@ -185,7 +169,7 @@ function parseData_(endpoint_name, params) {
     } else {
          data = getData_(endpoint_name, params).data;
     }
-        
+    
     if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
         data.forEach(function(obj) {
             var temp = [];
@@ -213,9 +197,10 @@ function parseData_(endpoint_name, params) {
 
 function doRequest_(path, method, token, data) {
     var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-    var options = {'method': method, headers: {'User-Agent': 'GESI user ' + EMAIL,'Content-Type': 'application/json','Authorization': auth}};
+    var options = {'method': method, 'muteHttpExceptions': true, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
     if (data) options['payload'] = JSON.stringify(data)
     var response = UrlFetchApp.fetch(path, options);
+    if (response.getResponseCode() !== 200) throw 'ESI response error:  ' + JSON.parse(response.getContentText())['error'];
     return {data: JSON.parse(response), headers: response.getHeaders()};
 }
 
@@ -230,6 +215,14 @@ function parseObject_(source, header) {
     }
 }
 
+function getProperty_(character_name, property) {
+    return SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data').getDataRange().getValues().filter(function(r) { return r[0] === character_name })[0][getValue_(property)];
+}
+
+function getValue_(property) {
+    return {character_name: 0, character_id: 1, corporation_id: 2, alliance_id: 3, refresh_token: 4}[property];
+}
+
 function extend_(obj, src) {
     for (var key in src) {
       if (src.hasOwnProperty(key)) obj[key] = src[key];
@@ -241,12 +234,10 @@ function flatten_(ob) {
     var toReturn = {};
     for (var i in ob) {
         if (!ob.hasOwnProperty(i)) continue;
-
         if ((typeof ob[i]) == 'object') {
             var flatObject = flatten_(ob[i]);
             for (var x in flatObject) {
                 if (!flatObject.hasOwnProperty(x)) continue;
-
                 toReturn[i + '-' + x] = flatObject[x];
             }
         } else {
@@ -256,7 +247,13 @@ function flatten_(ob) {
     return toReturn;
 };
 
-function findObjectByKey(array, key, value) {
+function uniqArray_(arrArg) {
+    return arrArg.filter(function(elem, pos, arr) {
+        return arr.indexOf(elem) == pos;
+    });
+};
+
+function findObjectByKey_(array, key, value) {
     for (var i = 0; i < array.length; i++) {
         if (array[i][key] === value) {
             return array[i];
@@ -274,18 +271,17 @@ function authCallback(request) {
     var characterData = extend_(tokenData, getCharacterDetails_(tokenData['access_token']));
     var affiliationData = getCharacterAffiliation_(characterData['CharacterID'])[0];
     var userData =   extend_(characterData, affiliationData);
-    cacheData_(userData);
+    cacheData_({character_name: userData['CharacterName'],character_id: userData['character_id'],corporation_id: userData['corporation_id'],alliance_id: userData['alliance_id'],refresh_token: userData['refresh_token']}, userData['access_token']);
     return HtmlService.createHtmlOutput('Thank you for using GESI ' + userData['CharacterName']);
 }
 
 function showSidebar() {
-    var scriptUrl = 'https://script.google.com/macros/d/' + SCRIPT_ID + '/usercallback';
-    var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(3600).createToken();
+    var scriptUrl = 'https://script.google.com/macros/d/' + ScriptApp.getScriptId() + '/usercallback';
+    var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(120).createToken();
     var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
-    var template = HtmlService.createTemplate('<br><a href="<?= authorizationUrl ?>" target="_blank">Authorize:  <?= character ?></a>.');
+    var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank">Authorize with EVE SSO</a>.');
     template.authorizationUrl = authorizationUrl;
-    template.character = AUTHING_CHARACTER;
-    SpreadsheetApp.getUi().showSidebar(template.evaluate());
+    SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
 
 function getAccessToken_(code) {
@@ -302,23 +298,47 @@ function getCharacterAffiliation_(character_id) {
 }
 
 function refreshToken_(name) {
-    var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": DOCUMENT_PROPERTIES.getProperty(name + '_refresh_token')}).data;
+    var response = doRequest_('https://login.eveonline.com/oauth/token', 'post', null, {"grant_type":"refresh_token", "refresh_token": getProperty_(name, 'refresh_token')}).data;
     CACHE.put(name + '_access_token', response['access_token'], 900);
     return response['access_token'];
 }
 
-function cacheData_(userData) {
-    var userProperties = {};
-    prefix = userData['CharacterName'] + '_';
-    ['character_id', 'corporation_id', 'alliance_id', 'CharacterName', 'refresh_token']
-      .forEach(function(param) { userProperties[prefix + param] = userData[param]; });
-    CACHE.put(prefix + 'access_token', userData['access_token'], 900);
-    DOCUMENT_PROPERTIES.setProperties(userProperties );
+function cacheData_(userData, access_token) {
+    if (!Object.keys(userData).every(function(k) { return ['character_id','corporation_id','alliance_id','character_name','refresh_token', 'access_token'].indexOf(k) !== -1 })) throw 'Required data is missing.';
+    var user_data = Object.keys(userData).map(function(p) { return userData[p] });
+    
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var authSheet = ss.getSheetByName('Auth Data');
+    if (authSheet === null) {
+        authSheet = ss.insertSheet('Auth Data').hideSheet();
+        authSheet.deleteRows(1, authSheet.getMaxRows()-1);
+        authSheet.deleteColumns(6, authSheet.getMaxColumns()-5);
+        var protectedData = authSheet.protect().setDescription('Only sheet owner can view auth data');
+        protectedData.removeEditors(protectedData.getEditors());
+        protectedData.addEditor(ss.getOwner().getEmail());
+    }
+    
+    var savedChars = authSheet.getDataRange().getValues().map(function(r) { return r[0] });
+    var character_name = userData['character_name'];
+    savedChars.indexOf(character_name) === -1 ? authSheet.appendRow(user_data) : authSheet.getRange((savedChars.indexOf(character_name) + 1), 1, 1, 5).setValues([user_data]);
+    [1,2,3,4,5].forEach(function(c) { authSheet.autoResizeColumn(c) });
+    CACHE.put(character_name + '_access_token', access_token, 900);
 }
 
-function resetAuth() {
-    DOCUMENT_PROPERTIES.deleteAllProperties();
-    CHARACTERS.forEach(function(character) {
-      CACHE.remove(character + '_access_token');
-    });
+function checkForUpdates()
+{
+    var newVersion = JSON.parse(UrlFetchApp.fetch('https://api.github.com/repos/Blacksmoke16/GESI/releases/latest'))['tag_name'];
+    if (newVersion != null) {
+      var message = 'You are using the latest version of GESI.';
+      var title = 'No updates found';
+      if (newVersion > APP_VERSION) {
+        message = 'A new ';
+        var newSplit = newVersion.split('.');
+        var currentSplit = APP_VERSION.split('.');
+        if (newSplit[0] > currentSplit[0]) { message += 'major'; } else if (newSplit[1] > currentSplit[1]) { message += 'minor'; } else if (newSplit[2] > currentSplit[2]) { message += 'patch'; }
+        message += ' version of GESI is available on GitHub.';
+        title = 'GESI version ' + newVersion + ' is available!';
+      }
+      SpreadsheetApp.getActiveSpreadsheet().toast(message, title, 5);
+    }
 }
