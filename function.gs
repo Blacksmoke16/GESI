@@ -1303,7 +1303,7 @@ function markets_groups_market_group(language, market_group_id, opt_headers) {
 }
 
 /** 
-* List market orders placed by a character
+* List open market orders placed by a character
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List open orders from a character.

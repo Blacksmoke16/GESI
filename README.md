@@ -32,10 +32,13 @@ Google Sheets Script for interacting with EVE ESI
 ## Usage Tips
 
 ### Checking the version
-Use the GESI option in the menu bar and click the `Check for updates` option.  Explanations of the types of updates are below:
+Use the GESI option in the menu bar and click the `Check for updates` option.  Explanations of the types of updates for GESI.gs are below:
 * New major version - Indicates a major rework of the script, there will most likely be breaking changes that require reauth/edits of your sheet.
 * New minor version - New features/additions to the script that will work with current auths.  Just copy paste new code in.
 * New patch version - Bug fixes and minor improvements that will work with current auths.  Just copy paste new code in.
+
+**NOTE:  Changes in the ESI spec, such as adding/removing columns, name changes etc., may still break your app. **
+
 
 ### Parameter datatype samples
 | Type    | Description                          | Sample                 |

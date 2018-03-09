@@ -226,12 +226,12 @@ ENDPOINTS = {
         "type": "integer"
       },
       {
-        "name": "location_flag",
-        "type": "string"
-      },
-      {
         "name": "is_singleton",
         "type": "boolean"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/assets/",
@@ -2250,10 +2250,6 @@ ENDPOINTS = {
         "type": "integer"
       },
       {
-        "name": "type",
-        "type": "string"
-      },
-      {
         "name": "sender_id",
         "type": "integer"
       },
@@ -2271,6 +2267,10 @@ ENDPOINTS = {
       },
       {
         "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "type",
         "type": "string"
       }
     ],
@@ -3554,10 +3554,6 @@ ENDPOINTS = {
         "type": "integer"
       },
       {
-        "name": "location_flag",
-        "type": "string"
-      },
-      {
         "name": "quantity",
         "type": "integer"
       },
@@ -3572,6 +3568,10 @@ ENDPOINTS = {
       {
         "name": "runs",
         "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/blueprints/",
@@ -3789,10 +3789,6 @@ ENDPOINTS = {
         "type": "integer"
       },
       {
-        "name": "location_flag",
-        "type": "string"
-      },
-      {
         "name": "action",
         "type": "string"
       },
@@ -3815,6 +3811,10 @@ ENDPOINTS = {
       {
         "name": "new_config_bitmask",
         "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/containers/logs/",
@@ -6128,10 +6128,10 @@ ENDPOINTS = {
     ]
   },
   "characters_character_orders": {
-    "description": "List market orders placed by a character",
+    "description": "List open market orders placed by a character",
     "summary": "List open orders from a character",
     "request": "get",
-    "version": 1,
+    "version": 2,
     "headers": [
       {
         "name": "order_id",
@@ -6154,10 +6154,6 @@ ENDPOINTS = {
         "type": "string"
       },
       {
-        "name": "is_buy_order",
-        "type": "boolean"
-      },
-      {
         "name": "price",
         "type": "number"
       },
@@ -6174,31 +6170,27 @@ ENDPOINTS = {
         "type": "string"
       },
       {
-        "name": "state",
-        "type": "string"
+        "name": "is_buy_order",
+        "type": "boolean"
       },
       {
         "name": "min_volume",
         "type": "integer"
       },
       {
-        "name": "account_id",
-        "type": "integer"
+        "name": "escrow",
+        "type": "number"
       },
       {
         "name": "duration",
         "type": "integer"
       },
       {
-        "name": "is_corp",
+        "name": "is_corporation",
         "type": "boolean"
-      },
-      {
-        "name": "escrow",
-        "type": "number"
       }
     ],
-    "path": "/v1/characters/{character_id}/orders/",
+    "path": "/v2/characters/{character_id}/orders/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -6323,7 +6315,7 @@ ENDPOINTS = {
     "description": "List open market orders placed on behalf of a corporation",
     "summary": "List open orders from a corporation",
     "request": "get",
-    "version": 1,
+    "version": 2,
     "headers": [
       {
         "name": "order_id",
@@ -6346,10 +6338,6 @@ ENDPOINTS = {
         "type": "string"
       },
       {
-        "name": "is_buy_order",
-        "type": "boolean"
-      },
-      {
         "name": "price",
         "type": "number"
       },
@@ -6366,27 +6354,27 @@ ENDPOINTS = {
         "type": "string"
       },
       {
-        "name": "state",
-        "type": "string"
+        "name": "is_buy_order",
+        "type": "boolean"
       },
       {
         "name": "min_volume",
         "type": "integer"
       },
       {
-        "name": "wallet_division",
-        "type": "integer"
+        "name": "escrow",
+        "type": "number"
       },
       {
         "name": "duration",
         "type": "integer"
       },
       {
-        "name": "escrow",
-        "type": "number"
+        "name": "wallet_division",
+        "type": "integer"
       }
     ],
-    "path": "/v1/corporations/{corporation_id}/orders/",
+    "path": "/v2/corporations/{corporation_id}/orders/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
