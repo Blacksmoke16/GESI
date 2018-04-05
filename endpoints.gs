@@ -203,7 +203,7 @@ ENDPOINTS = {
     "description": "Return a list of the corporation assets",
     "summary": "Get corporation assets",
     "request": "get",
-    "version": 2,
+    "version": 3,
     "headers": [
       {
         "name": "type_id",
@@ -234,7 +234,7 @@ ENDPOINTS = {
         "type": "string"
       }
     ],
-    "path": "/v2/corporations/{corporation_id}/assets/",
+    "path": "/v3/corporations/{corporation_id}/assets/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -577,6 +577,580 @@ ENDPOINTS = {
         "type": "integer",
         "in": "path"
       }
+    ]
+  },
+  "characters_character": {
+    "description": "Public information about a character",
+    "summary": "Get character's public information",
+    "request": "get",
+    "version": 4,
+    "headers": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "alliance_id",
+        "type": "integer"
+      },
+      {
+        "name": "birthday",
+        "type": "string"
+      },
+      {
+        "name": "gender",
+        "type": "string"
+      },
+      {
+        "name": "race_id",
+        "type": "integer"
+      },
+      {
+        "name": "bloodline_id",
+        "type": "integer"
+      },
+      {
+        "name": "ancestry_id",
+        "type": "integer"
+      },
+      {
+        "name": "security_status",
+        "type": "number"
+      },
+      {
+        "name": "faction_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v4/characters/{character_id}/",
+    "authed": false,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
+    ]
+  },
+  "characters_names": {
+    "description": "Resolve a set of character IDs to character names",
+    "summary": "Get character names",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "character_id",
+        "type": "integer"
+      },
+      {
+        "name": "character_name",
+        "type": "string"
+      }
+    ],
+    "path": "/v1/characters/names/",
+    "authed": false,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "character_ids",
+        "description": "A comma separated list of character IDs",
+        "required": true,
+        "type": "array",
+        "in": "query"
+      }
+    ]
+  },
+  "characters_character_portrait": {
+    "description": "Get portrait urls for a character",
+    "summary": "Get character portraits",
+    "request": "get",
+    "version": 2,
+    "headers": [
+      {
+        "name": "px64x64",
+        "type": "string"
+      },
+      {
+        "name": "px128x128",
+        "type": "string"
+      },
+      {
+        "name": "px256x256",
+        "type": "string"
+      },
+      {
+        "name": "px512x512",
+        "type": "string"
+      }
+    ],
+    "path": "/v2/characters/{character_id}/portrait/",
+    "authed": false,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
+    ]
+  },
+  "characters_character_corporationhistory": {
+    "description": "Get a list of all the corporations a character has been a member of",
+    "summary": "Get corporation history",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "start_date",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "is_deleted",
+        "type": "boolean"
+      },
+      {
+        "name": "record_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/corporationhistory/",
+    "authed": false,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "character_id",
+        "description": "An EVE character ID",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
+    ]
+  },
+  "characters_character_chat_channels": {
+    "description": "Return chat channels that a character is the owner or operator of",
+    "summary": "Get chat channels",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "channel_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "owner_id",
+        "type": "integer"
+      },
+      {
+        "name": "comparison_key",
+        "type": "string"
+      },
+      {
+        "name": "has_password",
+        "type": "boolean"
+      },
+      {
+        "name": "motd",
+        "type": "string"
+      },
+      {
+        "name": "allowed",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type"
+        ]
+      },
+      {
+        "name": "operators",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type"
+        ]
+      },
+      {
+        "name": "blocked",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type",
+          "reason",
+          "end_at"
+        ]
+      },
+      {
+        "name": "muted",
+        "type": "array",
+        "sub_headers": [
+          "accessor_id",
+          "accessor_type",
+          "reason",
+          "end_at"
+        ]
+      }
+    ],
+    "path": "/v1/characters/{character_id}/chat_channels/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_medals": {
+    "description": "Return a list of medals the character has",
+    "summary": "Get medals",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "medal_id",
+        "type": "integer"
+      },
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "corporation_id",
+        "type": "integer"
+      },
+      {
+        "name": "issuer_id",
+        "type": "integer"
+      },
+      {
+        "name": "date",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "graphics",
+        "type": "array",
+        "sub_headers": [
+          "part",
+          "layer",
+          "graphic",
+          "color"
+        ]
+      }
+    ],
+    "path": "/v1/characters/{character_id}/medals/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_standings": {
+    "description": "Return character standings from agents, NPC corporations, and factions",
+    "summary": "Get standings",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "from_id",
+        "type": "integer"
+      },
+      {
+        "name": "from_type",
+        "type": "string"
+      },
+      {
+        "name": "standing",
+        "type": "number"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/standings/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_agents_research": {
+    "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
+    "summary": "Get agents research",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "agent_id",
+        "type": "integer"
+      },
+      {
+        "name": "skill_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "started_at",
+        "type": "string"
+      },
+      {
+        "name": "points_per_day",
+        "type": "number"
+      },
+      {
+        "name": "remainder_points",
+        "type": "number"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/agents_research/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_blueprints": {
+    "description": "Return a list of blueprints the character owns",
+    "summary": "Get blueprints",
+    "request": "get",
+    "version": 2,
+    "headers": [
+      {
+        "name": "item_id",
+        "type": "integer"
+      },
+      {
+        "name": "type_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_id",
+        "type": "integer"
+      },
+      {
+        "name": "location_flag",
+        "type": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "integer"
+      },
+      {
+        "name": "time_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "material_efficiency",
+        "type": "integer"
+      },
+      {
+        "name": "runs",
+        "type": "integer"
+      }
+    ],
+    "path": "/v2/characters/{character_id}/blueprints/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
+    ]
+  },
+  "characters_character_fatigue": {
+    "description": "Return a character's jump activation and fatigue information",
+    "summary": "Get jump fatigue",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "last_jump_date",
+        "type": "string"
+      },
+      {
+        "name": "jump_fatigue_expire_date",
+        "type": "string"
+      },
+      {
+        "name": "last_update_date",
+        "type": "string"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/fatigue/",
+    "authed": true,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_notifications_contacts": {
+    "description": "Return notifications about having been added to someone's contact list",
+    "summary": "Get new contact notifications",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "notification_id",
+        "type": "integer"
+      },
+      {
+        "name": "send_date",
+        "type": "string"
+      },
+      {
+        "name": "standing_level",
+        "type": "number"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "sender_character_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/notifications/contacts/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "summary": "Get character notifications",
+    "request": "get",
+    "version": 2,
+    "headers": [
+      {
+        "name": "notification_id",
+        "type": "integer"
+      },
+      {
+        "name": "sender_id",
+        "type": "integer"
+      },
+      {
+        "name": "sender_type",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "string"
+      },
+      {
+        "name": "is_read",
+        "type": "boolean"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      }
+    ],
+    "path": "/v2/characters/{character_id}/notifications/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_roles": {
+    "description": "Returns a character's corporation roles",
+    "summary": "Get character corporation roles",
+    "request": "get",
+    "version": 2,
+    "headers": [
+      {
+        "name": "roles",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_hq",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_base",
+        "type": "array"
+      },
+      {
+        "name": "roles_at_other",
+        "type": "array"
+      }
+    ],
+    "path": "/v2/characters/{character_id}/roles/",
+    "authed": true,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+
+    ]
+  },
+  "characters_character_titles": {
+    "description": "Returns a character's titles",
+    "summary": "Get character corporation titles",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "title_id",
+        "type": "integer"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      }
+    ],
+    "path": "/v1/characters/{character_id}/titles/",
+    "authed": true,
+    "response_type": "array",
+    "item_type": "object",
+    "parameters": [
+
     ]
   },
   "characters_character_stats": {
@@ -1755,580 +2329,6 @@ ENDPOINTS = {
       }
     ],
     "path": "/v2/characters/{character_id}/stats/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character": {
-    "description": "Public information about a character",
-    "summary": "Get character's public information",
-    "request": "get",
-    "version": 4,
-    "headers": [
-      {
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "name": "description",
-        "type": "string"
-      },
-      {
-        "name": "corporation_id",
-        "type": "integer"
-      },
-      {
-        "name": "alliance_id",
-        "type": "integer"
-      },
-      {
-        "name": "birthday",
-        "type": "string"
-      },
-      {
-        "name": "gender",
-        "type": "string"
-      },
-      {
-        "name": "race_id",
-        "type": "integer"
-      },
-      {
-        "name": "bloodline_id",
-        "type": "integer"
-      },
-      {
-        "name": "ancestry_id",
-        "type": "integer"
-      },
-      {
-        "name": "security_status",
-        "type": "number"
-      },
-      {
-        "name": "faction_id",
-        "type": "integer"
-      }
-    ],
-    "path": "/v4/characters/{character_id}/",
-    "authed": false,
-    "response_type": "object",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "character_id",
-        "description": "An EVE character ID",
-        "required": true,
-        "type": "integer",
-        "in": "path"
-      }
-    ]
-  },
-  "characters_names": {
-    "description": "Resolve a set of character IDs to character names",
-    "summary": "Get character names",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "character_id",
-        "type": "integer"
-      },
-      {
-        "name": "character_name",
-        "type": "string"
-      }
-    ],
-    "path": "/v1/characters/names/",
-    "authed": false,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "character_ids",
-        "description": "A comma separated list of character IDs",
-        "required": true,
-        "type": "array",
-        "in": "query"
-      }
-    ]
-  },
-  "characters_character_portrait": {
-    "description": "Get portrait urls for a character",
-    "summary": "Get character portraits",
-    "request": "get",
-    "version": 2,
-    "headers": [
-      {
-        "name": "px64x64",
-        "type": "string"
-      },
-      {
-        "name": "px128x128",
-        "type": "string"
-      },
-      {
-        "name": "px256x256",
-        "type": "string"
-      },
-      {
-        "name": "px512x512",
-        "type": "string"
-      }
-    ],
-    "path": "/v2/characters/{character_id}/portrait/",
-    "authed": false,
-    "response_type": "object",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "character_id",
-        "description": "An EVE character ID",
-        "required": true,
-        "type": "integer",
-        "in": "path"
-      }
-    ]
-  },
-  "characters_character_corporationhistory": {
-    "description": "Get a list of all the corporations a character has been a member of",
-    "summary": "Get corporation history",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "start_date",
-        "type": "string"
-      },
-      {
-        "name": "corporation_id",
-        "type": "integer"
-      },
-      {
-        "name": "is_deleted",
-        "type": "boolean"
-      },
-      {
-        "name": "record_id",
-        "type": "integer"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/corporationhistory/",
-    "authed": false,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "character_id",
-        "description": "An EVE character ID",
-        "required": true,
-        "type": "integer",
-        "in": "path"
-      }
-    ]
-  },
-  "characters_character_chat_channels": {
-    "description": "Return chat channels that a character is the owner or operator of",
-    "summary": "Get chat channels",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "channel_id",
-        "type": "integer"
-      },
-      {
-        "name": "name",
-        "type": "string"
-      },
-      {
-        "name": "owner_id",
-        "type": "integer"
-      },
-      {
-        "name": "comparison_key",
-        "type": "string"
-      },
-      {
-        "name": "has_password",
-        "type": "boolean"
-      },
-      {
-        "name": "motd",
-        "type": "string"
-      },
-      {
-        "name": "allowed",
-        "type": "array",
-        "sub_headers": [
-          "accessor_id",
-          "accessor_type"
-        ]
-      },
-      {
-        "name": "operators",
-        "type": "array",
-        "sub_headers": [
-          "accessor_id",
-          "accessor_type"
-        ]
-      },
-      {
-        "name": "blocked",
-        "type": "array",
-        "sub_headers": [
-          "accessor_id",
-          "accessor_type",
-          "reason",
-          "end_at"
-        ]
-      },
-      {
-        "name": "muted",
-        "type": "array",
-        "sub_headers": [
-          "accessor_id",
-          "accessor_type",
-          "reason",
-          "end_at"
-        ]
-      }
-    ],
-    "path": "/v1/characters/{character_id}/chat_channels/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_medals": {
-    "description": "Return a list of medals the character has",
-    "summary": "Get medals",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "medal_id",
-        "type": "integer"
-      },
-      {
-        "name": "title",
-        "type": "string"
-      },
-      {
-        "name": "description",
-        "type": "string"
-      },
-      {
-        "name": "corporation_id",
-        "type": "integer"
-      },
-      {
-        "name": "issuer_id",
-        "type": "integer"
-      },
-      {
-        "name": "date",
-        "type": "string"
-      },
-      {
-        "name": "reason",
-        "type": "string"
-      },
-      {
-        "name": "status",
-        "type": "string"
-      },
-      {
-        "name": "graphics",
-        "type": "array",
-        "sub_headers": [
-          "part",
-          "layer",
-          "graphic",
-          "color"
-        ]
-      }
-    ],
-    "path": "/v1/characters/{character_id}/medals/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_standings": {
-    "description": "Return character standings from agents, NPC corporations, and factions",
-    "summary": "Get standings",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "from_id",
-        "type": "integer"
-      },
-      {
-        "name": "from_type",
-        "type": "string"
-      },
-      {
-        "name": "standing",
-        "type": "number"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/standings/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_agents_research": {
-    "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
-    "summary": "Get agents research",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "agent_id",
-        "type": "integer"
-      },
-      {
-        "name": "skill_type_id",
-        "type": "integer"
-      },
-      {
-        "name": "started_at",
-        "type": "string"
-      },
-      {
-        "name": "points_per_day",
-        "type": "number"
-      },
-      {
-        "name": "remainder_points",
-        "type": "number"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/agents_research/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_blueprints": {
-    "description": "Return a list of blueprints the character owns",
-    "summary": "Get blueprints",
-    "request": "get",
-    "version": 2,
-    "headers": [
-      {
-        "name": "item_id",
-        "type": "integer"
-      },
-      {
-        "name": "type_id",
-        "type": "integer"
-      },
-      {
-        "name": "location_id",
-        "type": "integer"
-      },
-      {
-        "name": "location_flag",
-        "type": "string"
-      },
-      {
-        "name": "quantity",
-        "type": "integer"
-      },
-      {
-        "name": "time_efficiency",
-        "type": "integer"
-      },
-      {
-        "name": "material_efficiency",
-        "type": "integer"
-      },
-      {
-        "name": "runs",
-        "type": "integer"
-      }
-    ],
-    "path": "/v2/characters/{character_id}/blueprints/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-      {
-        "name": "page",
-        "description": "Which page of results to return",
-        "required": null,
-        "type": "integer",
-        "in": "query"
-      }
-    ]
-  },
-  "characters_character_fatigue": {
-    "description": "Return a character's jump activation and fatigue information",
-    "summary": "Get jump fatigue",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "last_jump_date",
-        "type": "string"
-      },
-      {
-        "name": "jump_fatigue_expire_date",
-        "type": "string"
-      },
-      {
-        "name": "last_update_date",
-        "type": "string"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/fatigue/",
-    "authed": true,
-    "response_type": "object",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_notifications_contacts": {
-    "description": "Return notifications about having been added to someone's contact list",
-    "summary": "Get new contact notifications",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "notification_id",
-        "type": "integer"
-      },
-      {
-        "name": "send_date",
-        "type": "string"
-      },
-      {
-        "name": "standing_level",
-        "type": "number"
-      },
-      {
-        "name": "message",
-        "type": "string"
-      },
-      {
-        "name": "sender_character_id",
-        "type": "integer"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/notifications/contacts/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "summary": "Get character notifications",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "notification_id",
-        "type": "integer"
-      },
-      {
-        "name": "sender_id",
-        "type": "integer"
-      },
-      {
-        "name": "sender_type",
-        "type": "string"
-      },
-      {
-        "name": "timestamp",
-        "type": "string"
-      },
-      {
-        "name": "is_read",
-        "type": "boolean"
-      },
-      {
-        "name": "text",
-        "type": "string"
-      },
-      {
-        "name": "type",
-        "type": "string"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/notifications/",
-    "authed": true,
-    "response_type": "array",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_roles": {
-    "description": "Returns a character's corporation roles",
-    "summary": "Get character corporation roles",
-    "request": "get",
-    "version": 2,
-    "headers": [
-      {
-        "name": "roles",
-        "type": "array"
-      },
-      {
-        "name": "roles_at_hq",
-        "type": "array"
-      },
-      {
-        "name": "roles_at_base",
-        "type": "array"
-      },
-      {
-        "name": "roles_at_other",
-        "type": "array"
-      }
-    ],
-    "path": "/v2/characters/{character_id}/roles/",
-    "authed": true,
-    "response_type": "object",
-    "item_type": "object",
-    "parameters": [
-
-    ]
-  },
-  "characters_character_titles": {
-    "description": "Returns a character's titles",
-    "summary": "Get character corporation titles",
-    "request": "get",
-    "version": 1,
-    "headers": [
-      {
-        "name": "title_id",
-        "type": "integer"
-      },
-      {
-        "name": "name",
-        "type": "string"
-      }
-    ],
-    "path": "/v1/characters/{character_id}/titles/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -3539,7 +3539,7 @@ ENDPOINTS = {
     "description": "Returns a list of blueprints the corporation owns",
     "summary": "Get corporation blueprints",
     "request": "get",
-    "version": 1,
+    "version": 2,
     "headers": [
       {
         "name": "item_id",
@@ -3574,7 +3574,7 @@ ENDPOINTS = {
         "type": "string"
       }
     ],
-    "path": "/v1/corporations/{corporation_id}/blueprints/",
+    "path": "/v2/corporations/{corporation_id}/blueprints/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -3766,7 +3766,7 @@ ENDPOINTS = {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
     "summary": "Get all corporation ALSC logs",
     "request": "get",
-    "version": 1,
+    "version": 2,
     "headers": [
       {
         "name": "logged_at",
@@ -3817,7 +3817,7 @@ ENDPOINTS = {
         "type": "string"
       }
     ],
-    "path": "/v1/corporations/{corporation_id}/containers/logs/",
+    "path": "/v2/corporations/{corporation_id}/containers/logs/",
     "authed": true,
     "response_type": "array",
     "item_type": "object",
@@ -5300,7 +5300,13 @@ ENDPOINTS = {
     "response_type": "array",
     "item_type": "object",
     "parameters": [
-
+      {
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
+        "type": "integer",
+        "in": "query"
+      }
     ]
   },
   "insurance_prices": {
@@ -9071,4 +9077,6 @@ ENDPOINTS = {
       }
     ]
   }
+}
 };
+

@@ -167,17 +167,6 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 }
 
 /** 
-* Returns aggregate yearly stats for a character
-* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Yearly aggregate stats.
-* @customfunction
-*/
-function characters_character_stats(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
-}
-
-/** 
 * Public information about a character
 * @param {integer} character_id (Required) An EVE character ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -333,6 +322,17 @@ function characters_character_roles(name, opt_headers) {
 * @customfunction
 */
 function characters_character_titles(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
+}
+
+/** 
+* Returns aggregate yearly stats for a character
+* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Yearly aggregate stats.
+* @customfunction
+*/
+function characters_character_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
 }
 
@@ -1062,12 +1062,13 @@ function corporations_corporation_industry_jobs(include_completed, name, page, o
 /** 
 * Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Moon extraction timers.
 * @customfunction
 */
-function corporation_corporation_mining_extractions(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
+function corporation_corporation_mining_extractions(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -2007,3 +2008,4 @@ function wars_war_killmails(war_id, page, opt_headers) {
   if(!war_id) throw 'war_id is required';
   return parseData_(arguments.callee.name,{war_id:war_id,page:page,opt_headers:opt_headers});
 }
+
