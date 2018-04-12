@@ -2,7 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-APP_VERSION = '5.2.1';
+APP_VERSION = '5.3.0';
 BASE_URL = 'https://esi.tech.ccp.is'
 
 // Setup variables used throughout script

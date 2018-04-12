@@ -1900,6 +1900,18 @@ function universe_ancestries(language, opt_headers) {
 }
 
 /** 
+* Get information on an asteroid belt
+* @param {integer} asteroid_belt_id (Required) asteroid_belt_id integer.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Get asteroid belt information.
+* @customfunction
+*/
+function universe_asteroid_belts_asteroid_belt(asteroid_belt_id, opt_headers) {
+  if(!asteroid_belt_id) throw 'asteroid_belt_id is required';
+  return parseData_(arguments.callee.name,{asteroid_belt_id:asteroid_belt_id,opt_headers:opt_headers});
+}
+
+/** 
 * Returns a character's wallet balance
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.

@@ -5875,6 +5875,10 @@ ENDPOINTS = {
         "type": "integer"
       },
       {
+        "name": "system_id",
+        "type": "integer"
+      },
+      {
         "name": "volume_total",
         "type": "integer"
       },
@@ -7563,7 +7567,8 @@ ENDPOINTS = {
         "type": "array",
         "sub_headers": [
           "planet_id",
-          "moons"
+          "moons",
+          "asteroid_belts"
         ]
       },
       {
@@ -8519,6 +8524,47 @@ ENDPOINTS = {
         "required": null,
         "type": "string",
         "in": "query"
+      }
+    ]
+  },
+  "universe_asteroid_belts_asteroid_belt": {
+    "description": "Get information on an asteroid belt",
+    "summary": "Get asteroid belt information",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "position-x",
+        "type": "number"
+      },
+      {
+        "name": "position-y",
+        "type": "number"
+      },
+      {
+        "name": "position-z",
+        "type": "number"
+      },
+      {
+        "name": "system_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/universe/asteroid_belts/{asteroid_belt_id}/",
+    "authed": false,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "asteroid_belt_id",
+        "description": "asteroid_belt_id integer",
+        "required": true,
+        "type": "integer",
+        "in": "path"
       }
     ]
   },
