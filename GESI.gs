@@ -216,7 +216,9 @@ function parseObject_(source, header) {
 }
 
 function getProperty_(character_name, property) {
-    return SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data').getDataRange().getValues().filter(function(r) { return r[0] === character_name })[0][getValue_(property)];
+    var character_row = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data').getDataRange().getValues().filter(function(r) { return r[0] === character_name });
+    if (character_row.length === 0) throw character_name + " is not authed, or is misspelled.";
+    return character_row[0][getValue_(property)];
 }
 
 function getValue_(property) {
