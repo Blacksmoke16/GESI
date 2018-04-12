@@ -50,10 +50,35 @@ Use the GESI option in the menu bar and click the `Check for updates` option.  E
 ### Using the parseArray function
 As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.  See the documentation above the function in GESI.gs right above the private utility functions header below the scopes list. 
 
+### Using functions with multiple characters
+A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  Currently this can be achieved by calling `=characters_character_industry_jobs()` once, then leaving some space and adding more for each additional characters with opt_headers disabled.  While it is an ok workaround it is not optimal, since there could be empty rows, not easily expandable/editable, etc.  A better alternative would be to define a new custom function `getJobs(character_names)` that will output the industry jobs of the given characters, in a single function call.
+
+```JavaScript
+/**
+* Returns the combined industry jobs belonging to the given characters
+* @param {array} character_names Character names to get jobs for.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Combined industry job.
+* @customfunction
+*/
+function getJobs(character_names, opt_headers) {
+  var characters = character_names.split(",");
+  var jobs = characters_character_industry_jobs(false, characters.shift(), opt_headers);
+  characters.forEach(function(character) {
+    jobs = jobs.concat(characters_character_industry_jobs(false, character.trim(), false));
+  });
+  return jobs;
+}
+```
+
+Which would for three characters would be used like `=getJobs("Blacksmoke16, Character2, Character3")`.
+
+This is of course just an example, but the general idea can be used as a template for other endpoint functions and uses.
+
 ### Changing order of column headers
    1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
- ```
+ ```JSON
 "alliances_alliance": {
     "description": "Public information about an alliance",
     "summary": "Get alliance information",
