@@ -47,6 +47,9 @@ Use the GESI option in the menu bar and click the `Check for updates` option.  E
 | integer | An integer                           | 16                     |
 | string  | A string                             | "value"                |
 
+### Getting all pages of an endpoint datatype samples
+`-1` page param will return all pages, however it'll take longer to return.  See the troubleshooting section if you get the `Internal error when executing the custom function` error.
+
 ### Using the parseArray function
 As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.  See the documentation above the function in GESI.gs right above the private utility functions header below the scopes list. 
 
@@ -137,6 +140,32 @@ This is of course just an example, but the general idea can be used as a templat
 
 ### Login failed. Possible reasons can be: Your login session has expired. Please try again.
 * Remove scopes you are not using and try again.  Happens because sometime the state token + scopes is too long and causes issues.
+
+### Internal error when executing the custom function
+This happens when a request takes more than 30 seconds to complete, which is the limit for a custom function.  A workaround would be something like:
+```JavaScript
+function getAssets(startPage, endPage) {
+  var assets = [];
+  for (var page = startPage; page <= endPage; page++) {
+    var a = corporations_corporation_assets(null, page, false);
+    assets = assets.concat(a);
+    if (a.length < 1000) break;
+  }
+  return assets;
+}
+```
+and call it like `=getAssets(1, 7)`.
+
+Overall the functionality is exactly the same as the `-1` page param, provided you make enough of the functions to account for the highest possible amount of pages.  I.e call `=getAssets(1, 7)` in cell A1, then in cell A7001 (since the assets endpoint returns 1000 items per page, which varies depending on the endpoint) call the function again for pages 8 thru 14, and repeat until you cover all pages of the response.
+
+For example if on average you get 25 pages and are able to get 7 pages within 30 sec you could use 4 functions:
+
+`=getAssets(1, 7)`
+`=getAssets(8, 14)`
+`=getAssets(15, 21)`
+`=getAssets(22, 28)`
+
+If you really wanted you could add in logic like `if (endPage === page && a.length === 1000) throw 'Need more functions to cover additional pages.';` This way if you end up getting 30 pages the last function would throw an error telling you that you need to add more functions to cover pages 29-35.
 
 ## Contact Info
 In-game:  Blacksmoke16  
