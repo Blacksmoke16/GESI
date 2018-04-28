@@ -115,17 +115,6 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 }
 
 /** 
-* Return chat channels that a character is the owner or operator of
-* @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Get chat channels.
-* @customfunction
-*/
-function characters_character_chat_channels(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers});
-}
-
-/** 
 * Return contacts of a character
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return.
