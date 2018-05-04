@@ -2,8 +2,8 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-APP_VERSION = '5.4.0';
-BASE_URL = 'https://esi.tech.ccp.is'
+APP_VERSION = '5.5.0';
+BASE_URL = 'https://esi.evetech.net'
 
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
