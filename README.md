@@ -16,7 +16,7 @@ Google Sheets Script for interacting with EVE ESI
         * PERMISSIONS:   Select all esi-* endpoints.
         * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FOUR}/usercallback
         * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FOUR}` in the URL with YOUR script ID!
-        * Also be sure to **not** include the `{` and `}`.  Url should look something like this, but with your Script ID:
+        * Also be sure to **not** include the `{` and `}` in your url; it should look something like this, but with your Script ID:
         * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
    6. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
    7. Replace `YOUR_MAIN_CHARACTER_NAME` with the name of your main (the character to default to if no name is given with a function) character in the MAIN_CHARACTER constant, and save the script.
