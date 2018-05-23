@@ -891,8 +891,8 @@ ENDPOINTS = {
     ]
   },
   "characters_character_killmails_recent": {
-    "description": "Return a list of character's recent kills and losses",
-    "summary": "Get character kills and losses",
+    "description": "Return a list of a character's kills and losses going back 90 days",
+    "summary": "Get a character's recent kills and losses",
     "request": "get",
     "version": 1,
     "headers": [
@@ -911,16 +911,9 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
       {
-        "name": "max_count",
-        "description": "How many killmails to return at maximum",
-        "required": false,
-        "type": "integer",
-        "in": "query"
-      },
-      {
-        "name": "max_kill_id",
-        "description": "Only return killmails with ID smaller than this.\n",
-        "required": false,
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
         "type": "integer",
         "in": "query"
       }
@@ -2383,8 +2376,8 @@ ENDPOINTS = {
     ]
   },
   "corporations_corporation_killmails_recent": {
-    "description": "Get a list of corporation's recent kills and losses",
-    "summary": "Get corporation kills and losses",
+    "description": "Get a list of a corporation's kills and losses going back 90 days",
+    "summary": "Get a corporation's recent kills and losses",
     "request": "get",
     "version": 1,
     "headers": [
@@ -2403,9 +2396,9 @@ ENDPOINTS = {
     "item_type": "object",
     "parameters": [
       {
-        "name": "max_kill_id",
-        "description": "Only return killmails with ID smaller than this",
-        "required": false,
+        "name": "page",
+        "description": "Which page of results to return",
+        "required": null,
         "type": "integer",
         "in": "query"
       }

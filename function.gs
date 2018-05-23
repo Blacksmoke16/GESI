@@ -255,17 +255,15 @@ function characters_character_industry_jobs(include_completed, name, opt_headers
 }
 
 /** 
-* Return a list of character's recent kills and losses
-* @param {integer} max_count  How many killmails to return at maximum.
-* @param {integer} max_kill_id  Only return killmails with ID smaller than this.
-.
+* Return a list of a character's kills and losses going back 90 days
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Get character kills and losses.
+* @return Get a character's recent kills and losses.
 * @customfunction
 */
-function characters_character_killmails_recent(max_count, max_kill_id, name, opt_headers) {
-  return parseData_(arguments.callee.name,{max_count:max_count,max_kill_id:max_kill_id,name:name,opt_headers:opt_headers});
+function characters_character_killmails_recent(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 
@@ -656,15 +654,15 @@ function corporations_corporation_industry_jobs(include_completed, name, page, o
 }
 
 /** 
-* Get a list of corporation's recent kills and losses
-* @param {integer} max_kill_id  Only return killmails with ID smaller than this.
+* Get a list of a corporation's kills and losses going back 90 days
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Get corporation kills and losses.
+* @return Get a corporation's recent kills and losses.
 * @customfunction
 */
-function corporations_corporation_killmails_recent(max_kill_id, name, opt_headers) {
-  return parseData_(arguments.callee.name,{max_kill_id:max_kill_id,name:name,opt_headers:opt_headers});
+function corporations_corporation_killmails_recent(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers});
 }
 
 /** 

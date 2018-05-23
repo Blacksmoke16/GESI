@@ -2,7 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-APP_VERSION = '5.5.0';
+APP_VERSION = '5.6.0';
 BASE_URL = 'https://esi.evetech.net'
 
 // Setup variables used throughout script
