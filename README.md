@@ -5,11 +5,11 @@ Google Sheets Script for interacting with EVE ESI
    1. Create a new google sheet or go to the one you want to use the script on.
    2. In the menu bar go to Tools -> Script Editor.
    3. Copy the GESI files.  You may need to name the project to save it, so use any name.
-       * Copy the contents of GESI.gs into the Code.gs script file and save the script.  (Can rename Code.gs to GESI.gs if you want)
+       * Copy the contents of GESI.gs into the `Code.gs` script file, replacing everything in the file, and save the script.  (Can rename Code.gs to GESI.gs if you want)
        * Create a new script file (File -> New -> Script File) and name it `endpoints`.
-           * Copy the contents of `endpoints.gs` into this file and save the script
+           * Copy the contents of `endpoints.gs` into the script file, replacing everything in the file, and save the script.
        * Create a new script file (File -> New -> Script File) and name it `functions`.
-           * Copy the contents of `functions.gs` into this file and save the script
+           * Copy the contents of `functions.gs` into the script file, replacing everything in the file, and save the script.
    4. Go to File -> Project Properties and copy the Script ID.
    5. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
