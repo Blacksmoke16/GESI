@@ -545,11 +545,11 @@ function corporations_corporation_contacts_labels(name, opt_headers) {
 }
 
 /** 
-* Returns contracts available to a coporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
+* Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Get coporation contracts.
+* @return Get corporation contracts.
 * @customfunction
 */
 function corporations_corporation_contracts(name, page, opt_headers) {
@@ -892,6 +892,20 @@ function dogma_attributes_attribute(attribute_id, opt_headers) {
 }
 
 /** 
+* Returns info about a dynamic item resulting from mutation with a mutaplasmid.
+* @param {integer} item_id (Required) item_id integer.
+* @param {integer} type_id (Required) type_id integer.
+* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+* @return Get dynamic item information.
+* @customfunction
+*/
+function dogma_dynamic_items_type_item(item_id, type_id, opt_headers) {
+  if(!item_id) throw 'item_id is required';
+  if(!type_id) throw 'type_id is required';
+  return parseData_(arguments.callee.name,{item_id:item_id,type_id:type_id,opt_headers:opt_headers});
+}
+
+/** 
 * Get a list of dogma effect ids
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get effects.
@@ -917,7 +931,7 @@ function fleets_fleet(fleet_id, name, opt_headers) {
 /** 
 * Return information about fleet members
 * @param {integer} fleet_id (Required) ID for a fleet.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get fleet members.
@@ -931,7 +945,7 @@ function fleets_fleet_members(fleet_id, language, name, opt_headers) {
 /** 
 * Return information about wings in a fleet
 * @param {integer} fleet_id (Required) ID for a fleet.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get fleet wings.
@@ -1034,7 +1048,7 @@ function industry_systems(opt_headers) {
 
 /** 
 * Return available insurance levels for all ship types
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return List insurance levels.
 * @customfunction
@@ -1081,7 +1095,7 @@ function markets_groups(opt_headers) {
 
 /** 
 * Get information on an item group
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {integer} market_group_id (Required) An Eve item group ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get item group information.
@@ -1172,7 +1186,7 @@ function opportunities_groups(opt_headers) {
 /** 
 * Return information of an opportunities group
 * @param {integer} group_id (Required) ID of an opportunities group.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get opportunities group.
 * @customfunction
@@ -1263,7 +1277,7 @@ function status(opt_headers) {
 
 /** 
 * Get all character ancestries
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get ancestries.
 * @customfunction
@@ -1286,7 +1300,7 @@ function universe_asteroid_belts_asteroid_belt(asteroid_belt_id, opt_headers) {
 
 /** 
 * Get a list of bloodlines
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get bloodlines.
 * @customfunction
@@ -1308,7 +1322,7 @@ function universe_categories(opt_headers) {
 /** 
 * Get information of an item category
 * @param {integer} category_id (Required) An Eve item category ID.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get item category information.
 * @customfunction
@@ -1331,7 +1345,7 @@ function universe_constellations(opt_headers) {
 /** 
 * Get information on a constellation
 * @param {integer} constellation_id (Required) constellation_id integer.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get constellation information.
 * @customfunction
@@ -1377,7 +1391,7 @@ function universe_groups(page, opt_headers) {
 /** 
 * Get information on an item group
 * @param {integer} group_id (Required) An Eve item group ID.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get item group information.
 * @customfunction
@@ -1413,7 +1427,7 @@ function universe_planets_planet(planet_id, opt_headers) {
 
 /** 
 * Get a list of character races
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get character races.
 * @customfunction
@@ -1434,7 +1448,7 @@ function universe_regions(opt_headers) {
 
 /** 
 * Get information on a region
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {integer} region_id (Required) region_id integer.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get region information.
@@ -1759,7 +1773,7 @@ function corporations_corporation_orders(name, page, opt_headers) {
 
 /** 
 * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -1785,7 +1799,7 @@ function dogma_effects_effect(effect_id, opt_headers) {
 /** 
 * Search for entities that match a given sub
 * @param {array} categories (Required) Type of entities to search for.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {string} search (Required) The string to search on.
 * @param {boolean} strict  Whether the search should be a strict match.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
@@ -1800,7 +1814,7 @@ function eve_search(categories, language, search, strict, opt_headers) {
 
 /** 
 * Get a list of factions
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get factions.
 * @customfunction
@@ -1906,7 +1920,7 @@ function characters_character_planets_planet(planet_id, name, opt_headers) {
 /** 
 * Search for entities that match a given sub
 * @param {array} categories (Required) Type of entities to search for.
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {string} search (Required) The string to search on.
 * @param {boolean} strict  Whether the search should be a strict match.
 * @param {string} name Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -1958,8 +1972,8 @@ function corporations_corporation_wallets_division_journal(division, name, page,
 }
 
 /** 
-* Get information on a solar system
-* @param {string} language  Language to use in the response.
+* Get information on a solar system. NOTE: This route does not work with abyssal systems.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {integer} system_id (Required) system_id integer.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get solar system information.
@@ -1972,7 +1986,7 @@ function universe_systems_system(language, system_id, opt_headers) {
 
 /** 
 * Get information on a type
-* @param {string} language  Language to use in the response.
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language.
 * @param {integer} type_id (Required) An Eve item type ID.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Get type information.

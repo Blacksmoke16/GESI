@@ -1843,8 +1843,8 @@ ENDPOINTS = {
     ]
   },
   "corporations_corporation_contracts": {
-    "description": "Returns contracts available to a coporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
-    "summary": "Get coporation contracts",
+    "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
+    "summary": "Get corporation contracts",
     "request": "get",
     "version": 1,
     "headers": [
@@ -3278,6 +3278,62 @@ ENDPOINTS = {
       }
     ]
   },
+  "dogma_dynamic_items_type_item": {
+    "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
+    "summary": "Get dynamic item information",
+    "request": "get",
+    "version": 1,
+    "headers": [
+      {
+        "name": "created_by",
+        "type": "integer"
+      },
+      {
+        "name": "dogma_attributes",
+        "type": "array",
+        "sub_headers": [
+          "attribute_id",
+          "value"
+        ]
+      },
+      {
+        "name": "dogma_effects",
+        "type": "array",
+        "sub_headers": [
+          "effect_id",
+          "is_default"
+        ]
+      },
+      {
+        "name": "mutator_type_id",
+        "type": "integer"
+      },
+      {
+        "name": "source_type_id",
+        "type": "integer"
+      }
+    ],
+    "path": "/v1/dogma/dynamic/items/{type_id}/{item_id}/",
+    "authed": false,
+    "response_type": "object",
+    "item_type": "object",
+    "parameters": [
+      {
+        "name": "item_id",
+        "description": "item_id integer",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      },
+      {
+        "name": "type_id",
+        "description": "type_id integer",
+        "required": true,
+        "type": "integer",
+        "in": "path"
+      }
+    ]
+  },
   "dogma_effects": {
     "description": "Get a list of dogma effect ids",
     "summary": "Get effects",
@@ -3395,7 +3451,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -3439,7 +3495,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -3816,7 +3872,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4024,7 +4080,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4375,7 +4431,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4693,7 +4749,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4799,7 +4855,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4862,7 +4918,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -4937,7 +4993,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -5082,7 +5138,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -5213,7 +5269,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -5269,7 +5325,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -7673,7 +7729,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -7861,7 +7917,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -7936,7 +7992,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -8106,6 +8162,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
+      {
+        "name": "is_blueprint_copy",
+        "type": "boolean"
+      },
       {
         "name": "is_singleton",
         "type": "boolean"
@@ -8405,7 +8465,7 @@ ENDPOINTS = {
       },
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -8432,6 +8492,10 @@ ENDPOINTS = {
     "request": "get",
     "version": 3,
     "headers": [
+      {
+        "name": "is_blueprint_copy",
+        "type": "boolean"
+      },
       {
         "name": "is_singleton",
         "type": "boolean"
@@ -8575,7 +8639,7 @@ ENDPOINTS = {
     ]
   },
   "universe_systems_system": {
-    "description": "Get information on a solar system",
+    "description": "Get information on a solar system. NOTE: This route does not work with abyssal systems.",
     "summary": "Get solar system information",
     "request": "get",
     "version": 3,
@@ -8641,7 +8705,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
@@ -8741,7 +8805,7 @@ ENDPOINTS = {
     "parameters": [
       {
         "name": "language",
-        "description": "Language to use in the response",
+        "description": "Language to use in the response, takes precedence over Accept-Language",
         "required": null,
         "type": "string",
         "in": "query"
