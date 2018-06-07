@@ -7,6 +7,8 @@ module EveSwagger
   ESI_HOST = "https://esi.evetech.net"
   # Array of allowed swagger versions
   ALLOWED_VERSIONS = %w(legacy latest dev)
+  # Path of generated files storage location
+  OUT_DIR = "../dist/"
 
   alias PathObj = Hash(String, Hash(String, PathObjBody))
   alias PathObjBody = String | Int32 | Array(Parameter)
@@ -47,15 +49,19 @@ module EveSwagger
 
   class Base
     @endpoints = {} of String => EndpointObj
-    @scopes = [] of String
+    getter scopes = [] of String
 
     JSON.mapping(
-      definitions: {type: Hash(String, Definition), setter: false},
+      consumes: {type: Array(String), setter: false},
+      definitions: {type: Definitions, setter: false},
       host: {type: String, setter: false},
       info: {type: Info, setter: false},
       parameters: {type: Hash(String, Parameter), setter: false},
       paths: {type: Hash(String, Method), setter: false},
+      produces: {type: Array(String), setter: false},
+      schemes: {type: Array(String), setter: false},
       securityDefinitions: {type: SecurityDefinitions, setter: false},
+      swagger: {type: String, setter: false},
     )
 
     # Parses the Swagger spec object into GESI endpoints.gs
@@ -68,16 +74,24 @@ module EveSwagger
         if scope = path.scope
           @scopes << scope unless @scopes.includes? scope
         end
-        @endpoints[path.operationId.gsub(/get_|_id/, "")] = EndpointObj.new(path.description, path.parameters, path_url, path.scope, path.responses.success.description, path.responses.success.schema)
+
+        @endpoints[path.operationId.gsub(/get_|_id/, "")] = EndpointObj.new(
+          path.description,
+          path.responses.success.schema,
+          path.parameters,
+          path_url,
+          path.scope,
+          path.responses.success.description
+        )
       end
       @endpoints
     end
 
-    # Saves the endpoint hash + scopes array to `endpoints.gs`
+    # Saves the endpoint hash + scopes array to `build/endpoints.gs`
     def save
-      File.open("endpoints.gs", mode: "w") do |file|
+      File.open(OUT_DIR + "endpoints.gs", mode: "w") do |file|
         file.print("SCOPES = ")
-        file.print(@scopes.to_pretty_json)
+        file.print(@scopes.sort!.to_pretty_json)
         file.print(";\n\n")
         file.print("ENDPOINTS = ")
         file.print(@endpoints.to_pretty_json)
@@ -86,12 +100,38 @@ module EveSwagger
     end
   end
 
+  class Definitions
+    JSON.mapping(
+      bad_request: {type: Definition, setter: false},
+      error_limited: {type: Definition, setter: false},
+      forbidden: {type: Definition, setter: false},
+      gateway_timeout: {type: Definition, setter: false},
+      internal_server_error: {type: Definition, setter: false},
+      service_unavailable: {type: Definition, setter: false},
+      unauthorized: {type: Definition, setter: false},
+    )
+  end
+
   class Definition
     JSON.mapping(
       description: {type: String, setter: false},
-      properties: {type: Hash(String, NamedTuple(description: String, type: String)), setter: false},
+      properties: {type: DefinitionProperties, setter: false},
       required: {type: Array(String), setter: false},
       title: {type: String, setter: false},
+      type: {type: String, setter: false},
+    )
+  end
+
+  class DefinitionProperties
+    JSON.mapping(
+      error: {type: DefinitionProperty, setter: false},
+      sso_status: {type: DefinitionProperty, nilable: true, setter: false},
+    )
+  end
+
+  class DefinitionProperty
+    JSON.mapping(
+      description: {type: String, setter: false},
       type: {type: String, setter: false},
     )
   end
@@ -123,36 +163,74 @@ module EveSwagger
       scope: {type: String, key: "security", converter: Converters::PathScope, nilable: true, setter: false},
       summary: {type: String, setter: false},
       tags: {type: Array(String), setter: false},
+      x_alternate_versions: {type: Array(String), key: "x-alternate-versions", setter: false},
       x_cached_secions: {type: Int32, key: "x-cached-seconds", nilable: true, setter: false},
     )
+  end
+
+  class Header
+    JSON.mapping(
+      name: {type: String, setter: false},
+      type: {type: String, setter: false},
+      required: {type: Bool, setter: false},
+      sub_headers: {type: Array(String), nilable: true, setter: false},
+    )
+
+    def initialize(@name : String, @type : String, @required : Bool = true, @sub_headers : Array(String) | Nil = nil); end
   end
 
   class EndpointObj
     JSON.mapping(
       description: {type: String, setter: false},
+      headers: {type: Array(Header), setter: false},
       path: {type: String, setter: false},
-      schema: {type: Array(SchemaObj), setter: false},
       parameters: {type: Array(Parameter), setter: false},
       scope: {type: String | Nil, setter: false},
       summary: {type: String, setter: false},
     )
 
-    def initialize(@description : String, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, @schema : Array(SchemaObj))
+    def initialize(@description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String)
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
-      headers = [] of SchemaObj
-      # p @schema.as(Schema).properties.each do |p|
-      #   p p.name
-      # end
+      @headers = get_headers(schema)
+      @parameters.sort_by! { |p| p.required ? 0 : 1 }
     end
-  end
 
-  class SchemaObj
-    JSON.mapping(
-      name: {type: String, setter: false},
-      type: {type: String, setter: false},
-    )
+    private def get_headers(schema : Schema | Nil)
+      headers = [] of Header
 
-    def initialize(@name : String, @type : String)
+      return headers if schema.nil?
+
+      # Array
+      if items = schema.items
+        # of objects
+        if properties = items.properties
+          properties.each do |k, v|
+            required = items.required.nil? || items.required.not_nil!.includes? k
+            headers << Header.new(k, v.type, required)
+          end
+        else
+          # of single type
+          title = items.title
+          headers << Header.new(
+            title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's',
+            items.type
+          )
+        end
+        # Single object
+      elsif properties = schema.properties
+        properties.each do |k, v|
+          # sub array
+          sub_headers = parse_items(v.items.not_nil!) if v.type == "array"
+          # sub object
+          sub_headers = v.properties.not_nil!.keys if v.type == "object"
+          headers << Header.new(k, v.type, true, sub_headers)
+        end
+      end
+      headers
+    end
+
+    private def parse_items(item : Item)
+      item.properties.nil? ? [item.title.match(/.*_(.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
     end
   end
 
@@ -171,7 +249,7 @@ module EveSwagger
   class Response
     JSON.mapping(
       description: {type: String, setter: false},
-      schema: {type: Schema, setter: false},
+      schema: {type: Schema, nilable: true, setter: false},
     )
   end
 
@@ -191,9 +269,11 @@ module EveSwagger
       description: {type: String, nilable: true, setter: false},
       format: {type: String, nilable: true, setter: false},
       minimum: {type: Int32, nilable: true, setter: false},
+      items: {type: Item, nilable: true, setter: false},
       properties: {type: Hash(String, Item), nilable: true, setter: false},
-      title: {type: String, nilable: true, setter: false},
-      type: {type: String, nilable: true, setter: false},
+      required: {type: Array(String), nilable: true, setter: false},
+      title: {type: String, nilable: false, setter: false},
+      type: {type: String, nilable: false, setter: false},
       uniqueItems: {type: Bool, nilable: true, setter: false},
     )
   end
@@ -203,7 +283,7 @@ module EveSwagger
       description: {type: String, setter: false},
       format: {type: String, nilable: true, setter: false},
       minimum: {type: Int32, nilable: true, setter: false},
-      title: {type: String, setter: false},
+      title: {type: String, nilable: true, setter: false},
       type: {type: String, setter: false},
     )
   end

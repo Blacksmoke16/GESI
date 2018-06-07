@@ -13,18 +13,11 @@ OptionParser.parse! do |parser|
 end
 
 # Object mapping of swagger space starting from the root
+# excluding non GET requests and non 200 response code responses
 base = EveSwagger::Base.from_json(EveSwagger.load)
 
-# Hash of generated JSON in the format of endpoints.gs
+# Parsed mapping of `base` in format of endpoints.gs
 endpoints_hash = base.parse
 
-# Saves the endpoint hash + scopes array to `endpoints.gs`
-# base.save
-
-p endpoints_hash["alliances_alliance_contacts"]
-
-# alliances/ - array_integer (items)
-# alliances/alliance/ - type (properties)
-# alliances/alliance/contacts/ - array_object items -> properties
-# corporation/corporation/member/limit/ - integer
-# wallet limit - number
+# Generate and save `functions.gs` and `endpoints.gs` files
+base.save
