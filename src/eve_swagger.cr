@@ -18,7 +18,7 @@ module EveSwagger
 
   # Default parameters that will not be included in a function's argument list
   # either because they are not useful or they get handled automatically
-  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match character_id alliance_id corporation_id)
+  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match character_id corporation_id)
   @@swagger_root : JSON::Any | Nil
 
   # Returns the swagger spec for the desired version
@@ -75,7 +75,12 @@ module EveSwagger
           @scopes << scope unless @scopes.includes? scope
         end
 
-        @endpoints[path.operationId.gsub(/get_|_id/, "")] = EndpointObj.new(
+        endpoint_name = path.operationId.gsub(/get_|_id/, "")
+
+        # Rename search endpoint to not conflict with Sheets `Search` function
+        endpoint_name = "eve_search" if endpoint_name == "search"
+
+        @endpoints[endpoint_name] = EndpointObj.new(
           path.description,
           path.responses.success.schema,
           path.parameters,
@@ -171,12 +176,10 @@ module EveSwagger
   class Header
     JSON.mapping(
       name: {type: String, setter: false},
-      type: {type: String, setter: false},
-      required: {type: Bool, setter: false},
       sub_headers: {type: Array(String), nilable: true, setter: false},
     )
 
-    def initialize(@name : String, @type : String, @required : Bool = true, @sub_headers : Array(String) | Nil = nil); end
+    def initialize(@name : String, @sub_headers : Array(String) | Nil = nil); end
   end
 
   class EndpointObj
@@ -205,16 +208,16 @@ module EveSwagger
         # of objects
         if properties = items.properties
           properties.each do |k, v|
-            required = items.required.nil? || items.required.not_nil!.includes? k
-            headers << Header.new(k, v.type, required)
+            # sub array
+            sub_headers = parse_items(v.items.not_nil!) if v.type == "array"
+            # sub object
+            sub_headers = v.properties.not_nil!.keys if v.type == "object"
+            headers << Header.new(k, sub_headers)
           end
         else
           # of single type
           title = items.title
-          headers << Header.new(
-            title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's',
-            items.type
-          )
+          headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
         end
         # Single object
       elsif properties = schema.properties
@@ -223,14 +226,14 @@ module EveSwagger
           sub_headers = parse_items(v.items.not_nil!) if v.type == "array"
           # sub object
           sub_headers = v.properties.not_nil!.keys if v.type == "object"
-          headers << Header.new(k, v.type, true, sub_headers)
+          headers << Header.new(k, sub_headers)
         end
       end
       headers
     end
 
     private def parse_items(item : Item)
-      item.properties.nil? ? [item.title.match(/.*_(.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
+      item.properties.nil? ? [item.title.match(/.*_(.*_.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
     end
   end
 
