@@ -107,6 +107,7 @@ module EveSwagger
           str << "* @return #{endpoint_data.summary}\n"
           str << "* @customfunction\n"
           str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| p.name }.join(", ")}) {\n"
+          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw '#{p.name} is required';\n" if p.required }
           str << "  return parseData_(arguments.callee.name,{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
           str << "}\n\n"
         end
@@ -224,6 +225,7 @@ module EveSwagger
       # Add name parameter if function requires auth
       name = Parameter.from_json({name: "name", in: "parameters", type: "boolean", description: "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER."}.to_json)
 
+      # Make `name` param come before `page` param because reasons
       if @scope && !EveSwagger.rejected_params.includes? "name"
         if page = @parameters.find { |p| p.name == "page" }
           @parameters.delete page
