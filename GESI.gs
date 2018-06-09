@@ -40,7 +40,7 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 
   JSON.parse(array).forEach(function(a) {
     var temp = [];
-    endpoint.sub_headers.forEach(function(k) { temp.push(a[k]) });
+    endpoint.sub_headers.forEach(function(k) { temp.push(typeof(a) !== 'object' ? a : a[k]); });
     result.push(temp);
   });
   return result;
@@ -70,7 +70,7 @@ function getData_(endpoint_name, params) {
   if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(name, 'corporation_id'));
   
   var token = CACHE.get(name + '_access_token');
-  if (!token && endpoint.authed) token = refreshToken_(name);
+  if (!token && endpoint.scope) token = refreshToken_(name);
 
   return doRequest_(BASE_URL + path, 'get', token);
 }
@@ -96,30 +96,31 @@ function parseData_(endpoint_name, params) {
   } else {
    data = getData_(endpoint_name, params).data;
  }
- 
- if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
-  data.forEach(function(obj) {
-    var temp = [];
-    endpoint.headers.forEach(function(header) {
-      temp.push(parseObject_(obj, header));
-    });
-    result.push(temp);
-  });
-} else if (endpoint.response_type === 'object' && endpoint.item_type === 'object') {
-  var temp = [];
-  endpoint.headers.forEach(function(header) {
-    temp.push(parseObject_(data, header));
-  });
-  result.push(temp);
-} else if (endpoint.response_type === 'array' && endpoint.item_type === 'integer') {
-  data.forEach(function(dp) {
-    result.push(dp);
-  });
-} else if (endpoint.response_type === 'integer' || endpoint.response_type === 'number') {
-  result.push(data);        
-}
-
-return result;
+  
+ if (Array.isArray(data) && typeof(data[0]) === 'number') {
+   data.forEach(function(dp) {
+     result.push(dp);
+   });
+ } else if (Array.isArray(data) && typeof(data[0]) === 'object') {
+     data.forEach(function(obj) {
+       var temp = [];
+       endpoint.headers.forEach(function(header) {
+         temp.push(obj[header.name]);
+       });
+       result.push(temp);
+     });
+ } else if (typeof(data) === 'object') {
+     var temp = [];
+     endpoint.headers.forEach(function(header) {
+       dp = data[header.name];
+       temp.push(typeof(dp) === 'object' ? JSON.stringify(dp) : dp);
+     });
+     result.push(temp);
+ } else {
+   throw new "Unexepcted data type.  Please report this on Github.";
+ }
+  
+  return result;
 }
 
 function doRequest_(path, method, token, data) {
@@ -139,17 +140,6 @@ function doRequest_(path, method, token, data) {
   return {data: JSON.parse(response), headers: response.getHeaders()};
 }
 
-function parseObject_(source, header) {
-  if (header.type === 'array') {
-    return JSON.stringify(source[header.name]);
-  } else if (typeof source === 'object') {
-    var flat_obj = flatten_(source);
-    return flat_obj[header.name];
-  } else {
-    return source[header.name];
-  }
-}
-
 function getProperty_(character_name, property) {
   var character_row = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data').getDataRange().getValues().filter(function(r) { return r[0] === character_name });
   if (character_row.length === 0) throw character_name + " is not authed, or is misspelled.";
@@ -166,29 +156,6 @@ function extend_(obj, src) {
   }
   return obj;
 }
-
-function flatten_(ob) {
-  var toReturn = {};
-  for (var i in ob) {
-    if (!ob.hasOwnProperty(i)) continue;
-    if ((typeof ob[i]) == 'object') {
-      var flatObject = flatten_(ob[i]);
-      for (var x in flatObject) {
-        if (!flatObject.hasOwnProperty(x)) continue;
-        toReturn[i + '-' + x] = flatObject[x];
-      }
-    } else {
-      toReturn[i] = ob[i];
-    }
-  }
-  return toReturn;
-};
-
-function uniqArray_(arrArg) {
-  return arrArg.filter(function(elem, pos, arr) {
-    return arr.indexOf(elem) == pos;
-  });
-};
 
 function findObjectByKey_(array, key, value) {
   for (var i = 0; i < array.length; i++) {
@@ -259,7 +226,7 @@ function cacheData_(userData, access_token) {
   var character_name = userData['character_name'];
   savedChars.indexOf(character_name) === -1 ? authSheet.appendRow(user_data) : authSheet.getRange((savedChars.indexOf(character_name) + 1), 1, 1, 5).setValues([user_data]);
   [1,2,3,4,5].forEach(function(c) { authSheet.autoResizeColumn(c) });
-  CACHE.put(character_name + '_access_token', access_token, 900);
+  CACHE.put(character_name + '_access_token', access_token, 1080);
 }
 
 function checkForUpdates()
