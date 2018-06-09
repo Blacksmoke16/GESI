@@ -115,8 +115,10 @@ function parseData_(endpoint_name, params) {
        temp.push(typeof(data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]);
      });
      result.push(temp);
+ } else if (typeof(data) === 'number') {
+     result = [data];
  } else {
-   throw new "Unexepcted data type.  Please report this on Github.";
+     throw new "Unexepcted data type.  Please report this on Github.";
  }
   
   return result;
