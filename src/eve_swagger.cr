@@ -7,14 +7,14 @@ module EveSwagger
   ESI_HOST = "https://esi.evetech.net"
   # Array of allowed swagger versions
   ALLOWED_VERSIONS = %w(legacy latest dev)
-  # Path of generated files storage location
-  OUT_DIR = "../dist/"
 
   alias PathObj = Hash(String, Hash(String, PathObjBody))
   alias PathObjBody = String | Int32 | Array(Parameter)
 
   # Default swagger version
   class_setter version = "latest"
+  # Output directory for generated files
+  class_property out_dir = "./"
 
   # Default parameters that will not be included in a function's argument list
   # either because they are not useful or they get handled automatically
@@ -92,7 +92,8 @@ module EveSwagger
       @endpoints
     end
 
-    # Saves the endpoint hash + scopes array to `build/endpoints.gs`
+    # Saves the endpoint hash + scopes array to `EveSwagger.out_dir` + endpoints.gs`
+    # Saves the functions list to `EveSwagger.out_dir` + functions.gs
     def save
       save_endpoints
       save_functions
@@ -113,13 +114,13 @@ module EveSwagger
         end
       end
 
-      File.open(OUT_DIR + "functions.gs", mode: "w") do |file|
+      File.open(EveSwagger.out_dir + "functions.gs", mode: "w") do |file|
         file.print(functions)
       end
     end
 
     private def save_endpoints
-      File.open(OUT_DIR + "endpoints.gs", mode: "w") do |file|
+      File.open(EveSwagger.out_dir + "endpoints.gs", mode: "w") do |file|
         file.print("SCOPES = ")
         file.print(@scopes.sort!.to_pretty_json)
         file.print(";\n\n")
