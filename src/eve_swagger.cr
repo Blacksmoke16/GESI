@@ -18,7 +18,7 @@ module EveSwagger
 
   # Default parameters that will not be included in a function's argument list
   # either because they are not useful or they get handled automatically
-  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match character_id corporation_id)
+  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource character_id corporation_id alliance_id)
   @@swagger_root : JSON::Any | Nil
 
   # Returns the swagger spec for the desired version
@@ -77,7 +77,7 @@ module EveSwagger
 
         endpoint_name = path.operationId.gsub(/get_|_id/, "")
 
-        # Rename search endpoint to not conflict with Sheets `Search` function
+        # Rename search endpoint to not conflict with Sheets' `Search` function
         endpoint_name = "eve_search" if endpoint_name == "search"
 
         @endpoints[endpoint_name] = EndpointObj.new(
@@ -94,6 +94,30 @@ module EveSwagger
 
     # Saves the endpoint hash + scopes array to `build/endpoints.gs`
     def save
+      save_endpoints
+      save_functions
+    end
+
+    private def save_functions
+      functions = String.build do |str|
+        @endpoints.each do |endpoint_name, endpoint_data|
+          str << "/**\n"
+          str << "* #{endpoint_data.description}\n"
+          endpoint_data.parameters.each { |p| str << "* @param {#{p.type}} #{p.name} #{p.required ? "(Required)" : ""} #{p.description}\n" }
+          str << "* @return #{endpoint_data.summary}\n"
+          str << "* @customfunction\n"
+          str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| p.name }.join(", ")}) {\n"
+          str << "  return parseData_(arguments.callee.name,{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
+          str << "}\n\n"
+        end
+      end
+
+      File.open(OUT_DIR + "functions.gs", mode: "w") do |file|
+        file.print(functions)
+      end
+    end
+
+    private def save_endpoints
       File.open(OUT_DIR + "endpoints.gs", mode: "w") do |file|
         file.print("SCOPES = ")
         file.print(@scopes.sort!.to_pretty_json)
@@ -196,6 +220,22 @@ module EveSwagger
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
       @headers = get_headers(schema)
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
+
+      # Add name parameter if function requires auth
+      name = Parameter.from_json({name: "name", in: "parameters", type: "boolean", description: "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER."}.to_json)
+
+      if @scope && !EveSwagger.rejected_params.includes? "name"
+        if page = @parameters.find { |p| p.name == "page" }
+          @parameters.delete page
+          @parameters << name
+          @parameters << page
+        else
+          @parameters << name
+        end
+      end
+
+      # Add opt_headers parameter
+      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "string", description: "Default: True, Boolean if column headings should be listed or not."}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
     end
 
     private def get_headers(schema : Schema | Nil)
@@ -219,6 +259,9 @@ module EveSwagger
           title = items.title
           headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
         end
+        if required = items.required
+          headers.sort_by! { |h| required.index(h.name) || Float64::INFINITY }
+        end
         # Single object
       elsif properties = schema.properties
         properties.each do |k, v|
@@ -227,6 +270,9 @@ module EveSwagger
           # sub object
           sub_headers = v.properties.not_nil!.keys if v.type == "object"
           headers << Header.new(k, sub_headers)
+        end
+        if required = schema.required
+          headers.sort_by! { |h| required.index(h.name) || Float64::INFINITY }
         end
       end
       headers
@@ -262,6 +308,7 @@ module EveSwagger
       maxItems: {type: Int32, nilable: true, setter: false},
       items: {type: Item, nilable: true, setter: false},
       properties: {type: Hash(String, Item), nilable: true, setter: false},
+      required: {type: Array(String), nilable: true, setter: false},
       title: {type: String, setter: false},
       type: {type: String, setter: false},
     )

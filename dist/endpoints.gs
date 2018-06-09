@@ -72,9 +72,9 @@ ENDPOINTS = {
     "path": "/v1/alliances/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -94,16 +94,16 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -121,16 +121,9 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/corporations/",
     "parameters": [
       {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -150,16 +143,9 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/icons/",
     "parameters": [
       {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -186,9 +172,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -202,24 +188,31 @@ ENDPOINTS = {
         "name": "agent_id"
       },
       {
-        "name": "points_per_day"
-      },
-      {
-        "name": "remainder_points"
-      },
-      {
         "name": "skill_type_id"
       },
       {
         "name": "started_at"
+      },
+      {
+        "name": "points_per_day"
+      },
+      {
+        "name": "remainder_points"
       }
     ],
     "path": "/v1/characters/{character_id}/agents_research/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -231,19 +224,10 @@ ENDPOINTS = {
     "description": "Return attributes of a character",
     "headers": [
       {
-        "name": "accrued_remap_cooldown_date"
-      },
-      {
-        "name": "bonus_remaps"
-      },
-      {
         "name": "charisma"
       },
       {
         "name": "intelligence"
-      },
-      {
-        "name": "last_remap_date"
       },
       {
         "name": "memory"
@@ -253,14 +237,30 @@ ENDPOINTS = {
       },
       {
         "name": "willpower"
+      },
+      {
+        "name": "accrued_remap_cooldown_date"
+      },
+      {
+        "name": "bonus_remaps"
+      },
+      {
+        "name": "last_remap_date"
       }
     ],
     "path": "/v1/characters/{character_id}/attributes/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -290,17 +290,24 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/calendar/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "The event ID to retrieve events from",
         "in": "query",
         "name": "from_event",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -327,9 +334,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -350,9 +364,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -364,67 +385,67 @@ ENDPOINTS = {
     "description": "Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
     "headers": [
       {
-        "name": "acceptor_id"
-      },
-      {
-        "name": "assignee_id"
-      },
-      {
-        "name": "availability"
-      },
-      {
-        "name": "buyout"
-      },
-      {
-        "name": "collateral"
-      },
-      {
         "name": "contract_id"
-      },
-      {
-        "name": "date_accepted"
-      },
-      {
-        "name": "date_completed"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "date_issued"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
-        "name": "issuer_corporation_id"
       },
       {
         "name": "issuer_id"
       },
       {
-        "name": "price"
+        "name": "issuer_corporation_id"
       },
       {
-        "name": "reward"
+        "name": "assignee_id"
       },
       {
-        "name": "start_location_id"
+        "name": "acceptor_id"
+      },
+      {
+        "name": "type"
       },
       {
         "name": "status"
       },
       {
+        "name": "for_corporation"
+      },
+      {
+        "name": "availability"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
         "name": "title"
       },
       {
-        "name": "type"
+        "name": "start_location_id"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "date_completed"
+      },
+      {
+        "name": "date_accepted"
+      },
+      {
+        "name": "collateral"
+      },
+      {
+        "name": "buyout"
       },
       {
         "name": "volume"
@@ -433,10 +454,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/contracts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -444,6 +465,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -454,9 +482,6 @@ ENDPOINTS = {
     "description": "Lists bids on a particular auction contract",
     "headers": [
       {
-        "name": "amount"
-      },
-      {
         "name": "bid_id"
       },
       {
@@ -464,6 +489,9 @@ ENDPOINTS = {
       },
       {
         "name": "date_bid"
+      },
+      {
+        "name": "amount"
       }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/bids/",
@@ -476,9 +504,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -490,22 +525,22 @@ ENDPOINTS = {
     "description": "Lists items of a particular contract",
     "headers": [
       {
-        "name": "is_included"
+        "name": "record_id"
       },
       {
-        "name": "is_singleton"
+        "name": "type_id"
       },
       {
         "name": "quantity"
       },
       {
+        "name": "is_singleton"
+      },
+      {
+        "name": "is_included"
+      },
+      {
         "name": "raw_quantity"
-      },
-      {
-        "name": "record_id"
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/items/",
@@ -518,9 +553,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -532,24 +574,24 @@ ENDPOINTS = {
     "description": "Get a list of all the corporations a character has been a member of",
     "headers": [
       {
-        "name": "corporation_id"
+        "name": "start_date"
       },
       {
-        "name": "is_deleted"
+        "name": "corporation_id"
       },
       {
         "name": "record_id"
       },
       {
-        "name": "start_date"
+        "name": "is_deleted"
       }
     ],
     "path": "/v1/characters/{character_id}/corporationhistory/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -572,9 +614,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/fatigue/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -586,10 +635,16 @@ ENDPOINTS = {
     "description": "Return fittings of a character",
     "headers": [
       {
+        "name": "fitting_id"
+      },
+      {
+        "name": "name"
+      },
+      {
         "name": "description"
       },
       {
-        "name": "fitting_id"
+        "name": "ship_type_id"
       },
       {
         "name": "items",
@@ -598,20 +653,21 @@ ENDPOINTS = {
           "quantity",
           "type_id"
         ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "ship_type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/fittings/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -626,21 +682,28 @@ ENDPOINTS = {
         "name": "fleet_id"
       },
       {
-        "name": "role"
+        "name": "wing_id"
       },
       {
         "name": "squad_id"
       },
       {
-        "name": "wing_id"
+        "name": "role"
       }
     ],
     "path": "/v1/characters/{character_id}/fleet/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -651,18 +714,6 @@ ENDPOINTS = {
   "characters_character_fw_stats": {
     "description": "Statistical overview of a character involved in faction warfare",
     "headers": [
-      {
-        "name": "current_rank"
-      },
-      {
-        "name": "enlisted_on"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "highest_rank"
-      },
       {
         "name": "kills",
         "sub_headers": [
@@ -678,14 +729,33 @@ ENDPOINTS = {
           "total",
           "yesterday"
         ]
+      },
+      {
+        "name": "current_rank"
+      },
+      {
+        "name": "enlisted_on"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "highest_rank"
       }
     ],
     "path": "/v1/characters/{character_id}/fw/stats/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -703,9 +773,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/implants/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -717,67 +794,67 @@ ENDPOINTS = {
     "description": "List industry jobs placed by a character",
     "headers": [
       {
+        "name": "job_id"
+      },
+      {
+        "name": "installer_id"
+      },
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "station_id"
+      },
+      {
         "name": "activity_id"
       },
       {
         "name": "blueprint_id"
       },
       {
-        "name": "blueprint_location_id"
-      },
-      {
         "name": "blueprint_type_id"
       },
       {
-        "name": "completed_character_id"
-      },
-      {
-        "name": "completed_date"
-      },
-      {
-        "name": "cost"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "end_date"
-      },
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "installer_id"
-      },
-      {
-        "name": "job_id"
-      },
-      {
-        "name": "licensed_runs"
+        "name": "blueprint_location_id"
       },
       {
         "name": "output_location_id"
       },
       {
-        "name": "pause_date"
-      },
-      {
-        "name": "probability"
-      },
-      {
-        "name": "product_type_id"
-      },
-      {
         "name": "runs"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "duration"
       },
       {
         "name": "start_date"
       },
       {
-        "name": "station_id"
+        "name": "end_date"
       },
       {
-        "name": "status"
+        "name": "product_type_id"
+      },
+      {
+        "name": "probability"
+      },
+      {
+        "name": "pause_date"
+      },
+      {
+        "name": "completed_date"
+      },
+      {
+        "name": "licensed_runs"
+      },
+      {
+        "name": "completed_character_id"
+      },
+      {
+        "name": "cost"
       },
       {
         "name": "successful_runs"
@@ -786,17 +863,24 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Whether retrieve completed character industry jobs as well",
         "in": "query",
         "name": "include_completed",
         "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -807,19 +891,19 @@ ENDPOINTS = {
     "description": "Return a list of a character's kills and losses going back 90 days",
     "headers": [
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       },
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       }
     ],
     "path": "/v1/characters/{character_id}/killmails/recent/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -827,6 +911,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -849,9 +940,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/location/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -872,9 +970,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/loyalty/points/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -917,13 +1022,6 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/mail/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Fetch only mails that match one or more of the given labels",
         "in": "query",
         "name": "labels",
@@ -935,6 +1033,20 @@ ENDPOINTS = {
         "in": "query",
         "name": "last_mail_id",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -954,9 +1066,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/mail/lists/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1006,9 +1125,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1020,13 +1146,28 @@ ENDPOINTS = {
     "description": "Return a list of medals the character has",
     "headers": [
       {
+        "name": "medal_id"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "description"
+      },
+      {
         "name": "corporation_id"
+      },
+      {
+        "name": "issuer_id"
       },
       {
         "name": "date"
       },
       {
-        "name": "description"
+        "name": "reason"
+      },
+      {
+        "name": "status"
       },
       {
         "name": "graphics",
@@ -1036,29 +1177,21 @@ ENDPOINTS = {
           "layer",
           "part"
         ]
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "medal_id"
-      },
-      {
-        "name": "reason"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "title"
       }
     ],
     "path": "/v1/characters/{character_id}/medals/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1073,22 +1206,22 @@ ENDPOINTS = {
         "name": "date"
       },
       {
-        "name": "quantity"
-      },
-      {
         "name": "solar_system_id"
       },
       {
         "name": "type_id"
+      },
+      {
+        "name": "quantity"
       }
     ],
     "path": "/v1/characters/{character_id}/mining/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1096,6 +1229,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1106,27 +1246,34 @@ ENDPOINTS = {
     "description": "Return notifications about having been added to someone's contact list",
     "headers": [
       {
-        "name": "message"
-      },
-      {
         "name": "notification_id"
       },
       {
         "name": "send_date"
       },
       {
-        "name": "sender_character_id"
+        "name": "standing_level"
       },
       {
-        "name": "standing_level"
+        "name": "message"
+      },
+      {
+        "name": "sender_character_id"
       }
     ],
     "path": "/v1/characters/{character_id}/notifications/contacts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1138,18 +1285,25 @@ ENDPOINTS = {
     "description": "Return a list of tasks finished by a character",
     "headers": [
       {
-        "name": "completed_at"
+        "name": "task_id"
       },
       {
-        "name": "task_id"
+        "name": "completed_at"
       }
     ],
     "path": "/v1/characters/{character_id}/opportunities/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1161,7 +1315,40 @@ ENDPOINTS = {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
     "headers": [
       {
+        "name": "is_corporation"
+      },
+      {
         "name": "duration"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "issued"
       },
       {
         "name": "escrow"
@@ -1170,49 +1357,16 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
-        "name": "is_corporation"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
       }
     ],
     "path": "/v1/characters/{character_id}/orders/history/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1220,6 +1374,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1230,13 +1391,7 @@ ENDPOINTS = {
     "description": "Returns a list of all planetary colonies owned by a character.",
     "headers": [
       {
-        "name": "last_update"
-      },
-      {
-        "name": "num_pins"
-      },
-      {
-        "name": "owner_id"
+        "name": "solar_system_id"
       },
       {
         "name": "planet_id"
@@ -1245,18 +1400,31 @@ ENDPOINTS = {
         "name": "planet_type"
       },
       {
-        "name": "solar_system_id"
+        "name": "owner_id"
+      },
+      {
+        "name": "last_update"
       },
       {
         "name": "upgrade_level"
+      },
+      {
+        "name": "num_pins"
       }
     ],
     "path": "/v1/characters/{character_id}/planets/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1268,21 +1436,28 @@ ENDPOINTS = {
     "description": "Get the current ship type, name and id",
     "headers": [
       {
+        "name": "ship_type_id"
+      },
+      {
         "name": "ship_item_id"
       },
       {
         "name": "ship_name"
-      },
-      {
-        "name": "ship_type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/ship/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1306,9 +1481,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/standings/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1329,9 +1511,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/titles/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1345,9 +1534,16 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/wallet/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1359,10 +1555,25 @@ ENDPOINTS = {
     "description": "Get wallet transactions of a character",
     "headers": [
       {
-        "name": "client_id"
+        "name": "transaction_id"
       },
       {
         "name": "date"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unit_price"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "client_id"
       },
       {
         "name": "is_buy"
@@ -1372,37 +1583,29 @@ ENDPOINTS = {
       },
       {
         "name": "journal_ref_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "transaction_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unit_price"
       }
     ],
     "path": "/v1/characters/{character_id}/wallet/transactions/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Only show transactions happened before the one referenced by this id",
         "in": "query",
         "name": "from_id",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1413,28 +1616,28 @@ ENDPOINTS = {
     "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
     "headers": [
       {
-        "name": "chunk_arrival_time"
-      },
-      {
-        "name": "extraction_start_time"
+        "name": "structure_id"
       },
       {
         "name": "moon_id"
       },
       {
-        "name": "natural_decay_time"
+        "name": "extraction_start_time"
       },
       {
-        "name": "structure_id"
+        "name": "chunk_arrival_time"
+      },
+      {
+        "name": "natural_decay_time"
       }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/extractions/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1442,6 +1645,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1464,10 +1674,10 @@ ENDPOINTS = {
     "path": "/v1/corporation/{corporation_id}/mining/observers/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1475,6 +1685,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1485,19 +1702,19 @@ ENDPOINTS = {
     "description": "Paginated record of all mining seen by an observer",
     "headers": [
       {
-        "name": "character_id"
-      },
-      {
         "name": "last_updated"
       },
       {
-        "name": "quantity"
+        "name": "character_id"
       },
       {
         "name": "recorded_corporation_id"
       },
       {
         "name": "type_id"
+      },
+      {
+        "name": "quantity"
       }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/observers/{observer_id}/",
@@ -1510,10 +1727,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1521,6 +1738,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1537,9 +1761,9 @@ ENDPOINTS = {
     "path": "/v1/corporations/npccorps/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1553,18 +1777,27 @@ ENDPOINTS = {
         "name": "bookmark_id"
       },
       {
+        "name": "creator_id"
+      },
+      {
+        "name": "created"
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "notes"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "coordinates",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
       },
       {
         "name": "folder_id"
@@ -1575,24 +1808,15 @@ ENDPOINTS = {
           "item_id",
           "type_id"
         ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1600,6 +1824,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1610,22 +1841,22 @@ ENDPOINTS = {
     "description": "A list of your corporation's bookmark folders",
     "headers": [
       {
-        "name": "creator_id"
-      },
-      {
         "name": "folder_id"
       },
       {
         "name": "name"
+      },
+      {
+        "name": "creator_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1633,6 +1864,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1652,9 +1890,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1666,67 +1911,67 @@ ENDPOINTS = {
     "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
     "headers": [
       {
-        "name": "acceptor_id"
-      },
-      {
-        "name": "assignee_id"
-      },
-      {
-        "name": "availability"
-      },
-      {
-        "name": "buyout"
-      },
-      {
-        "name": "collateral"
-      },
-      {
         "name": "contract_id"
-      },
-      {
-        "name": "date_accepted"
-      },
-      {
-        "name": "date_completed"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "date_issued"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
-        "name": "issuer_corporation_id"
       },
       {
         "name": "issuer_id"
       },
       {
-        "name": "price"
+        "name": "issuer_corporation_id"
       },
       {
-        "name": "reward"
+        "name": "assignee_id"
       },
       {
-        "name": "start_location_id"
+        "name": "acceptor_id"
+      },
+      {
+        "name": "type"
       },
       {
         "name": "status"
       },
       {
+        "name": "for_corporation"
+      },
+      {
+        "name": "availability"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
         "name": "title"
       },
       {
-        "name": "type"
+        "name": "start_location_id"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "date_completed"
+      },
+      {
+        "name": "date_accepted"
+      },
+      {
+        "name": "collateral"
+      },
+      {
+        "name": "buyout"
       },
       {
         "name": "volume"
@@ -1735,10 +1980,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/contracts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1746,6 +1991,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1756,9 +2008,6 @@ ENDPOINTS = {
     "description": "Lists bids on a particular auction contract",
     "headers": [
       {
-        "name": "amount"
-      },
-      {
         "name": "bid_id"
       },
       {
@@ -1766,6 +2015,9 @@ ENDPOINTS = {
       },
       {
         "name": "date_bid"
+      },
+      {
+        "name": "amount"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/bids/",
@@ -1778,10 +2030,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1789,6 +2041,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1799,22 +2058,22 @@ ENDPOINTS = {
     "description": "Lists items of a particular contract",
     "headers": [
       {
-        "name": "is_included"
+        "name": "record_id"
       },
       {
-        "name": "is_singleton"
+        "name": "type_id"
       },
       {
         "name": "quantity"
       },
       {
+        "name": "is_singleton"
+      },
+      {
+        "name": "is_included"
+      },
+      {
         "name": "raw_quantity"
-      },
-      {
-        "name": "record_id"
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/items/",
@@ -1827,9 +2086,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1841,13 +2107,25 @@ ENDPOINTS = {
     "description": "List customs offices owned by a corporation",
     "headers": [
       {
-        "name": "alliance_tax_rate"
+        "name": "office_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "reinforce_exit_start"
+      },
+      {
+        "name": "reinforce_exit_end"
+      },
+      {
+        "name": "allow_alliance_access"
       },
       {
         "name": "allow_access_with_standings"
       },
       {
-        "name": "allow_alliance_access"
+        "name": "alliance_tax_rate"
       },
       {
         "name": "bad_standing_tax_rate"
@@ -1865,19 +2143,7 @@ ENDPOINTS = {
         "name": "neutral_standing_tax_rate"
       },
       {
-        "name": "office_id"
-      },
-      {
-        "name": "reinforce_exit_end"
-      },
-      {
-        "name": "reinforce_exit_start"
-      },
-      {
         "name": "standing_level"
-      },
-      {
-        "name": "system_id"
       },
       {
         "name": "terrible_standing_tax_rate"
@@ -1886,10 +2152,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/customs_offices/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -1897,6 +2163,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -1924,9 +2197,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/divisions/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1941,18 +2221,25 @@ ENDPOINTS = {
         "name": "facility_id"
       },
       {
-        "name": "system_id"
+        "name": "type_id"
       },
       {
-        "name": "type_id"
+        "name": "system_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/facilities/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -1964,12 +2251,6 @@ ENDPOINTS = {
     "description": "Statistics about a corporation involved in faction warfare",
     "headers": [
       {
-        "name": "enlisted_on"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
         "name": "kills",
         "sub_headers": [
           "last_week",
@@ -1978,23 +2259,36 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "pilots"
-      },
-      {
         "name": "victory_points",
         "sub_headers": [
           "last_week",
           "total",
           "yesterday"
         ]
+      },
+      {
+        "name": "enlisted_on"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "pilots"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/fw/stats/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2018,9 +2312,9 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/icons/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2031,67 +2325,67 @@ ENDPOINTS = {
     "description": "List industry jobs run by a corporation",
     "headers": [
       {
+        "name": "job_id"
+      },
+      {
+        "name": "installer_id"
+      },
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "activity_id"
       },
       {
         "name": "blueprint_id"
       },
       {
-        "name": "blueprint_location_id"
-      },
-      {
         "name": "blueprint_type_id"
       },
       {
-        "name": "completed_character_id"
-      },
-      {
-        "name": "completed_date"
-      },
-      {
-        "name": "cost"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "end_date"
-      },
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "installer_id"
-      },
-      {
-        "name": "job_id"
-      },
-      {
-        "name": "licensed_runs"
-      },
-      {
-        "name": "location_id"
+        "name": "blueprint_location_id"
       },
       {
         "name": "output_location_id"
       },
       {
-        "name": "pause_date"
-      },
-      {
-        "name": "probability"
-      },
-      {
-        "name": "product_type_id"
-      },
-      {
         "name": "runs"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "duration"
       },
       {
         "name": "start_date"
       },
       {
-        "name": "status"
+        "name": "end_date"
+      },
+      {
+        "name": "product_type_id"
+      },
+      {
+        "name": "probability"
+      },
+      {
+        "name": "pause_date"
+      },
+      {
+        "name": "completed_date"
+      },
+      {
+        "name": "licensed_runs"
+      },
+      {
+        "name": "completed_character_id"
+      },
+      {
+        "name": "cost"
       },
       {
         "name": "successful_runs"
@@ -2100,16 +2394,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Whether retrieve completed industry jobs as well",
         "in": "query",
         "name": "include_completed",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
         "type": "boolean",
         "required": false
       },
@@ -2118,6 +2412,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2128,19 +2429,19 @@ ENDPOINTS = {
     "description": "Get a list of a corporation's kills and losses going back 90 days",
     "headers": [
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       },
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/killmails/recent/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2148,6 +2449,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2158,28 +2466,28 @@ ENDPOINTS = {
     "description": "Returns a corporation's medals",
     "headers": [
       {
-        "name": "created_at"
+        "name": "medal_id"
       },
       {
-        "name": "creator_id"
+        "name": "title"
       },
       {
         "name": "description"
       },
       {
-        "name": "medal_id"
+        "name": "creator_id"
       },
       {
-        "name": "title"
+        "name": "created_at"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2187,6 +2495,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2197,31 +2512,31 @@ ENDPOINTS = {
     "description": "Returns medals issued by a corporation",
     "headers": [
       {
-        "name": "character_id"
-      },
-      {
-        "name": "issued_at"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
         "name": "medal_id"
+      },
+      {
+        "name": "character_id"
       },
       {
         "name": "reason"
       },
       {
         "name": "status"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "issued_at"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/issued/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2229,6 +2544,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2241,9 +2563,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/members/limit/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2267,9 +2596,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/members/titles/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2281,10 +2617,10 @@ ENDPOINTS = {
     "description": "Returns additional information about a corporation's members which helps tracking their activities",
     "headers": [
       {
-        "name": "base_id"
+        "name": "character_id"
       },
       {
-        "name": "character_id"
+        "name": "base_id"
       },
       {
         "name": "location_id"
@@ -2305,9 +2641,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/membertracking/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2319,7 +2662,40 @@ ENDPOINTS = {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
     "headers": [
       {
+        "name": "wallet_division"
+      },
+      {
         "name": "duration"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "issued"
       },
       {
         "name": "escrow"
@@ -2328,49 +2704,16 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "wallet_division"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/orders/history/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2378,6 +2721,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2394,10 +2744,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/outposts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2405,6 +2755,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2415,12 +2772,10 @@ ENDPOINTS = {
     "description": "Get details about a given outpost. Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
     "headers": [
       {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
+        "name": "owner_id"
+      },
+      {
+        "name": "system_id"
       },
       {
         "name": "docking_cost_per_ship_volume"
@@ -2429,13 +2784,24 @@ ENDPOINTS = {
         "name": "office_rental_cost"
       },
       {
-        "name": "owner_id"
+        "name": "type_id"
       },
       {
         "name": "reprocessing_efficiency"
       },
       {
         "name": "reprocessing_station_take"
+      },
+      {
+        "name": "standing_owner_id"
+      },
+      {
+        "name": "coordinates",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
       },
       {
         "name": "services",
@@ -2445,15 +2811,6 @@ ENDPOINTS = {
           "service_name",
           "surcharge_per_bad_standing"
         ]
-      },
-      {
-        "name": "standing_owner_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/outposts/{outpost_id}/",
@@ -2466,9 +2823,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2534,9 +2898,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/roles/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2548,19 +2919,16 @@ ENDPOINTS = {
     "description": "Return how roles have changed for a coporation's members, up to a month",
     "headers": [
       {
-        "name": "changed_at"
+        "name": "character_id"
       },
       {
-        "name": "character_id"
+        "name": "changed_at"
       },
       {
         "name": "issuer_id"
       },
       {
-        "name": "new_roles",
-        "sub_headers": [
-          "new_roles"
-        ]
+        "name": "role_type"
       },
       {
         "name": "old_roles",
@@ -2569,16 +2937,19 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "role_type"
+        "name": "new_roles",
+        "sub_headers": [
+          "new_roles"
+        ]
       }
     ],
     "path": "/v1/corporations/{corporation_id}/roles/history/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2586,6 +2957,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2596,22 +2974,22 @@ ENDPOINTS = {
     "description": "Return the current shareholders of a corporation.",
     "headers": [
       {
-        "name": "share_count"
-      },
-      {
         "name": "shareholder_id"
       },
       {
         "name": "shareholder_type"
+      },
+      {
+        "name": "share_count"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/shareholders/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2619,6 +2997,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2641,10 +3026,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/standings/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2652,6 +3037,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2662,6 +3054,15 @@ ENDPOINTS = {
     "description": "Returns list of corporation starbases (POSes)",
     "headers": [
       {
+        "name": "starbase_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
         "name": "moon_id"
       },
       {
@@ -2671,16 +3072,7 @@ ENDPOINTS = {
         "name": "reinforced_until"
       },
       {
-        "name": "starbase_id"
-      },
-      {
         "name": "state"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
       },
       {
         "name": "unanchor_at"
@@ -2689,10 +3081,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/starbases/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -2700,6 +3092,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2710,19 +3109,37 @@ ENDPOINTS = {
     "description": "Returns various settings and fuels of a starbase (POS)",
     "headers": [
       {
-        "name": "allow_alliance_members"
+        "name": "fuel_bay_view"
       },
       {
-        "name": "allow_corporation_members"
+        "name": "fuel_bay_take"
       },
       {
         "name": "anchor"
       },
       {
-        "name": "attack_if_at_war"
+        "name": "unanchor"
+      },
+      {
+        "name": "online"
+      },
+      {
+        "name": "offline"
+      },
+      {
+        "name": "allow_corporation_members"
+      },
+      {
+        "name": "allow_alliance_members"
+      },
+      {
+        "name": "use_alliance_standings"
       },
       {
         "name": "attack_if_other_security_status_dropping"
+      },
+      {
+        "name": "attack_if_at_war"
       },
       {
         "name": "attack_security_status_threshold"
@@ -2731,29 +3148,11 @@ ENDPOINTS = {
         "name": "attack_standing_threshold"
       },
       {
-        "name": "fuel_bay_take"
-      },
-      {
-        "name": "fuel_bay_view"
-      },
-      {
         "name": "fuels",
         "sub_headers": [
           "quantity",
           "type_id"
         ]
-      },
-      {
-        "name": "offline"
-      },
-      {
-        "name": "online"
-      },
-      {
-        "name": "unanchor"
-      },
-      {
-        "name": "use_alliance_standings"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/starbases/{starbase_id}/",
@@ -2773,9 +3172,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2844,9 +3250,16 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/titles/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2858,18 +3271,25 @@ ENDPOINTS = {
     "description": "Get a corporation's wallets",
     "headers": [
       {
-        "name": "balance"
+        "name": "division"
       },
       {
-        "name": "division"
+        "name": "balance"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2881,31 +3301,31 @@ ENDPOINTS = {
     "description": "Get wallet transactions of a corporation",
     "headers": [
       {
-        "name": "client_id"
+        "name": "transaction_id"
       },
       {
         "name": "date"
       },
       {
-        "name": "is_buy"
-      },
-      {
-        "name": "journal_ref_id"
-      },
-      {
         "name": "location_id"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "transaction_id"
       },
       {
         "name": "type_id"
       },
       {
         "name": "unit_price"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "client_id"
+      },
+      {
+        "name": "is_buy"
+      },
+      {
+        "name": "journal_ref_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/{division}/transactions/",
@@ -2918,17 +3338,24 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Only show journal entries happened before the transaction referenced by this id",
         "in": "query",
         "name": "from_id",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -2945,9 +3372,9 @@ ENDPOINTS = {
     "path": "/v1/dogma/attributes/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -2998,9 +3425,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3010,9 +3437,6 @@ ENDPOINTS = {
   "dogma_dynamic_items_type_item": {
     "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
     "headers": [
-      {
-        "name": "created_by"
-      },
       {
         "name": "dogma_attributes",
         "sub_headers": [
@@ -3028,10 +3452,13 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "mutator_type_id"
+        "name": "created_by"
       },
       {
         "name": "source_type_id"
+      },
+      {
+        "name": "mutator_type_id"
       }
     ],
     "path": "/v1/dogma/dynamic/items/{type_id}/{item_id}/",
@@ -3051,9 +3478,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3070,9 +3497,9 @@ ENDPOINTS = {
     "path": "/v1/dogma/effects/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3083,6 +3510,9 @@ ENDPOINTS = {
     "description": "Return details about a fleet",
     "headers": [
       {
+        "name": "motd"
+      },
+      {
         "name": "is_free_move"
       },
       {
@@ -3090,9 +3520,6 @@ ENDPOINTS = {
       },
       {
         "name": "is_voice_enabled"
-      },
-      {
-        "name": "motd"
       }
     ],
     "path": "/v1/fleets/{fleet_id}/",
@@ -3105,9 +3532,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3122,7 +3556,13 @@ ENDPOINTS = {
         "name": "character_id"
       },
       {
-        "name": "join_time"
+        "name": "ship_type_id"
+      },
+      {
+        "name": "wing_id"
+      },
+      {
+        "name": "squad_id"
       },
       {
         "name": "role"
@@ -3131,22 +3571,16 @@ ENDPOINTS = {
         "name": "role_name"
       },
       {
-        "name": "ship_type_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "squad_id"
-      },
-      {
-        "name": "station_id"
+        "name": "join_time"
       },
       {
         "name": "takes_fleet_warp"
       },
       {
-        "name": "wing_id"
+        "name": "solar_system_id"
+      },
+      {
+        "name": "station_id"
       }
     ],
     "path": "/v1/fleets/{fleet_id}/members/",
@@ -3159,23 +3593,23 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3187,10 +3621,10 @@ ENDPOINTS = {
     "description": "Return information about wings in a fleet",
     "headers": [
       {
-        "name": "id"
+        "name": "name"
       },
       {
-        "name": "name"
+        "name": "id"
       },
       {
         "name": "squads",
@@ -3210,23 +3644,23 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3257,9 +3691,9 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3289,9 +3723,9 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/characters/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3321,9 +3755,9 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/corporations/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3337,18 +3771,18 @@ ENDPOINTS = {
         "name": "faction_id"
       },
       {
+        "name": "pilots"
+      },
+      {
+        "name": "systems_controlled"
+      },
+      {
         "name": "kills",
         "sub_headers": [
           "last_week",
           "total",
           "yesterday"
         ]
-      },
-      {
-        "name": "pilots"
-      },
-      {
-        "name": "systems_controlled"
       },
       {
         "name": "victory_points",
@@ -3362,9 +3796,9 @@ ENDPOINTS = {
     "path": "/v1/fw/stats/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3375,7 +3809,7 @@ ENDPOINTS = {
     "description": "An overview of the current ownership of faction warfare solar systems",
     "headers": [
       {
-        "name": "contested"
+        "name": "solar_system_id"
       },
       {
         "name": "occupier_faction_id"
@@ -3384,21 +3818,21 @@ ENDPOINTS = {
         "name": "owner_faction_id"
       },
       {
-        "name": "solar_system_id"
-      },
-      {
         "name": "victory_points"
       },
       {
         "name": "victory_points_threshold"
+      },
+      {
+        "name": "contested"
       }
     ],
     "path": "/v1/fw/systems/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3409,18 +3843,18 @@ ENDPOINTS = {
     "description": "Data about which NPC factions are at war",
     "headers": [
       {
-        "name": "against_id"
+        "name": "faction_id"
       },
       {
-        "name": "faction_id"
+        "name": "against_id"
       }
     ],
     "path": "/v1/fw/wars/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3431,39 +3865,39 @@ ENDPOINTS = {
     "description": "Return a list of current incursions",
     "headers": [
       {
-        "name": "constellation_id"
+        "name": "type"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "influence"
+      },
+      {
+        "name": "has_boss"
       },
       {
         "name": "faction_id"
       },
       {
-        "name": "has_boss"
+        "name": "constellation_id"
+      },
+      {
+        "name": "staging_solar_system_id"
       },
       {
         "name": "infested_solar_systems",
         "sub_headers": [
           "solar_systems"
         ]
-      },
-      {
-        "name": "influence"
-      },
-      {
-        "name": "staging_solar_system_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "type"
       }
     ],
     "path": "/v1/incursions/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3480,24 +3914,24 @@ ENDPOINTS = {
         "name": "owner_id"
       },
       {
-        "name": "region_id"
+        "name": "type_id"
       },
       {
         "name": "solar_system_id"
       },
       {
-        "name": "tax"
+        "name": "region_id"
       },
       {
-        "name": "type_id"
+        "name": "tax"
       }
     ],
     "path": "/v1/industry/facilities/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3508,22 +3942,22 @@ ENDPOINTS = {
     "description": "Return cost indices for solar systems",
     "headers": [
       {
+        "name": "solar_system_id"
+      },
+      {
         "name": "cost_indices",
         "sub_headers": [
           "activity",
           "cost_index"
         ]
-      },
-      {
-        "name": "solar_system_id"
       }
     ],
     "path": "/v1/industry/systems/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3534,37 +3968,30 @@ ENDPOINTS = {
     "description": "Return available insurance levels for all ship types",
     "headers": [
       {
+        "name": "type_id"
+      },
+      {
         "name": "levels",
         "sub_headers": [
           "cost",
           "name",
           "payout"
         ]
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/insurance/prices/",
     "parameters": [
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3574,6 +4001,25 @@ ENDPOINTS = {
   "killmails_killmail_killmail_hash": {
     "description": "Return a single killmail from its ID and hash",
     "headers": [
+      {
+        "name": "killmail_id"
+      },
+      {
+        "name": "killmail_time"
+      },
+      {
+        "name": "victim",
+        "sub_headers": [
+          "alliance_id",
+          "character_id",
+          "corporation_id",
+          "damage_taken",
+          "faction_id",
+          "items",
+          "position",
+          "ship_type_id"
+        ]
+      },
       {
         "name": "attackers",
         "sub_headers": [
@@ -3589,29 +4035,10 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "killmail_id"
-      },
-      {
-        "name": "killmail_time"
-      },
-      {
-        "name": "moon_id"
-      },
-      {
         "name": "solar_system_id"
       },
       {
-        "name": "victim",
-        "sub_headers": [
-          "alliance_id",
-          "character_id",
-          "corporation_id",
-          "damage_taken",
-          "faction_id",
-          "items",
-          "position",
-          "ship_type_id"
-        ]
+        "name": "moon_id"
       },
       {
         "name": "war_id"
@@ -3634,9 +4061,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3647,19 +4074,19 @@ ENDPOINTS = {
     "description": "Return a list of offers from a specific corporation's loyalty store",
     "headers": [
       {
-        "name": "ak_cost"
+        "name": "offer_id"
       },
       {
-        "name": "isk_cost"
+        "name": "type_id"
+      },
+      {
+        "name": "quantity"
       },
       {
         "name": "lp_cost"
       },
       {
-        "name": "offer_id"
-      },
-      {
-        "name": "quantity"
+        "name": "isk_cost"
       },
       {
         "name": "required_items",
@@ -3669,15 +4096,15 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "type_id"
+        "name": "ak_cost"
       }
     ],
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3694,9 +4121,9 @@ ENDPOINTS = {
     "path": "/v1/markets/groups/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3707,22 +4134,22 @@ ENDPOINTS = {
     "description": "Get information on an item group",
     "headers": [
       {
-        "name": "description"
-      },
-      {
         "name": "market_group_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "parent_group_id"
+        "name": "description"
       },
       {
         "name": "types",
         "sub_headers": [
           "id_types"
         ]
+      },
+      {
+        "name": "parent_group_id"
       }
     ],
     "path": "/v1/markets/groups/{market_group_id}/",
@@ -3735,23 +4162,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3762,21 +4182,21 @@ ENDPOINTS = {
     "description": "Return a list of prices",
     "headers": [
       {
+        "name": "type_id"
+      },
+      {
         "name": "adjusted_price"
       },
       {
         "name": "average_price"
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/markets/prices/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3787,37 +4207,37 @@ ENDPOINTS = {
     "description": "Return all orders in a structure",
     "headers": [
       {
-        "name": "duration"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
         "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
       },
       {
         "name": "type_id"
       },
       {
-        "name": "volume_remain"
+        "name": "location_id"
       },
       {
         "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "range"
       }
     ],
     "path": "/v1/markets/structures/{structure_id}/",
@@ -3830,10 +4250,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -3841,6 +4261,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -3851,22 +4278,22 @@ ENDPOINTS = {
     "description": "Return a list of historical market statistics for the specified type in a region",
     "headers": [
       {
-        "name": "average"
-      },
-      {
         "name": "date"
-      },
-      {
-        "name": "highest"
-      },
-      {
-        "name": "lowest"
       },
       {
         "name": "order_count"
       },
       {
         "name": "volume"
+      },
+      {
+        "name": "highest"
+      },
+      {
+        "name": "average"
+      },
+      {
+        "name": "lowest"
       }
     ],
     "path": "/v1/markets/{region_id}/history/",
@@ -3886,9 +4313,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -3899,40 +4326,40 @@ ENDPOINTS = {
     "description": "Return a list of orders in a region",
     "headers": [
       {
-        "name": "duration"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
         "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "system_id"
       },
       {
         "name": "type_id"
       },
       {
-        "name": "volume_remain"
+        "name": "location_id"
+      },
+      {
+        "name": "system_id"
       },
       {
         "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "range"
       }
     ],
     "path": "/v1/markets/{region_id}/orders/",
@@ -3952,13 +4379,6 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
@@ -3970,6 +4390,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "type_id",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -3992,17 +4419,17 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -4018,9 +4445,9 @@ ENDPOINTS = {
     "path": "/v1/opportunities/groups/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4031,19 +4458,13 @@ ENDPOINTS = {
     "description": "Return information of an opportunities group",
     "headers": [
       {
-        "name": "connected_groups",
-        "sub_headers": [
-          "connected_groups"
-        ]
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "group_id"
       },
       {
         "name": "name"
+      },
+      {
+        "name": "description"
       },
       {
         "name": "notification"
@@ -4052,6 +4473,12 @@ ENDPOINTS = {
         "name": "required_tasks",
         "sub_headers": [
           "required_tasks"
+        ]
+      },
+      {
+        "name": "connected_groups",
+        "sub_headers": [
+          "connected_groups"
         ]
       }
     ],
@@ -4065,23 +4492,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4098,9 +4518,9 @@ ENDPOINTS = {
     "path": "/v1/opportunities/tasks/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4111,16 +4531,16 @@ ENDPOINTS = {
     "description": "Return information of an opportunities task",
     "headers": [
       {
-        "name": "description"
+        "name": "task_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "notification"
+        "name": "description"
       },
       {
-        "name": "task_id"
+        "name": "notification"
       }
     ],
     "path": "/v1/opportunities/tasks/{task_id}/",
@@ -4133,9 +4553,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4180,16 +4600,16 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "The server name you would like data from",
+        "description": "route security preference",
         "in": "query",
-        "name": "datasource",
+        "name": "flag",
         "type": "string",
         "required": false
       },
       {
-        "description": "route security preference",
-        "in": "query",
-        "name": "flag",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4200,13 +4620,25 @@ ENDPOINTS = {
     "description": "Shows sovereignty data for campaigns.",
     "headers": [
       {
-        "name": "attackers_score"
-      },
-      {
         "name": "campaign_id"
       },
       {
+        "name": "structure_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
         "name": "constellation_id"
+      },
+      {
+        "name": "event_type"
+      },
+      {
+        "name": "start_time"
+      },
+      {
+        "name": "attackers_score"
       },
       {
         "name": "defender_id"
@@ -4215,31 +4647,19 @@ ENDPOINTS = {
         "name": "defender_score"
       },
       {
-        "name": "event_type"
-      },
-      {
         "name": "participants",
         "sub_headers": [
           "alliance_id",
           "score"
         ]
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "start_time"
-      },
-      {
-        "name": "structure_id"
       }
     ],
     "path": "/v1/sovereignty/campaigns/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4250,6 +4670,9 @@ ENDPOINTS = {
     "description": "Shows sovereignty information for solar systems",
     "headers": [
       {
+        "name": "system_id"
+      },
+      {
         "name": "alliance_id"
       },
       {
@@ -4257,17 +4680,14 @@ ENDPOINTS = {
       },
       {
         "name": "faction_id"
-      },
-      {
-        "name": "system_id"
       }
     ],
     "path": "/v1/sovereignty/map/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4302,9 +4722,9 @@ ENDPOINTS = {
     "path": "/v1/sovereignty/structures/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4315,13 +4735,13 @@ ENDPOINTS = {
     "description": "EVE Server status",
     "headers": [
       {
+        "name": "start_time"
+      },
+      {
         "name": "players"
       },
       {
         "name": "server_version"
-      },
-      {
-        "name": "start_time"
       },
       {
         "name": "vip"
@@ -4330,9 +4750,9 @@ ENDPOINTS = {
     "path": "/v1/status/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4343,6 +4763,12 @@ ENDPOINTS = {
     "description": "Get all character ancestries",
     "headers": [
       {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      },
+      {
         "name": "bloodline_id"
       },
       {
@@ -4352,35 +4778,22 @@ ENDPOINTS = {
         "name": "icon_id"
       },
       {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      },
-      {
         "name": "short_description"
       }
     ],
     "path": "/v1/universe/ancestries/",
     "parameters": [
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4415,9 +4828,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4431,25 +4844,10 @@ ENDPOINTS = {
         "name": "bloodline_id"
       },
       {
-        "name": "charisma"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "intelligence"
-      },
-      {
-        "name": "memory"
-      },
-      {
         "name": "name"
       },
       {
-        "name": "perception"
+        "name": "description"
       },
       {
         "name": "race_id"
@@ -4458,29 +4856,37 @@ ENDPOINTS = {
         "name": "ship_type_id"
       },
       {
+        "name": "corporation_id"
+      },
+      {
+        "name": "perception"
+      },
+      {
         "name": "willpower"
+      },
+      {
+        "name": "charisma"
+      },
+      {
+        "name": "memory"
+      },
+      {
+        "name": "intelligence"
       }
     ],
     "path": "/v1/universe/bloodlines/",
     "parameters": [
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4497,9 +4903,9 @@ ENDPOINTS = {
     "path": "/v1/universe/categories/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4513,16 +4919,16 @@ ENDPOINTS = {
         "name": "category_id"
       },
       {
-        "name": "groups",
-        "sub_headers": [
-          "id_groups"
-        ]
-      },
-      {
         "name": "name"
       },
       {
         "name": "published"
+      },
+      {
+        "name": "groups",
+        "sub_headers": [
+          "id_groups"
+        ]
       }
     ],
     "path": "/v1/universe/categories/{category_id}/",
@@ -4535,23 +4941,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4568,9 +4967,9 @@ ENDPOINTS = {
     "path": "/v1/universe/constellations/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4614,23 +5013,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4647,9 +5039,9 @@ ENDPOINTS = {
     "path": "/v1/universe/graphics/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4660,13 +5052,13 @@ ENDPOINTS = {
     "description": "Get information on a graphic",
     "headers": [
       {
+        "name": "graphic_id"
+      },
+      {
         "name": "collision_file"
       },
       {
         "name": "graphic_file"
-      },
-      {
-        "name": "graphic_id"
       },
       {
         "name": "icon_folder"
@@ -4694,9 +5086,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4713,17 +5105,17 @@ ENDPOINTS = {
     "path": "/v1/universe/groups/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -4733,9 +5125,6 @@ ENDPOINTS = {
     "description": "Get information on an item group",
     "headers": [
       {
-        "name": "category_id"
-      },
-      {
         "name": "group_id"
       },
       {
@@ -4743,6 +5132,9 @@ ENDPOINTS = {
       },
       {
         "name": "published"
+      },
+      {
+        "name": "category_id"
       },
       {
         "name": "types",
@@ -4761,23 +5153,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4815,9 +5200,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4828,10 +5213,13 @@ ENDPOINTS = {
     "description": "Get information on a planet",
     "headers": [
       {
+        "name": "planet_id"
+      },
+      {
         "name": "name"
       },
       {
-        "name": "planet_id"
+        "name": "type_id"
       },
       {
         "name": "position",
@@ -4843,9 +5231,6 @@ ENDPOINTS = {
       },
       {
         "name": "system_id"
-      },
-      {
-        "name": "type_id"
       }
     ],
     "path": "/v1/universe/planets/{planet_id}/",
@@ -4858,9 +5243,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4871,38 +5256,31 @@ ENDPOINTS = {
     "description": "Get a list of character races",
     "headers": [
       {
-        "name": "alliance_id"
-      },
-      {
-        "name": "description"
+        "name": "race_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "race_id"
+        "name": "description"
+      },
+      {
+        "name": "alliance_id"
       }
     ],
     "path": "/v1/universe/races/",
     "parameters": [
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4919,9 +5297,9 @@ ENDPOINTS = {
     "path": "/v1/universe/regions/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4932,6 +5310,12 @@ ENDPOINTS = {
     "description": "Get information on a region",
     "headers": [
       {
+        "name": "region_id"
+      },
+      {
+        "name": "name"
+      },
+      {
         "name": "constellations",
         "sub_headers": [
           "id_constellations"
@@ -4939,12 +5323,6 @@ ENDPOINTS = {
       },
       {
         "name": "description"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "region_id"
       }
     ],
     "path": "/v1/universe/regions/{region_id}/",
@@ -4957,23 +5335,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -4984,10 +5355,10 @@ ENDPOINTS = {
     "description": "Get information on a planetary factory schematic",
     "headers": [
       {
-        "name": "cycle_time"
+        "name": "schematic_name"
       },
       {
-        "name": "schematic_name"
+        "name": "cycle_time"
       }
     ],
     "path": "/v1/universe/schematics/{schematic_id}/",
@@ -5000,9 +5371,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5013,14 +5384,13 @@ ENDPOINTS = {
     "description": "Get information on a stargate",
     "headers": [
       {
-        "name": "destination",
-        "sub_headers": [
-          "stargate_id",
-          "system_id"
-        ]
+        "name": "stargate_id"
       },
       {
         "name": "name"
+      },
+      {
+        "name": "type_id"
       },
       {
         "name": "position",
@@ -5031,13 +5401,14 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "stargate_id"
-      },
-      {
         "name": "system_id"
       },
       {
-        "name": "type_id"
+        "name": "destination",
+        "sub_headers": [
+          "stargate_id",
+          "system_id"
+        ]
       }
     ],
     "path": "/v1/universe/stargates/{stargate_id}/",
@@ -5050,9 +5421,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5063,19 +5434,19 @@ ENDPOINTS = {
     "description": "Get information on a star",
     "headers": [
       {
+        "name": "name"
+      },
+      {
+        "name": "type_id"
+      },
+      {
         "name": "age"
       },
       {
         "name": "luminosity"
       },
       {
-        "name": "name"
-      },
-      {
         "name": "radius"
-      },
-      {
-        "name": "solar_system_id"
       },
       {
         "name": "spectral_class"
@@ -5084,7 +5455,7 @@ ENDPOINTS = {
         "name": "temperature"
       },
       {
-        "name": "type_id"
+        "name": "solar_system_id"
       }
     ],
     "path": "/v1/universe/stars/{star_id}/",
@@ -5097,9 +5468,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5116,9 +5487,9 @@ ENDPOINTS = {
     "path": "/v1/universe/structures/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5132,15 +5503,15 @@ ENDPOINTS = {
         "name": "name"
       },
       {
+        "name": "solar_system_id"
+      },
+      {
         "name": "position",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
-      },
-      {
-        "name": "solar_system_id"
       },
       {
         "name": "type_id"
@@ -5156,9 +5527,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5170,18 +5548,18 @@ ENDPOINTS = {
     "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
     "headers": [
       {
-        "name": "ship_jumps"
+        "name": "system_id"
       },
       {
-        "name": "system_id"
+        "name": "ship_jumps"
       }
     ],
     "path": "/v1/universe/system_jumps/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5198,9 +5576,9 @@ ENDPOINTS = {
     "path": "/v1/universe/systems/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5217,17 +5595,17 @@ ENDPOINTS = {
     "path": "/v1/universe/types/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5243,17 +5621,17 @@ ENDPOINTS = {
     "path": "/v1/wars/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Only return wars with ID smaller than this.",
         "in": "query",
         "name": "max_war_id",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5263,7 +5641,28 @@ ENDPOINTS = {
     "description": "Return details about a war",
     "headers": [
       {
+        "name": "id"
+      },
+      {
+        "name": "declared"
+      },
+      {
+        "name": "mutual"
+      },
+      {
+        "name": "open_for_allies"
+      },
+      {
         "name": "aggressor",
+        "sub_headers": [
+          "alliance_id",
+          "corporation_id",
+          "isk_destroyed",
+          "ships_killed"
+        ]
+      },
+      {
+        "name": "defender",
         "sub_headers": [
           "alliance_id",
           "corporation_id",
@@ -5279,28 +5678,7 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "declared"
-      },
-      {
-        "name": "defender",
-        "sub_headers": [
-          "alliance_id",
-          "corporation_id",
-          "isk_destroyed",
-          "ships_killed"
-        ]
-      },
-      {
         "name": "finished"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "mutual"
-      },
-      {
-        "name": "open_for_allies"
       },
       {
         "name": "retracted"
@@ -5319,9 +5697,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5332,10 +5710,10 @@ ENDPOINTS = {
     "description": "Return a list of kills related to a war",
     "headers": [
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       },
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       }
     ],
     "path": "/v1/wars/{war_id}/killmails/",
@@ -5348,17 +5726,17 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5384,9 +5762,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5397,35 +5775,28 @@ ENDPOINTS = {
     "description": "Return contacts of an alliance",
     "headers": [
       {
-        "name": "contact_id"
+        "name": "standing"
       },
       {
         "name": "contact_type"
+      },
+      {
+        "name": "contact_id"
       },
       {
         "name": "label_ids",
         "sub_headers": [
           "label_ids"
         ]
-      },
-      {
-        "name": "standing"
       }
     ],
     "path": "/v2/alliances/{alliance_id}/contacts/",
     "parameters": [
       {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -5433,6 +5804,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5446,34 +5824,34 @@ ENDPOINTS = {
         "name": "item_id"
       },
       {
-        "name": "location_flag"
+        "name": "type_id"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "material_efficiency"
+        "name": "location_flag"
       },
       {
         "name": "quantity"
       },
       {
-        "name": "runs"
-      },
-      {
         "name": "time_efficiency"
       },
       {
-        "name": "type_id"
+        "name": "material_efficiency"
+      },
+      {
+        "name": "runs"
       }
     ],
     "path": "/v2/characters/{character_id}/blueprints/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -5481,6 +5859,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5494,18 +5879,27 @@ ENDPOINTS = {
         "name": "bookmark_id"
       },
       {
+        "name": "created"
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "notes"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
         "name": "coordinates",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
       },
       {
         "name": "folder_id"
@@ -5516,24 +5910,15 @@ ENDPOINTS = {
           "item_id",
           "type_id"
         ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
       }
     ],
     "path": "/v2/characters/{character_id}/bookmarks/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -5541,6 +5926,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5560,10 +5952,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/bookmarks/folders/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -5571,6 +5963,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5581,10 +5980,13 @@ ENDPOINTS = {
     "description": "Return contacts of a character",
     "headers": [
       {
-        "name": "contact_id"
+        "name": "standing"
       },
       {
         "name": "contact_type"
+      },
+      {
+        "name": "contact_id"
       },
       {
         "name": "is_blocked"
@@ -5597,18 +5999,15 @@ ENDPOINTS = {
         "sub_headers": [
           "label_ids"
         ]
-      },
-      {
-        "name": "standing"
       }
     ],
     "path": "/v2/characters/{character_id}/contacts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -5616,6 +6015,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -5626,10 +6032,10 @@ ENDPOINTS = {
     "description": "Return character notifications",
     "headers": [
       {
-        "name": "is_read"
+        "name": "notification_id"
       },
       {
-        "name": "notification_id"
+        "name": "type"
       },
       {
         "name": "sender_id"
@@ -5638,21 +6044,28 @@ ENDPOINTS = {
         "name": "sender_type"
       },
       {
-        "name": "text"
-      },
-      {
         "name": "timestamp"
       },
       {
-        "name": "type"
+        "name": "is_read"
+      },
+      {
+        "name": "text"
       }
     ],
     "path": "/v2/characters/{character_id}/notifications/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5664,6 +6077,9 @@ ENDPOINTS = {
     "description": "Checks if the character is currently online",
     "headers": [
       {
+        "name": "online"
+      },
+      {
         "name": "last_login"
       },
       {
@@ -5671,17 +6087,21 @@ ENDPOINTS = {
       },
       {
         "name": "logins"
-      },
-      {
-        "name": "online"
       }
     ],
     "path": "/v2/characters/{character_id}/online/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5693,7 +6113,37 @@ ENDPOINTS = {
     "description": "List open market orders placed by a character",
     "headers": [
       {
+        "name": "is_corporation"
+      },
+      {
         "name": "duration"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "issued"
       },
       {
         "name": "escrow"
@@ -5702,45 +6152,22 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
-        "name": "is_corporation"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
       }
     ],
     "path": "/v2/characters/{character_id}/orders/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5767,9 +6194,9 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/portrait/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5807,9 +6234,16 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/roles/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5821,22 +6255,22 @@ ENDPOINTS = {
     "description": "List the configured skill queue for the given character",
     "headers": [
       {
-        "name": "finish_date"
+        "name": "skill_id"
       },
       {
         "name": "finished_level"
+      },
+      {
+        "name": "queue_position"
+      },
+      {
+        "name": "finish_date"
       },
       {
         "name": "level_end_sp"
       },
       {
         "name": "level_start_sp"
-      },
-      {
-        "name": "queue_position"
-      },
-      {
-        "name": "skill_id"
       },
       {
         "name": "start_date"
@@ -5848,9 +6282,16 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/skillqueue/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -5861,6 +6302,9 @@ ENDPOINTS = {
   "characters_character_stats": {
     "description": "Returns aggregate yearly stats for a character",
     "headers": [
+      {
+        "name": "year"
+      },
       {
         "name": "character",
         "sub_headers": [
@@ -6211,17 +6655,21 @@ ENDPOINTS = {
           "warps_to_scan_result",
           "warps_wormhole"
         ]
-      },
-      {
-        "name": "year"
       }
     ],
     "path": "/v2/characters/{character_id}/stats/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6249,9 +6697,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6262,24 +6710,24 @@ ENDPOINTS = {
     "description": "Get a list of all the alliances a corporation has been a member of",
     "headers": [
       {
-        "name": "alliance_id"
-      },
-      {
-        "name": "is_deleted"
+        "name": "start_date"
       },
       {
         "name": "record_id"
       },
       {
-        "name": "start_date"
+        "name": "alliance_id"
+      },
+      {
+        "name": "is_deleted"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6293,34 +6741,34 @@ ENDPOINTS = {
         "name": "item_id"
       },
       {
-        "name": "location_flag"
+        "name": "type_id"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "material_efficiency"
+        "name": "location_flag"
       },
       {
         "name": "quantity"
       },
       {
-        "name": "runs"
-      },
-      {
         "name": "time_efficiency"
       },
       {
-        "name": "type_id"
+        "name": "material_efficiency"
+      },
+      {
+        "name": "runs"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/blueprints/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -6328,6 +6776,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -6338,10 +6793,13 @@ ENDPOINTS = {
     "description": "Return contacts of a corporation",
     "headers": [
       {
-        "name": "contact_id"
+        "name": "standing"
       },
       {
         "name": "contact_type"
+      },
+      {
+        "name": "contact_id"
       },
       {
         "name": "is_watched"
@@ -6351,18 +6809,15 @@ ENDPOINTS = {
         "sub_headers": [
           "label_ids"
         ]
-      },
-      {
-        "name": "standing"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/contacts/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -6370,6 +6825,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -6380,10 +6842,7 @@ ENDPOINTS = {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
     "headers": [
       {
-        "name": "action"
-      },
-      {
-        "name": "character_id"
+        "name": "logged_at"
       },
       {
         "name": "container_id"
@@ -6392,13 +6851,16 @@ ENDPOINTS = {
         "name": "container_type_id"
       },
       {
-        "name": "location_flag"
+        "name": "character_id"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "logged_at"
+        "name": "action"
+      },
+      {
+        "name": "location_flag"
       },
       {
         "name": "new_config_bitmask"
@@ -6419,10 +6881,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/containers/logs/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -6430,6 +6892,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -6443,52 +6912,52 @@ ENDPOINTS = {
         "name": "duration"
       },
       {
+        "name": "wallet_division"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "issued"
+      },
+      {
         "name": "escrow"
       },
       {
         "name": "is_buy_order"
       },
       {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "wallet_division"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/orders/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -6496,6 +6965,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -6506,7 +6982,28 @@ ENDPOINTS = {
     "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
     "headers": [
       {
+        "name": "structure_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
         "name": "corporation_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "profile_id"
+      },
+      {
+        "name": "reinforce_weekday"
+      },
+      {
+        "name": "reinforce_hour"
+      },
+      {
+        "name": "state"
       },
       {
         "name": "fuel_expires"
@@ -6521,23 +7018,11 @@ ENDPOINTS = {
         "name": "next_reinforce_weekday"
       },
       {
-        "name": "profile_id"
-      },
-      {
-        "name": "reinforce_hour"
-      },
-      {
-        "name": "reinforce_weekday"
-      },
-      {
         "name": "services",
         "sub_headers": [
           "name",
           "state"
         ]
-      },
-      {
-        "name": "state"
       },
       {
         "name": "state_timer_end"
@@ -6546,34 +7031,11 @@ ENDPOINTS = {
         "name": "state_timer_start"
       },
       {
-        "name": "structure_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
         "name": "unanchors_at"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/structures/",
     "parameters": [
-      {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
@@ -6582,10 +7044,24 @@ ENDPOINTS = {
         "required": false
       },
       {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -6596,43 +7072,28 @@ ENDPOINTS = {
     "description": "Get information on a dogma effect",
     "headers": [
       {
-        "name": "description"
-      },
-      {
-        "name": "disallow_auto_repeat"
-      },
-      {
-        "name": "discharge_attribute_id"
-      },
-      {
-        "name": "display_name"
-      },
-      {
-        "name": "duration_attribute_id"
-      },
-      {
-        "name": "effect_category"
-      },
-      {
         "name": "effect_id"
       },
       {
-        "name": "electronic_chance"
+        "name": "description"
       },
       {
-        "name": "falloff_attribute_id"
+        "name": "range_chance"
       },
       {
-        "name": "icon_id"
+        "name": "range_attribute_id"
       },
       {
-        "name": "is_assistance"
+        "name": "published"
       },
       {
-        "name": "is_offensive"
+        "name": "pre_expression"
       },
       {
-        "name": "is_warp_safe"
+        "name": "post_expression"
+      },
+      {
+        "name": "name"
       },
       {
         "name": "modifiers",
@@ -6646,22 +7107,37 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "name"
+        "name": "is_warp_safe"
       },
       {
-        "name": "post_expression"
+        "name": "is_offensive"
       },
       {
-        "name": "pre_expression"
+        "name": "is_assistance"
       },
       {
-        "name": "published"
+        "name": "icon_id"
       },
       {
-        "name": "range_attribute_id"
+        "name": "falloff_attribute_id"
       },
       {
-        "name": "range_chance"
+        "name": "electronic_chance"
+      },
+      {
+        "name": "effect_category"
+      },
+      {
+        "name": "duration_attribute_id"
+      },
+      {
+        "name": "display_name"
+      },
+      {
+        "name": "discharge_attribute_id"
+      },
+      {
+        "name": "disallow_auto_repeat"
       },
       {
         "name": "tracking_speed_attribute_id"
@@ -6677,9 +7153,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6767,20 +7243,6 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
@@ -6793,6 +7255,13 @@ ENDPOINTS = {
         "name": "strict",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
       }
     ],
     "summary": "A list of search results"
@@ -6801,56 +7270,49 @@ ENDPOINTS = {
     "description": "Get a list of factions",
     "headers": [
       {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "faction_id"
-      },
-      {
-        "name": "is_unique"
-      },
-      {
-        "name": "militia_corporation_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "size_factor"
+        "name": "description"
       },
       {
-        "name": "solar_system_id"
+        "name": "size_factor"
       },
       {
         "name": "station_count"
       },
       {
         "name": "station_system_count"
+      },
+      {
+        "name": "is_unique"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "militia_corporation_id"
+      },
+      {
+        "name": "solar_system_id"
       }
     ],
     "path": "/v2/universe/factions/",
     "parameters": [
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6861,16 +7323,13 @@ ENDPOINTS = {
     "description": "Get information on a station",
     "headers": [
       {
-        "name": "max_dockable_ship_volume"
+        "name": "station_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "office_rental_cost"
-      },
-      {
-        "name": "owner"
+        "name": "type_id"
       },
       {
         "name": "position",
@@ -6881,7 +7340,7 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "race_id"
+        "name": "system_id"
       },
       {
         "name": "reprocessing_efficiency"
@@ -6890,19 +7349,22 @@ ENDPOINTS = {
         "name": "reprocessing_stations_take"
       },
       {
+        "name": "max_dockable_ship_volume"
+      },
+      {
+        "name": "office_rental_cost"
+      },
+      {
         "name": "services",
         "sub_headers": [
           "id_services"
         ]
       },
       {
-        "name": "station_id"
+        "name": "owner"
       },
       {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
+        "name": "race_id"
       }
     ],
     "path": "/v2/universe/stations/{station_id}/",
@@ -6915,9 +7377,9 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6928,24 +7390,24 @@ ENDPOINTS = {
     "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
     "headers": [
       {
-        "name": "npc_kills"
-      },
-      {
-        "name": "pod_kills"
+        "name": "system_id"
       },
       {
         "name": "ship_kills"
       },
       {
-        "name": "system_id"
+        "name": "npc_kills"
+      },
+      {
+        "name": "pod_kills"
       }
     ],
     "path": "/v2/universe/system_kills/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -6956,10 +7418,16 @@ ENDPOINTS = {
     "description": "Public information about an alliance",
     "headers": [
       {
-        "name": "creator_corporation_id"
+        "name": "name"
       },
       {
         "name": "creator_id"
+      },
+      {
+        "name": "creator_corporation_id"
+      },
+      {
+        "name": "ticker"
       },
       {
         "name": "date_founded"
@@ -6969,27 +7437,14 @@ ENDPOINTS = {
       },
       {
         "name": "faction_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "ticker"
       }
     ],
     "path": "/v3/alliances/{alliance_id}/",
     "parameters": [
       {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7000,16 +7455,10 @@ ENDPOINTS = {
     "description": "Return a list of the characters assets",
     "headers": [
       {
-        "name": "is_blueprint_copy"
+        "name": "type_id"
       },
       {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
+        "name": "quantity"
       },
       {
         "name": "location_id"
@@ -7018,19 +7467,25 @@ ENDPOINTS = {
         "name": "location_type"
       },
       {
-        "name": "quantity"
+        "name": "item_id"
       },
       {
-        "name": "type_id"
+        "name": "location_flag"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "is_blueprint_copy"
       }
     ],
     "path": "/v3/characters/{character_id}/assets/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -7038,6 +7493,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -7048,16 +7510,7 @@ ENDPOINTS = {
     "description": "Get all the information for a specific event",
     "headers": [
       {
-        "name": "date"
-      },
-      {
-        "name": "duration"
-      },
-      {
         "name": "event_id"
-      },
-      {
-        "name": "importance"
       },
       {
         "name": "owner_id"
@@ -7066,7 +7519,16 @@ ENDPOINTS = {
         "name": "owner_name"
       },
       {
-        "name": "owner_type"
+        "name": "date"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "importance"
       },
       {
         "name": "response"
@@ -7075,7 +7537,7 @@ ENDPOINTS = {
         "name": "text"
       },
       {
-        "name": "title"
+        "name": "owner_type"
       }
     ],
     "path": "/v3/characters/{character_id}/calendar/{event_id}/",
@@ -7088,9 +7550,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7102,13 +7571,6 @@ ENDPOINTS = {
     "description": "A list of the character's clones",
     "headers": [
       {
-        "name": "home_location",
-        "sub_headers": [
-          "location_id",
-          "location_type"
-        ]
-      },
-      {
         "name": "jump_clones",
         "sub_headers": [
           "implants",
@@ -7116,6 +7578,13 @@ ENDPOINTS = {
           "location_id",
           "location_type",
           "name"
+        ]
+      },
+      {
+        "name": "home_location",
+        "sub_headers": [
+          "location_id",
+          "location_type"
         ]
       },
       {
@@ -7128,9 +7597,16 @@ ENDPOINTS = {
     "path": "/v3/characters/{character_id}/clones/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7157,9 +7633,16 @@ ENDPOINTS = {
     "path": "/v3/characters/{character_id}/mail/labels/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7216,9 +7699,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7313,20 +7803,6 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
@@ -7339,6 +7815,20 @@ ENDPOINTS = {
         "name": "strict",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-search.search_structures.v1",
@@ -7348,16 +7838,10 @@ ENDPOINTS = {
     "description": "Return a list of the corporation assets",
     "headers": [
       {
-        "name": "is_blueprint_copy"
+        "name": "type_id"
       },
       {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
+        "name": "quantity"
       },
       {
         "name": "location_id"
@@ -7366,19 +7850,25 @@ ENDPOINTS = {
         "name": "location_type"
       },
       {
-        "name": "quantity"
+        "name": "item_id"
       },
       {
-        "name": "type_id"
+        "name": "location_flag"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "is_blueprint_copy"
       }
     ],
     "path": "/v3/corporations/{corporation_id}/assets/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -7386,6 +7876,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -7402,9 +7899,16 @@ ENDPOINTS = {
     "path": "/v3/corporations/{corporation_id}/members/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7415,6 +7919,18 @@ ENDPOINTS = {
   "corporations_corporation_wallets_division_journal": {
     "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
     "headers": [
+      {
+        "name": "date"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "description"
+      },
       {
         "name": "amount"
       },
@@ -7428,22 +7944,10 @@ ENDPOINTS = {
         "name": "context_id_type"
       },
       {
-        "name": "date"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "first_party_id"
       },
       {
-        "name": "id"
-      },
-      {
         "name": "reason"
-      },
-      {
-        "name": "ref_type"
       },
       {
         "name": "second_party_id"
@@ -7465,10 +7969,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -7476,6 +7980,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -7486,18 +7997,13 @@ ENDPOINTS = {
     "description": "Get information on a solar system. NOTE: This route does not work with abyssal systems.",
     "headers": [
       {
-        "name": "constellation_id"
+        "name": "star_id"
+      },
+      {
+        "name": "system_id"
       },
       {
         "name": "name"
-      },
-      {
-        "name": "planets",
-        "sub_headers": [
-          "asteroid_belts",
-          "moons",
-          "planet_id"
-        ]
       },
       {
         "name": "position",
@@ -7508,13 +8014,21 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "security_class"
-      },
-      {
         "name": "security_status"
       },
       {
-        "name": "star_id"
+        "name": "constellation_id"
+      },
+      {
+        "name": "planets",
+        "sub_headers": [
+          "asteroid_belts",
+          "moons",
+          "planet_id"
+        ]
+      },
+      {
+        "name": "security_class"
       },
       {
         "name": "stargates",
@@ -7527,9 +8041,6 @@ ENDPOINTS = {
         "sub_headers": [
           "id_stations"
         ]
-      },
-      {
-        "name": "system_id"
       }
     ],
     "path": "/v3/universe/systems/{system_id}/",
@@ -7542,23 +8053,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7569,10 +8073,22 @@ ENDPOINTS = {
     "description": "Get information on a type",
     "headers": [
       {
-        "name": "capacity"
+        "name": "type_id"
+      },
+      {
+        "name": "name"
       },
       {
         "name": "description"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "group_id"
+      },
+      {
+        "name": "capacity"
       },
       {
         "name": "dogma_attributes",
@@ -7592,9 +8108,6 @@ ENDPOINTS = {
         "name": "graphic_id"
       },
       {
-        "name": "group_id"
-      },
-      {
         "name": "icon_id"
       },
       {
@@ -7604,22 +8117,13 @@ ENDPOINTS = {
         "name": "mass"
       },
       {
-        "name": "name"
-      },
-      {
         "name": "packaged_volume"
       },
       {
         "name": "portion_size"
       },
       {
-        "name": "published"
-      },
-      {
         "name": "radius"
-      },
-      {
-        "name": "type_id"
       },
       {
         "name": "volume"
@@ -7635,23 +8139,16 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Language to use in the response",
-        "in": "header",
-        "name": "Accept-Language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
-        "required": false
-      },
-      {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7662,19 +8159,28 @@ ENDPOINTS = {
     "description": "Public information about a character",
     "headers": [
       {
-        "name": "alliance_id"
-      },
-      {
-        "name": "ancestry_id"
+        "name": "corporation_id"
       },
       {
         "name": "birthday"
       },
       {
+        "name": "name"
+      },
+      {
+        "name": "gender"
+      },
+      {
+        "name": "race_id"
+      },
+      {
         "name": "bloodline_id"
       },
       {
-        "name": "corporation_id"
+        "name": "alliance_id"
+      },
+      {
+        "name": "ancestry_id"
       },
       {
         "name": "description"
@@ -7683,24 +8189,15 @@ ENDPOINTS = {
         "name": "faction_id"
       },
       {
-        "name": "gender"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "race_id"
-      },
-      {
         "name": "security_status"
       }
     ],
     "path": "/v4/characters/{character_id}/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7729,9 +8226,16 @@ ENDPOINTS = {
     "path": "/v4/characters/{character_id}/skills/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }
@@ -7742,6 +8246,18 @@ ENDPOINTS = {
   "characters_character_wallet_journal": {
     "description": "Retrieve the given character's wallet journal going 30 days back",
     "headers": [
+      {
+        "name": "date"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "description"
+      },
       {
         "name": "amount"
       },
@@ -7755,22 +8271,10 @@ ENDPOINTS = {
         "name": "context_id_type"
       },
       {
-        "name": "date"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "first_party_id"
       },
       {
-        "name": "id"
-      },
-      {
         "name": "reason"
-      },
-      {
-        "name": "ref_type"
       },
       {
         "name": "second_party_id"
@@ -7785,10 +8289,10 @@ ENDPOINTS = {
     "path": "/v4/characters/{character_id}/wallet/journal/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
-        "type": "string",
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
         "required": false
       },
       {
@@ -7796,6 +8300,13 @@ ENDPOINTS = {
         "in": "query",
         "name": "page",
         "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
         "required": false
       }
     ],
@@ -7806,13 +8317,25 @@ ENDPOINTS = {
     "description": "Public information about a corporation",
     "headers": [
       {
-        "name": "alliance_id"
+        "name": "name"
+      },
+      {
+        "name": "ticker"
+      },
+      {
+        "name": "member_count"
       },
       {
         "name": "ceo_id"
       },
       {
+        "name": "tax_rate"
+      },
+      {
         "name": "creator_id"
+      },
+      {
+        "name": "alliance_id"
       },
       {
         "name": "date_founded"
@@ -7827,19 +8350,7 @@ ENDPOINTS = {
         "name": "home_station_id"
       },
       {
-        "name": "member_count"
-      },
-      {
-        "name": "name"
-      },
-      {
         "name": "shares"
-      },
-      {
-        "name": "tax_rate"
-      },
-      {
-        "name": "ticker"
       },
       {
         "name": "url"
@@ -7848,9 +8359,9 @@ ENDPOINTS = {
     "path": "/v4/corporations/{corporation_id}/",
     "parameters": [
       {
-        "description": "The server name you would like data from",
-        "in": "query",
-        "name": "datasource",
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
         "type": "string",
         "required": false
       }

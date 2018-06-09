@@ -170,6 +170,7 @@ If you really wanted you could add in logic like `if (endPage === page && a.leng
 ## Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#0016
+Discord Server: https://discordapp.com/invite/eEAH2et
   
 ## Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 

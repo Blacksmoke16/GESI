@@ -2,6 +2,7 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
+// https://discord.gg/eEAH2et
 APP_VERSION = '6.0.0';
 BASE_URL = 'https://esi.evetech.net'
 
