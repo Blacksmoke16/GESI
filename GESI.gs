@@ -105,15 +105,14 @@ function parseData_(endpoint_name, params) {
      data.forEach(function(obj) {
        var temp = [];
        endpoint.headers.forEach(function(header) {
-         temp.push(obj[header.name]);
+         temp.push(Array.isArray(header.name) ? JSON.stringify(data[header.name]) : data[header.name]);
        });
        result.push(temp);
      });
  } else if (typeof(data) === 'object') {
      var temp = [];
      endpoint.headers.forEach(function(header) {
-       dp = data[header.name];
-       temp.push(typeof(dp) === 'object' ? JSON.stringify(dp) : dp);
+       temp.push(typeof(data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]);
      });
      result.push(temp);
  } else {
