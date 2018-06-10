@@ -107,6 +107,7 @@ module EveSwagger
           endpoint_data.parameters.each { |p| str << "* @param {#{p.type}} #{p.name} #{p.required ? "(Required)" : ""} #{p.description}\n" }
           str << "* @return #{endpoint_data.summary}\n"
           str << "* @customfunction\n"
+          str << "*/\n"
           str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| p.name }.join(", ")}) {\n"
           endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw '#{p.name} is required';\n" if p.required }
           str << "  return parseData_(arguments.callee.name,{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"

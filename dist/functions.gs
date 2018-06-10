@@ -3,6 +3,7 @@
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of Alliance IDs
 * @customfunction
+*/
 function alliances(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -13,6 +14,7 @@ function alliances(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of alliance contact labels
 * @customfunction
+*/
 function alliances_alliance_contacts_labels(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -22,6 +24,7 @@ function alliances_alliance_contacts_labels(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation IDs
 * @customfunction
+*/
 function alliances_alliance_corporations(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -31,6 +34,7 @@ function alliances_alliance_corporations(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Icon URLs for the given alliance id and server
 * @customfunction
+*/
 function alliances_alliance_icons(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -41,6 +45,7 @@ function alliances_alliance_icons(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of id/name associations
 * @customfunction
+*/
 function characters_names(character_ids, opt_headers) {
   if(!character_ids) throw 'character_ids is required';
   return parseData_(arguments.callee.name,{character_ids:character_ids,opt_headers:opt_headers})
@@ -52,6 +57,7 @@ function characters_names(character_ids, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of agents research information
 * @customfunction
+*/
 function characters_character_agents_research(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -62,6 +68,7 @@ function characters_character_agents_research(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Attributes of a character
 * @customfunction
+*/
 function characters_character_attributes(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -73,6 +80,7 @@ function characters_character_attributes(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A collection of event summaries
 * @customfunction
+*/
 function characters_character_calendar(from_event, name, opt_headers) {
   return parseData_(arguments.callee.name,{from_event:from_event,name:name,opt_headers:opt_headers})
 }
@@ -84,6 +92,7 @@ function characters_character_calendar(from_event, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of attendees
 * @customfunction
+*/
 function characters_character_calendar_event_attendees(event_id, name, opt_headers) {
   if(!event_id) throw 'event_id is required';
   return parseData_(arguments.callee.name,{event_id:event_id,name:name,opt_headers:opt_headers})
@@ -95,6 +104,7 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contact labels
 * @customfunction
+*/
 function characters_character_contacts_labels(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -106,6 +116,7 @@ function characters_character_contacts_labels(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contracts
 * @customfunction
+*/
 function characters_character_contracts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -117,6 +128,7 @@ function characters_character_contracts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bids
 * @customfunction
+*/
 function characters_character_contracts_contract_bids(contract_id, name, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
   return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,opt_headers:opt_headers})
@@ -129,6 +141,7 @@ function characters_character_contracts_contract_bids(contract_id, name, opt_hea
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of items in this contract
 * @customfunction
+*/
 function characters_character_contracts_contract_items(contract_id, name, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
   return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,opt_headers:opt_headers})
@@ -139,6 +152,7 @@ function characters_character_contracts_contract_items(contract_id, name, opt_he
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Corporation history for the given character
 * @customfunction
+*/
 function characters_character_corporationhistory(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -149,6 +163,7 @@ function characters_character_corporationhistory(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Jump activation and fatigue information
 * @customfunction
+*/
 function characters_character_fatigue(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -159,6 +174,7 @@ function characters_character_fatigue(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fittings
 * @customfunction
+*/
 function characters_character_fittings(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -169,6 +185,7 @@ function characters_character_fittings(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about the character's fleet
 * @customfunction
+*/
 function characters_character_fleet(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -179,6 +196,7 @@ function characters_character_fleet(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Faction warfare statistics for a given character
 * @customfunction
+*/
 function characters_character_fw_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -189,6 +207,7 @@ function characters_character_fw_stats(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of implant type ids
 * @customfunction
+*/
 function characters_character_implants(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -200,6 +219,7 @@ function characters_character_implants(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Industry jobs placed by a character
 * @customfunction
+*/
 function characters_character_industry_jobs(include_completed, name, opt_headers) {
   return parseData_(arguments.callee.name,{include_completed:include_completed,name:name,opt_headers:opt_headers})
 }
@@ -211,6 +231,7 @@ function characters_character_industry_jobs(include_completed, name, opt_headers
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of killmail IDs and hashes
 * @customfunction
+*/
 function characters_character_killmails_recent(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -221,6 +242,7 @@ function characters_character_killmails_recent(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
 * @customfunction
+*/
 function characters_character_location(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -231,6 +253,7 @@ function characters_character_location(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of loyalty points
 * @customfunction
+*/
 function characters_character_loyalty_points(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -243,6 +266,7 @@ function characters_character_loyalty_points(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The requested mail
 * @customfunction
+*/
 function characters_character_mail(labels, last_mail_id, name, opt_headers) {
   return parseData_(arguments.callee.name,{labels:labels,last_mail_id:last_mail_id,name:name,opt_headers:opt_headers})
 }
@@ -253,6 +277,7 @@ function characters_character_mail(labels, last_mail_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mailing lists
 * @customfunction
+*/
 function characters_character_mail_lists(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -264,6 +289,7 @@ function characters_character_mail_lists(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Contents of a mail
 * @customfunction
+*/
 function characters_character_mail_mail(mail_id, name, opt_headers) {
   if(!mail_id) throw 'mail_id is required';
   return parseData_(arguments.callee.name,{mail_id:mail_id,name:name,opt_headers:opt_headers})
@@ -275,6 +301,7 @@ function characters_character_mail_mail(mail_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of medals
 * @customfunction
+*/
 function characters_character_medals(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -286,6 +313,7 @@ function characters_character_medals(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mining ledger of a character
 * @customfunction
+*/
 function characters_character_mining(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -296,6 +324,7 @@ function characters_character_mining(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contact notifications
 * @customfunction
+*/
 function characters_character_notifications_contacts(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -306,6 +335,7 @@ function characters_character_notifications_contacts(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of opportunities task ids
 * @customfunction
+*/
 function characters_character_opportunities(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -317,6 +347,7 @@ function characters_character_opportunities(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Expired and cancelled market orders placed by a character
 * @customfunction
+*/
 function characters_character_orders_history(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -327,6 +358,7 @@ function characters_character_orders_history(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of colonies
 * @customfunction
+*/
 function characters_character_planets(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -337,6 +369,7 @@ function characters_character_planets(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Get the current ship type, name and id
 * @customfunction
+*/
 function characters_character_ship(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -347,6 +380,7 @@ function characters_character_ship(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of standings
 * @customfunction
+*/
 function characters_character_standings(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -357,6 +391,7 @@ function characters_character_standings(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of titles
 * @customfunction
+*/
 function characters_character_titles(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -367,6 +402,7 @@ function characters_character_titles(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet balance
 * @customfunction
+*/
 function characters_character_wallet(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -378,6 +414,7 @@ function characters_character_wallet(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet transactions
 * @customfunction
+*/
 function characters_character_wallet_transactions(from_id, name, opt_headers) {
   return parseData_(arguments.callee.name,{from_id:from_id,name:name,opt_headers:opt_headers})
 }
@@ -389,6 +426,7 @@ function characters_character_wallet_transactions(from_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of chunk timers
 * @customfunction
+*/
 function corporation_corporation_mining_extractions(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -400,6 +438,7 @@ function corporation_corporation_mining_extractions(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Observer list of a corporation
 * @customfunction
+*/
 function corporation_corporation_mining_observers(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -412,6 +451,7 @@ function corporation_corporation_mining_observers(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mining ledger of an observer
 * @customfunction
+*/
 function corporation_corporation_mining_observers_observer(observer_id, name, page, opt_headers) {
   if(!observer_id) throw 'observer_id is required';
   return parseData_(arguments.callee.name,{observer_id:observer_id,name:name,page:page,opt_headers:opt_headers})
@@ -422,6 +462,7 @@ function corporation_corporation_mining_observers_observer(observer_id, name, pa
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of npc corporation ids
 * @customfunction
+*/
 function corporations_npccorps(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -433,6 +474,7 @@ function corporations_npccorps(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation owned bookmarks
 * @customfunction
+*/
 function corporations_corporation_bookmarks(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -444,6 +486,7 @@ function corporations_corporation_bookmarks(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation owned bookmark folders
 * @customfunction
+*/
 function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -454,6 +497,7 @@ function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of corporation contact labels
 * @customfunction
+*/
 function corporations_corporation_contacts_labels(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -465,6 +509,7 @@ function corporations_corporation_contacts_labels(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contracts
 * @customfunction
+*/
 function corporations_corporation_contracts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -477,6 +522,7 @@ function corporations_corporation_contracts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bids
 * @customfunction
+*/
 function corporations_corporation_contracts_contract_bids(contract_id, name, page, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
   return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,page:page,opt_headers:opt_headers})
@@ -489,6 +535,7 @@ function corporations_corporation_contracts_contract_bids(contract_id, name, pag
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of items in this contract
 * @customfunction
+*/
 function corporations_corporation_contracts_contract_items(contract_id, name, opt_headers) {
   if(!contract_id) throw 'contract_id is required';
   return parseData_(arguments.callee.name,{contract_id:contract_id,name:name,opt_headers:opt_headers})
@@ -501,6 +548,7 @@ function corporations_corporation_contracts_contract_items(contract_id, name, op
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of customs offices and their settings
 * @customfunction
+*/
 function corporations_corporation_customs_offices(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -511,6 +559,7 @@ function corporations_corporation_customs_offices(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation division names
 * @customfunction
+*/
 function corporations_corporation_divisions(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -521,6 +570,7 @@ function corporations_corporation_divisions(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation facilities
 * @customfunction
+*/
 function corporations_corporation_facilities(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -531,6 +581,7 @@ function corporations_corporation_facilities(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Faction warfare statistics for a given corporation
 * @customfunction
+*/
 function corporations_corporation_fw_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -540,6 +591,7 @@ function corporations_corporation_fw_stats(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Urls for icons for the given corporation id and server
 * @customfunction
+*/
 function corporations_corporation_icons(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -552,6 +604,7 @@ function corporations_corporation_icons(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of corporation industry jobs
 * @customfunction
+*/
 function corporations_corporation_industry_jobs(include_completed, name, page, opt_headers) {
   return parseData_(arguments.callee.name,{include_completed:include_completed,name:name,page:page,opt_headers:opt_headers})
 }
@@ -563,6 +616,7 @@ function corporations_corporation_industry_jobs(include_completed, name, page, o
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of killmail IDs and hashes
 * @customfunction
+*/
 function corporations_corporation_killmails_recent(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -574,6 +628,7 @@ function corporations_corporation_killmails_recent(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of medals
 * @customfunction
+*/
 function corporations_corporation_medals(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -585,6 +640,7 @@ function corporations_corporation_medals(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of issued medals
 * @customfunction
+*/
 function corporations_corporation_medals_issued(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -595,6 +651,7 @@ function corporations_corporation_medals_issued(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The corporation's member limit
 * @customfunction
+*/
 function corporations_corporation_members_limit(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -605,6 +662,7 @@ function corporations_corporation_members_limit(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of members and theirs titles
 * @customfunction
+*/
 function corporations_corporation_members_titles(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -615,6 +673,7 @@ function corporations_corporation_members_titles(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character IDs
 * @customfunction
+*/
 function corporations_corporation_membertracking(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -626,6 +685,7 @@ function corporations_corporation_membertracking(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Expired and cancelled market orders placed on behalf of a corporation
 * @customfunction
+*/
 function corporations_corporation_orders_history(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -637,6 +697,7 @@ function corporations_corporation_orders_history(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation outpost IDs
 * @customfunction
+*/
 function corporations_corporation_outposts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -648,6 +709,7 @@ function corporations_corporation_outposts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about the given outpost
 * @customfunction
+*/
 function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers) {
   if(!outpost_id) throw 'outpost_id is required';
   return parseData_(arguments.callee.name,{outpost_id:outpost_id,name:name,opt_headers:opt_headers})
@@ -659,6 +721,7 @@ function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character ID's and roles
 * @customfunction
+*/
 function corporations_corporation_roles(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -670,6 +733,7 @@ function corporations_corporation_roles(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of role changes
 * @customfunction
+*/
 function corporations_corporation_roles_history(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -681,6 +745,7 @@ function corporations_corporation_roles_history(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of shareholders
 * @customfunction
+*/
 function corporations_corporation_shareholders(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -692,6 +757,7 @@ function corporations_corporation_shareholders(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of standings
 * @customfunction
+*/
 function corporations_corporation_standings(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -703,6 +769,7 @@ function corporations_corporation_standings(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of starbases (POSes)
 * @customfunction
+*/
 function corporations_corporation_starbases(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -715,6 +782,7 @@ function corporations_corporation_starbases(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of starbases (POSes)
 * @customfunction
+*/
 function corporations_corporation_starbases_starbase(starbase_id, system_id, name, opt_headers) {
   if(!starbase_id) throw 'starbase_id is required';
   if(!system_id) throw 'system_id is required';
@@ -727,6 +795,7 @@ function corporations_corporation_starbases_starbase(starbase_id, system_id, nam
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of titles
 * @customfunction
+*/
 function corporations_corporation_titles(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -737,6 +806,7 @@ function corporations_corporation_titles(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation wallets
 * @customfunction
+*/
 function corporations_corporation_wallets(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -749,6 +819,7 @@ function corporations_corporation_wallets(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet transactions
 * @customfunction
+*/
 function corporations_corporation_wallets_division_transactions(division, from_id, name, opt_headers) {
   if(!division) throw 'division is required';
   return parseData_(arguments.callee.name,{division:division,from_id:from_id,name:name,opt_headers:opt_headers})
@@ -759,6 +830,7 @@ function corporations_corporation_wallets_division_transactions(division, from_i
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of dogma attribute ids
 * @customfunction
+*/
 function dogma_attributes(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -769,6 +841,7 @@ function dogma_attributes(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a dogma attribute
 * @customfunction
+*/
 function dogma_attributes_attribute(attribute_id, opt_headers) {
   if(!attribute_id) throw 'attribute_id is required';
   return parseData_(arguments.callee.name,{attribute_id:attribute_id,opt_headers:opt_headers})
@@ -781,6 +854,7 @@ function dogma_attributes_attribute(attribute_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about a dynamic item
 * @customfunction
+*/
 function dogma_dynamic_items_type_item(item_id, type_id, opt_headers) {
   if(!item_id) throw 'item_id is required';
   if(!type_id) throw 'type_id is required';
@@ -792,6 +866,7 @@ function dogma_dynamic_items_type_item(item_id, type_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of dogma effect ids
 * @customfunction
+*/
 function dogma_effects(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -803,6 +878,7 @@ function dogma_effects(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about a fleet
 * @customfunction
+*/
 function fleets_fleet(fleet_id, name, opt_headers) {
   if(!fleet_id) throw 'fleet_id is required';
   return parseData_(arguments.callee.name,{fleet_id:fleet_id,name:name,opt_headers:opt_headers})
@@ -816,6 +892,7 @@ function fleets_fleet(fleet_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fleet members
 * @customfunction
+*/
 function fleets_fleet_members(fleet_id, language, name, opt_headers) {
   if(!fleet_id) throw 'fleet_id is required';
   return parseData_(arguments.callee.name,{fleet_id:fleet_id,language:language,name:name,opt_headers:opt_headers})
@@ -829,6 +906,7 @@ function fleets_fleet_members(fleet_id, language, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fleet wings
 * @customfunction
+*/
 function fleets_fleet_wings(fleet_id, language, name, opt_headers) {
   if(!fleet_id) throw 'fleet_id is required';
   return parseData_(arguments.callee.name,{fleet_id:fleet_id,language:language,name:name,opt_headers:opt_headers})
@@ -839,6 +917,7 @@ function fleets_fleet_wings(fleet_id, language, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Corporation leaderboard of kills and victory points within faction warfare.
 * @customfunction
+*/
 function fw_leaderboards(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -848,6 +927,7 @@ function fw_leaderboards(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Character leaderboard of kills and victory points within faction warfare.
 * @customfunction
+*/
 function fw_leaderboards_characters(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -857,6 +937,7 @@ function fw_leaderboards_characters(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Corporation leaderboard of kills and victory points within faction warfare.
 * @customfunction
+*/
 function fw_leaderboards_corporations(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -866,6 +947,7 @@ function fw_leaderboards_corporations(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Per faction breakdown of faction warfare statistics
 * @customfunction
+*/
 function fw_stats(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -875,6 +957,7 @@ function fw_stats(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return All faction warfare solar systems
 * @customfunction
+*/
 function fw_systems(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -884,6 +967,7 @@ function fw_systems(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of NPC factions at war
 * @customfunction
+*/
 function fw_wars(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -893,6 +977,7 @@ function fw_wars(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of incursions
 * @customfunction
+*/
 function incursions(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -902,6 +987,7 @@ function incursions(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of facilities
 * @customfunction
+*/
 function industry_facilities(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -911,6 +997,7 @@ function industry_facilities(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of cost indicies
 * @customfunction
+*/
 function industry_systems(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -921,6 +1008,7 @@ function industry_systems(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of insurance levels for all ship types
 * @customfunction
+*/
 function insurance_prices(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
 }
@@ -932,6 +1020,7 @@ function insurance_prices(language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A killmail
 * @customfunction
+*/
 function killmails_killmail_killmail_hash(killmail_hash, killmail_id, opt_headers) {
   if(!killmail_hash) throw 'killmail_hash is required';
   if(!killmail_id) throw 'killmail_id is required';
@@ -943,6 +1032,7 @@ function killmails_killmail_killmail_hash(killmail_hash, killmail_id, opt_header
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of offers
 * @customfunction
+*/
 function loyalty_stores_corporation_offers(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -952,6 +1042,7 @@ function loyalty_stores_corporation_offers(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of item group ids
 * @customfunction
+*/
 function markets_groups(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -963,6 +1054,7 @@ function markets_groups(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about an item group
 * @customfunction
+*/
 function markets_groups_market_group(market_group_id, language, opt_headers) {
   if(!market_group_id) throw 'market_group_id is required';
   return parseData_(arguments.callee.name,{market_group_id:market_group_id,language:language,opt_headers:opt_headers})
@@ -973,6 +1065,7 @@ function markets_groups_market_group(market_group_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of prices
 * @customfunction
+*/
 function markets_prices(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -985,6 +1078,7 @@ function markets_prices(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of orders
 * @customfunction
+*/
 function markets_structures_structure(structure_id, name, page, opt_headers) {
   if(!structure_id) throw 'structure_id is required';
   return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,page:page,opt_headers:opt_headers})
@@ -997,6 +1091,7 @@ function markets_structures_structure(structure_id, name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of historical market statistics
 * @customfunction
+*/
 function markets_region_history(region_id, type_id, opt_headers) {
   if(!region_id) throw 'region_id is required';
   if(!type_id) throw 'type_id is required';
@@ -1012,6 +1107,7 @@ function markets_region_history(region_id, type_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of orders
 * @customfunction
+*/
 function markets_region_orders(order_type, region_id, page, type_id, opt_headers) {
   if(!order_type) throw 'order_type is required';
   if(!region_id) throw 'region_id is required';
@@ -1025,6 +1121,7 @@ function markets_region_orders(order_type, region_id, page, type_id, opt_headers
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of type IDs
 * @customfunction
+*/
 function markets_region_types(region_id, page, opt_headers) {
   if(!region_id) throw 'region_id is required';
   return parseData_(arguments.callee.name,{region_id:region_id,page:page,opt_headers:opt_headers})
@@ -1035,6 +1132,7 @@ function markets_region_types(region_id, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of opportunities group ids
 * @customfunction
+*/
 function opportunities_groups(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1046,6 +1144,7 @@ function opportunities_groups(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details of an opportunities group
 * @customfunction
+*/
 function opportunities_groups_group(group_id, language, opt_headers) {
   if(!group_id) throw 'group_id is required';
   return parseData_(arguments.callee.name,{group_id:group_id,language:language,opt_headers:opt_headers})
@@ -1056,6 +1155,7 @@ function opportunities_groups_group(group_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of opportunities task ids
 * @customfunction
+*/
 function opportunities_tasks(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1066,6 +1166,7 @@ function opportunities_tasks(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details of an opportunities task
 * @customfunction
+*/
 function opportunities_tasks_task(task_id, opt_headers) {
   if(!task_id) throw 'task_id is required';
   return parseData_(arguments.callee.name,{task_id:task_id,opt_headers:opt_headers})
@@ -1081,6 +1182,7 @@ function opportunities_tasks_task(task_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Solar systems in route from origin to destination
 * @customfunction
+*/
 function route_origin_destination(destination, origin, avoid, connections, flag, opt_headers) {
   if(!destination) throw 'destination is required';
   if(!origin) throw 'origin is required';
@@ -1092,6 +1194,7 @@ function route_origin_destination(destination, origin, avoid, connections, flag,
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of sovereignty campaigns
 * @customfunction
+*/
 function sovereignty_campaigns(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1101,6 +1204,7 @@ function sovereignty_campaigns(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of sovereignty information for solar systems in New Eden
 * @customfunction
+*/
 function sovereignty_map(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1110,6 +1214,7 @@ function sovereignty_map(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of sovereignty structures
 * @customfunction
+*/
 function sovereignty_structures(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1119,6 +1224,7 @@ function sovereignty_structures(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Server status
 * @customfunction
+*/
 function status(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1129,6 +1235,7 @@ function status(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of ancestries
 * @customfunction
+*/
 function universe_ancestries(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
 }
@@ -1139,6 +1246,7 @@ function universe_ancestries(language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about an asteroid belt
 * @customfunction
+*/
 function universe_asteroid_belts_asteroid_belt(asteroid_belt_id, opt_headers) {
   if(!asteroid_belt_id) throw 'asteroid_belt_id is required';
   return parseData_(arguments.callee.name,{asteroid_belt_id:asteroid_belt_id,opt_headers:opt_headers})
@@ -1150,6 +1258,7 @@ function universe_asteroid_belts_asteroid_belt(asteroid_belt_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bloodlines
 * @customfunction
+*/
 function universe_bloodlines(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
 }
@@ -1159,6 +1268,7 @@ function universe_bloodlines(language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of item category ids
 * @customfunction
+*/
 function universe_categories(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1170,6 +1280,7 @@ function universe_categories(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about an item category
 * @customfunction
+*/
 function universe_categories_category(category_id, language, opt_headers) {
   if(!category_id) throw 'category_id is required';
   return parseData_(arguments.callee.name,{category_id:category_id,language:language,opt_headers:opt_headers})
@@ -1180,6 +1291,7 @@ function universe_categories_category(category_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of constellation ids
 * @customfunction
+*/
 function universe_constellations(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1191,6 +1303,7 @@ function universe_constellations(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a constellation
 * @customfunction
+*/
 function universe_constellations_constellation(constellation_id, language, opt_headers) {
   if(!constellation_id) throw 'constellation_id is required';
   return parseData_(arguments.callee.name,{constellation_id:constellation_id,language:language,opt_headers:opt_headers})
@@ -1201,6 +1314,7 @@ function universe_constellations_constellation(constellation_id, language, opt_h
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of graphic ids
 * @customfunction
+*/
 function universe_graphics(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1211,6 +1325,7 @@ function universe_graphics(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a graphic
 * @customfunction
+*/
 function universe_graphics_graphic(graphic_id, opt_headers) {
   if(!graphic_id) throw 'graphic_id is required';
   return parseData_(arguments.callee.name,{graphic_id:graphic_id,opt_headers:opt_headers})
@@ -1222,6 +1337,7 @@ function universe_graphics_graphic(graphic_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of item group ids
 * @customfunction
+*/
 function universe_groups(page, opt_headers) {
   return parseData_(arguments.callee.name,{page:page,opt_headers:opt_headers})
 }
@@ -1233,6 +1349,7 @@ function universe_groups(page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about an item group
 * @customfunction
+*/
 function universe_groups_group(group_id, language, opt_headers) {
   if(!group_id) throw 'group_id is required';
   return parseData_(arguments.callee.name,{group_id:group_id,language:language,opt_headers:opt_headers})
@@ -1244,6 +1361,7 @@ function universe_groups_group(group_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a moon
 * @customfunction
+*/
 function universe_moons_moon(moon_id, opt_headers) {
   if(!moon_id) throw 'moon_id is required';
   return parseData_(arguments.callee.name,{moon_id:moon_id,opt_headers:opt_headers})
@@ -1255,6 +1373,7 @@ function universe_moons_moon(moon_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a planet
 * @customfunction
+*/
 function universe_planets_planet(planet_id, opt_headers) {
   if(!planet_id) throw 'planet_id is required';
   return parseData_(arguments.callee.name,{planet_id:planet_id,opt_headers:opt_headers})
@@ -1266,6 +1385,7 @@ function universe_planets_planet(planet_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of character races
 * @customfunction
+*/
 function universe_races(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
 }
@@ -1275,6 +1395,7 @@ function universe_races(language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of region ids
 * @customfunction
+*/
 function universe_regions(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1286,6 +1407,7 @@ function universe_regions(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a region
 * @customfunction
+*/
 function universe_regions_region(region_id, language, opt_headers) {
   if(!region_id) throw 'region_id is required';
   return parseData_(arguments.callee.name,{region_id:region_id,language:language,opt_headers:opt_headers})
@@ -1297,6 +1419,7 @@ function universe_regions_region(region_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data about a schematic
 * @customfunction
+*/
 function universe_schematics_schematic(schematic_id, opt_headers) {
   if(!schematic_id) throw 'schematic_id is required';
   return parseData_(arguments.callee.name,{schematic_id:schematic_id,opt_headers:opt_headers})
@@ -1308,6 +1431,7 @@ function universe_schematics_schematic(schematic_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a stargate
 * @customfunction
+*/
 function universe_stargates_stargate(stargate_id, opt_headers) {
   if(!stargate_id) throw 'stargate_id is required';
   return parseData_(arguments.callee.name,{stargate_id:stargate_id,opt_headers:opt_headers})
@@ -1319,6 +1443,7 @@ function universe_stargates_stargate(stargate_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a star
 * @customfunction
+*/
 function universe_stars_star(star_id, opt_headers) {
   if(!star_id) throw 'star_id is required';
   return parseData_(arguments.callee.name,{star_id:star_id,opt_headers:opt_headers})
@@ -1329,6 +1454,7 @@ function universe_stars_star(star_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of public structure IDs
 * @customfunction
+*/
 function universe_structures(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1340,6 +1466,7 @@ function universe_structures(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Data about a structure
 * @customfunction
+*/
 function universe_structures_structure(structure_id, name, opt_headers) {
   if(!structure_id) throw 'structure_id is required';
   return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,opt_headers:opt_headers})
@@ -1350,6 +1477,7 @@ function universe_structures_structure(structure_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of systems and number of jumps
 * @customfunction
+*/
 function universe_system_jumps(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1359,6 +1487,7 @@ function universe_system_jumps(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of solar system ids
 * @customfunction
+*/
 function universe_systems(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1369,6 +1498,7 @@ function universe_systems(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of type ids
 * @customfunction
+*/
 function universe_types(page, opt_headers) {
   return parseData_(arguments.callee.name,{page:page,opt_headers:opt_headers})
 }
@@ -1379,6 +1509,7 @@ function universe_types(page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of war IDs, in decending order by war_id.
 * @customfunction
+*/
 function wars(max_war_id, opt_headers) {
   return parseData_(arguments.callee.name,{max_war_id:max_war_id,opt_headers:opt_headers})
 }
@@ -1389,6 +1520,7 @@ function wars(max_war_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about a war
 * @customfunction
+*/
 function wars_war(war_id, opt_headers) {
   if(!war_id) throw 'war_id is required';
   return parseData_(arguments.callee.name,{war_id:war_id,opt_headers:opt_headers})
@@ -1401,6 +1533,7 @@ function wars_war(war_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of killmail IDs and hashes
 * @customfunction
+*/
 function wars_war_killmails(war_id, page, opt_headers) {
   if(!war_id) throw 'war_id is required';
   return parseData_(arguments.callee.name,{war_id:war_id,page:page,opt_headers:opt_headers})
@@ -1412,6 +1545,7 @@ function wars_war_killmails(war_id, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of id/name associations
 * @customfunction
+*/
 function alliances_names(alliance_ids, opt_headers) {
   if(!alliance_ids) throw 'alliance_ids is required';
   return parseData_(arguments.callee.name,{alliance_ids:alliance_ids,opt_headers:opt_headers})
@@ -1424,6 +1558,7 @@ function alliances_names(alliance_ids, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
 * @customfunction
+*/
 function alliances_alliance_contacts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1435,6 +1570,7 @@ function alliances_alliance_contacts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of blueprints
 * @customfunction
+*/
 function characters_character_blueprints(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1446,6 +1582,7 @@ function characters_character_blueprints(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bookmarks
 * @customfunction
+*/
 function characters_character_bookmarks(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1457,6 +1594,7 @@ function characters_character_bookmarks(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of bookmark folders
 * @customfunction
+*/
 function characters_character_bookmarks_folders(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1468,6 +1606,7 @@ function characters_character_bookmarks_folders(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
 * @customfunction
+*/
 function characters_character_contacts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1478,6 +1617,7 @@ function characters_character_contacts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Returns your recent notifications
 * @customfunction
+*/
 function characters_character_notifications(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1488,6 +1628,7 @@ function characters_character_notifications(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Object describing the character's online status
 * @customfunction
+*/
 function characters_character_online(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1498,6 +1639,7 @@ function characters_character_online(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Open market orders placed by a character
 * @customfunction
+*/
 function characters_character_orders(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1507,6 +1649,7 @@ function characters_character_orders(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data for the given character
 * @customfunction
+*/
 function characters_character_portrait(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1517,6 +1660,7 @@ function characters_character_portrait(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The character's roles in thier corporation
 * @customfunction
+*/
 function characters_character_roles(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1527,6 +1671,7 @@ function characters_character_roles(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The current skill queue, sorted ascending by finishing time
 * @customfunction
+*/
 function characters_character_skillqueue(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1537,6 +1682,7 @@ function characters_character_skillqueue(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Character stats
 * @customfunction
+*/
 function characters_character_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1547,6 +1693,7 @@ function characters_character_stats(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of id/name associations
 * @customfunction
+*/
 function corporations_names(corporation_ids, opt_headers) {
   if(!corporation_ids) throw 'corporation_ids is required';
   return parseData_(arguments.callee.name,{corporation_ids:corporation_ids,opt_headers:opt_headers})
@@ -1557,6 +1704,7 @@ function corporations_names(corporation_ids, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Alliance history for the given corporation
 * @customfunction
+*/
 function corporations_corporation_alliancehistory(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1568,6 +1716,7 @@ function corporations_corporation_alliancehistory(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation blueprints
 * @customfunction
+*/
 function corporations_corporation_blueprints(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1579,6 +1728,7 @@ function corporations_corporation_blueprints(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
 * @customfunction
+*/
 function corporations_corporation_contacts(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1590,6 +1740,7 @@ function corporations_corporation_contacts(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation ALSC logs
 * @customfunction
+*/
 function corporations_corporation_containers_logs(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1601,6 +1752,7 @@ function corporations_corporation_containers_logs(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of open market orders
 * @customfunction
+*/
 function corporations_corporation_orders(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1613,6 +1765,7 @@ function corporations_corporation_orders(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation structures' information
 * @customfunction
+*/
 function corporations_corporation_structures(language, name, page, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,name:name,page:page,opt_headers:opt_headers})
 }
@@ -1623,6 +1776,7 @@ function corporations_corporation_structures(language, name, page, opt_headers) 
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a dogma effect
 * @customfunction
+*/
 function dogma_effects_effect(effect_id, opt_headers) {
   if(!effect_id) throw 'effect_id is required';
   return parseData_(arguments.callee.name,{effect_id:effect_id,opt_headers:opt_headers})
@@ -1637,6 +1791,7 @@ function dogma_effects_effect(effect_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of search results
 * @customfunction
+*/
 function eve_search(categories, search, language, strict, opt_headers) {
   if(!categories) throw 'categories is required';
   if(!search) throw 'search is required';
@@ -1649,6 +1804,7 @@ function eve_search(categories, search, language, strict, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of factions
 * @customfunction
+*/
 function universe_factions(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
 }
@@ -1659,6 +1815,7 @@ function universe_factions(language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a station
 * @customfunction
+*/
 function universe_stations_station(station_id, opt_headers) {
   if(!station_id) throw 'station_id is required';
   return parseData_(arguments.callee.name,{station_id:station_id,opt_headers:opt_headers})
@@ -1669,6 +1826,7 @@ function universe_stations_station(station_id, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of systems and number of ship, pod and NPC kills
 * @customfunction
+*/
 function universe_system_kills(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1678,6 +1836,7 @@ function universe_system_kills(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data about an alliance
 * @customfunction
+*/
 function alliances_alliance(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1689,6 +1848,7 @@ function alliances_alliance(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A flat list of the users assets
 * @customfunction
+*/
 function characters_character_assets(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1700,6 +1860,7 @@ function characters_character_assets(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Full details of a specific event
 * @customfunction
+*/
 function characters_character_calendar_event(event_id, name, opt_headers) {
   if(!event_id) throw 'event_id is required';
   return parseData_(arguments.callee.name,{event_id:event_id,name:name,opt_headers:opt_headers})
@@ -1711,6 +1872,7 @@ function characters_character_calendar_event(event_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Clone information for the given character
 * @customfunction
+*/
 function characters_character_clones(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1721,6 +1883,7 @@ function characters_character_clones(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of mail labels and unread counts
 * @customfunction
+*/
 function characters_character_mail_labels(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1732,6 +1895,7 @@ function characters_character_mail_labels(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Colony layout
 * @customfunction
+*/
 function characters_character_planets_planet(planet_id, name, opt_headers) {
   if(!planet_id) throw 'planet_id is required';
   return parseData_(arguments.callee.name,{planet_id:planet_id,name:name,opt_headers:opt_headers})
@@ -1747,6 +1911,7 @@ function characters_character_planets_planet(planet_id, name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of search results
 * @customfunction
+*/
 function characters_character_search(categories, search, language, strict, name, opt_headers) {
   if(!categories) throw 'categories is required';
   if(!search) throw 'search is required';
@@ -1760,6 +1925,7 @@ function characters_character_search(categories, search, language, strict, name,
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of assets
 * @customfunction
+*/
 function corporations_corporation_assets(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1770,6 +1936,7 @@ function corporations_corporation_assets(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character IDs
 * @customfunction
+*/
 function corporations_corporation_members(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1782,6 +1949,7 @@ function corporations_corporation_members(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Journal entries
 * @customfunction
+*/
 function corporations_corporation_wallets_division_journal(division, name, page, opt_headers) {
   if(!division) throw 'division is required';
   return parseData_(arguments.callee.name,{division:division,name:name,page:page,opt_headers:opt_headers})
@@ -1794,6 +1962,7 @@ function corporations_corporation_wallets_division_journal(division, name, page,
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a solar system
 * @customfunction
+*/
 function universe_systems_system(system_id, language, opt_headers) {
   if(!system_id) throw 'system_id is required';
   return parseData_(arguments.callee.name,{system_id:system_id,language:language,opt_headers:opt_headers})
@@ -1806,6 +1975,7 @@ function universe_systems_system(system_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about a type
 * @customfunction
+*/
 function universe_types_type(type_id, language, opt_headers) {
   if(!type_id) throw 'type_id is required';
   return parseData_(arguments.callee.name,{type_id:type_id,language:language,opt_headers:opt_headers})
@@ -1816,6 +1986,7 @@ function universe_types_type(type_id, language, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data for the given character
 * @customfunction
+*/
 function characters_character(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
@@ -1826,6 +1997,7 @@ function characters_character(opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Known skills for the character
 * @customfunction
+*/
 function characters_character_skills(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
@@ -1837,6 +2009,7 @@ function characters_character_skills(name, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Journal entries
 * @customfunction
+*/
 function characters_character_wallet_journal(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
@@ -1846,6 +2019,7 @@ function characters_character_wallet_journal(name, page, opt_headers) {
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public information about a corporation
 * @customfunction
+*/
 function corporations_corporation(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
