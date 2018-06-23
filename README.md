@@ -7,26 +7,27 @@ Google Sheets Script for interacting with EVE ESI
    3. Copy the GESI files.  You may need to name the project to save it, so use any name.
        * Copy the contents of GESI.gs into the `Code.gs` script file, replacing everything in the file, and save the script.  (Can rename Code.gs to GESI.gs if you want)
        * Create a new script file (File -> New -> Script File) and name it `endpoints`.
-           * Copy the contents of `endpoints.gs` into the script file, replacing everything in the file, and save the script.
+           * Copy the contents of `dist/endpoints.gs` into the script file, replacing everything in the file, and save the script.
        * Create a new script file (File -> New -> Script File) and name it `functions`.
-           * Copy the contents of `functions.gs` into the script file, replacing everything in the file, and save the script.
-   4. Go to File -> Project Properties and copy the Script ID.
-   5. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
+           * Copy the contents of `dist/functions.gs` into the script file, replacing everything in the file, and save the script.
+   4. A this point setup is complete for unauthenticated endpoints.  If you need the authenticated endpoints continue on.
+   5. Go to File -> Project Properties and copy the Script ID.
+   6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
         * Content Type:  Authentication & API Access
         * PERMISSIONS:   Select all esi-* endpoints.
-        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FOUR}/usercallback
-        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FOUR}` in the URL with YOUR script ID!
+        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
+        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
         * Also be sure to **not** include the `{` and `}` in your url; it should look something like this, but with your Script ID:
         * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
-   6. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
-   7. Replace `YOUR_MAIN_CHARACTER_NAME` with the name of your main (the character to default to if no name is given with a function) character in the MAIN_CHARACTER constant, and save the script.
-   8. Close the script and refresh the spreadsheet.
-   9. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
-   10. Give the script permission to do what it needs.
-   11. Click 'Authorize with EVE SSO' in the modal that opens -> login -> select what character you want to authorize -> Authorize.
-   12. Close the modal.
-   13. (Optional) Repeat step 11 to authorize other characters.
-   13. Done.
+   7. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
+   8. Replace `YOUR_MAIN_CHARACTER_NAME` with the name of your main (the character to default to if no name is given with a function) character in the MAIN_CHARACTER constant, and save the script.
+   9. Close the script and refresh the spreadsheet.
+   10. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
+   11. Give the script permission to do what it needs.
+   12. Click the EVE SSO button in the modal.  Login -> select what character you want to authorize -> Authorize.
+   13. Close the modal.
+   14. (Optional) Repeat step 12 to authorize other characters.
+   15. Done.
    
 ## Usage Tips
 
@@ -81,57 +82,52 @@ This is of course just an example, but the general idea can be used as a templat
 ### Changing order of column headers
    1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
       * E.x. 
- ```JSON
-"alliances_alliance": {
+```JSON
+  "alliances_alliance": {
     "description": "Public information about an alliance",
-    "summary": "Get alliance information",
-    "request": "get",
-    "version": 3,
     "headers": [
       {
-        "name": "name",
-        "type": "string"
+        "name": "creator_corporation_id"
       },
       {
-        "name": "creator_id",
-        "type": "integer"
+        "name": "creator_id"
       },
       {
-        "name": "creator_corporation_id",
-        "type": "integer"
+        "name": "date_founded"
       },
       {
-        "name": "ticker",
-        "type": "string"
+        "name": "executor_corporation_id"
       },
       {
-        "name": "executor_corporation_id",
-        "type": "integer"
+        "name": "faction_id"
       },
       {
-        "name": "date_founded",
-        "type": "string"
+        "name": "name"
       },
       {
-        "name": "faction_id",
-        "type": "integer"
+        "name": "ticker"
       }
     ],
     "path": "/v3/alliances/{alliance_id}/",
-    "authed": false,
-    "response_type": "object",
-    "item_type": "object",
     "parameters": [
       {
-        "name": "alliance_id",
         "description": "An EVE alliance ID",
-        "required": true,
+        "in": "path",
+        "name": "alliance_id",
         "type": "integer",
-        "in": "path"
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
       }
-    ]
+    ],
+    "summary": "Public data about an alliance"
   }
- ```
+```
    2. Re order the objects in the `headers` array to the order you want.
       * The first object in the array is the first column on the sheet
    3. If a header has a `sub_headers` array, the first value in that array is first as well.
@@ -149,7 +145,6 @@ function getAssets(startPage, endPage) {
   for (var page = startPage; page <= endPage; page++) {
     var a = corporations_corporation_assets(null, page, false);
     assets = assets.concat(a);
-    if (a.length < 1000) break;
   }
   return assets;
 }
@@ -170,6 +165,7 @@ If you really wanted you could add in logic like `if (endPage === page && a.leng
 ## Contact Info
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#0016
+Discord Server: https://discordapp.com/invite/eEAH2et
   
 ## Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 

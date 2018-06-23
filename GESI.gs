@@ -2,81 +2,17 @@
 //
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
-APP_VERSION = '5.7.0';
+// https://discord.gg/eEAH2et
+APP_VERSION = '6.0.0';
 BASE_URL = 'https://esi.evetech.net'
 
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
-CLIENT_ID = 'a7015d3dafa342c29b70f9cdd8b9c767';
-CLIENT_SECRET = 'l1GDn1jm5Q2lzfe6cYhSUDNuwiCqXHPy02YvgTeJ';
+CLIENT_ID = 'YOUR_CLIENT_ID';
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 // Name of your 'main' character to use when a function is called without a character name as a param
-MAIN_CHARACTER = "Blacksmoke16";
-
-// List of scopes to request
-SCOPES = [
-  "esi-alliances.read_contacts.v1",
-  "esi-assets.read_assets.v1",
-  "esi-assets.read_corporation_assets.v1",
-  "esi-bookmarks.read_character_bookmarks.v1",
-  "esi-bookmarks.read_corporation_bookmarks.v1",
-  "esi-calendar.read_calendar_events.v1",
-  "esi-characters.read_agents_research.v1",
-  "esi-characters.read_blueprints.v1",
-  "esi-characters.read_chat_channels.v1",
-  "esi-characters.read_contacts.v1",
-  "esi-characters.read_corporation_roles.v1",
-  "esi-characters.read_fatigue.v1",
-  "esi-characters.read_fw_stats.v1",
-  "esi-characters.read_loyalty.v1",
-  "esi-characters.read_medals.v1",
-  "esi-characters.read_notifications.v1",
-  "esi-characters.read_opportunities.v1",
-  "esi-characters.read_standings.v1",
-  "esi-characters.read_titles.v1",
-  "esi-characterstats.read.v1",
-  "esi-clones.read_clones.v1",
-  "esi-clones.read_implants.v1",
-  "esi-contracts.read_character_contracts.v1",
-  "esi-contracts.read_corporation_contracts.v1",
-  "esi-corporations.read_blueprints.v1",
-  "esi-corporations.read_contacts.v1",
-  "esi-corporations.read_container_logs.v1",
-  "esi-corporations.read_corporation_membership.v1",
-  "esi-corporations.read_divisions.v1",
-  "esi-corporations.read_facilities.v1",
-  "esi-corporations.read_fw_stats.v1",
-  "esi-corporations.read_medals.v1",
-  "esi-corporations.read_outposts.v1",
-  "esi-corporations.read_standings.v1",
-  "esi-corporations.read_starbases.v1",
-  "esi-corporations.read_structures.v1",
-  "esi-corporations.read_titles.v1",
-  "esi-corporations.track_members.v1",
-  "esi-fittings.read_fittings.v1",
-  "esi-fleets.read_fleet.v1",
-  "esi-industry.read_character_jobs.v1",
-  "esi-industry.read_character_mining.v1",
-  "esi-industry.read_corporation_jobs.v1",
-  "esi-industry.read_corporation_mining.v1",
-  "esi-killmails.read_corporation_killmails.v1",
-  "esi-killmails.read_killmails.v1",
-  "esi-location.read_location.v1",
-  "esi-location.read_online.v1",
-  "esi-location.read_ship_type.v1",
-  "esi-mail.read_mail.v1",
-  "esi-markets.read_character_orders.v1",
-  "esi-markets.read_corporation_orders.v1",
-  "esi-markets.structure_markets.v1",
-  "esi-planets.manage_planets.v1",
-  "esi-planets.read_customs_offices.v1",
-  "esi-search.search_structures.v1",
-  "esi-skills.read_skillqueue.v1",
-  "esi-skills.read_skills.v1",
-  "esi-universe.read_structures.v1",
-  "esi-wallet.read_character_wallet.v1",
-  "esi-wallet.read_corporation_wallets.v1"
-];
+MAIN_CHARACTER = "YOUR_MAIN_CHARACTER_NAME";
 
 CACHE = CacheService.getDocumentCache();
 
@@ -105,7 +41,7 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 
   JSON.parse(array).forEach(function(a) {
     var temp = [];
-    endpoint.sub_headers.forEach(function(k) { temp.push(a[k]) });
+    endpoint.sub_headers.forEach(function(k) { temp.push(typeof(a) !== 'object' ? a : a[k]); });
     result.push(temp);
   });
   return result;
@@ -135,7 +71,7 @@ function getData_(endpoint_name, params) {
   if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(name, 'corporation_id'));
   
   var token = CACHE.get(name + '_access_token');
-  if (!token && endpoint.authed) token = refreshToken_(name);
+  if (!token && endpoint.scope) token = refreshToken_(name);
 
   return doRequest_(BASE_URL + path, 'get', token);
 }
@@ -161,30 +97,32 @@ function parseData_(endpoint_name, params) {
   } else {
    data = getData_(endpoint_name, params).data;
  }
- 
- if (endpoint.response_type === 'array' && endpoint.item_type === 'object') {
-  data.forEach(function(obj) {
-    var temp = [];
-    endpoint.headers.forEach(function(header) {
-      temp.push(parseObject_(obj, header));
-    });
-    result.push(temp);
-  });
-} else if (endpoint.response_type === 'object' && endpoint.item_type === 'object') {
-  var temp = [];
-  endpoint.headers.forEach(function(header) {
-    temp.push(parseObject_(data, header));
-  });
-  result.push(temp);
-} else if (endpoint.response_type === 'array' && endpoint.item_type === 'integer') {
-  data.forEach(function(dp) {
-    result.push(dp);
-  });
-} else if (endpoint.response_type === 'integer' || endpoint.response_type === 'number') {
-  result.push(data);        
-}
-
-return result;
+  
+ if (Array.isArray(data) && typeof(data[0]) === 'number') {
+   data.forEach(function(dp) {
+     result.push(dp);
+   });
+ } else if (Array.isArray(data) && typeof(data[0]) === 'object') {
+     data.forEach(function(obj) {
+       var temp = [];
+       endpoint.headers.forEach(function(header) {
+         temp.push(Array.isArray(obj[header.name]) ? JSON.stringify(obj[header.name]) : obj[header.name]);
+       });
+       result.push(temp);
+     });
+ } else if (typeof(data) === 'object') {
+     var temp = [];
+     endpoint.headers.forEach(function(header) {
+       temp.push(typeof(data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]);
+     });
+     result.push(temp);
+ } else if (typeof(data) === 'number') {
+     result = [data];
+ } else {
+     throw new "Unexepcted data type.  Please report this on Github.";
+ }
+  
+  return result;
 }
 
 function doRequest_(path, method, token, data) {
@@ -204,17 +142,6 @@ function doRequest_(path, method, token, data) {
   return {data: JSON.parse(response), headers: response.getHeaders()};
 }
 
-function parseObject_(source, header) {
-  if (header.type === 'array') {
-    return JSON.stringify(source[header.name]);
-  } else if (typeof source === 'object') {
-    var flat_obj = flatten_(source);
-    return flat_obj[header.name];
-  } else {
-    return source[header.name];
-  }
-}
-
 function getProperty_(character_name, property) {
   var character_row = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data').getDataRange().getValues().filter(function(r) { return r[0] === character_name });
   if (character_row.length === 0) throw character_name + " is not authed, or is misspelled.";
@@ -231,29 +158,6 @@ function extend_(obj, src) {
   }
   return obj;
 }
-
-function flatten_(ob) {
-  var toReturn = {};
-  for (var i in ob) {
-    if (!ob.hasOwnProperty(i)) continue;
-    if ((typeof ob[i]) == 'object') {
-      var flatObject = flatten_(ob[i]);
-      for (var x in flatObject) {
-        if (!flatObject.hasOwnProperty(x)) continue;
-        toReturn[i + '-' + x] = flatObject[x];
-      }
-    } else {
-      toReturn[i] = ob[i];
-    }
-  }
-  return toReturn;
-};
-
-function uniqArray_(arrArg) {
-  return arrArg.filter(function(elem, pos, arr) {
-    return arr.indexOf(elem) == pos;
-  });
-};
 
 function findObjectByKey_(array, key, value) {
   for (var i = 0; i < array.length; i++) {
@@ -281,7 +185,7 @@ function showSidebar() {
   var scriptUrl = 'https://script.google.com/macros/d/' + ScriptApp.getScriptId() + '/usercallback';
   var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(120).createToken();
   var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
-  var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>');
+  var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>');  
   template.authorizationUrl = authorizationUrl;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
@@ -324,7 +228,7 @@ function cacheData_(userData, access_token) {
   var character_name = userData['character_name'];
   savedChars.indexOf(character_name) === -1 ? authSheet.appendRow(user_data) : authSheet.getRange((savedChars.indexOf(character_name) + 1), 1, 1, 5).setValues([user_data]);
   [1,2,3,4,5].forEach(function(c) { authSheet.autoResizeColumn(c) });
-  CACHE.put(character_name + '_access_token', access_token, 900);
+  CACHE.put(character_name + '_access_token', access_token, 1080);
 }
 
 function checkForUpdates()
