@@ -14,11 +14,11 @@ module EveSwagger
   # Default swagger version
   class_setter version = "latest"
   # Output directory for generated files
-  class_property out_dir = "./"
+  class_property out_dir = "dist/"
 
   # Default parameters that will not be included in a function's argument list
   # either because they are not useful or they get handled automatically
-  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource character_id corporation_id alliance_id)
+  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
   @@swagger_root : JSON::Any | Nil
 
   # Returns the swagger spec for the desired version
@@ -86,7 +86,8 @@ module EveSwagger
           path.parameters,
           path_url,
           path.scope,
-          path.responses.success.description
+          path.responses.success.description,
+          endpoint_name
         )
       end
       @endpoints
@@ -219,10 +220,15 @@ module EveSwagger
       summary: {type: String, setter: false},
     )
 
-    def initialize(@description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String)
+    def initialize(@description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String)
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
       @headers = get_headers(schema)
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
+
+      # Remove character/corporation/alliance_id param if they are not one of the three endpoints that can be arbitrary
+      @parameters.delete @parameters.find { |p| p.name == "character_id" } unless endpoint_name == "characters_character"
+      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless endpoint_name == "corporations_corporation"
+      @parameters.delete @parameters.find { |p| p.name == "alliance_id" } unless endpoint_name == "alliances_alliance"
 
       # Add name parameter if function requires auth
       name = Parameter.from_json({name: "name", in: "parameters", type: "boolean", description: "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER."}.to_json)

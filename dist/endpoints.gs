@@ -7355,6 +7355,13 @@ ENDPOINTS = {
     "path": "/v3/alliances/{alliance_id}/",
     "parameters": [
       {
+        "description": "An EVE alliance ID",
+        "in": "path",
+        "name": "alliance_id",
+        "type": "integer",
+        "required": true
+      },
+      {
         "description": "Default: True, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
@@ -8108,6 +8115,13 @@ ENDPOINTS = {
     "path": "/v4/characters/{character_id}/",
     "parameters": [
       {
+        "description": "An EVE character ID",
+        "in": "path",
+        "name": "character_id",
+        "type": "integer",
+        "required": true
+      },
+      {
         "description": "Default: True, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
@@ -8271,6 +8285,13 @@ ENDPOINTS = {
     ],
     "path": "/v4/corporations/{corporation_id}/",
     "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "integer",
+        "required": true
+      },
       {
         "description": "Default: True, Boolean if column headings should be listed or not.",
         "in": "parameters",

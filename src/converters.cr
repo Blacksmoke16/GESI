@@ -24,7 +24,15 @@ module Converters
   # Returns the scope of an endpoint from its security definition
   module PathScope
     def self.from_json(pull : JSON::PullParser) : String
-      JSON.parse(pull.read_raw).first["evesso"].first.to_s
+      scope = ""
+      pull.read_array do
+        pull.read_object do |key|
+          pull.read_array do
+            scope = pull.read_string
+          end
+        end
+      end
+      scope
     end
   end
 end

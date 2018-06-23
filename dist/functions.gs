@@ -1797,12 +1797,14 @@ function universe_system_kills(opt_headers) {
 
 /**
 * Public information about an alliance
+* @param {integer} alliance_id (Required) An EVE alliance ID
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data about an alliance
 * @customfunction
 */
-function alliances_alliance(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+function alliances_alliance(alliance_id, opt_headers) {
+  if(!alliance_id) throw 'alliance_id is required';
+  return parseData_(arguments.callee.name,{alliance_id:alliance_id,opt_headers:opt_headers})
 }
 
 /**
@@ -1947,12 +1949,14 @@ function universe_types_type(type_id, language, opt_headers) {
 
 /**
 * Public information about a character
+* @param {integer} character_id (Required) An EVE character ID
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public data for the given character
 * @customfunction
 */
-function characters_character(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+function characters_character(character_id, opt_headers) {
+  if(!character_id) throw 'character_id is required';
+  return parseData_(arguments.callee.name,{character_id:character_id,opt_headers:opt_headers})
 }
 
 /**
@@ -1980,11 +1984,13 @@ function characters_character_wallet_journal(name, page, opt_headers) {
 
 /**
 * Public information about a corporation
+* @param {integer} corporation_id (Required) An EVE corporation ID
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Public information about a corporation
 * @customfunction
 */
-function corporations_corporation(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+function corporations_corporation(corporation_id, opt_headers) {
+  if(!corporation_id) throw 'corporation_id is required';
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers})
 }
 
