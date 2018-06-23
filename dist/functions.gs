@@ -40,18 +40,6 @@ function alliances_alliance_icons(opt_headers) {
 }
 
 /**
-* Resolve a set of character IDs to character names
-* @param {array} character_ids (Required) A comma separated list of character IDs
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of id/name associations
-* @customfunction
-*/
-function characters_names(character_ids, opt_headers) {
-  if(!character_ids) throw 'character_ids is required';
-  return parseData_(arguments.callee.name,{character_ids:character_ids,opt_headers:opt_headers})
-}
-
-/**
 * Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime 
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -1540,18 +1528,6 @@ function wars_war_killmails(war_id, page, opt_headers) {
 }
 
 /**
-* Resolve a set of alliance IDs to alliance names
-* @param {array} alliance_ids (Required) A comma separated list of alliance IDs
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of id/name associations
-* @customfunction
-*/
-function alliances_names(alliance_ids, opt_headers) {
-  if(!alliance_ids) throw 'alliance_ids is required';
-  return parseData_(arguments.callee.name,{alliance_ids:alliance_ids,opt_headers:opt_headers})
-}
-
-/**
 * Return contacts of an alliance
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -1685,18 +1661,6 @@ function characters_character_skillqueue(name, opt_headers) {
 */
 function characters_character_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* Resolve a set of corporation IDs to corporation names
-* @param {array} corporation_ids (Required) A comma separated list of corporation IDs
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of id/name associations
-* @customfunction
-*/
-function corporations_names(corporation_ids, opt_headers) {
-  if(!corporation_ids) throw 'corporation_ids is required';
-  return parseData_(arguments.callee.name,{corporation_ids:corporation_ids,opt_headers:opt_headers})
 }
 
 /**

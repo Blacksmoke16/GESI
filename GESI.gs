@@ -8,11 +8,11 @@ BASE_URL = 'https://esi.evetech.net'
 
 // Setup variables used throughout script
 // From your dev app https://developers.eveonline.com/applications
-CLIENT_ID = 'a7015d3dafa342c29b70f9cdd8b9c767';
-CLIENT_SECRET = 'l1GDn1jm5Q2lzfe6cYhSUDNuwiCqXHPy02YvgTeJ';
+CLIENT_ID = 'YOUR_CLIENT_ID';
+CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
 
 // Name of your 'main' character to use when a function is called without a character name as a param
-MAIN_CHARACTER = "Blacksmoke16";
+MAIN_CHARACTER = "YOUR_MAIN_CHARACTER_NAME";
 
 CACHE = CacheService.getDocumentCache();
 
@@ -106,7 +106,7 @@ function parseData_(endpoint_name, params) {
      data.forEach(function(obj) {
        var temp = [];
        endpoint.headers.forEach(function(header) {
-         temp.push(Array.isArray(header.name) ? JSON.stringify(data[header.name]) : data[header.name]);
+         temp.push(Array.isArray(obj[header.name]) ? JSON.stringify(obj[header.name]) : obj[header.name]);
        });
        result.push(temp);
      });
@@ -185,7 +185,7 @@ function showSidebar() {
   var scriptUrl = 'https://script.google.com/macros/d/' + ScriptApp.getScriptId() + '/usercallback';
   var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(120).createToken();
   var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
-  var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank">Authorize with EVE SSO</a>.');
+  var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>');  
   template.authorizationUrl = authorizationUrl;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }

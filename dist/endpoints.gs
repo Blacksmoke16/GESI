@@ -152,35 +152,6 @@ ENDPOINTS = {
     ],
     "summary": "Icon URLs for the given alliance id and server"
   },
-  "characters_names": {
-    "description": "Resolve a set of character IDs to character names",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "character_name"
-      }
-    ],
-    "path": "/v1/characters/names/",
-    "parameters": [
-      {
-        "description": "A comma separated list of character IDs",
-        "in": "query",
-        "name": "character_ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations"
-  },
   "characters_character_agents_research": {
     "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
     "headers": [
@@ -5742,35 +5713,6 @@ ENDPOINTS = {
     ],
     "summary": "A list of killmail IDs and hashes"
   },
-  "alliances_names": {
-    "description": "Resolve a set of alliance IDs to alliance names",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "alliance_name"
-      }
-    ],
-    "path": "/v2/alliances/names/",
-    "parameters": [
-      {
-        "description": "A comma separated list of alliance IDs",
-        "in": "query",
-        "name": "alliance_ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations"
-  },
   "alliances_alliance_contacts": {
     "description": "Return contacts of an alliance",
     "headers": [
@@ -6676,35 +6618,6 @@ ENDPOINTS = {
     ],
     "scope": "esi-characterstats.read.v1",
     "summary": "Character stats"
-  },
-  "corporations_names": {
-    "description": "Resolve a set of corporation IDs to corporation names",
-    "headers": [
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "corporation_name"
-      }
-    ],
-    "path": "/v2/corporations/names/",
-    "parameters": [
-      {
-        "description": "A comma separated list of corporation IDs",
-        "in": "query",
-        "name": "corporation_ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations"
   },
   "corporations_corporation_alliancehistory": {
     "description": "Get a list of all the alliances a corporation has been a member of",
