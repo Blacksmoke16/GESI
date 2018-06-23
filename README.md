@@ -87,16 +87,10 @@ This is of course just an example, but the general idea can be used as a templat
     "description": "Public information about an alliance",
     "headers": [
       {
-        "name": "name"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
         "name": "creator_corporation_id"
       },
       {
-        "name": "ticker"
+        "name": "creator_id"
       },
       {
         "name": "date_founded"
@@ -106,10 +100,23 @@ This is of course just an example, but the general idea can be used as a templat
       },
       {
         "name": "faction_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ticker"
       }
     ],
     "path": "/v3/alliances/{alliance_id}/",
     "parameters": [
+      {
+        "description": "An EVE alliance ID",
+        "in": "path",
+        "name": "alliance_id",
+        "type": "integer",
+        "required": true
+      },
       {
         "description": "Default: True, Boolean if column headings should be listed or not.",
         "in": "parameters",
