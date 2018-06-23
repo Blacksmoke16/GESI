@@ -269,9 +269,6 @@ module EveSwagger
           title = items.title
           headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
         end
-        if required = items.required
-          headers.sort_by! { |h| required.index(h.name) || Float64::INFINITY }
-        end
         # Single object
       elsif properties = schema.properties
         properties.each do |k, v|
@@ -281,11 +278,8 @@ module EveSwagger
           sub_headers = v.properties.not_nil!.keys if v.type == "object"
           headers << Header.new(k, sub_headers)
         end
-        if required = schema.required
-          headers.sort_by! { |h| required.index(h.name) || Float64::INFINITY }
-        end
       end
-      headers
+      headers.sort_by! { |h| h.name }
     end
 
     private def parse_items(item : Item)

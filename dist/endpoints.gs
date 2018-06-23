@@ -159,16 +159,16 @@ ENDPOINTS = {
         "name": "agent_id"
       },
       {
-        "name": "skill_type_id"
-      },
-      {
-        "name": "started_at"
-      },
-      {
         "name": "points_per_day"
       },
       {
         "name": "remainder_points"
+      },
+      {
+        "name": "skill_type_id"
+      },
+      {
+        "name": "started_at"
       }
     ],
     "path": "/v1/characters/{character_id}/agents_research/",
@@ -195,10 +195,19 @@ ENDPOINTS = {
     "description": "Return attributes of a character",
     "headers": [
       {
+        "name": "accrued_remap_cooldown_date"
+      },
+      {
+        "name": "bonus_remaps"
+      },
+      {
         "name": "charisma"
       },
       {
         "name": "intelligence"
+      },
+      {
+        "name": "last_remap_date"
       },
       {
         "name": "memory"
@@ -208,15 +217,6 @@ ENDPOINTS = {
       },
       {
         "name": "willpower"
-      },
-      {
-        "name": "accrued_remap_cooldown_date"
-      },
-      {
-        "name": "bonus_remaps"
-      },
-      {
-        "name": "last_remap_date"
       }
     ],
     "path": "/v1/characters/{character_id}/attributes/",
@@ -356,67 +356,67 @@ ENDPOINTS = {
     "description": "Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
     "headers": [
       {
-        "name": "contract_id"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "issuer_corporation_id"
+        "name": "acceptor_id"
       },
       {
         "name": "assignee_id"
       },
       {
-        "name": "acceptor_id"
-      },
-      {
-        "name": "type"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
         "name": "availability"
       },
       {
-        "name": "date_issued"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "start_location_id"
-      },
-      {
-        "name": "reward"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "date_completed"
-      },
-      {
-        "name": "date_accepted"
+        "name": "buyout"
       },
       {
         "name": "collateral"
       },
       {
-        "name": "buyout"
+        "name": "contract_id"
+      },
+      {
+        "name": "date_accepted"
+      },
+      {
+        "name": "date_completed"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "for_corporation"
+      },
+      {
+        "name": "issuer_corporation_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "start_location_id"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "type"
       },
       {
         "name": "volume"
@@ -453,6 +453,9 @@ ENDPOINTS = {
     "description": "Lists bids on a particular auction contract",
     "headers": [
       {
+        "name": "amount"
+      },
+      {
         "name": "bid_id"
       },
       {
@@ -460,9 +463,6 @@ ENDPOINTS = {
       },
       {
         "name": "date_bid"
-      },
-      {
-        "name": "amount"
       }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/bids/",
@@ -496,22 +496,22 @@ ENDPOINTS = {
     "description": "Lists items of a particular contract",
     "headers": [
       {
-        "name": "record_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "quantity"
+        "name": "is_included"
       },
       {
         "name": "is_singleton"
       },
       {
-        "name": "is_included"
+        "name": "quantity"
       },
       {
         "name": "raw_quantity"
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/items/",
@@ -545,16 +545,16 @@ ENDPOINTS = {
     "description": "Get a list of all the corporations a character has been a member of",
     "headers": [
       {
-        "name": "start_date"
+        "name": "corporation_id"
       },
       {
-        "name": "corporation_id"
+        "name": "is_deleted"
       },
       {
         "name": "record_id"
       },
       {
-        "name": "is_deleted"
+        "name": "start_date"
       }
     ],
     "path": "/v1/characters/{character_id}/corporationhistory/",
@@ -606,16 +606,10 @@ ENDPOINTS = {
     "description": "Return fittings of a character",
     "headers": [
       {
-        "name": "fitting_id"
-      },
-      {
-        "name": "name"
-      },
-      {
         "name": "description"
       },
       {
-        "name": "ship_type_id"
+        "name": "fitting_id"
       },
       {
         "name": "items",
@@ -624,6 +618,12 @@ ENDPOINTS = {
           "quantity",
           "type_id"
         ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ship_type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/fittings/",
@@ -653,13 +653,13 @@ ENDPOINTS = {
         "name": "fleet_id"
       },
       {
-        "name": "wing_id"
+        "name": "role"
       },
       {
         "name": "squad_id"
       },
       {
-        "name": "role"
+        "name": "wing_id"
       }
     ],
     "path": "/v1/characters/{character_id}/fleet/",
@@ -686,6 +686,18 @@ ENDPOINTS = {
     "description": "Statistical overview of a character involved in faction warfare",
     "headers": [
       {
+        "name": "current_rank"
+      },
+      {
+        "name": "enlisted_on"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "highest_rank"
+      },
+      {
         "name": "kills",
         "sub_headers": [
           "last_week",
@@ -700,18 +712,6 @@ ENDPOINTS = {
           "total",
           "yesterday"
         ]
-      },
-      {
-        "name": "current_rank"
-      },
-      {
-        "name": "enlisted_on"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "highest_rank"
       }
     ],
     "path": "/v1/characters/{character_id}/fw/stats/",
@@ -765,67 +765,67 @@ ENDPOINTS = {
     "description": "List industry jobs placed by a character",
     "headers": [
       {
-        "name": "job_id"
-      },
-      {
-        "name": "installer_id"
-      },
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "station_id"
-      },
-      {
         "name": "activity_id"
       },
       {
         "name": "blueprint_id"
       },
       {
-        "name": "blueprint_type_id"
-      },
-      {
         "name": "blueprint_location_id"
       },
       {
-        "name": "output_location_id"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "start_date"
-      },
-      {
-        "name": "end_date"
-      },
-      {
-        "name": "product_type_id"
-      },
-      {
-        "name": "probability"
-      },
-      {
-        "name": "pause_date"
-      },
-      {
-        "name": "completed_date"
-      },
-      {
-        "name": "licensed_runs"
+        "name": "blueprint_type_id"
       },
       {
         "name": "completed_character_id"
       },
       {
+        "name": "completed_date"
+      },
+      {
         "name": "cost"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "end_date"
+      },
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "installer_id"
+      },
+      {
+        "name": "job_id"
+      },
+      {
+        "name": "licensed_runs"
+      },
+      {
+        "name": "output_location_id"
+      },
+      {
+        "name": "pause_date"
+      },
+      {
+        "name": "probability"
+      },
+      {
+        "name": "product_type_id"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "start_date"
+      },
+      {
+        "name": "station_id"
+      },
+      {
+        "name": "status"
       },
       {
         "name": "successful_runs"
@@ -862,10 +862,10 @@ ENDPOINTS = {
     "description": "Return a list of a character's kills and losses going back 90 days",
     "headers": [
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       },
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       }
     ],
     "path": "/v1/characters/{character_id}/killmails/recent/",
@@ -1117,28 +1117,13 @@ ENDPOINTS = {
     "description": "Return a list of medals the character has",
     "headers": [
       {
-        "name": "medal_id"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "corporation_id"
-      },
-      {
-        "name": "issuer_id"
       },
       {
         "name": "date"
       },
       {
-        "name": "reason"
-      },
-      {
-        "name": "status"
+        "name": "description"
       },
       {
         "name": "graphics",
@@ -1148,6 +1133,21 @@ ENDPOINTS = {
           "layer",
           "part"
         ]
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "medal_id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "title"
       }
     ],
     "path": "/v1/characters/{character_id}/medals/",
@@ -1177,13 +1177,13 @@ ENDPOINTS = {
         "name": "date"
       },
       {
+        "name": "quantity"
+      },
+      {
         "name": "solar_system_id"
       },
       {
         "name": "type_id"
-      },
-      {
-        "name": "quantity"
       }
     ],
     "path": "/v1/characters/{character_id}/mining/",
@@ -1217,19 +1217,19 @@ ENDPOINTS = {
     "description": "Return notifications about having been added to someone's contact list",
     "headers": [
       {
+        "name": "message"
+      },
+      {
         "name": "notification_id"
       },
       {
         "name": "send_date"
       },
       {
-        "name": "standing_level"
-      },
-      {
-        "name": "message"
-      },
-      {
         "name": "sender_character_id"
+      },
+      {
+        "name": "standing_level"
       }
     ],
     "path": "/v1/characters/{character_id}/notifications/contacts/",
@@ -1256,10 +1256,10 @@ ENDPOINTS = {
     "description": "Return a list of tasks finished by a character",
     "headers": [
       {
-        "name": "task_id"
+        "name": "completed_at"
       },
       {
-        "name": "completed_at"
+        "name": "task_id"
       }
     ],
     "path": "/v1/characters/{character_id}/opportunities/",
@@ -1286,40 +1286,7 @@ ENDPOINTS = {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
     "headers": [
       {
-        "name": "is_corporation"
-      },
-      {
         "name": "duration"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "issued"
       },
       {
         "name": "escrow"
@@ -1328,7 +1295,40 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
+        "name": "is_corporation"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
       }
     ],
     "path": "/v1/characters/{character_id}/orders/history/",
@@ -1362,7 +1362,13 @@ ENDPOINTS = {
     "description": "Returns a list of all planetary colonies owned by a character.",
     "headers": [
       {
-        "name": "solar_system_id"
+        "name": "last_update"
+      },
+      {
+        "name": "num_pins"
+      },
+      {
+        "name": "owner_id"
       },
       {
         "name": "planet_id"
@@ -1371,16 +1377,10 @@ ENDPOINTS = {
         "name": "planet_type"
       },
       {
-        "name": "owner_id"
-      },
-      {
-        "name": "last_update"
+        "name": "solar_system_id"
       },
       {
         "name": "upgrade_level"
-      },
-      {
-        "name": "num_pins"
       }
     ],
     "path": "/v1/characters/{character_id}/planets/",
@@ -1407,13 +1407,13 @@ ENDPOINTS = {
     "description": "Get the current ship type, name and id",
     "headers": [
       {
-        "name": "ship_type_id"
-      },
-      {
         "name": "ship_item_id"
       },
       {
         "name": "ship_name"
+      },
+      {
+        "name": "ship_type_id"
       }
     ],
     "path": "/v1/characters/{character_id}/ship/",
@@ -1526,25 +1526,10 @@ ENDPOINTS = {
     "description": "Get wallet transactions of a character",
     "headers": [
       {
-        "name": "transaction_id"
+        "name": "client_id"
       },
       {
         "name": "date"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unit_price"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "client_id"
       },
       {
         "name": "is_buy"
@@ -1554,6 +1539,21 @@ ENDPOINTS = {
       },
       {
         "name": "journal_ref_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "transaction_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unit_price"
       }
     ],
     "path": "/v1/characters/{character_id}/wallet/transactions/",
@@ -1587,19 +1587,19 @@ ENDPOINTS = {
     "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
     "headers": [
       {
-        "name": "structure_id"
-      },
-      {
-        "name": "moon_id"
+        "name": "chunk_arrival_time"
       },
       {
         "name": "extraction_start_time"
       },
       {
-        "name": "chunk_arrival_time"
+        "name": "moon_id"
       },
       {
         "name": "natural_decay_time"
+      },
+      {
+        "name": "structure_id"
       }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/extractions/",
@@ -1673,19 +1673,19 @@ ENDPOINTS = {
     "description": "Paginated record of all mining seen by an observer",
     "headers": [
       {
+        "name": "character_id"
+      },
+      {
         "name": "last_updated"
       },
       {
-        "name": "character_id"
+        "name": "quantity"
       },
       {
         "name": "recorded_corporation_id"
       },
       {
         "name": "type_id"
-      },
-      {
-        "name": "quantity"
       }
     ],
     "path": "/v1/corporation/{corporation_id}/mining/observers/{observer_id}/",
@@ -1748,27 +1748,18 @@ ENDPOINTS = {
         "name": "bookmark_id"
       },
       {
-        "name": "creator_id"
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "notes"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "coordinates",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
+      },
+      {
+        "name": "created"
+      },
+      {
+        "name": "creator_id"
       },
       {
         "name": "folder_id"
@@ -1779,6 +1770,15 @@ ENDPOINTS = {
           "item_id",
           "type_id"
         ]
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "notes"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/",
@@ -1812,13 +1812,13 @@ ENDPOINTS = {
     "description": "A list of your corporation's bookmark folders",
     "headers": [
       {
+        "name": "creator_id"
+      },
+      {
         "name": "folder_id"
       },
       {
         "name": "name"
-      },
-      {
-        "name": "creator_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
@@ -1882,67 +1882,67 @@ ENDPOINTS = {
     "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
     "headers": [
       {
-        "name": "contract_id"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "issuer_corporation_id"
+        "name": "acceptor_id"
       },
       {
         "name": "assignee_id"
       },
       {
-        "name": "acceptor_id"
-      },
-      {
-        "name": "type"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
         "name": "availability"
       },
       {
-        "name": "date_issued"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "start_location_id"
-      },
-      {
-        "name": "reward"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "date_completed"
-      },
-      {
-        "name": "date_accepted"
+        "name": "buyout"
       },
       {
         "name": "collateral"
       },
       {
-        "name": "buyout"
+        "name": "contract_id"
+      },
+      {
+        "name": "date_accepted"
+      },
+      {
+        "name": "date_completed"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "for_corporation"
+      },
+      {
+        "name": "issuer_corporation_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "start_location_id"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "type"
       },
       {
         "name": "volume"
@@ -1979,6 +1979,9 @@ ENDPOINTS = {
     "description": "Lists bids on a particular auction contract",
     "headers": [
       {
+        "name": "amount"
+      },
+      {
         "name": "bid_id"
       },
       {
@@ -1986,9 +1989,6 @@ ENDPOINTS = {
       },
       {
         "name": "date_bid"
-      },
-      {
-        "name": "amount"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/bids/",
@@ -2029,22 +2029,22 @@ ENDPOINTS = {
     "description": "Lists items of a particular contract",
     "headers": [
       {
-        "name": "record_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "quantity"
+        "name": "is_included"
       },
       {
         "name": "is_singleton"
       },
       {
-        "name": "is_included"
+        "name": "quantity"
       },
       {
         "name": "raw_quantity"
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/items/",
@@ -2078,25 +2078,13 @@ ENDPOINTS = {
     "description": "List customs offices owned by a corporation",
     "headers": [
       {
-        "name": "office_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "reinforce_exit_start"
-      },
-      {
-        "name": "reinforce_exit_end"
-      },
-      {
-        "name": "allow_alliance_access"
+        "name": "alliance_tax_rate"
       },
       {
         "name": "allow_access_with_standings"
       },
       {
-        "name": "alliance_tax_rate"
+        "name": "allow_alliance_access"
       },
       {
         "name": "bad_standing_tax_rate"
@@ -2114,7 +2102,19 @@ ENDPOINTS = {
         "name": "neutral_standing_tax_rate"
       },
       {
+        "name": "office_id"
+      },
+      {
+        "name": "reinforce_exit_end"
+      },
+      {
+        "name": "reinforce_exit_start"
+      },
+      {
         "name": "standing_level"
+      },
+      {
+        "name": "system_id"
       },
       {
         "name": "terrible_standing_tax_rate"
@@ -2192,10 +2192,10 @@ ENDPOINTS = {
         "name": "facility_id"
       },
       {
-        "name": "type_id"
+        "name": "system_id"
       },
       {
-        "name": "system_id"
+        "name": "type_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/facilities/",
@@ -2222,6 +2222,12 @@ ENDPOINTS = {
     "description": "Statistics about a corporation involved in faction warfare",
     "headers": [
       {
+        "name": "enlisted_on"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
         "name": "kills",
         "sub_headers": [
           "last_week",
@@ -2230,21 +2236,15 @@ ENDPOINTS = {
         ]
       },
       {
+        "name": "pilots"
+      },
+      {
         "name": "victory_points",
         "sub_headers": [
           "last_week",
           "total",
           "yesterday"
         ]
-      },
-      {
-        "name": "enlisted_on"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "pilots"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/fw/stats/",
@@ -2296,67 +2296,67 @@ ENDPOINTS = {
     "description": "List industry jobs run by a corporation",
     "headers": [
       {
-        "name": "job_id"
-      },
-      {
-        "name": "installer_id"
-      },
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
         "name": "activity_id"
       },
       {
         "name": "blueprint_id"
       },
       {
-        "name": "blueprint_type_id"
-      },
-      {
         "name": "blueprint_location_id"
       },
       {
-        "name": "output_location_id"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "start_date"
-      },
-      {
-        "name": "end_date"
-      },
-      {
-        "name": "product_type_id"
-      },
-      {
-        "name": "probability"
-      },
-      {
-        "name": "pause_date"
-      },
-      {
-        "name": "completed_date"
-      },
-      {
-        "name": "licensed_runs"
+        "name": "blueprint_type_id"
       },
       {
         "name": "completed_character_id"
       },
       {
+        "name": "completed_date"
+      },
+      {
         "name": "cost"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "end_date"
+      },
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "installer_id"
+      },
+      {
+        "name": "job_id"
+      },
+      {
+        "name": "licensed_runs"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "output_location_id"
+      },
+      {
+        "name": "pause_date"
+      },
+      {
+        "name": "probability"
+      },
+      {
+        "name": "product_type_id"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "start_date"
+      },
+      {
+        "name": "status"
       },
       {
         "name": "successful_runs"
@@ -2400,10 +2400,10 @@ ENDPOINTS = {
     "description": "Get a list of a corporation's kills and losses going back 90 days",
     "headers": [
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       },
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/killmails/recent/",
@@ -2437,19 +2437,19 @@ ENDPOINTS = {
     "description": "Returns a corporation's medals",
     "headers": [
       {
-        "name": "medal_id"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "description"
+        "name": "created_at"
       },
       {
         "name": "creator_id"
       },
       {
-        "name": "created_at"
+        "name": "description"
+      },
+      {
+        "name": "medal_id"
+      },
+      {
+        "name": "title"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/",
@@ -2483,22 +2483,22 @@ ENDPOINTS = {
     "description": "Returns medals issued by a corporation",
     "headers": [
       {
-        "name": "medal_id"
+        "name": "character_id"
       },
       {
-        "name": "character_id"
+        "name": "issued_at"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "medal_id"
       },
       {
         "name": "reason"
       },
       {
         "name": "status"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "issued_at"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/medals/issued/",
@@ -2588,10 +2588,10 @@ ENDPOINTS = {
     "description": "Returns additional information about a corporation's members which helps tracking their activities",
     "headers": [
       {
-        "name": "character_id"
+        "name": "base_id"
       },
       {
-        "name": "base_id"
+        "name": "character_id"
       },
       {
         "name": "location_id"
@@ -2633,40 +2633,7 @@ ENDPOINTS = {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
     "headers": [
       {
-        "name": "wallet_division"
-      },
-      {
         "name": "duration"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "issued"
       },
       {
         "name": "escrow"
@@ -2675,7 +2642,40 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "wallet_division"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/orders/history/",
@@ -2743,10 +2743,12 @@ ENDPOINTS = {
     "description": "Get details about a given outpost. Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
     "headers": [
       {
-        "name": "owner_id"
-      },
-      {
-        "name": "system_id"
+        "name": "coordinates",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
       },
       {
         "name": "docking_cost_per_ship_volume"
@@ -2755,24 +2757,13 @@ ENDPOINTS = {
         "name": "office_rental_cost"
       },
       {
-        "name": "type_id"
+        "name": "owner_id"
       },
       {
         "name": "reprocessing_efficiency"
       },
       {
         "name": "reprocessing_station_take"
-      },
-      {
-        "name": "standing_owner_id"
-      },
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
       },
       {
         "name": "services",
@@ -2782,6 +2773,15 @@ ENDPOINTS = {
           "service_name",
           "surcharge_per_bad_standing"
         ]
+      },
+      {
+        "name": "standing_owner_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/outposts/{outpost_id}/",
@@ -2890,16 +2890,19 @@ ENDPOINTS = {
     "description": "Return how roles have changed for a coporation's members, up to a month",
     "headers": [
       {
-        "name": "character_id"
+        "name": "changed_at"
       },
       {
-        "name": "changed_at"
+        "name": "character_id"
       },
       {
         "name": "issuer_id"
       },
       {
-        "name": "role_type"
+        "name": "new_roles",
+        "sub_headers": [
+          "new_roles"
+        ]
       },
       {
         "name": "old_roles",
@@ -2908,10 +2911,7 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "new_roles",
-        "sub_headers": [
-          "new_roles"
-        ]
+        "name": "role_type"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/roles/history/",
@@ -2945,13 +2945,13 @@ ENDPOINTS = {
     "description": "Return the current shareholders of a corporation.",
     "headers": [
       {
+        "name": "share_count"
+      },
+      {
         "name": "shareholder_id"
       },
       {
         "name": "shareholder_type"
-      },
-      {
-        "name": "share_count"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/shareholders/",
@@ -3025,15 +3025,6 @@ ENDPOINTS = {
     "description": "Returns list of corporation starbases (POSes)",
     "headers": [
       {
-        "name": "starbase_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
         "name": "moon_id"
       },
       {
@@ -3043,7 +3034,16 @@ ENDPOINTS = {
         "name": "reinforced_until"
       },
       {
+        "name": "starbase_id"
+      },
+      {
         "name": "state"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
       },
       {
         "name": "unanchor_at"
@@ -3080,37 +3080,19 @@ ENDPOINTS = {
     "description": "Returns various settings and fuels of a starbase (POS)",
     "headers": [
       {
-        "name": "fuel_bay_view"
-      },
-      {
-        "name": "fuel_bay_take"
-      },
-      {
-        "name": "anchor"
-      },
-      {
-        "name": "unanchor"
-      },
-      {
-        "name": "online"
-      },
-      {
-        "name": "offline"
+        "name": "allow_alliance_members"
       },
       {
         "name": "allow_corporation_members"
       },
       {
-        "name": "allow_alliance_members"
-      },
-      {
-        "name": "use_alliance_standings"
-      },
-      {
-        "name": "attack_if_other_security_status_dropping"
+        "name": "anchor"
       },
       {
         "name": "attack_if_at_war"
+      },
+      {
+        "name": "attack_if_other_security_status_dropping"
       },
       {
         "name": "attack_security_status_threshold"
@@ -3119,11 +3101,29 @@ ENDPOINTS = {
         "name": "attack_standing_threshold"
       },
       {
+        "name": "fuel_bay_take"
+      },
+      {
+        "name": "fuel_bay_view"
+      },
+      {
         "name": "fuels",
         "sub_headers": [
           "quantity",
           "type_id"
         ]
+      },
+      {
+        "name": "offline"
+      },
+      {
+        "name": "online"
+      },
+      {
+        "name": "unanchor"
+      },
+      {
+        "name": "use_alliance_standings"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/starbases/{starbase_id}/",
@@ -3242,10 +3242,10 @@ ENDPOINTS = {
     "description": "Get a corporation's wallets",
     "headers": [
       {
-        "name": "division"
+        "name": "balance"
       },
       {
-        "name": "balance"
+        "name": "division"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/",
@@ -3272,31 +3272,31 @@ ENDPOINTS = {
     "description": "Get wallet transactions of a corporation",
     "headers": [
       {
-        "name": "transaction_id"
+        "name": "client_id"
       },
       {
         "name": "date"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unit_price"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "client_id"
       },
       {
         "name": "is_buy"
       },
       {
         "name": "journal_ref_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "transaction_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unit_price"
       }
     ],
     "path": "/v1/corporations/{corporation_id}/wallets/{division}/transactions/",
@@ -3409,6 +3409,9 @@ ENDPOINTS = {
     "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
     "headers": [
       {
+        "name": "created_by"
+      },
+      {
         "name": "dogma_attributes",
         "sub_headers": [
           "attribute_id",
@@ -3423,13 +3426,10 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "created_by"
+        "name": "mutator_type_id"
       },
       {
         "name": "source_type_id"
-      },
-      {
-        "name": "mutator_type_id"
       }
     ],
     "path": "/v1/dogma/dynamic/items/{type_id}/{item_id}/",
@@ -3481,9 +3481,6 @@ ENDPOINTS = {
     "description": "Return details about a fleet",
     "headers": [
       {
-        "name": "motd"
-      },
-      {
         "name": "is_free_move"
       },
       {
@@ -3491,6 +3488,9 @@ ENDPOINTS = {
       },
       {
         "name": "is_voice_enabled"
+      },
+      {
+        "name": "motd"
       }
     ],
     "path": "/v1/fleets/{fleet_id}/",
@@ -3527,13 +3527,7 @@ ENDPOINTS = {
         "name": "character_id"
       },
       {
-        "name": "ship_type_id"
-      },
-      {
-        "name": "wing_id"
-      },
-      {
-        "name": "squad_id"
+        "name": "join_time"
       },
       {
         "name": "role"
@@ -3542,16 +3536,22 @@ ENDPOINTS = {
         "name": "role_name"
       },
       {
-        "name": "join_time"
-      },
-      {
-        "name": "takes_fleet_warp"
+        "name": "ship_type_id"
       },
       {
         "name": "solar_system_id"
       },
       {
+        "name": "squad_id"
+      },
+      {
         "name": "station_id"
+      },
+      {
+        "name": "takes_fleet_warp"
+      },
+      {
+        "name": "wing_id"
       }
     ],
     "path": "/v1/fleets/{fleet_id}/members/",
@@ -3592,10 +3592,10 @@ ENDPOINTS = {
     "description": "Return information about wings in a fleet",
     "headers": [
       {
-        "name": "name"
+        "name": "id"
       },
       {
-        "name": "id"
+        "name": "name"
       },
       {
         "name": "squads",
@@ -3742,18 +3742,18 @@ ENDPOINTS = {
         "name": "faction_id"
       },
       {
-        "name": "pilots"
-      },
-      {
-        "name": "systems_controlled"
-      },
-      {
         "name": "kills",
         "sub_headers": [
           "last_week",
           "total",
           "yesterday"
         ]
+      },
+      {
+        "name": "pilots"
+      },
+      {
+        "name": "systems_controlled"
       },
       {
         "name": "victory_points",
@@ -3780,7 +3780,7 @@ ENDPOINTS = {
     "description": "An overview of the current ownership of faction warfare solar systems",
     "headers": [
       {
-        "name": "solar_system_id"
+        "name": "contested"
       },
       {
         "name": "occupier_faction_id"
@@ -3789,13 +3789,13 @@ ENDPOINTS = {
         "name": "owner_faction_id"
       },
       {
+        "name": "solar_system_id"
+      },
+      {
         "name": "victory_points"
       },
       {
         "name": "victory_points_threshold"
-      },
-      {
-        "name": "contested"
       }
     ],
     "path": "/v1/fw/systems/",
@@ -3814,10 +3814,10 @@ ENDPOINTS = {
     "description": "Data about which NPC factions are at war",
     "headers": [
       {
-        "name": "faction_id"
+        "name": "against_id"
       },
       {
-        "name": "against_id"
+        "name": "faction_id"
       }
     ],
     "path": "/v1/fw/wars/",
@@ -3836,31 +3836,31 @@ ENDPOINTS = {
     "description": "Return a list of current incursions",
     "headers": [
       {
-        "name": "type"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "influence"
-      },
-      {
-        "name": "has_boss"
+        "name": "constellation_id"
       },
       {
         "name": "faction_id"
       },
       {
-        "name": "constellation_id"
-      },
-      {
-        "name": "staging_solar_system_id"
+        "name": "has_boss"
       },
       {
         "name": "infested_solar_systems",
         "sub_headers": [
           "solar_systems"
         ]
+      },
+      {
+        "name": "influence"
+      },
+      {
+        "name": "staging_solar_system_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type"
       }
     ],
     "path": "/v1/incursions/",
@@ -3885,16 +3885,16 @@ ENDPOINTS = {
         "name": "owner_id"
       },
       {
-        "name": "type_id"
+        "name": "region_id"
       },
       {
         "name": "solar_system_id"
       },
       {
-        "name": "region_id"
+        "name": "tax"
       },
       {
-        "name": "tax"
+        "name": "type_id"
       }
     ],
     "path": "/v1/industry/facilities/",
@@ -3913,14 +3913,14 @@ ENDPOINTS = {
     "description": "Return cost indices for solar systems",
     "headers": [
       {
-        "name": "solar_system_id"
-      },
-      {
         "name": "cost_indices",
         "sub_headers": [
           "activity",
           "cost_index"
         ]
+      },
+      {
+        "name": "solar_system_id"
       }
     ],
     "path": "/v1/industry/systems/",
@@ -3939,15 +3939,15 @@ ENDPOINTS = {
     "description": "Return available insurance levels for all ship types",
     "headers": [
       {
-        "name": "type_id"
-      },
-      {
         "name": "levels",
         "sub_headers": [
           "cost",
           "name",
           "payout"
         ]
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/insurance/prices/",
@@ -3973,25 +3973,6 @@ ENDPOINTS = {
     "description": "Return a single killmail from its ID and hash",
     "headers": [
       {
-        "name": "killmail_id"
-      },
-      {
-        "name": "killmail_time"
-      },
-      {
-        "name": "victim",
-        "sub_headers": [
-          "alliance_id",
-          "character_id",
-          "corporation_id",
-          "damage_taken",
-          "faction_id",
-          "items",
-          "position",
-          "ship_type_id"
-        ]
-      },
-      {
         "name": "attackers",
         "sub_headers": [
           "alliance_id",
@@ -4006,10 +3987,29 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "solar_system_id"
+        "name": "killmail_id"
+      },
+      {
+        "name": "killmail_time"
       },
       {
         "name": "moon_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "victim",
+        "sub_headers": [
+          "alliance_id",
+          "character_id",
+          "corporation_id",
+          "damage_taken",
+          "faction_id",
+          "items",
+          "position",
+          "ship_type_id"
+        ]
       },
       {
         "name": "war_id"
@@ -4045,19 +4045,19 @@ ENDPOINTS = {
     "description": "Return a list of offers from a specific corporation's loyalty store",
     "headers": [
       {
-        "name": "offer_id"
+        "name": "ak_cost"
       },
       {
-        "name": "type_id"
-      },
-      {
-        "name": "quantity"
+        "name": "isk_cost"
       },
       {
         "name": "lp_cost"
       },
       {
-        "name": "isk_cost"
+        "name": "offer_id"
+      },
+      {
+        "name": "quantity"
       },
       {
         "name": "required_items",
@@ -4067,7 +4067,7 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "ak_cost"
+        "name": "type_id"
       }
     ],
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
@@ -4105,22 +4105,22 @@ ENDPOINTS = {
     "description": "Get information on an item group",
     "headers": [
       {
+        "name": "description"
+      },
+      {
         "name": "market_group_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "description"
+        "name": "parent_group_id"
       },
       {
         "name": "types",
         "sub_headers": [
           "id_types"
         ]
-      },
-      {
-        "name": "parent_group_id"
       }
     ],
     "path": "/v1/markets/groups/{market_group_id}/",
@@ -4153,13 +4153,13 @@ ENDPOINTS = {
     "description": "Return a list of prices",
     "headers": [
       {
-        "name": "type_id"
-      },
-      {
         "name": "adjusted_price"
       },
       {
         "name": "average_price"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/markets/prices/",
@@ -4178,37 +4178,37 @@ ENDPOINTS = {
     "description": "Return all orders in a structure",
     "headers": [
       {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "price"
+        "name": "duration"
       },
       {
         "name": "is_buy_order"
       },
       {
-        "name": "duration"
-      },
-      {
         "name": "issued"
       },
       {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
         "name": "range"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
       }
     ],
     "path": "/v1/markets/structures/{structure_id}/",
@@ -4249,22 +4249,22 @@ ENDPOINTS = {
     "description": "Return a list of historical market statistics for the specified type in a region",
     "headers": [
       {
+        "name": "average"
+      },
+      {
         "name": "date"
+      },
+      {
+        "name": "highest"
+      },
+      {
+        "name": "lowest"
       },
       {
         "name": "order_count"
       },
       {
         "name": "volume"
-      },
-      {
-        "name": "highest"
-      },
-      {
-        "name": "average"
-      },
-      {
-        "name": "lowest"
       }
     ],
     "path": "/v1/markets/{region_id}/history/",
@@ -4297,40 +4297,40 @@ ENDPOINTS = {
     "description": "Return a list of orders in a region",
     "headers": [
       {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "price"
+        "name": "duration"
       },
       {
         "name": "is_buy_order"
       },
       {
-        "name": "duration"
-      },
-      {
         "name": "issued"
       },
       {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
         "name": "range"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
       }
     ],
     "path": "/v1/markets/{region_id}/orders/",
@@ -4429,13 +4429,19 @@ ENDPOINTS = {
     "description": "Return information of an opportunities group",
     "headers": [
       {
+        "name": "connected_groups",
+        "sub_headers": [
+          "connected_groups"
+        ]
+      },
+      {
+        "name": "description"
+      },
+      {
         "name": "group_id"
       },
       {
         "name": "name"
-      },
-      {
-        "name": "description"
       },
       {
         "name": "notification"
@@ -4444,12 +4450,6 @@ ENDPOINTS = {
         "name": "required_tasks",
         "sub_headers": [
           "required_tasks"
-        ]
-      },
-      {
-        "name": "connected_groups",
-        "sub_headers": [
-          "connected_groups"
         ]
       }
     ],
@@ -4502,16 +4502,16 @@ ENDPOINTS = {
     "description": "Return information of an opportunities task",
     "headers": [
       {
-        "name": "task_id"
+        "name": "description"
       },
       {
         "name": "name"
       },
       {
-        "name": "description"
+        "name": "notification"
       },
       {
-        "name": "notification"
+        "name": "task_id"
       }
     ],
     "path": "/v1/opportunities/tasks/{task_id}/",
@@ -4591,25 +4591,13 @@ ENDPOINTS = {
     "description": "Shows sovereignty data for campaigns.",
     "headers": [
       {
+        "name": "attackers_score"
+      },
+      {
         "name": "campaign_id"
       },
       {
-        "name": "structure_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
         "name": "constellation_id"
-      },
-      {
-        "name": "event_type"
-      },
-      {
-        "name": "start_time"
-      },
-      {
-        "name": "attackers_score"
       },
       {
         "name": "defender_id"
@@ -4618,11 +4606,23 @@ ENDPOINTS = {
         "name": "defender_score"
       },
       {
+        "name": "event_type"
+      },
+      {
         "name": "participants",
         "sub_headers": [
           "alliance_id",
           "score"
         ]
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "start_time"
+      },
+      {
+        "name": "structure_id"
       }
     ],
     "path": "/v1/sovereignty/campaigns/",
@@ -4641,9 +4641,6 @@ ENDPOINTS = {
     "description": "Shows sovereignty information for solar systems",
     "headers": [
       {
-        "name": "system_id"
-      },
-      {
         "name": "alliance_id"
       },
       {
@@ -4651,6 +4648,9 @@ ENDPOINTS = {
       },
       {
         "name": "faction_id"
+      },
+      {
+        "name": "system_id"
       }
     ],
     "path": "/v1/sovereignty/map/",
@@ -4706,13 +4706,13 @@ ENDPOINTS = {
     "description": "EVE Server status",
     "headers": [
       {
-        "name": "start_time"
-      },
-      {
         "name": "players"
       },
       {
         "name": "server_version"
+      },
+      {
+        "name": "start_time"
       },
       {
         "name": "vip"
@@ -4734,12 +4734,6 @@ ENDPOINTS = {
     "description": "Get all character ancestries",
     "headers": [
       {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      },
-      {
         "name": "bloodline_id"
       },
       {
@@ -4747,6 +4741,12 @@ ENDPOINTS = {
       },
       {
         "name": "icon_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
       },
       {
         "name": "short_description"
@@ -4815,10 +4815,25 @@ ENDPOINTS = {
         "name": "bloodline_id"
       },
       {
-        "name": "name"
+        "name": "charisma"
+      },
+      {
+        "name": "corporation_id"
       },
       {
         "name": "description"
+      },
+      {
+        "name": "intelligence"
+      },
+      {
+        "name": "memory"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "perception"
       },
       {
         "name": "race_id"
@@ -4827,22 +4842,7 @@ ENDPOINTS = {
         "name": "ship_type_id"
       },
       {
-        "name": "corporation_id"
-      },
-      {
-        "name": "perception"
-      },
-      {
         "name": "willpower"
-      },
-      {
-        "name": "charisma"
-      },
-      {
-        "name": "memory"
-      },
-      {
-        "name": "intelligence"
       }
     ],
     "path": "/v1/universe/bloodlines/",
@@ -4890,16 +4890,16 @@ ENDPOINTS = {
         "name": "category_id"
       },
       {
-        "name": "name"
-      },
-      {
-        "name": "published"
-      },
-      {
         "name": "groups",
         "sub_headers": [
           "id_groups"
         ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "published"
       }
     ],
     "path": "/v1/universe/categories/{category_id}/",
@@ -5023,13 +5023,13 @@ ENDPOINTS = {
     "description": "Get information on a graphic",
     "headers": [
       {
-        "name": "graphic_id"
-      },
-      {
         "name": "collision_file"
       },
       {
         "name": "graphic_file"
+      },
+      {
+        "name": "graphic_id"
       },
       {
         "name": "icon_folder"
@@ -5096,6 +5096,9 @@ ENDPOINTS = {
     "description": "Get information on an item group",
     "headers": [
       {
+        "name": "category_id"
+      },
+      {
         "name": "group_id"
       },
       {
@@ -5103,9 +5106,6 @@ ENDPOINTS = {
       },
       {
         "name": "published"
-      },
-      {
-        "name": "category_id"
       },
       {
         "name": "types",
@@ -5184,13 +5184,10 @@ ENDPOINTS = {
     "description": "Get information on a planet",
     "headers": [
       {
-        "name": "planet_id"
-      },
-      {
         "name": "name"
       },
       {
-        "name": "type_id"
+        "name": "planet_id"
       },
       {
         "name": "position",
@@ -5202,6 +5199,9 @@ ENDPOINTS = {
       },
       {
         "name": "system_id"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v1/universe/planets/{planet_id}/",
@@ -5227,16 +5227,16 @@ ENDPOINTS = {
     "description": "Get a list of character races",
     "headers": [
       {
-        "name": "race_id"
-      },
-      {
-        "name": "name"
+        "name": "alliance_id"
       },
       {
         "name": "description"
       },
       {
-        "name": "alliance_id"
+        "name": "name"
+      },
+      {
+        "name": "race_id"
       }
     ],
     "path": "/v1/universe/races/",
@@ -5281,12 +5281,6 @@ ENDPOINTS = {
     "description": "Get information on a region",
     "headers": [
       {
-        "name": "region_id"
-      },
-      {
-        "name": "name"
-      },
-      {
         "name": "constellations",
         "sub_headers": [
           "id_constellations"
@@ -5294,6 +5288,12 @@ ENDPOINTS = {
       },
       {
         "name": "description"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "region_id"
       }
     ],
     "path": "/v1/universe/regions/{region_id}/",
@@ -5326,10 +5326,10 @@ ENDPOINTS = {
     "description": "Get information on a planetary factory schematic",
     "headers": [
       {
-        "name": "schematic_name"
+        "name": "cycle_time"
       },
       {
-        "name": "cycle_time"
+        "name": "schematic_name"
       }
     ],
     "path": "/v1/universe/schematics/{schematic_id}/",
@@ -5355,13 +5355,14 @@ ENDPOINTS = {
     "description": "Get information on a stargate",
     "headers": [
       {
-        "name": "stargate_id"
+        "name": "destination",
+        "sub_headers": [
+          "stargate_id",
+          "system_id"
+        ]
       },
       {
         "name": "name"
-      },
-      {
-        "name": "type_id"
       },
       {
         "name": "position",
@@ -5372,14 +5373,13 @@ ENDPOINTS = {
         ]
       },
       {
+        "name": "stargate_id"
+      },
+      {
         "name": "system_id"
       },
       {
-        "name": "destination",
-        "sub_headers": [
-          "stargate_id",
-          "system_id"
-        ]
+        "name": "type_id"
       }
     ],
     "path": "/v1/universe/stargates/{stargate_id}/",
@@ -5405,19 +5405,19 @@ ENDPOINTS = {
     "description": "Get information on a star",
     "headers": [
       {
-        "name": "name"
-      },
-      {
-        "name": "type_id"
-      },
-      {
         "name": "age"
       },
       {
         "name": "luminosity"
       },
       {
+        "name": "name"
+      },
+      {
         "name": "radius"
+      },
+      {
+        "name": "solar_system_id"
       },
       {
         "name": "spectral_class"
@@ -5426,7 +5426,7 @@ ENDPOINTS = {
         "name": "temperature"
       },
       {
-        "name": "solar_system_id"
+        "name": "type_id"
       }
     ],
     "path": "/v1/universe/stars/{star_id}/",
@@ -5474,15 +5474,15 @@ ENDPOINTS = {
         "name": "name"
       },
       {
-        "name": "solar_system_id"
-      },
-      {
         "name": "position",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
+      },
+      {
+        "name": "solar_system_id"
       },
       {
         "name": "type_id"
@@ -5519,10 +5519,10 @@ ENDPOINTS = {
     "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
     "headers": [
       {
-        "name": "system_id"
+        "name": "ship_jumps"
       },
       {
-        "name": "ship_jumps"
+        "name": "system_id"
       }
     ],
     "path": "/v1/universe/system_jumps/",
@@ -5612,28 +5612,7 @@ ENDPOINTS = {
     "description": "Return details about a war",
     "headers": [
       {
-        "name": "id"
-      },
-      {
-        "name": "declared"
-      },
-      {
-        "name": "mutual"
-      },
-      {
-        "name": "open_for_allies"
-      },
-      {
         "name": "aggressor",
-        "sub_headers": [
-          "alliance_id",
-          "corporation_id",
-          "isk_destroyed",
-          "ships_killed"
-        ]
-      },
-      {
-        "name": "defender",
         "sub_headers": [
           "alliance_id",
           "corporation_id",
@@ -5649,7 +5628,28 @@ ENDPOINTS = {
         ]
       },
       {
+        "name": "declared"
+      },
+      {
+        "name": "defender",
+        "sub_headers": [
+          "alliance_id",
+          "corporation_id",
+          "isk_destroyed",
+          "ships_killed"
+        ]
+      },
+      {
         "name": "finished"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "mutual"
+      },
+      {
+        "name": "open_for_allies"
       },
       {
         "name": "retracted"
@@ -5681,10 +5681,10 @@ ENDPOINTS = {
     "description": "Return a list of kills related to a war",
     "headers": [
       {
-        "name": "killmail_id"
+        "name": "killmail_hash"
       },
       {
-        "name": "killmail_hash"
+        "name": "killmail_id"
       }
     ],
     "path": "/v1/wars/{war_id}/killmails/",
@@ -5717,19 +5717,19 @@ ENDPOINTS = {
     "description": "Return contacts of an alliance",
     "headers": [
       {
-        "name": "standing"
+        "name": "contact_id"
       },
       {
         "name": "contact_type"
-      },
-      {
-        "name": "contact_id"
       },
       {
         "name": "label_ids",
         "sub_headers": [
           "label_ids"
         ]
+      },
+      {
+        "name": "standing"
       }
     ],
     "path": "/v2/alliances/{alliance_id}/contacts/",
@@ -5766,25 +5766,25 @@ ENDPOINTS = {
         "name": "item_id"
       },
       {
-        "name": "type_id"
+        "name": "location_flag"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "location_flag"
+        "name": "material_efficiency"
       },
       {
         "name": "quantity"
       },
       {
+        "name": "runs"
+      },
+      {
         "name": "time_efficiency"
       },
       {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "runs"
+        "name": "type_id"
       }
     ],
     "path": "/v2/characters/{character_id}/blueprints/",
@@ -5821,27 +5821,18 @@ ENDPOINTS = {
         "name": "bookmark_id"
       },
       {
-        "name": "created"
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "notes"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
         "name": "coordinates",
         "sub_headers": [
           "x",
           "y",
           "z"
         ]
+      },
+      {
+        "name": "created"
+      },
+      {
+        "name": "creator_id"
       },
       {
         "name": "folder_id"
@@ -5852,6 +5843,15 @@ ENDPOINTS = {
           "item_id",
           "type_id"
         ]
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "notes"
       }
     ],
     "path": "/v2/characters/{character_id}/bookmarks/",
@@ -5922,13 +5922,10 @@ ENDPOINTS = {
     "description": "Return contacts of a character",
     "headers": [
       {
-        "name": "standing"
+        "name": "contact_id"
       },
       {
         "name": "contact_type"
-      },
-      {
-        "name": "contact_id"
       },
       {
         "name": "is_blocked"
@@ -5941,6 +5938,9 @@ ENDPOINTS = {
         "sub_headers": [
           "label_ids"
         ]
+      },
+      {
+        "name": "standing"
       }
     ],
     "path": "/v2/characters/{character_id}/contacts/",
@@ -5974,10 +5974,10 @@ ENDPOINTS = {
     "description": "Return character notifications",
     "headers": [
       {
-        "name": "notification_id"
+        "name": "is_read"
       },
       {
-        "name": "type"
+        "name": "notification_id"
       },
       {
         "name": "sender_id"
@@ -5986,13 +5986,13 @@ ENDPOINTS = {
         "name": "sender_type"
       },
       {
+        "name": "text"
+      },
+      {
         "name": "timestamp"
       },
       {
-        "name": "is_read"
-      },
-      {
-        "name": "text"
+        "name": "type"
       }
     ],
     "path": "/v2/characters/{character_id}/notifications/",
@@ -6019,9 +6019,6 @@ ENDPOINTS = {
     "description": "Checks if the character is currently online",
     "headers": [
       {
-        "name": "online"
-      },
-      {
         "name": "last_login"
       },
       {
@@ -6029,6 +6026,9 @@ ENDPOINTS = {
       },
       {
         "name": "logins"
+      },
+      {
+        "name": "online"
       }
     ],
     "path": "/v2/characters/{character_id}/online/",
@@ -6055,37 +6055,7 @@ ENDPOINTS = {
     "description": "List open market orders placed by a character",
     "headers": [
       {
-        "name": "is_corporation"
-      },
-      {
         "name": "duration"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "issued"
       },
       {
         "name": "escrow"
@@ -6094,7 +6064,37 @@ ENDPOINTS = {
         "name": "is_buy_order"
       },
       {
+        "name": "is_corporation"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
       }
     ],
     "path": "/v2/characters/{character_id}/orders/",
@@ -6197,22 +6197,22 @@ ENDPOINTS = {
     "description": "List the configured skill queue for the given character",
     "headers": [
       {
-        "name": "skill_id"
+        "name": "finish_date"
       },
       {
         "name": "finished_level"
-      },
-      {
-        "name": "queue_position"
-      },
-      {
-        "name": "finish_date"
       },
       {
         "name": "level_end_sp"
       },
       {
         "name": "level_start_sp"
+      },
+      {
+        "name": "queue_position"
+      },
+      {
+        "name": "skill_id"
       },
       {
         "name": "start_date"
@@ -6244,9 +6244,6 @@ ENDPOINTS = {
   "characters_character_stats": {
     "description": "Returns aggregate yearly stats for a character",
     "headers": [
-      {
-        "name": "year"
-      },
       {
         "name": "character",
         "sub_headers": [
@@ -6597,6 +6594,9 @@ ENDPOINTS = {
           "warps_to_scan_result",
           "warps_wormhole"
         ]
+      },
+      {
+        "name": "year"
       }
     ],
     "path": "/v2/characters/{character_id}/stats/",
@@ -6623,16 +6623,16 @@ ENDPOINTS = {
     "description": "Get a list of all the alliances a corporation has been a member of",
     "headers": [
       {
-        "name": "start_date"
+        "name": "alliance_id"
+      },
+      {
+        "name": "is_deleted"
       },
       {
         "name": "record_id"
       },
       {
-        "name": "alliance_id"
-      },
-      {
-        "name": "is_deleted"
+        "name": "start_date"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
@@ -6654,25 +6654,25 @@ ENDPOINTS = {
         "name": "item_id"
       },
       {
-        "name": "type_id"
+        "name": "location_flag"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "location_flag"
+        "name": "material_efficiency"
       },
       {
         "name": "quantity"
       },
       {
+        "name": "runs"
+      },
+      {
         "name": "time_efficiency"
       },
       {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "runs"
+        "name": "type_id"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/blueprints/",
@@ -6706,13 +6706,10 @@ ENDPOINTS = {
     "description": "Return contacts of a corporation",
     "headers": [
       {
-        "name": "standing"
+        "name": "contact_id"
       },
       {
         "name": "contact_type"
-      },
-      {
-        "name": "contact_id"
       },
       {
         "name": "is_watched"
@@ -6722,6 +6719,9 @@ ENDPOINTS = {
         "sub_headers": [
           "label_ids"
         ]
+      },
+      {
+        "name": "standing"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/contacts/",
@@ -6755,7 +6755,10 @@ ENDPOINTS = {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
     "headers": [
       {
-        "name": "logged_at"
+        "name": "action"
+      },
+      {
+        "name": "character_id"
       },
       {
         "name": "container_id"
@@ -6764,16 +6767,13 @@ ENDPOINTS = {
         "name": "container_type_id"
       },
       {
-        "name": "character_id"
+        "name": "location_flag"
       },
       {
         "name": "location_id"
       },
       {
-        "name": "action"
-      },
-      {
-        "name": "location_flag"
+        "name": "logged_at"
       },
       {
         "name": "new_config_bitmask"
@@ -6825,43 +6825,43 @@ ENDPOINTS = {
         "name": "duration"
       },
       {
-        "name": "wallet_division"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "issued"
-      },
-      {
         "name": "escrow"
       },
       {
         "name": "is_buy_order"
       },
       {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
         "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "wallet_division"
       }
     ],
     "path": "/v2/corporations/{corporation_id}/orders/",
@@ -6895,28 +6895,7 @@ ENDPOINTS = {
     "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
     "headers": [
       {
-        "name": "structure_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
         "name": "corporation_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "profile_id"
-      },
-      {
-        "name": "reinforce_weekday"
-      },
-      {
-        "name": "reinforce_hour"
-      },
-      {
-        "name": "state"
       },
       {
         "name": "fuel_expires"
@@ -6931,6 +6910,15 @@ ENDPOINTS = {
         "name": "next_reinforce_weekday"
       },
       {
+        "name": "profile_id"
+      },
+      {
+        "name": "reinforce_hour"
+      },
+      {
+        "name": "reinforce_weekday"
+      },
+      {
         "name": "services",
         "sub_headers": [
           "name",
@@ -6938,10 +6926,22 @@ ENDPOINTS = {
         ]
       },
       {
+        "name": "state"
+      },
+      {
         "name": "state_timer_end"
       },
       {
         "name": "state_timer_start"
+      },
+      {
+        "name": "structure_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
       },
       {
         "name": "unanchors_at"
@@ -6985,28 +6985,43 @@ ENDPOINTS = {
     "description": "Get information on a dogma effect",
     "headers": [
       {
-        "name": "effect_id"
-      },
-      {
         "name": "description"
       },
       {
-        "name": "range_chance"
+        "name": "disallow_auto_repeat"
       },
       {
-        "name": "range_attribute_id"
+        "name": "discharge_attribute_id"
       },
       {
-        "name": "published"
+        "name": "display_name"
       },
       {
-        "name": "pre_expression"
+        "name": "duration_attribute_id"
       },
       {
-        "name": "post_expression"
+        "name": "effect_category"
       },
       {
-        "name": "name"
+        "name": "effect_id"
+      },
+      {
+        "name": "electronic_chance"
+      },
+      {
+        "name": "falloff_attribute_id"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "is_assistance"
+      },
+      {
+        "name": "is_offensive"
+      },
+      {
+        "name": "is_warp_safe"
       },
       {
         "name": "modifiers",
@@ -7020,37 +7035,22 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "is_warp_safe"
+        "name": "name"
       },
       {
-        "name": "is_offensive"
+        "name": "post_expression"
       },
       {
-        "name": "is_assistance"
+        "name": "pre_expression"
       },
       {
-        "name": "icon_id"
+        "name": "published"
       },
       {
-        "name": "falloff_attribute_id"
+        "name": "range_attribute_id"
       },
       {
-        "name": "electronic_chance"
-      },
-      {
-        "name": "effect_category"
-      },
-      {
-        "name": "duration_attribute_id"
-      },
-      {
-        "name": "display_name"
-      },
-      {
-        "name": "discharge_attribute_id"
-      },
-      {
-        "name": "disallow_auto_repeat"
+        "name": "range_chance"
       },
       {
         "name": "tracking_speed_attribute_id"
@@ -7183,34 +7183,34 @@ ENDPOINTS = {
     "description": "Get a list of factions",
     "headers": [
       {
-        "name": "faction_id"
-      },
-      {
-        "name": "name"
+        "name": "corporation_id"
       },
       {
         "name": "description"
       },
       {
+        "name": "faction_id"
+      },
+      {
+        "name": "is_unique"
+      },
+      {
+        "name": "militia_corporation_id"
+      },
+      {
+        "name": "name"
+      },
+      {
         "name": "size_factor"
+      },
+      {
+        "name": "solar_system_id"
       },
       {
         "name": "station_count"
       },
       {
         "name": "station_system_count"
-      },
-      {
-        "name": "is_unique"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "militia_corporation_id"
-      },
-      {
-        "name": "solar_system_id"
       }
     ],
     "path": "/v2/universe/factions/",
@@ -7236,13 +7236,16 @@ ENDPOINTS = {
     "description": "Get information on a station",
     "headers": [
       {
-        "name": "station_id"
+        "name": "max_dockable_ship_volume"
       },
       {
         "name": "name"
       },
       {
-        "name": "type_id"
+        "name": "office_rental_cost"
+      },
+      {
+        "name": "owner"
       },
       {
         "name": "position",
@@ -7253,7 +7256,7 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "system_id"
+        "name": "race_id"
       },
       {
         "name": "reprocessing_efficiency"
@@ -7262,22 +7265,19 @@ ENDPOINTS = {
         "name": "reprocessing_stations_take"
       },
       {
-        "name": "max_dockable_ship_volume"
-      },
-      {
-        "name": "office_rental_cost"
-      },
-      {
         "name": "services",
         "sub_headers": [
           "id_services"
         ]
       },
       {
-        "name": "owner"
+        "name": "station_id"
       },
       {
-        "name": "race_id"
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v2/universe/stations/{station_id}/",
@@ -7303,16 +7303,16 @@ ENDPOINTS = {
     "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
     "headers": [
       {
-        "name": "system_id"
+        "name": "npc_kills"
+      },
+      {
+        "name": "pod_kills"
       },
       {
         "name": "ship_kills"
       },
       {
-        "name": "npc_kills"
-      },
-      {
-        "name": "pod_kills"
+        "name": "system_id"
       }
     ],
     "path": "/v2/universe/system_kills/",
@@ -7331,16 +7331,10 @@ ENDPOINTS = {
     "description": "Public information about an alliance",
     "headers": [
       {
-        "name": "name"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
         "name": "creator_corporation_id"
       },
       {
-        "name": "ticker"
+        "name": "creator_id"
       },
       {
         "name": "date_founded"
@@ -7350,6 +7344,12 @@ ENDPOINTS = {
       },
       {
         "name": "faction_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ticker"
       }
     ],
     "path": "/v3/alliances/{alliance_id}/",
@@ -7375,16 +7375,10 @@ ENDPOINTS = {
     "description": "Return a list of the characters assets",
     "headers": [
       {
-        "name": "type_id"
+        "name": "is_blueprint_copy"
       },
       {
-        "name": "quantity"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
+        "name": "is_singleton"
       },
       {
         "name": "item_id"
@@ -7393,10 +7387,16 @@ ENDPOINTS = {
         "name": "location_flag"
       },
       {
-        "name": "is_singleton"
+        "name": "location_id"
       },
       {
-        "name": "is_blueprint_copy"
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v3/characters/{character_id}/assets/",
@@ -7430,7 +7430,16 @@ ENDPOINTS = {
     "description": "Get all the information for a specific event",
     "headers": [
       {
+        "name": "date"
+      },
+      {
+        "name": "duration"
+      },
+      {
         "name": "event_id"
+      },
+      {
+        "name": "importance"
       },
       {
         "name": "owner_id"
@@ -7439,16 +7448,7 @@ ENDPOINTS = {
         "name": "owner_name"
       },
       {
-        "name": "date"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "importance"
+        "name": "owner_type"
       },
       {
         "name": "response"
@@ -7457,7 +7457,7 @@ ENDPOINTS = {
         "name": "text"
       },
       {
-        "name": "owner_type"
+        "name": "title"
       }
     ],
     "path": "/v3/characters/{character_id}/calendar/{event_id}/",
@@ -7491,6 +7491,13 @@ ENDPOINTS = {
     "description": "A list of the character's clones",
     "headers": [
       {
+        "name": "home_location",
+        "sub_headers": [
+          "location_id",
+          "location_type"
+        ]
+      },
+      {
         "name": "jump_clones",
         "sub_headers": [
           "implants",
@@ -7498,13 +7505,6 @@ ENDPOINTS = {
           "location_id",
           "location_type",
           "name"
-        ]
-      },
-      {
-        "name": "home_location",
-        "sub_headers": [
-          "location_id",
-          "location_type"
         ]
       },
       {
@@ -7758,16 +7758,10 @@ ENDPOINTS = {
     "description": "Return a list of the corporation assets",
     "headers": [
       {
-        "name": "type_id"
+        "name": "is_blueprint_copy"
       },
       {
-        "name": "quantity"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
+        "name": "is_singleton"
       },
       {
         "name": "item_id"
@@ -7776,10 +7770,16 @@ ENDPOINTS = {
         "name": "location_flag"
       },
       {
-        "name": "is_singleton"
+        "name": "location_id"
       },
       {
-        "name": "is_blueprint_copy"
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
       }
     ],
     "path": "/v3/corporations/{corporation_id}/assets/",
@@ -7840,18 +7840,6 @@ ENDPOINTS = {
     "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
     "headers": [
       {
-        "name": "date"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "ref_type"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "amount"
       },
       {
@@ -7864,10 +7852,22 @@ ENDPOINTS = {
         "name": "context_id_type"
       },
       {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
         "name": "first_party_id"
       },
       {
+        "name": "id"
+      },
+      {
         "name": "reason"
+      },
+      {
+        "name": "ref_type"
       },
       {
         "name": "second_party_id"
@@ -7917,27 +7917,10 @@ ENDPOINTS = {
     "description": "Get information on a solar system. NOTE: This route does not work with abyssal systems.",
     "headers": [
       {
-        "name": "star_id"
-      },
-      {
-        "name": "system_id"
+        "name": "constellation_id"
       },
       {
         "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "security_status"
-      },
-      {
-        "name": "constellation_id"
       },
       {
         "name": "planets",
@@ -7948,7 +7931,21 @@ ENDPOINTS = {
         ]
       },
       {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
         "name": "security_class"
+      },
+      {
+        "name": "security_status"
+      },
+      {
+        "name": "star_id"
       },
       {
         "name": "stargates",
@@ -7961,6 +7958,9 @@ ENDPOINTS = {
         "sub_headers": [
           "id_stations"
         ]
+      },
+      {
+        "name": "system_id"
       }
     ],
     "path": "/v3/universe/systems/{system_id}/",
@@ -7993,22 +7993,10 @@ ENDPOINTS = {
     "description": "Get information on a type",
     "headers": [
       {
-        "name": "type_id"
-      },
-      {
-        "name": "name"
+        "name": "capacity"
       },
       {
         "name": "description"
-      },
-      {
-        "name": "published"
-      },
-      {
-        "name": "group_id"
-      },
-      {
-        "name": "capacity"
       },
       {
         "name": "dogma_attributes",
@@ -8028,6 +8016,9 @@ ENDPOINTS = {
         "name": "graphic_id"
       },
       {
+        "name": "group_id"
+      },
+      {
         "name": "icon_id"
       },
       {
@@ -8037,13 +8028,22 @@ ENDPOINTS = {
         "name": "mass"
       },
       {
+        "name": "name"
+      },
+      {
         "name": "packaged_volume"
       },
       {
         "name": "portion_size"
       },
       {
+        "name": "published"
+      },
+      {
         "name": "radius"
+      },
+      {
+        "name": "type_id"
       },
       {
         "name": "volume"
@@ -8079,34 +8079,34 @@ ENDPOINTS = {
     "description": "Public information about a character",
     "headers": [
       {
-        "name": "corporation_id"
-      },
-      {
-        "name": "birthday"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "gender"
-      },
-      {
-        "name": "race_id"
-      },
-      {
-        "name": "bloodline_id"
-      },
-      {
         "name": "alliance_id"
       },
       {
         "name": "ancestry_id"
       },
       {
+        "name": "birthday"
+      },
+      {
+        "name": "bloodline_id"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
         "name": "description"
       },
       {
         "name": "faction_id"
+      },
+      {
+        "name": "gender"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "race_id"
       },
       {
         "name": "security_status"
@@ -8174,18 +8174,6 @@ ENDPOINTS = {
     "description": "Retrieve the given character's wallet journal going 30 days back",
     "headers": [
       {
-        "name": "date"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "ref_type"
-      },
-      {
-        "name": "description"
-      },
-      {
         "name": "amount"
       },
       {
@@ -8198,10 +8186,22 @@ ENDPOINTS = {
         "name": "context_id_type"
       },
       {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
         "name": "first_party_id"
       },
       {
+        "name": "id"
+      },
+      {
         "name": "reason"
+      },
+      {
+        "name": "ref_type"
       },
       {
         "name": "second_party_id"
@@ -8244,25 +8244,13 @@ ENDPOINTS = {
     "description": "Public information about a corporation",
     "headers": [
       {
-        "name": "name"
-      },
-      {
-        "name": "ticker"
-      },
-      {
-        "name": "member_count"
+        "name": "alliance_id"
       },
       {
         "name": "ceo_id"
       },
       {
-        "name": "tax_rate"
-      },
-      {
         "name": "creator_id"
-      },
-      {
-        "name": "alliance_id"
       },
       {
         "name": "date_founded"
@@ -8277,7 +8265,19 @@ ENDPOINTS = {
         "name": "home_station_id"
       },
       {
+        "name": "member_count"
+      },
+      {
+        "name": "name"
+      },
+      {
         "name": "shares"
+      },
+      {
+        "name": "tax_rate"
+      },
+      {
+        "name": "ticker"
       },
       {
         "name": "url"
