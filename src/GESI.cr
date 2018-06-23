@@ -10,7 +10,7 @@ OptionParser.parse! do |parser|
   parser.on("-i param", "--ignore=param", "Ignore a given parameter") { |param| EveSwagger.ignore_param(param) }
   parser.on("-a param", "--allow=param", "Allow a given parameter") { |param| EveSwagger.allow_param(param) }
   parser.on("-o param", "--out=param", "Specifiy out directory") { |param| EveSwagger.out_dir = param }
-  parser.on("-h", "--help", "Show this help") { puts parser }
+  parser.on("-h", "--help", "Show this help") { puts parser; exit(0) }
 end
 
 # Object mapping of swagger space starting from the root
