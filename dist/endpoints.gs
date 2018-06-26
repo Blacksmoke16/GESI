@@ -69,6 +69,7 @@ ENDPOINTS = {
         "name": "alliance_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/alliances/",
     "parameters": [
       {
@@ -91,6 +92,7 @@ ENDPOINTS = {
         "name": "label_name"
       }
     ],
+    "method": "GET",
     "path": "/v1/alliances/{alliance_id}/contacts/labels/",
     "parameters": [
       {
@@ -118,6 +120,7 @@ ENDPOINTS = {
         "name": "corporation_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/alliances/{alliance_id}/corporations/",
     "parameters": [
       {
@@ -140,6 +143,7 @@ ENDPOINTS = {
         "name": "px64x64"
       }
     ],
+    "method": "GET",
     "path": "/v1/alliances/{alliance_id}/icons/",
     "parameters": [
       {
@@ -151,6 +155,42 @@ ENDPOINTS = {
       }
     ],
     "summary": "Icon URLs for the given alliance id and server"
+  },
+  "characters_affiliation": {
+    "description": "Bulk lookup of character IDs to corporation, alliance and faction",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "faction_id"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/characters/affiliation/",
+    "parameters": [
+      {
+        "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned.",
+        "in": "body",
+        "name": "characters",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Character corporation, alliance and faction IDs"
   },
   "characters_character_agents_research": {
     "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
@@ -171,6 +211,7 @@ ENDPOINTS = {
         "name": "started_at"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/agents_research/",
     "parameters": [
       {
@@ -190,6 +231,44 @@ ENDPOINTS = {
     ],
     "scope": "esi-characters.read_agents_research.v1",
     "summary": "A list of agents research information"
+  },
+  "characters_character_assets_names": {
+    "description": "Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/characters/{character_id}/assets/names/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "List of asset names"
   },
   "characters_character_attributes": {
     "description": "Return attributes of a character",
@@ -219,6 +298,7 @@ ENDPOINTS = {
         "name": "willpower"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/attributes/",
     "parameters": [
       {
@@ -258,6 +338,7 @@ ENDPOINTS = {
         "name": "title"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/calendar/",
     "parameters": [
       {
@@ -295,6 +376,7 @@ ENDPOINTS = {
         "name": "event_response"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/calendar/{event_id}/attendees/",
     "parameters": [
       {
@@ -332,6 +414,7 @@ ENDPOINTS = {
         "name": "label_name"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/contacts/labels/",
     "parameters": [
       {
@@ -422,6 +505,7 @@ ENDPOINTS = {
         "name": "volume"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/contracts/",
     "parameters": [
       {
@@ -465,6 +549,7 @@ ENDPOINTS = {
         "name": "date_bid"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/bids/",
     "parameters": [
       {
@@ -514,6 +599,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/contracts/{contract_id}/items/",
     "parameters": [
       {
@@ -557,6 +643,7 @@ ENDPOINTS = {
         "name": "start_date"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/corporationhistory/",
     "parameters": [
       {
@@ -582,6 +669,7 @@ ENDPOINTS = {
         "name": "last_update_date"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/fatigue/",
     "parameters": [
       {
@@ -626,6 +714,7 @@ ENDPOINTS = {
         "name": "ship_type_id"
       }
     ],
+    "method": "POST",
     "path": "/v1/characters/{character_id}/fittings/",
     "parameters": [
       {
@@ -662,6 +751,7 @@ ENDPOINTS = {
         "name": "wing_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/fleet/",
     "parameters": [
       {
@@ -714,6 +804,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/fw/stats/",
     "parameters": [
       {
@@ -741,6 +832,7 @@ ENDPOINTS = {
         "name": "implant_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/implants/",
     "parameters": [
       {
@@ -831,6 +923,7 @@ ENDPOINTS = {
         "name": "successful_runs"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/industry/jobs/",
     "parameters": [
       {
@@ -868,6 +961,7 @@ ENDPOINTS = {
         "name": "killmail_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/killmails/recent/",
     "parameters": [
       {
@@ -908,6 +1002,7 @@ ENDPOINTS = {
         "name": "structure_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/location/",
     "parameters": [
       {
@@ -938,6 +1033,7 @@ ENDPOINTS = {
         "name": "loyalty_points"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/loyalty/points/",
     "parameters": [
       {
@@ -990,6 +1086,7 @@ ENDPOINTS = {
         "name": "timestamp"
       }
     ],
+    "method": "POST",
     "path": "/v1/characters/{character_id}/mail/",
     "parameters": [
       {
@@ -1034,6 +1131,7 @@ ENDPOINTS = {
         "name": "name"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/mail/lists/",
     "parameters": [
       {
@@ -1086,6 +1184,7 @@ ENDPOINTS = {
         "name": "timestamp"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/mail/{mail_id}/",
     "parameters": [
       {
@@ -1150,6 +1249,7 @@ ENDPOINTS = {
         "name": "title"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/medals/",
     "parameters": [
       {
@@ -1186,6 +1286,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/mining/",
     "parameters": [
       {
@@ -1232,6 +1333,7 @@ ENDPOINTS = {
         "name": "standing_level"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/notifications/contacts/",
     "parameters": [
       {
@@ -1262,6 +1364,7 @@ ENDPOINTS = {
         "name": "task_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/opportunities/",
     "parameters": [
       {
@@ -1331,6 +1434,7 @@ ENDPOINTS = {
         "name": "volume_total"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/orders/history/",
     "parameters": [
       {
@@ -1383,6 +1487,7 @@ ENDPOINTS = {
         "name": "upgrade_level"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/planets/",
     "parameters": [
       {
@@ -1416,6 +1521,7 @@ ENDPOINTS = {
         "name": "ship_type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/ship/",
     "parameters": [
       {
@@ -1449,6 +1555,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/standings/",
     "parameters": [
       {
@@ -1479,6 +1586,7 @@ ENDPOINTS = {
         "name": "title_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/titles/",
     "parameters": [
       {
@@ -1502,6 +1610,7 @@ ENDPOINTS = {
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",
     "headers": [],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/wallet/",
     "parameters": [
       {
@@ -1556,6 +1665,7 @@ ENDPOINTS = {
         "name": "unit_price"
       }
     ],
+    "method": "GET",
     "path": "/v1/characters/{character_id}/wallet/transactions/",
     "parameters": [
       {
@@ -1602,6 +1712,7 @@ ENDPOINTS = {
         "name": "structure_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporation/{corporation_id}/mining/extractions/",
     "parameters": [
       {
@@ -1642,6 +1753,7 @@ ENDPOINTS = {
         "name": "observer_type"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporation/{corporation_id}/mining/observers/",
     "parameters": [
       {
@@ -1688,6 +1800,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporation/{corporation_id}/mining/observers/{observer_id}/",
     "parameters": [
       {
@@ -1729,6 +1842,7 @@ ENDPOINTS = {
         "name": "npccorp_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/npccorps/",
     "parameters": [
       {
@@ -1740,6 +1854,44 @@ ENDPOINTS = {
       }
     ],
     "summary": "A list of npc corporation ids"
+  },
+  "corporations_corporation_assets_names": {
+    "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/corporations/{corporation_id}/assets/names/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "List of asset names"
   },
   "corporations_corporation_bookmarks": {
     "description": "A list of your corporation's bookmarks",
@@ -1781,6 +1933,7 @@ ENDPOINTS = {
         "name": "notes"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/bookmarks/",
     "parameters": [
       {
@@ -1821,6 +1974,7 @@ ENDPOINTS = {
         "name": "name"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
     "parameters": [
       {
@@ -1858,6 +2012,7 @@ ENDPOINTS = {
         "name": "label_name"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/contacts/labels/",
     "parameters": [
       {
@@ -1948,6 +2103,7 @@ ENDPOINTS = {
         "name": "volume"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/contracts/",
     "parameters": [
       {
@@ -1991,6 +2147,7 @@ ENDPOINTS = {
         "name": "date_bid"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/bids/",
     "parameters": [
       {
@@ -2047,6 +2204,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/items/",
     "parameters": [
       {
@@ -2120,6 +2278,7 @@ ENDPOINTS = {
         "name": "terrible_standing_tax_rate"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/customs_offices/",
     "parameters": [
       {
@@ -2165,6 +2324,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/divisions/",
     "parameters": [
       {
@@ -2198,6 +2358,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/facilities/",
     "parameters": [
       {
@@ -2247,6 +2408,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/fw/stats/",
     "parameters": [
       {
@@ -2280,6 +2442,7 @@ ENDPOINTS = {
         "name": "px64x64"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/icons/",
     "parameters": [
       {
@@ -2362,6 +2525,7 @@ ENDPOINTS = {
         "name": "successful_runs"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/industry/jobs/",
     "parameters": [
       {
@@ -2406,6 +2570,7 @@ ENDPOINTS = {
         "name": "killmail_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/killmails/recent/",
     "parameters": [
       {
@@ -2452,6 +2617,7 @@ ENDPOINTS = {
         "name": "title"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/medals/",
     "parameters": [
       {
@@ -2501,6 +2667,7 @@ ENDPOINTS = {
         "name": "status"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/medals/issued/",
     "parameters": [
       {
@@ -2531,6 +2698,7 @@ ENDPOINTS = {
   "corporations_corporation_members_limit": {
     "description": "Return a corporation's member limit, not including CEO himself",
     "headers": [],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/members/limit/",
     "parameters": [
       {
@@ -2564,6 +2732,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/members/titles/",
     "parameters": [
       {
@@ -2609,6 +2778,7 @@ ENDPOINTS = {
         "name": "start_date"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/membertracking/",
     "parameters": [
       {
@@ -2678,6 +2848,7 @@ ENDPOINTS = {
         "name": "wallet_division"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/orders/history/",
     "parameters": [
       {
@@ -2712,6 +2883,7 @@ ENDPOINTS = {
         "name": "outpost_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/outposts/",
     "parameters": [
       {
@@ -2784,6 +2956,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/outposts/{outpost_id}/",
     "parameters": [
       {
@@ -2866,6 +3039,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/roles/",
     "parameters": [
       {
@@ -2914,6 +3088,7 @@ ENDPOINTS = {
         "name": "role_type"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/roles/history/",
     "parameters": [
       {
@@ -2954,6 +3129,7 @@ ENDPOINTS = {
         "name": "shareholder_type"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/shareholders/",
     "parameters": [
       {
@@ -2994,6 +3170,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/standings/",
     "parameters": [
       {
@@ -3049,6 +3226,7 @@ ENDPOINTS = {
         "name": "unanchor_at"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/starbases/",
     "parameters": [
       {
@@ -3126,6 +3304,7 @@ ENDPOINTS = {
         "name": "use_alliance_standings"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/starbases/{starbase_id}/",
     "parameters": [
       {
@@ -3218,6 +3397,7 @@ ENDPOINTS = {
         "name": "title_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/titles/",
     "parameters": [
       {
@@ -3248,6 +3428,7 @@ ENDPOINTS = {
         "name": "division"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/wallets/",
     "parameters": [
       {
@@ -3299,6 +3480,7 @@ ENDPOINTS = {
         "name": "unit_price"
       }
     ],
+    "method": "GET",
     "path": "/v1/corporations/{corporation_id}/wallets/{division}/transactions/",
     "parameters": [
       {
@@ -3340,6 +3522,7 @@ ENDPOINTS = {
         "name": "attribute_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/dogma/attributes/",
     "parameters": [
       {
@@ -3386,6 +3569,7 @@ ENDPOINTS = {
         "name": "unit_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/dogma/attributes/{attribute_id}/",
     "parameters": [
       {
@@ -3432,6 +3616,7 @@ ENDPOINTS = {
         "name": "source_type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/dogma/dynamic/items/{type_id}/{item_id}/",
     "parameters": [
       {
@@ -3465,6 +3650,7 @@ ENDPOINTS = {
         "name": "effect_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/dogma/effects/",
     "parameters": [
       {
@@ -3493,6 +3679,7 @@ ENDPOINTS = {
         "name": "motd"
       }
     ],
+    "method": "GET",
     "path": "/v1/fleets/{fleet_id}/",
     "parameters": [
       {
@@ -3554,6 +3741,7 @@ ENDPOINTS = {
         "name": "wing_id"
       }
     ],
+    "method": "POST",
     "path": "/v1/fleets/{fleet_id}/members/",
     "parameters": [
       {
@@ -3605,6 +3793,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "POST",
     "path": "/v1/fleets/{fleet_id}/wings/",
     "parameters": [
       {
@@ -3659,6 +3848,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/leaderboards/",
     "parameters": [
       {
@@ -3691,6 +3881,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/leaderboards/characters/",
     "parameters": [
       {
@@ -3723,6 +3914,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/leaderboards/corporations/",
     "parameters": [
       {
@@ -3764,6 +3956,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/stats/",
     "parameters": [
       {
@@ -3798,6 +3991,7 @@ ENDPOINTS = {
         "name": "victory_points_threshold"
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/systems/",
     "parameters": [
       {
@@ -3820,6 +4014,7 @@ ENDPOINTS = {
         "name": "faction_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/fw/wars/",
     "parameters": [
       {
@@ -3863,6 +4058,7 @@ ENDPOINTS = {
         "name": "type"
       }
     ],
+    "method": "GET",
     "path": "/v1/incursions/",
     "parameters": [
       {
@@ -3897,6 +4093,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/industry/facilities/",
     "parameters": [
       {
@@ -3923,6 +4120,7 @@ ENDPOINTS = {
         "name": "solar_system_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/industry/systems/",
     "parameters": [
       {
@@ -3950,6 +4148,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/insurance/prices/",
     "parameters": [
       {
@@ -4015,6 +4214,7 @@ ENDPOINTS = {
         "name": "war_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/killmails/{killmail_id}/{killmail_hash}/",
     "parameters": [
       {
@@ -4070,6 +4270,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
     "parameters": [
       {
@@ -4089,6 +4290,7 @@ ENDPOINTS = {
         "name": "group_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/groups/",
     "parameters": [
       {
@@ -4123,6 +4325,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/groups/{market_group_id}/",
     "parameters": [
       {
@@ -4162,6 +4365,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/prices/",
     "parameters": [
       {
@@ -4211,6 +4415,7 @@ ENDPOINTS = {
         "name": "volume_total"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/structures/{structure_id}/",
     "parameters": [
       {
@@ -4267,6 +4472,7 @@ ENDPOINTS = {
         "name": "volume"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/{region_id}/history/",
     "parameters": [
       {
@@ -4333,6 +4539,7 @@ ENDPOINTS = {
         "name": "volume_total"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/{region_id}/orders/",
     "parameters": [
       {
@@ -4380,6 +4587,7 @@ ENDPOINTS = {
         "name": "type_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/markets/{region_id}/types/",
     "parameters": [
       {
@@ -4413,6 +4621,7 @@ ENDPOINTS = {
         "name": "group_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/opportunities/groups/",
     "parameters": [
       {
@@ -4453,6 +4662,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/opportunities/groups/{group_id}/",
     "parameters": [
       {
@@ -4486,6 +4696,7 @@ ENDPOINTS = {
         "name": "task_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/opportunities/tasks/",
     "parameters": [
       {
@@ -4514,6 +4725,7 @@ ENDPOINTS = {
         "name": "task_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/opportunities/tasks/{task_id}/",
     "parameters": [
       {
@@ -4540,6 +4752,7 @@ ENDPOINTS = {
         "name": "Solar system IDs"
       }
     ],
+    "method": "GET",
     "path": "/v1/route/{origin}/{destination}/",
     "parameters": [
       {
@@ -4625,6 +4838,7 @@ ENDPOINTS = {
         "name": "structure_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/sovereignty/campaigns/",
     "parameters": [
       {
@@ -4653,6 +4867,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/sovereignty/map/",
     "parameters": [
       {
@@ -4690,6 +4905,7 @@ ENDPOINTS = {
         "name": "vulnerable_start_time"
       }
     ],
+    "method": "GET",
     "path": "/v1/sovereignty/structures/",
     "parameters": [
       {
@@ -4718,6 +4934,7 @@ ENDPOINTS = {
         "name": "vip"
       }
     ],
+    "method": "GET",
     "path": "/v1/status/",
     "parameters": [
       {
@@ -4752,6 +4969,7 @@ ENDPOINTS = {
         "name": "short_description"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/ancestries/",
     "parameters": [
       {
@@ -4789,6 +5007,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/asteroid_belts/{asteroid_belt_id}/",
     "parameters": [
       {
@@ -4845,6 +5064,7 @@ ENDPOINTS = {
         "name": "willpower"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/bloodlines/",
     "parameters": [
       {
@@ -4871,6 +5091,7 @@ ENDPOINTS = {
         "name": "categorie_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/categories/",
     "parameters": [
       {
@@ -4902,6 +5123,7 @@ ENDPOINTS = {
         "name": "published"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/categories/{category_id}/",
     "parameters": [
       {
@@ -4935,6 +5157,7 @@ ENDPOINTS = {
         "name": "constellation_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/constellations/",
     "parameters": [
       {
@@ -4974,6 +5197,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/constellations/{constellation_id}/",
     "parameters": [
       {
@@ -5007,6 +5231,7 @@ ENDPOINTS = {
         "name": "graphic_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/graphics/",
     "parameters": [
       {
@@ -5047,6 +5272,7 @@ ENDPOINTS = {
         "name": "sof_race_name"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/graphics/{graphic_id}/",
     "parameters": [
       {
@@ -5073,6 +5299,7 @@ ENDPOINTS = {
         "name": "group_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/groups/",
     "parameters": [
       {
@@ -5114,6 +5341,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/groups/{group_id}/",
     "parameters": [
       {
@@ -5140,6 +5368,107 @@ ENDPOINTS = {
     ],
     "summary": "Information about an item group"
   },
+  "universe_ids": {
+    "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours.",
+    "headers": [
+      {
+        "name": "agents",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "alliances",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "characters",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "constellations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "corporations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "factions",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "inventory_types",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "regions",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "stations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "systems",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/universe/ids/",
+    "parameters": [
+      {
+        "description": "The names to resolve",
+        "in": "body",
+        "name": "names",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted."
+  },
   "universe_moons_moon": {
     "description": "Get information on a moon",
     "headers": [
@@ -5161,6 +5490,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/moons/{moon_id}/",
     "parameters": [
       {
@@ -5204,6 +5534,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/planets/{planet_id}/",
     "parameters": [
       {
@@ -5239,6 +5570,7 @@ ENDPOINTS = {
         "name": "race_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/races/",
     "parameters": [
       {
@@ -5265,6 +5597,7 @@ ENDPOINTS = {
         "name": "region_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/regions/",
     "parameters": [
       {
@@ -5296,6 +5629,7 @@ ENDPOINTS = {
         "name": "region_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/regions/{region_id}/",
     "parameters": [
       {
@@ -5332,6 +5666,7 @@ ENDPOINTS = {
         "name": "schematic_name"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/schematics/{schematic_id}/",
     "parameters": [
       {
@@ -5382,6 +5717,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/stargates/{stargate_id}/",
     "parameters": [
       {
@@ -5429,6 +5765,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/stars/{star_id}/",
     "parameters": [
       {
@@ -5455,6 +5792,7 @@ ENDPOINTS = {
         "name": "structure_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/structures/",
     "parameters": [
       {
@@ -5488,6 +5826,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/structures/{structure_id}/",
     "parameters": [
       {
@@ -5525,6 +5864,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/system_jumps/",
     "parameters": [
       {
@@ -5544,6 +5884,7 @@ ENDPOINTS = {
         "name": "system_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/systems/",
     "parameters": [
       {
@@ -5563,6 +5904,7 @@ ENDPOINTS = {
         "name": "type_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/universe/types/",
     "parameters": [
       {
@@ -5589,6 +5931,7 @@ ENDPOINTS = {
         "name": "war_ids"
       }
     ],
+    "method": "GET",
     "path": "/v1/wars/",
     "parameters": [
       {
@@ -5658,6 +6001,7 @@ ENDPOINTS = {
         "name": "started"
       }
     ],
+    "method": "GET",
     "path": "/v1/wars/{war_id}/",
     "parameters": [
       {
@@ -5687,6 +6031,7 @@ ENDPOINTS = {
         "name": "killmail_id"
       }
     ],
+    "method": "GET",
     "path": "/v1/wars/{war_id}/killmails/",
     "parameters": [
       {
@@ -5732,6 +6077,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
+    "method": "GET",
     "path": "/v2/alliances/{alliance_id}/contacts/",
     "parameters": [
       {
@@ -5758,6 +6104,49 @@ ENDPOINTS = {
     ],
     "scope": "esi-alliances.read_contacts.v1",
     "summary": "A list of contacts"
+  },
+  "characters_character_assets_locations": {
+    "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      }
+    ],
+    "method": "POST",
+    "path": "/v2/characters/{character_id}/assets/locations/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "List of asset locations"
   },
   "characters_character_blueprints": {
     "description": "Return a list of blueprints the character owns",
@@ -5787,6 +6176,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/blueprints/",
     "parameters": [
       {
@@ -5854,6 +6244,7 @@ ENDPOINTS = {
         "name": "notes"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/bookmarks/",
     "parameters": [
       {
@@ -5891,6 +6282,7 @@ ENDPOINTS = {
         "name": "name"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/bookmarks/folders/",
     "parameters": [
       {
@@ -5943,6 +6335,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
+    "method": "POST",
     "path": "/v2/characters/{character_id}/contacts/",
     "parameters": [
       {
@@ -5995,6 +6388,7 @@ ENDPOINTS = {
         "name": "type"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/notifications/",
     "parameters": [
       {
@@ -6031,6 +6425,7 @@ ENDPOINTS = {
         "name": "online"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/online/",
     "parameters": [
       {
@@ -6097,6 +6492,7 @@ ENDPOINTS = {
         "name": "volume_total"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/orders/",
     "parameters": [
       {
@@ -6133,6 +6529,7 @@ ENDPOINTS = {
         "name": "px64x64"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/portrait/",
     "parameters": [
       {
@@ -6173,6 +6570,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/roles/",
     "parameters": [
       {
@@ -6221,6 +6619,7 @@ ENDPOINTS = {
         "name": "training_start_sp"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/skillqueue/",
     "parameters": [
       {
@@ -6599,6 +6998,7 @@ ENDPOINTS = {
         "name": "year"
       }
     ],
+    "method": "GET",
     "path": "/v2/characters/{character_id}/stats/",
     "parameters": [
       {
@@ -6635,6 +7035,7 @@ ENDPOINTS = {
         "name": "start_date"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
     "parameters": [
       {
@@ -6646,6 +7047,49 @@ ENDPOINTS = {
       }
     ],
     "summary": "Alliance history for the given corporation"
+  },
+  "corporations_corporation_assets_locations": {
+    "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      }
+    ],
+    "method": "POST",
+    "path": "/v2/corporations/{corporation_id}/assets/locations/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "List of asset locations"
   },
   "corporations_corporation_blueprints": {
     "description": "Returns a list of blueprints the corporation owns",
@@ -6675,6 +7119,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/blueprints/",
     "parameters": [
       {
@@ -6724,6 +7169,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/contacts/",
     "parameters": [
       {
@@ -6791,6 +7237,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/containers/logs/",
     "parameters": [
       {
@@ -6864,6 +7311,7 @@ ENDPOINTS = {
         "name": "wallet_division"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/orders/",
     "parameters": [
       {
@@ -6947,6 +7395,7 @@ ENDPOINTS = {
         "name": "unanchors_at"
       }
     ],
+    "method": "GET",
     "path": "/v2/corporations/{corporation_id}/structures/",
     "parameters": [
       {
@@ -7056,6 +7505,7 @@ ENDPOINTS = {
         "name": "tracking_speed_attribute_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/dogma/effects/{effect_id}/",
     "parameters": [
       {
@@ -7139,6 +7589,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v2/search/",
     "parameters": [
       {
@@ -7213,6 +7664,7 @@ ENDPOINTS = {
         "name": "station_system_count"
       }
     ],
+    "method": "GET",
     "path": "/v2/universe/factions/",
     "parameters": [
       {
@@ -7231,6 +7683,39 @@ ENDPOINTS = {
       }
     ],
     "summary": "A list of factions"
+  },
+  "universe_names": {
+    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.",
+    "headers": [
+      {
+        "name": "category"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "POST",
+    "path": "/v2/universe/names/",
+    "parameters": [
+      {
+        "description": "The ids to resolve",
+        "in": "body",
+        "name": "ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned."
   },
   "universe_stations_station": {
     "description": "Get information on a station",
@@ -7280,6 +7765,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/universe/stations/{station_id}/",
     "parameters": [
       {
@@ -7315,6 +7801,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v2/universe/system_kills/",
     "parameters": [
       {
@@ -7352,6 +7839,7 @@ ENDPOINTS = {
         "name": "ticker"
       }
     ],
+    "method": "GET",
     "path": "/v3/alliances/{alliance_id}/",
     "parameters": [
       {
@@ -7399,6 +7887,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/assets/",
     "parameters": [
       {
@@ -7460,6 +7949,7 @@ ENDPOINTS = {
         "name": "title"
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/calendar/{event_id}/",
     "parameters": [
       {
@@ -7514,6 +8004,7 @@ ENDPOINTS = {
         "name": "last_station_change_date"
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/clones/",
     "parameters": [
       {
@@ -7550,6 +8041,7 @@ ENDPOINTS = {
         "name": "total_unread_count"
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/mail/labels/",
     "parameters": [
       {
@@ -7609,6 +8101,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/planets/{planet_id}/",
     "parameters": [
       {
@@ -7706,6 +8199,7 @@ ENDPOINTS = {
         ]
       }
     ],
+    "method": "GET",
     "path": "/v3/characters/{character_id}/search/",
     "parameters": [
       {
@@ -7782,6 +8276,7 @@ ENDPOINTS = {
         "name": "type_id"
       }
     ],
+    "method": "GET",
     "path": "/v3/corporations/{corporation_id}/assets/",
     "parameters": [
       {
@@ -7816,6 +8311,7 @@ ENDPOINTS = {
         "name": "member_ids"
       }
     ],
+    "method": "GET",
     "path": "/v3/corporations/{corporation_id}/members/",
     "parameters": [
       {
@@ -7879,6 +8375,7 @@ ENDPOINTS = {
         "name": "tax_receiver_id"
       }
     ],
+    "method": "GET",
     "path": "/v3/corporations/{corporation_id}/wallets/{division}/journal/",
     "parameters": [
       {
@@ -7963,6 +8460,7 @@ ENDPOINTS = {
         "name": "system_id"
       }
     ],
+    "method": "GET",
     "path": "/v3/universe/systems/{system_id}/",
     "parameters": [
       {
@@ -8049,6 +8547,7 @@ ENDPOINTS = {
         "name": "volume"
       }
     ],
+    "method": "GET",
     "path": "/v3/universe/types/{type_id}/",
     "parameters": [
       {
@@ -8112,6 +8611,7 @@ ENDPOINTS = {
         "name": "security_status"
       }
     ],
+    "method": "GET",
     "path": "/v4/characters/{character_id}/",
     "parameters": [
       {
@@ -8150,6 +8650,7 @@ ENDPOINTS = {
         "name": "unallocated_sp"
       }
     ],
+    "method": "GET",
     "path": "/v4/characters/{character_id}/skills/",
     "parameters": [
       {
@@ -8213,6 +8714,7 @@ ENDPOINTS = {
         "name": "tax_receiver_id"
       }
     ],
+    "method": "GET",
     "path": "/v4/characters/{character_id}/wallet/journal/",
     "parameters": [
       {
@@ -8283,6 +8785,7 @@ ENDPOINTS = {
         "name": "url"
       }
     ],
+    "method": "GET",
     "path": "/v4/corporations/{corporation_id}/",
     "parameters": [
       {

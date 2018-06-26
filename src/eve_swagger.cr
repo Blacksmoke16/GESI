@@ -70,26 +70,34 @@ module EveSwagger
       @paths.each do |(path_url, responses)|
         # Skip non-get endpoints for now still
         path = responses.get
+        path = responses.post if path.nil?
         next if path.nil?
-        if scope = path.scope
-          @scopes << scope unless @scopes.includes? scope
+
+        if success = path.responses.success
+          if scope = path.scope
+            @scopes << scope unless @scopes.includes? scope
+          end
+
+          endpoint_name = path.operationId.gsub(/^post_|^get_|_id/, "")
+
+          # Rename search endpoint to not conflict with Sheets' `Search` function
+          # Rename universes to universe_ids due to regex matching `_ids`
+          endpoint_name = "eve_search" if endpoint_name == "search"
+          endpoint_name = "universe_ids" if endpoint_name == "universes"
+
+          @endpoints[endpoint_name] = EndpointObj.new(
+            responses.post.nil? ? "GET" : "POST",
+            path.description,
+            success.schema,
+            path.parameters,
+            path_url,
+            path.scope,
+            success.description,
+            endpoint_name
+          )
         end
-
-        endpoint_name = path.operationId.gsub(/get_|_id/, "")
-
-        # Rename search endpoint to not conflict with Sheets' `Search` function
-        endpoint_name = "eve_search" if endpoint_name == "search"
-
-        @endpoints[endpoint_name] = EndpointObj.new(
-          path.description,
-          path.responses.success.schema,
-          path.parameters,
-          path_url,
-          path.scope,
-          path.responses.success.description,
-          endpoint_name
-        )
       end
+
       @endpoints
     end
 
@@ -182,8 +190,9 @@ module EveSwagger
       description: {type: String, setter: false},
       in: {type: String, setter: false},
       name: {type: String, setter: false},
-      type: {type: String, setter: false},
+      type: {type: String, nilable: true, setter: true},
       required: {type: Bool, nilable: false, default: false, setter: false},
+      schema: {type: Schema, nilable: true, setter: true},
     )
   end
 
@@ -214,15 +223,26 @@ module EveSwagger
     JSON.mapping(
       description: {type: String, setter: false},
       headers: {type: Array(Header), setter: false},
+      method: {type: String, setter: false},
       path: {type: String, setter: false},
       parameters: {type: Array(Parameter), setter: false},
       scope: {type: String | Nil, setter: false},
       summary: {type: String, setter: false},
     )
 
-    def initialize(@description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String)
+    def initialize(@method : String, @description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String)
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
       @headers = get_headers(schema)
+
+      # Set type of the parameter if there is a schema and remove schema
+      @parameters.each do |param|
+        if schema = param.schema
+          type = schema.type
+          param.type = type
+          param.schema = nil
+        end
+      end
+
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
 
       # Remove character/corporation/alliance_id param if they are not one of the three endpoints that can be arbitrary
@@ -290,12 +310,13 @@ module EveSwagger
   class Method
     JSON.mapping(
       get: {type: Path, nilable: true, setter: false},
+      post: {type: Path, nilable: true, setter: false},
     )
   end
 
   class ResponseCode
     JSON.mapping(
-      success: {type: Response, key: "200", nilable: false, setter: false},
+      success: {type: Response, key: "200", nilable: true, setter: false},
     )
   end
 

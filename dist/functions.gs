@@ -40,6 +40,18 @@ function alliances_alliance_icons(opt_headers) {
 }
 
 /**
+* Bulk lookup of character IDs to corporation, alliance and faction
+* @param {array} characters (Required) The character IDs to fetch affiliations for. All characters must exist, or none will be returned.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Character corporation, alliance and faction IDs
+* @customfunction
+*/
+function characters_affiliation(characters, opt_headers) {
+  if(!characters) throw 'characters is required';
+  return parseData_(arguments.callee.name,{characters:characters,opt_headers:opt_headers})
+}
+
+/**
 * Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime 
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -48,6 +60,19 @@ function alliances_alliance_icons(opt_headers) {
 */
 function characters_character_agents_research(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset names
+* @customfunction
+*/
+function characters_character_assets_names(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
 }
 
 /**
@@ -453,6 +478,19 @@ function corporation_corporation_mining_observers_observer(observer_id, name, pa
 */
 function corporations_npccorps(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+}
+
+/**
+* Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset names
+* @customfunction
+*/
+function corporations_corporation_assets_names(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
 }
 
 /**
@@ -1344,6 +1382,19 @@ function universe_groups_group(group_id, language, opt_headers) {
 }
 
 /**
+* Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours.
+* @param {array} names (Required) The names to resolve
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted.
+* @customfunction
+*/
+function universe_ids(names, language, opt_headers) {
+  if(!names) throw 'names is required';
+  return parseData_(arguments.callee.name,{names:names,language:language,opt_headers:opt_headers})
+}
+
+/**
 * Get information on a moon
 * @param {integer} moon_id (Required) moon_id integer
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -1540,6 +1591,19 @@ function alliances_alliance_contacts(name, page, opt_headers) {
 }
 
 /**
+* Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset locations
+* @customfunction
+*/
+function characters_character_assets_locations(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return a list of blueprints the character owns
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -1674,6 +1738,19 @@ function corporations_corporation_alliancehistory(opt_headers) {
 }
 
 /**
+* Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset locations
+* @customfunction
+*/
+function corporations_corporation_assets_locations(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
+}
+
+/**
 * Returns a list of blueprints the corporation owns
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -1771,6 +1848,18 @@ function eve_search(categories, search, language, strict, opt_headers) {
 */
 function universe_factions(language, opt_headers) {
   return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
+}
+
+/**
+* Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.
+* @param {array} ids (Required) The ids to resolve
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned.
+* @customfunction
+*/
+function universe_names(ids, opt_headers) {
+  if(!ids) throw 'ids is required';
+  return parseData_(arguments.callee.name,{ids:ids,opt_headers:opt_headers})
 }
 
 /**
