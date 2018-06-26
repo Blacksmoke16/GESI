@@ -3,7 +3,7 @@
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
 // https://discord.gg/eEAH2et
-APP_VERSION = '6.0.0';
+APP_VERSION = '6.1.0';
 BASE_URL = 'https://esi.evetech.net'
 
 // Setup variables used throughout script
@@ -55,6 +55,7 @@ function getData_(endpoint_name, params) {
   var endpoint = ENDPOINTS[endpoint_name]
   var path = endpoint.path;
   var name = params.name;
+  var data = null;
   if (!name) name = MAIN_CHARACTER;
   
   endpoint.parameters.forEach(function(param) {
@@ -63,6 +64,12 @@ function getData_(endpoint_name, params) {
     } else if (param['in'] === 'query' && params[param.name]) {
       path += path.indexOf('?') !== -1 ? '&' : '?';
       path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
+    } else if (param['in'] === 'body' && params[param.name]) {
+      if (param['type'] === 'array') {
+        data = Array.isArray(params[param.name]) ? params[param.name].map(function(id) { return id[0]; }) : [params[param.name]];
+      } else {
+        throw new 'Unexepcted param type.  Please report this on Github.';
+      }
     }
   });
   
@@ -73,7 +80,7 @@ function getData_(endpoint_name, params) {
   var token = CACHE.get(name + '_access_token');
   if (!token && endpoint.scope) token = refreshToken_(name);
 
-  return doRequest_(BASE_URL + path, 'get', token);
+  return doRequest_(BASE_URL + path, endpoint.method, token, data);
 }
 
 function parseData_(endpoint_name, params) {
@@ -106,7 +113,7 @@ function parseData_(endpoint_name, params) {
      data.forEach(function(obj) {
        var temp = [];
        endpoint.headers.forEach(function(header) {
-         temp.push(Array.isArray(obj[header.name]) ? JSON.stringify(obj[header.name]) : obj[header.name]);
+         temp.push(typeof(obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
        });
        result.push(temp);
      });
@@ -129,7 +136,7 @@ function doRequest_(path, method, token, data) {
   var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
   var options = {'method': method, 'muteHttpExceptions': true, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
   if (data) options['payload'] = JSON.stringify(data)
-    var response = UrlFetchApp.fetch(path, options);
+  var response = UrlFetchApp.fetch(path, options);
   if (response.getResponseCode() !== 200) {
     var error_body = JSON.parse(response.getContentText());
     var error = {};
