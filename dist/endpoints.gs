@@ -3969,41 +3969,6 @@ ENDPOINTS = {
     ],
     "summary": "Per faction breakdown of faction warfare statistics"
   },
-  "fw_systems": {
-    "description": "An overview of the current ownership of faction warfare solar systems",
-    "headers": [
-      {
-        "name": "contested"
-      },
-      {
-        "name": "occupier_faction_id"
-      },
-      {
-        "name": "owner_faction_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "victory_points"
-      },
-      {
-        "name": "victory_points_threshold"
-      }
-    ],
-    "method": "GET",
-    "path": "/v1/fw/systems/",
-    "parameters": [
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "All faction warfare solar systems"
-  },
   "fw_wars": {
     "description": "Data about which NPC factions are at war",
     "headers": [
@@ -7524,6 +7489,41 @@ ENDPOINTS = {
       }
     ],
     "summary": "Information about a dogma effect"
+  },
+  "fw_systems": {
+    "description": "An overview of the current ownership of faction warfare solar systems",
+    "headers": [
+      {
+        "name": "contested"
+      },
+      {
+        "name": "occupier_faction_id"
+      },
+      {
+        "name": "owner_faction_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "victory_points"
+      },
+      {
+        "name": "victory_points_threshold"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/fw/systems/",
+    "parameters": [
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "All faction warfare solar systems"
   },
   "eve_search": {
     "description": "Search for entities that match a given sub",

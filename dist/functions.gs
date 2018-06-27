@@ -979,16 +979,6 @@ function fw_stats(opt_headers) {
 }
 
 /**
-* An overview of the current ownership of faction warfare solar systems
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return All faction warfare solar systems
-* @customfunction
-*/
-function fw_systems(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
-}
-
-/**
 * Data about which NPC factions are at war
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of NPC factions at war
@@ -1821,6 +1811,16 @@ function corporations_corporation_structures(language, name, page, opt_headers) 
 function dogma_effects_effect(effect_id, opt_headers) {
   if(!effect_id) throw 'effect_id is required';
   return parseData_(arguments.callee.name,{effect_id:effect_id,opt_headers:opt_headers})
+}
+
+/**
+* An overview of the current ownership of faction warfare solar systems
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return All faction warfare solar systems
+* @customfunction
+*/
+function fw_systems(opt_headers) {
+  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
 
 /**
