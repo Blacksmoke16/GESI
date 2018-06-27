@@ -15,11 +15,13 @@ if [ "$ETAG" != "$VERSION" ]; then
 
 	# Checkout correct branch
 	git checkout $TRAVIS_BRANCH
-	git config user.name "GESI Bot" 
-	git config user.email "Blacksmoke16+GESIBot@eve.tools"
+	
+	# Set user settings
+	git config --global user.name "GESI Bot" 
+	git config --global user.email "Blacksmoke16+GESIBot@eve.tools"
 
 	# Check if anything actually changed
-    if [[ -n $(git diff ./dist/) ]]; then
+    	if [[ -n $(git diff ./dist/) ]]; then
     		echo "endpoints changed...pushing changes to Github"
 		git add -A
 		git commit -am "$(date '+%B %d') ESI Updates [skip ci]"
