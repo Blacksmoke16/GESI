@@ -5,7 +5,7 @@ echo "Current ETag: $VERSION"
 echo "ESI ETag: $ETAG"
 
 if [ "$ETAG" != "$VERSION" ]; then
-	echo 'New ESI version...updating version.cr'
+	echo 'New ESI version...updating GESI files'
 
 	# Save new ETag
 	sed -i "s/.*/$ETAG/" ./src/version.cr
@@ -15,9 +15,11 @@ if [ "$ETAG" != "$VERSION" ]; then
 
 	# Checkout correct branch
 	git checkout $TRAVIS_BRANCH
+	git config user.name "GESI Bot" 
+	git config user.email "Blacksmoke16+GESIBot@eve.tools"
 
 	# Check if anything actually changed
-    if [[ -n $(git diff ./dist/functions.gs) || -n $(git diff ./dist/endpoints.gs) ]]; then
+    if [[ -n $(git diff ./dist/) ]]; then
     		echo "endpoints changed...pushing changes to Github"
 		git add -A
 		git commit -am "$(date '+%B %d') ESI Updates [skip ci]"
