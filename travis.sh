@@ -24,11 +24,11 @@ if [ "$ETAG" != "$VERSION" ]; then
     	if [[ -n $(git diff ./dist/) ]]; then
     		echo "endpoints changed...pushing changes to Github"
 		git add -A
-		git commit -am "$(date '+%B %d') ESI Updates [skip ci]"
+		git commit -am "$(date '+%B %d') ESI Updates"
 		git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git
 	else
 		echo "Nothing actually changed...bump version.cr"
-		git commit -am "Bump version.cr [skip ci]"
+		git commit -am "Bump version.cr"
 		git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git
 	fi
 else
