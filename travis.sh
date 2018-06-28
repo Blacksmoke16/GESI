@@ -1,4 +1,4 @@
-ETAG=$(curl -s --head https://esi.evetech.net/_latest/swagger.json | grep -o '\".*\"'| sed 's/"//g')
+ETAG=$(curl -Is https://esi.evetech.net/_latest/swagger.json | grep -o '\".*\"'| sed 's/"//g')
 VERSION=$(cat src/version.cr)
 
 echo "Current ETag: $VERSION"
@@ -10,8 +10,10 @@ if [ "$ETAG" != "$VERSION" ]; then
 	# Save new ETag
 	sed -i "s/.*/$ETAG/" ./src/version.cr
 
-	# Generate new files
-	./bin/GESI-linux-x86_64 -o ./dist/
+	# Generate new files for each ESI version
+	./bin/GESI-linux-x86_64 -v legacy -o ./dist/legacy/
+	./bin/GESI-linux-x86_64 -v latest -o ./dist/latest/
+	./bin/GESI-linux-x86_64 -v dev -o ./dist/dev/
 
 	# Checkout correct branch
 	git checkout $TRAVIS_BRANCH
@@ -21,11 +23,35 @@ if [ "$ETAG" != "$VERSION" ]; then
 	git config --global user.email "Blacksmoke16+GESIBot@eve.tools"
 
 	# Check if anything actually changed
-    	if [[ -n $(git diff ./dist/) ]]; then
-    		echo "endpoints changed...pushing changes to Github"
+    if [[ -n $(git diff ./dist/) ]]; then
+    	echo "endpoints changed...pushing changes to Github"
+
+		# Bump APP_VERSION
+		APP_VERSION=$(cat GESI.gs | grep -o "\.[0-9]*\." | sed 's/\.//g')
+		let "APP_VERSION++"
+		sed -i "s/\.[0-9]*\./\.$APP_VERSION\./" ./GESI.gs
+
 		git add -A
 		git commit -am "$(date '+%B %d') ESI Updates"
-		git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git
+		PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
+
+		if [[ -z $PUSH ]]; then
+			# Cut a new pre release
+			echo "Creating a new pre release"
+			curl -s -o /dev/null -X POST \
+			  	https://api.github.com/repos/Blacksmoke16/GESI/releases \
+				-H "Authorization: Bearer $GITHUB_TOKEN" \
+			  	-H 'Content-Type: application/json' \
+			  	-d '{
+			  		  "tag_name": "6.'"$APP_VERSION".'0",
+			  		  "target_commitish": "master",
+			  		  "name": "'"$(date '+%B %d') ESI Updates"'",
+					  "body": "'"https://github.com/esi/esi-issues/blob/master/changelog.md#$(date +%F)"'",
+					  "draft": false,
+					  "prerelease": true
+					}'
+
+		fi
 	else
 		echo "Nothing actually changed...bump version.cr"
 		git commit -am "Bump version.cr"
