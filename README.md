@@ -7,9 +7,11 @@ Google Sheets Script for interacting with EVE ESI
    3. Copy the GESI files.  You may need to name the project to save it, so use any name.
        * Copy the contents of GESI.gs into the `Code.gs` script file, replacing everything in the file, and save the script.  (Can rename Code.gs to GESI.gs if you want)
        * Create a new script file (File -> New -> Script File) and name it `endpoints`.
-           * Copy the contents of `dist/endpoints.gs` into the script file, replacing everything in the file, and save the script.
+           * Pick which version of ESI you wish to use: legacy, latest, dev.
+           * Copy the contents of `dist/ESI_VERSION/endpoints.gs` into the script file, replacing everything in the file, and save the script.
        * Create a new script file (File -> New -> Script File) and name it `functions`.
-           * Copy the contents of `dist/functions.gs` into the script file, replacing everything in the file, and save the script.
+           * Pick which version of ESI you wish to use: legacy, latest, dev.
+           * Copy the contents of `dist/ESI_VERSION/functions.gs` into the script file, replacing everything in the file, and save the script.
    4. A this point setup is complete for unauthenticated endpoints.  If you need the authenticated endpoints continue on.
    5. Go to File -> Project Properties and copy the Script ID.
    6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
