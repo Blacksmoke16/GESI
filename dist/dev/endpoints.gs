@@ -2799,83 +2799,6 @@ ENDPOINTS = {
     "scope": "esi-corporations.track_members.v1",
     "summary": "List of member character IDs"
   },
-  "corporations_corporation_orders_history": {
-    "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "escrow"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "wallet_division"
-      }
-    ],
-    "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/orders/history/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "Expired and cancelled market orders placed on behalf of a corporation"
-  },
   "corporations_corporation_outposts": {
     "description": "Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
     "headers": [
@@ -5770,55 +5693,6 @@ ENDPOINTS = {
     ],
     "summary": "List of public structure IDs"
   },
-  "universe_structures_structure": {
-    "description": "Returns information on requested structure, if you are on the ACL. Otherwise, returns \"Forbidden\" for all inputs.",
-    "headers": [
-      {
-        "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v1/universe/structures/{structure_id}/",
-    "parameters": [
-      {
-        "description": "An Eve structure ID",
-        "in": "path",
-        "name": "structure_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-universe.read_structures.v1",
-    "summary": "Data about a structure"
-  },
   "universe_system_jumps": {
     "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
     "headers": [
@@ -7230,8 +7104,8 @@ ENDPOINTS = {
     "scope": "esi-corporations.read_container_logs.v1",
     "summary": "List of corporation ALSC logs"
   },
-  "corporations_corporation_orders": {
-    "description": "List open market orders placed on behalf of a corporation",
+  "corporations_corporation_orders_history": {
+    "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
     "headers": [
       {
         "name": "duration"
@@ -7244,6 +7118,9 @@ ENDPOINTS = {
       },
       {
         "name": "issued"
+      },
+      {
+        "name": "issued_by"
       },
       {
         "name": "location_id"
@@ -7264,6 +7141,9 @@ ENDPOINTS = {
         "name": "region_id"
       },
       {
+        "name": "state"
+      },
+      {
         "name": "type_id"
       },
       {
@@ -7277,7 +7157,7 @@ ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/orders/",
+    "path": "/v2/corporations/{corporation_id}/orders/history/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -7302,7 +7182,7 @@ ENDPOINTS = {
       }
     ],
     "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "A list of open market orders"
+    "summary": "Expired and cancelled market orders placed on behalf of a corporation"
   },
   "corporations_corporation_structures": {
     "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
@@ -7784,6 +7664,58 @@ ENDPOINTS = {
       }
     ],
     "summary": "Information about a station"
+  },
+  "universe_structures_structure": {
+    "description": "Returns information on requested structure if you are on the ACL. Otherwise, returns \"Forbidden\" for all inputs.",
+    "headers": [
+      {
+        "name": "name"
+      },
+      {
+        "name": "owner_id"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/universe/structures/{structure_id}/",
+    "parameters": [
+      {
+        "description": "An Eve structure ID",
+        "in": "path",
+        "name": "structure_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-universe.read_structures.v1",
+    "summary": "Data about a structure"
   },
   "universe_system_kills": {
     "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
@@ -8332,6 +8264,83 @@ ENDPOINTS = {
     "scope": "esi-corporations.read_corporation_membership.v1",
     "summary": "List of member character IDs"
   },
+  "corporations_corporation_orders": {
+    "description": "List open market orders placed on behalf of a corporation",
+    "headers": [
+      {
+        "name": "duration"
+      },
+      {
+        "name": "escrow"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "issued_by"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "wallet_division"
+      }
+    ],
+    "method": "GET",
+    "path": "/v3/corporations/{corporation_id}/orders/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-markets.read_corporation_orders.v1",
+    "summary": "A list of open market orders"
+  },
   "corporations_corporation_wallets_division_journal": {
     "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
     "headers": [
@@ -8409,83 +8418,6 @@ ENDPOINTS = {
     ],
     "scope": "esi-wallet.read_corporation_wallets.v1",
     "summary": "Journal entries"
-  },
-  "universe_systems_system": {
-    "description": "Get information on a solar system. NOTE: This route does not work with abyssal systems.",
-    "headers": [
-      {
-        "name": "constellation_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "planets",
-        "sub_headers": [
-          "asteroid_belts",
-          "moons",
-          "planet_id"
-        ]
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "security_class"
-      },
-      {
-        "name": "security_status"
-      },
-      {
-        "name": "star_id"
-      },
-      {
-        "name": "stargates",
-        "sub_headers": [
-          "id_stargates"
-        ]
-      },
-      {
-        "name": "stations",
-        "sub_headers": [
-          "id_stations"
-        ]
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v3/universe/systems/{system_id}/",
-    "parameters": [
-      {
-        "description": "system_id integer",
-        "in": "path",
-        "name": "system_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a solar system"
   },
   "universe_types_type": {
     "description": "Get information on a type",
@@ -8804,5 +8736,82 @@ ENDPOINTS = {
       }
     ],
     "summary": "Public information about a corporation"
+  },
+  "universe_systems_system": {
+    "description": "Get information on a solar system.",
+    "headers": [
+      {
+        "name": "constellation_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "planets",
+        "sub_headers": [
+          "asteroid_belts",
+          "moons",
+          "planet_id"
+        ]
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "security_class"
+      },
+      {
+        "name": "security_status"
+      },
+      {
+        "name": "star_id"
+      },
+      {
+        "name": "stargates",
+        "sub_headers": [
+          "id_stargates"
+        ]
+      },
+      {
+        "name": "stations",
+        "sub_headers": [
+          "id_stations"
+        ]
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v4/universe/systems/{system_id}/",
+    "parameters": [
+      {
+        "description": "system_id integer",
+        "in": "path",
+        "name": "system_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a solar system"
   }
 };

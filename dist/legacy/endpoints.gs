@@ -82,6 +82,50 @@ ENDPOINTS = {
     ],
     "summary": "List of Alliance IDs"
   },
+  "alliances_alliance_contacts": {
+    "description": "Return contacts of an alliance",
+    "headers": [
+      {
+        "name": "contact_id"
+      },
+      {
+        "name": "contact_type"
+      },
+      {
+        "name": "label_id"
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/alliances/{alliance_id}/contacts/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-alliances.read_contacts.v1",
+    "summary": "A list of contacts"
+  },
   "alliances_alliance_contacts_labels": {
     "description": "Return custom labels for an alliance's contacts",
     "headers": [
@@ -232,6 +276,50 @@ ENDPOINTS = {
     "scope": "esi-characters.read_agents_research.v1",
     "summary": "A list of agents research information"
   },
+  "characters_character_assets_locations": {
+    "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "x"
+      },
+      {
+        "name": "y"
+      },
+      {
+        "name": "z"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/characters/{character_id}/assets/locations/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "List of asset locations"
+  },
   "characters_character_assets_names": {
     "description": "Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.",
     "headers": [
@@ -319,6 +407,143 @@ ENDPOINTS = {
     "scope": "esi-skills.read_skills.v1",
     "summary": "Attributes of a character"
   },
+  "characters_character_blueprints": {
+    "description": "Return a list of blueprints the character has",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "material_efficiency"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "time_efficiency"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/blueprints/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_blueprints.v1",
+    "summary": "A list of blueprints"
+  },
+  "characters_character_bookmarks": {
+    "description": "List your character's personal bookmarks",
+    "headers": [
+      {
+        "name": "bookmark_id"
+      },
+      {
+        "name": "create_date"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "memo"
+      },
+      {
+        "name": "note"
+      },
+      {
+        "name": "owner_id"
+      },
+      {
+        "name": "target",
+        "sub_headers": [
+          "coordinates",
+          "item",
+          "location_id"
+        ]
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/bookmarks/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-bookmarks.read_character_bookmarks.v1",
+    "summary": "A list of bookmarks"
+  },
+  "characters_character_bookmarks_folders": {
+    "description": "List your character's personal bookmark folders",
+    "headers": [
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "owner_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/bookmarks/folders/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-bookmarks.read_character_bookmarks.v1",
+    "summary": "List of bookmark folders"
+  },
   "characters_character_calendar": {
     "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event.",
     "headers": [
@@ -403,6 +628,56 @@ ENDPOINTS = {
     ],
     "scope": "esi-calendar.read_calendar_events.v1",
     "summary": "List of attendees"
+  },
+  "characters_character_contacts": {
+    "description": "Return contacts of a character",
+    "headers": [
+      {
+        "name": "contact_id"
+      },
+      {
+        "name": "contact_type"
+      },
+      {
+        "name": "is_blocked"
+      },
+      {
+        "name": "is_watched"
+      },
+      {
+        "name": "label_id"
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/characters/{character_id}/contacts/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_contacts.v1",
+    "summary": "A list of contacts"
   },
   "characters_character_contacts_labels": {
     "description": "Return custom labels for a character's contacts",
@@ -1152,6 +1427,30 @@ ENDPOINTS = {
     "scope": "esi-mail.read_mail.v1",
     "summary": "Mailing lists"
   },
+  "characters_character_mail_unread": {
+    "description": "Return the number of unread mails for the character",
+    "headers": [],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/mail/unread/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-mail.read_mail.v1",
+    "summary": "Unread mail count"
+  },
   "characters_character_mail_mail": {
     "description": "Return the contents of an EVE mail",
     "headers": [
@@ -1314,6 +1613,52 @@ ENDPOINTS = {
     "scope": "esi-industry.read_character_mining.v1",
     "summary": "Mining ledger of a character"
   },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
+      {
+        "name": "is_read"
+      },
+      {
+        "name": "notification_id"
+      },
+      {
+        "name": "sender_id"
+      },
+      {
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/notifications/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Returns your recent notifications"
+  },
   "characters_character_notifications_contacts": {
     "description": "Return notifications about having been added to someone's contact list",
     "headers": [
@@ -1354,6 +1699,30 @@ ENDPOINTS = {
     "scope": "esi-characters.read_notifications.v1",
     "summary": "A list of contact notifications"
   },
+  "characters_character_online": {
+    "description": "Checks if the character is currently online",
+    "headers": [],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/online/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-location.read_online.v1",
+    "summary": "Boolean of if the character is currently online"
+  },
   "characters_character_opportunities": {
     "description": "Return a list of tasks finished by a character",
     "headers": [
@@ -1384,6 +1753,79 @@ ENDPOINTS = {
     ],
     "scope": "esi-characters.read_opportunities.v1",
     "summary": "A list of opportunities task ids"
+  },
+  "characters_character_orders": {
+    "description": "List market orders placed by a character",
+    "headers": [
+      {
+        "name": "account_id"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "escrow"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "is_corp"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/orders/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-markets.read_character_orders.v1",
+    "summary": "Market orders placed by a character"
   },
   "characters_character_orders_history": {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
@@ -1508,6 +1950,63 @@ ENDPOINTS = {
     "scope": "esi-planets.manage_planets.v1",
     "summary": "List of colonies"
   },
+  "characters_character_portrait": {
+    "description": "Get portrait urls for a character",
+    "headers": [
+      {
+        "name": "128x128"
+      },
+      {
+        "name": "256x256"
+      },
+      {
+        "name": "512x512"
+      },
+      {
+        "name": "64x64"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/portrait/",
+    "parameters": [
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Public data for the given character"
+  },
+  "characters_character_roles": {
+    "description": "Returns a character's corporation roles",
+    "headers": [
+      {
+        "name": "role_ids"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/roles/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_corporation_roles.v1",
+    "summary": "The character's roles in thier corporation"
+  },
   "characters_character_ship": {
     "description": "Get the current ship type, name and id",
     "headers": [
@@ -1575,6 +2074,907 @@ ENDPOINTS = {
     ],
     "scope": "esi-characters.read_standings.v1",
     "summary": "A list of standings"
+  },
+  "characters_character_stats": {
+    "description": "Returns aggregate yearly stats for a character",
+    "headers": [
+      {
+        "name": "character_minutes"
+      },
+      {
+        "name": "character_sessions_started"
+      },
+      {
+        "name": "combat_cap_drainedby_npc"
+      },
+      {
+        "name": "combat_cap_drainedby_pc"
+      },
+      {
+        "name": "combat_cap_draining_pc"
+      },
+      {
+        "name": "combat_criminal_flag_set"
+      },
+      {
+        "name": "combat_damage_from_np_cs_amount"
+      },
+      {
+        "name": "combat_damage_from_np_cs_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_bomb_amount"
+      },
+      {
+        "name": "combat_damage_from_players_bomb_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_combat_drone_amount"
+      },
+      {
+        "name": "combat_damage_from_players_combat_drone_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_energy_amount"
+      },
+      {
+        "name": "combat_damage_from_players_energy_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_fighter_bomber_amount"
+      },
+      {
+        "name": "combat_damage_from_players_fighter_bomber_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_fighter_drone_amount"
+      },
+      {
+        "name": "combat_damage_from_players_fighter_drone_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_hybrid_amount"
+      },
+      {
+        "name": "combat_damage_from_players_hybrid_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_missile_amount"
+      },
+      {
+        "name": "combat_damage_from_players_missile_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_projectile_amount"
+      },
+      {
+        "name": "combat_damage_from_players_projectile_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_smart_bomb_amount"
+      },
+      {
+        "name": "combat_damage_from_players_smart_bomb_num_shots"
+      },
+      {
+        "name": "combat_damage_from_players_super_amount"
+      },
+      {
+        "name": "combat_damage_from_players_super_num_shots"
+      },
+      {
+        "name": "combat_damage_from_structures_total_amount"
+      },
+      {
+        "name": "combat_damage_from_structures_total_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_bomb_amount"
+      },
+      {
+        "name": "combat_damage_to_players_bomb_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_combat_drone_amount"
+      },
+      {
+        "name": "combat_damage_to_players_combat_drone_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_energy_amount"
+      },
+      {
+        "name": "combat_damage_to_players_energy_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_fighter_bomber_amount"
+      },
+      {
+        "name": "combat_damage_to_players_fighter_bomber_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_fighter_drone_amount"
+      },
+      {
+        "name": "combat_damage_to_players_fighter_drone_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_hybrid_amount"
+      },
+      {
+        "name": "combat_damage_to_players_hybrid_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_missile_amount"
+      },
+      {
+        "name": "combat_damage_to_players_missile_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_projectile_amount"
+      },
+      {
+        "name": "combat_damage_to_players_projectile_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_smart_bomb_amount"
+      },
+      {
+        "name": "combat_damage_to_players_smart_bomb_num_shots"
+      },
+      {
+        "name": "combat_damage_to_players_super_amount"
+      },
+      {
+        "name": "combat_damage_to_players_super_num_shots"
+      },
+      {
+        "name": "combat_damage_to_structures_total_amount"
+      },
+      {
+        "name": "combat_damage_to_structures_total_num_shots"
+      },
+      {
+        "name": "combat_deaths_high_sec"
+      },
+      {
+        "name": "combat_deaths_low_sec"
+      },
+      {
+        "name": "combat_deaths_null_sec"
+      },
+      {
+        "name": "combat_deaths_pod_high_sec"
+      },
+      {
+        "name": "combat_deaths_pod_low_sec"
+      },
+      {
+        "name": "combat_deaths_pod_null_sec"
+      },
+      {
+        "name": "combat_deaths_pod_wormhole"
+      },
+      {
+        "name": "combat_deaths_wormhole"
+      },
+      {
+        "name": "combat_drone_engage"
+      },
+      {
+        "name": "combat_duel_requested"
+      },
+      {
+        "name": "combat_engagement_register"
+      },
+      {
+        "name": "combat_kills_assists"
+      },
+      {
+        "name": "combat_kills_high_sec"
+      },
+      {
+        "name": "combat_kills_low_sec"
+      },
+      {
+        "name": "combat_kills_null_sec"
+      },
+      {
+        "name": "combat_kills_pod_high_sec"
+      },
+      {
+        "name": "combat_kills_pod_low_sec"
+      },
+      {
+        "name": "combat_kills_pod_null_sec"
+      },
+      {
+        "name": "combat_kills_pod_wormhole"
+      },
+      {
+        "name": "combat_kills_wormhole"
+      },
+      {
+        "name": "combat_npc_flag_set"
+      },
+      {
+        "name": "combat_pvp_flag_set"
+      },
+      {
+        "name": "combat_repair_armor_by_remote_amount"
+      },
+      {
+        "name": "combat_repair_armor_remote_amount"
+      },
+      {
+        "name": "combat_repair_armor_self_amount"
+      },
+      {
+        "name": "combat_repair_capacitor_by_remote_amount"
+      },
+      {
+        "name": "combat_repair_capacitor_remote_amount"
+      },
+      {
+        "name": "combat_repair_capacitor_self_amount"
+      },
+      {
+        "name": "combat_repair_hull_by_remote_amount"
+      },
+      {
+        "name": "combat_repair_hull_remote_amount"
+      },
+      {
+        "name": "combat_repair_hull_self_amount"
+      },
+      {
+        "name": "combat_repair_shield_by_remote_amount"
+      },
+      {
+        "name": "combat_repair_shield_remote_amount"
+      },
+      {
+        "name": "combat_repair_shield_self_amount"
+      },
+      {
+        "name": "combat_self_destructs"
+      },
+      {
+        "name": "combat_warp_scramble_pc"
+      },
+      {
+        "name": "combat_warp_scrambledby_npc"
+      },
+      {
+        "name": "combat_warp_scrambledby_pc"
+      },
+      {
+        "name": "combat_weapon_flag_set"
+      },
+      {
+        "name": "combat_webifiedby_npc"
+      },
+      {
+        "name": "combat_webifiedby_pc"
+      },
+      {
+        "name": "combat_webifying_pc"
+      },
+      {
+        "name": "days_of_activity"
+      },
+      {
+        "name": "generic_cone_scans"
+      },
+      {
+        "name": "generic_request_scans"
+      },
+      {
+        "name": "industry_hacking_successes"
+      },
+      {
+        "name": "industry_jobs_cancelled"
+      },
+      {
+        "name": "industry_jobs_completed_copy_blueprint"
+      },
+      {
+        "name": "industry_jobs_completed_invention"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_asteroid"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_asteroid_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_charge"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_charge_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_commodity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_commodity_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_deployable"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_deployable_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_drone"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_drone_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_implant"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_implant_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_module"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_module_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_other"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_other_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_ship"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_ship_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_structure"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_structure_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_subsystem"
+      },
+      {
+        "name": "industry_jobs_completed_manufacture_subsystem_quantity"
+      },
+      {
+        "name": "industry_jobs_completed_material_productivity"
+      },
+      {
+        "name": "industry_jobs_completed_time_productivity"
+      },
+      {
+        "name": "industry_jobs_started_copy_blueprint"
+      },
+      {
+        "name": "industry_jobs_started_invention"
+      },
+      {
+        "name": "industry_jobs_started_manufacture"
+      },
+      {
+        "name": "industry_jobs_started_material_productivity"
+      },
+      {
+        "name": "industry_jobs_started_time_productivity"
+      },
+      {
+        "name": "industry_reprocess_item"
+      },
+      {
+        "name": "industry_reprocess_item_quantity"
+      },
+      {
+        "name": "inventory_abandon_loot_quantity"
+      },
+      {
+        "name": "inventory_trash_item_quantity"
+      },
+      {
+        "name": "isk_in"
+      },
+      {
+        "name": "isk_out"
+      },
+      {
+        "name": "market_accept_contracts_courier"
+      },
+      {
+        "name": "market_accept_contracts_item_exchange"
+      },
+      {
+        "name": "market_buy_orders_placed"
+      },
+      {
+        "name": "market_cancel_market_order"
+      },
+      {
+        "name": "market_create_contracts_auction"
+      },
+      {
+        "name": "market_create_contracts_courier"
+      },
+      {
+        "name": "market_create_contracts_item_exchange"
+      },
+      {
+        "name": "market_deliver_courier_contract"
+      },
+      {
+        "name": "market_isk_gained"
+      },
+      {
+        "name": "market_isk_spent"
+      },
+      {
+        "name": "market_modify_market_order"
+      },
+      {
+        "name": "market_search_contracts"
+      },
+      {
+        "name": "market_sell_orders_placed"
+      },
+      {
+        "name": "mining_drone_mine"
+      },
+      {
+        "name": "mining_ore_arkonor"
+      },
+      {
+        "name": "mining_ore_bistot"
+      },
+      {
+        "name": "mining_ore_crokite"
+      },
+      {
+        "name": "mining_ore_dark_ochre"
+      },
+      {
+        "name": "mining_ore_gneiss"
+      },
+      {
+        "name": "mining_ore_harvestable_cloud"
+      },
+      {
+        "name": "mining_ore_hedbergite"
+      },
+      {
+        "name": "mining_ore_hemorphite"
+      },
+      {
+        "name": "mining_ore_ice"
+      },
+      {
+        "name": "mining_ore_jaspet"
+      },
+      {
+        "name": "mining_ore_kernite"
+      },
+      {
+        "name": "mining_ore_mercoxit"
+      },
+      {
+        "name": "mining_ore_omber"
+      },
+      {
+        "name": "mining_ore_plagioclase"
+      },
+      {
+        "name": "mining_ore_pyroxeres"
+      },
+      {
+        "name": "mining_ore_scordite"
+      },
+      {
+        "name": "mining_ore_spodumain"
+      },
+      {
+        "name": "mining_ore_veldspar"
+      },
+      {
+        "name": "module_activations_armor_hardener"
+      },
+      {
+        "name": "module_activations_armor_repair_unit"
+      },
+      {
+        "name": "module_activations_armor_resistance_shift_hardener"
+      },
+      {
+        "name": "module_activations_automated_targeting_system"
+      },
+      {
+        "name": "module_activations_bastion"
+      },
+      {
+        "name": "module_activations_bomb_launcher"
+      },
+      {
+        "name": "module_activations_capacitor_booster"
+      },
+      {
+        "name": "module_activations_cargo_scanner"
+      },
+      {
+        "name": "module_activations_cloaking_device"
+      },
+      {
+        "name": "module_activations_clone_vat_bay"
+      },
+      {
+        "name": "module_activations_cynosural_field"
+      },
+      {
+        "name": "module_activations_damage_control"
+      },
+      {
+        "name": "module_activations_data_miners"
+      },
+      {
+        "name": "module_activations_drone_control_unit"
+      },
+      {
+        "name": "module_activations_drone_tracking_modules"
+      },
+      {
+        "name": "module_activations_eccm"
+      },
+      {
+        "name": "module_activations_ecm"
+      },
+      {
+        "name": "module_activations_ecm_burst"
+      },
+      {
+        "name": "module_activations_energy_destabilizer"
+      },
+      {
+        "name": "module_activations_energy_vampire"
+      },
+      {
+        "name": "module_activations_energy_weapon"
+      },
+      {
+        "name": "module_activations_festival_launcher"
+      },
+      {
+        "name": "module_activations_frequency_mining_laser"
+      },
+      {
+        "name": "module_activations_fueled_armor_repairer"
+      },
+      {
+        "name": "module_activations_fueled_shield_booster"
+      },
+      {
+        "name": "module_activations_gang_coordinator"
+      },
+      {
+        "name": "module_activations_gas_cloud_harvester"
+      },
+      {
+        "name": "module_activations_hull_repair_unit"
+      },
+      {
+        "name": "module_activations_hybrid_weapon"
+      },
+      {
+        "name": "module_activations_industrial_core"
+      },
+      {
+        "name": "module_activations_interdiction_sphere_launcher"
+      },
+      {
+        "name": "module_activations_micro_jump_drive"
+      },
+      {
+        "name": "module_activations_mining_laser"
+      },
+      {
+        "name": "module_activations_missile_launcher"
+      },
+      {
+        "name": "module_activations_passive_targeting_system"
+      },
+      {
+        "name": "module_activations_probe_launcher"
+      },
+      {
+        "name": "module_activations_projected_eccm"
+      },
+      {
+        "name": "module_activations_projectile_weapon"
+      },
+      {
+        "name": "module_activations_propulsion_module"
+      },
+      {
+        "name": "module_activations_remote_armor_repairer"
+      },
+      {
+        "name": "module_activations_remote_capacitor_transmitter"
+      },
+      {
+        "name": "module_activations_remote_ecm_burst"
+      },
+      {
+        "name": "module_activations_remote_hull_repairer"
+      },
+      {
+        "name": "module_activations_remote_sensor_booster"
+      },
+      {
+        "name": "module_activations_remote_sensor_damper"
+      },
+      {
+        "name": "module_activations_remote_shield_booster"
+      },
+      {
+        "name": "module_activations_remote_tracking_computer"
+      },
+      {
+        "name": "module_activations_salvager"
+      },
+      {
+        "name": "module_activations_sensor_booster"
+      },
+      {
+        "name": "module_activations_shield_booster"
+      },
+      {
+        "name": "module_activations_shield_hardener"
+      },
+      {
+        "name": "module_activations_ship_scanner"
+      },
+      {
+        "name": "module_activations_siege"
+      },
+      {
+        "name": "module_activations_smart_bomb"
+      },
+      {
+        "name": "module_activations_stasis_web"
+      },
+      {
+        "name": "module_activations_strip_miner"
+      },
+      {
+        "name": "module_activations_super_weapon"
+      },
+      {
+        "name": "module_activations_survey_scanner"
+      },
+      {
+        "name": "module_activations_target_breaker"
+      },
+      {
+        "name": "module_activations_target_painter"
+      },
+      {
+        "name": "module_activations_tracking_computer"
+      },
+      {
+        "name": "module_activations_tracking_disruptor"
+      },
+      {
+        "name": "module_activations_tractor_beam"
+      },
+      {
+        "name": "module_activations_triage"
+      },
+      {
+        "name": "module_activations_warp_disrupt_field_generator"
+      },
+      {
+        "name": "module_activations_warp_scrambler"
+      },
+      {
+        "name": "module_link_weapons"
+      },
+      {
+        "name": "module_overload"
+      },
+      {
+        "name": "module_repairs"
+      },
+      {
+        "name": "orbital_strike_characters_killed"
+      },
+      {
+        "name": "orbital_strike_damage_to_players_armor_amount"
+      },
+      {
+        "name": "orbital_strike_damage_to_players_shield_amount"
+      },
+      {
+        "name": "pve_dungeons_completed_agent"
+      },
+      {
+        "name": "pve_dungeons_completed_distribution"
+      },
+      {
+        "name": "pve_missions_succeeded"
+      },
+      {
+        "name": "pve_missions_succeeded_epic_arc"
+      },
+      {
+        "name": "social_add_contact_bad"
+      },
+      {
+        "name": "social_add_contact_good"
+      },
+      {
+        "name": "social_add_contact_high"
+      },
+      {
+        "name": "social_add_contact_horrible"
+      },
+      {
+        "name": "social_add_contact_neutral"
+      },
+      {
+        "name": "social_add_note"
+      },
+      {
+        "name": "social_added_as_contact_bad"
+      },
+      {
+        "name": "social_added_as_contact_good"
+      },
+      {
+        "name": "social_added_as_contact_high"
+      },
+      {
+        "name": "social_added_as_contact_horrible"
+      },
+      {
+        "name": "social_added_as_contact_neutral"
+      },
+      {
+        "name": "social_calendar_event_created"
+      },
+      {
+        "name": "social_chat_messages_alliance"
+      },
+      {
+        "name": "social_chat_messages_constellation"
+      },
+      {
+        "name": "social_chat_messages_corporation"
+      },
+      {
+        "name": "social_chat_messages_fleet"
+      },
+      {
+        "name": "social_chat_messages_region"
+      },
+      {
+        "name": "social_chat_messages_solarsystem"
+      },
+      {
+        "name": "social_chat_messages_warfaction"
+      },
+      {
+        "name": "social_chat_total_message_length"
+      },
+      {
+        "name": "social_direct_trades"
+      },
+      {
+        "name": "social_fleet_broadcasts"
+      },
+      {
+        "name": "social_fleet_joins"
+      },
+      {
+        "name": "social_mails_received"
+      },
+      {
+        "name": "social_mails_sent"
+      },
+      {
+        "name": "travel_acceleration_gate_activations"
+      },
+      {
+        "name": "travel_align_to"
+      },
+      {
+        "name": "travel_distance_warped_high_sec"
+      },
+      {
+        "name": "travel_distance_warped_low_sec"
+      },
+      {
+        "name": "travel_distance_warped_null_sec"
+      },
+      {
+        "name": "travel_distance_warped_wormhole"
+      },
+      {
+        "name": "travel_docks_high_sec"
+      },
+      {
+        "name": "travel_docks_low_sec"
+      },
+      {
+        "name": "travel_docks_null_sec"
+      },
+      {
+        "name": "travel_jumps_stargate_high_sec"
+      },
+      {
+        "name": "travel_jumps_stargate_low_sec"
+      },
+      {
+        "name": "travel_jumps_stargate_null_sec"
+      },
+      {
+        "name": "travel_jumps_wormhole"
+      },
+      {
+        "name": "travel_warps_high_sec"
+      },
+      {
+        "name": "travel_warps_low_sec"
+      },
+      {
+        "name": "travel_warps_null_sec"
+      },
+      {
+        "name": "travel_warps_to_bookmark"
+      },
+      {
+        "name": "travel_warps_to_celestial"
+      },
+      {
+        "name": "travel_warps_to_fleet_member"
+      },
+      {
+        "name": "travel_warps_to_scan_result"
+      },
+      {
+        "name": "travel_warps_wormhole"
+      },
+      {
+        "name": "year"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/characters/{character_id}/stats/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characterstats.read.v1",
+    "summary": "Character stats"
   },
   "characters_character_titles": {
     "description": "Returns a character's titles",
@@ -1855,6 +3255,80 @@ ENDPOINTS = {
     ],
     "summary": "A list of npc corporation ids"
   },
+  "corporations_corporation_alliancehistory": {
+    "description": "Get a list of all the alliances a corporation has been a member of",
+    "headers": [
+      {
+        "name": "alliance",
+        "sub_headers": [
+          "alliance_id",
+          "is_deleted"
+        ]
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "start_date"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/alliancehistory/",
+    "parameters": [
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Alliance history for the given corporation"
+  },
+  "corporations_corporation_assets_locations": {
+    "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "x"
+      },
+      {
+        "name": "y"
+      },
+      {
+        "name": "z"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/corporations/{corporation_id}/assets/locations/",
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "List of asset locations"
+  },
   "corporations_corporation_assets_names": {
     "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.",
     "headers": [
@@ -1892,6 +3366,62 @@ ENDPOINTS = {
     ],
     "scope": "esi-assets.read_corporation_assets.v1",
     "summary": "List of asset names"
+  },
+  "corporations_corporation_blueprints": {
+    "description": "Returns a list of blueprints the corporation owns",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "material_efficiency"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "time_efficiency"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/blueprints/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-corporations.read_blueprints.v1",
+    "summary": "List of corporation blueprints"
   },
   "corporations_corporation_bookmarks": {
     "description": "A list of your corporation's bookmarks",
@@ -2002,6 +3532,53 @@ ENDPOINTS = {
     "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
     "summary": "List of corporation owned bookmark folders"
   },
+  "corporations_corporation_contacts": {
+    "description": "Return contacts of a corporation",
+    "headers": [
+      {
+        "name": "contact_id"
+      },
+      {
+        "name": "contact_type"
+      },
+      {
+        "name": "is_watched"
+      },
+      {
+        "name": "label_id"
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/contacts/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-corporations.read_contacts.v1",
+    "summary": "A list of contacts"
+  },
   "corporations_corporation_contacts_labels": {
     "description": "Return custom labels for a corporation's contacts",
     "headers": [
@@ -2032,6 +3609,74 @@ ENDPOINTS = {
     ],
     "scope": "esi-corporations.read_contacts.v1",
     "summary": "A list of corporation contact labels"
+  },
+  "corporations_corporation_containers_logs": {
+    "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
+    "headers": [
+      {
+        "name": "action"
+      },
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "container_id"
+      },
+      {
+        "name": "container_type_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "logged_at"
+      },
+      {
+        "name": "new_config_bitmask"
+      },
+      {
+        "name": "old_config_bitmask"
+      },
+      {
+        "name": "password_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/containers/logs/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-corporations.read_container_logs.v1",
+    "summary": "List of corporation ALSC logs"
   },
   "corporations_corporation_contracts": {
     "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -2799,6 +4444,83 @@ ENDPOINTS = {
     "scope": "esi-corporations.track_members.v1",
     "summary": "List of member character IDs"
   },
+  "corporations_corporation_orders": {
+    "description": "List open market orders placed on behalf of a corporation",
+    "headers": [
+      {
+        "name": "duration"
+      },
+      {
+        "name": "escrow"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "wallet_division"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/orders/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-markets.read_corporation_orders.v1",
+    "summary": "A list of open market orders"
+  },
   "corporations_corporation_orders_history": {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
     "headers": [
@@ -3339,6 +5061,93 @@ ENDPOINTS = {
     "scope": "esi-corporations.read_starbases.v1",
     "summary": "List of starbases (POSes)"
   },
+  "corporations_corporation_structures": {
+    "description": "Get a list of corporation structures",
+    "headers": [
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "current_vul",
+        "sub_headers": [
+          "day",
+          "hour"
+        ]
+      },
+      {
+        "name": "fuel_expires"
+      },
+      {
+        "name": "next_vul",
+        "sub_headers": [
+          "day",
+          "hour"
+        ]
+      },
+      {
+        "name": "profile_id"
+      },
+      {
+        "name": "services",
+        "sub_headers": [
+          "name",
+          "state"
+        ]
+      },
+      {
+        "name": "state_timer_end"
+      },
+      {
+        "name": "state_timer_start"
+      },
+      {
+        "name": "structure_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unanchors_at"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/corporations/{corporation_id}/structures/",
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-corporations.read_structures.v1",
+    "summary": "List of corporation structures' information"
+  },
   "corporations_corporation_titles": {
     "description": "Returns a corporation's titles",
     "headers": [
@@ -3663,6 +5472,100 @@ ENDPOINTS = {
     ],
     "summary": "A list of dogma effect ids"
   },
+  "dogma_effects_effect": {
+    "description": "Get information on a dogma effect",
+    "headers": [
+      {
+        "name": "description"
+      },
+      {
+        "name": "disallow_auto_repeat"
+      },
+      {
+        "name": "discharge_attribute_id"
+      },
+      {
+        "name": "display_name"
+      },
+      {
+        "name": "duration_attribute_id"
+      },
+      {
+        "name": "effect_category"
+      },
+      {
+        "name": "effect_id"
+      },
+      {
+        "name": "electronic_chance"
+      },
+      {
+        "name": "falloff_attribute_id"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "is_assistance"
+      },
+      {
+        "name": "is_offensive"
+      },
+      {
+        "name": "is_warp_safe"
+      },
+      {
+        "name": "modifiers",
+        "sub_headers": [
+          "domain",
+          "func",
+          "modified_attribute_id",
+          "modifying_attribute_id",
+          "operator"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "post_expression"
+      },
+      {
+        "name": "pre_expression"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "range_attribute_id"
+      },
+      {
+        "name": "range_chance"
+      },
+      {
+        "name": "tracking_speed_attribute_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/dogma/effects/{effect_id}/",
+    "parameters": [
+      {
+        "description": "A dogma effect ID",
+        "in": "path",
+        "name": "effect_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a dogma effect"
+  },
   "fleets_fleet": {
     "description": "Return details about a fleet",
     "headers": [
@@ -3968,6 +5871,41 @@ ENDPOINTS = {
       }
     ],
     "summary": "Per faction breakdown of faction warfare statistics"
+  },
+  "fw_systems": {
+    "description": "An overview of the current ownership of faction warfare solar systems",
+    "headers": [
+      {
+        "name": "contested"
+      },
+      {
+        "name": "occupier_faction_id"
+      },
+      {
+        "name": "owner_faction_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "victory_points"
+      },
+      {
+        "name": "victory_points_threshold"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/fw/systems/",
+    "parameters": [
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "All faction warfare solar systems"
   },
   "fw_wars": {
     "description": "Data about which NPC factions are at war",
@@ -4765,6 +6703,117 @@ ENDPOINTS = {
     ],
     "summary": "Solar systems in route from origin to destination"
   },
+  "eve_search": {
+    "description": "Search for entities that match a given sub",
+    "headers": [
+      {
+        "name": "agent",
+        "sub_headers": [
+          "agent_agents"
+        ]
+      },
+      {
+        "name": "alliance",
+        "sub_headers": [
+          "alliance_alliances"
+        ]
+      },
+      {
+        "name": "character",
+        "sub_headers": [
+          "character_characters"
+        ]
+      },
+      {
+        "name": "constellation",
+        "sub_headers": [
+          "constellation_constellations"
+        ]
+      },
+      {
+        "name": "corporation",
+        "sub_headers": [
+          "corporation_corporations"
+        ]
+      },
+      {
+        "name": "faction",
+        "sub_headers": [
+          "faction_factions"
+        ]
+      },
+      {
+        "name": "inventorytype",
+        "sub_headers": [
+          "inventorytype_inventorytypes"
+        ]
+      },
+      {
+        "name": "region",
+        "sub_headers": [
+          "region_regions"
+        ]
+      },
+      {
+        "name": "solarsystem",
+        "sub_headers": [
+          "solarsystem_solarsystems"
+        ]
+      },
+      {
+        "name": "station",
+        "sub_headers": [
+          "station_stations"
+        ]
+      },
+      {
+        "name": "wormhole",
+        "sub_headers": [
+          "wormhole_wormholes"
+        ]
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/search/",
+    "parameters": [
+      {
+        "description": "Type of entities to search for",
+        "in": "query",
+        "name": "categories",
+        "type": "array",
+        "required": true
+      },
+      {
+        "description": "The string to search on",
+        "in": "query",
+        "name": "search",
+        "type": "string",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Whether the search should be a strict match",
+        "in": "query",
+        "name": "strict",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "A list of search results"
+  },
   "sovereignty_campaigns": {
     "description": "Shows sovereignty data for campaigns.",
     "headers": [
@@ -5189,6 +7238,60 @@ ENDPOINTS = {
     ],
     "summary": "Information about a constellation"
   },
+  "universe_factions": {
+    "description": "Get a list of factions",
+    "headers": [
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "is_unique"
+      },
+      {
+        "name": "militia_corporation_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "size_factor"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "station_count"
+      },
+      {
+        "name": "station_system_count"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/universe/factions/",
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "A list of factions"
+  },
   "universe_graphics": {
     "description": "Get a list of graphics",
     "headers": [
@@ -5475,6 +7578,39 @@ ENDPOINTS = {
     ],
     "summary": "Information about a moon"
   },
+  "universe_names": {
+    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.",
+    "headers": [
+      {
+        "name": "category"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "POST",
+    "path": "/v1/universe/names/",
+    "parameters": [
+      {
+        "description": "The ids to resolve",
+        "in": "body",
+        "name": "ids",
+        "type": "object",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned."
+  },
   "universe_planets_planet": {
     "description": "Get information on a planet",
     "headers": [
@@ -5750,6 +7886,36 @@ ENDPOINTS = {
     ],
     "summary": "Information about a star"
   },
+  "universe_stations_station": {
+    "description": "Public information on stations",
+    "headers": [
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "station_name"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/universe/stations/{station_id}/",
+    "parameters": [
+      {
+        "description": "An Eve station ID",
+        "in": "path",
+        "name": "station_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Public data about a station"
+  },
   "universe_structures": {
     "description": "List all public structures",
     "headers": [
@@ -5841,6 +8007,35 @@ ENDPOINTS = {
       }
     ],
     "summary": "A list of systems and number of jumps"
+  },
+  "universe_system_kills": {
+    "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
+    "headers": [
+      {
+        "name": "npc_kills"
+      },
+      {
+        "name": "pod_kills"
+      },
+      {
+        "name": "ship_kills"
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/universe/system_kills/",
+    "parameters": [
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "A list of systems and number of ship, pod and NPC kills"
   },
   "universe_systems": {
     "description": "Get a list of solar systems",
@@ -6023,1824 +8218,24 @@ ENDPOINTS = {
     ],
     "summary": "A list of killmail IDs and hashes"
   },
-  "alliances_alliance_contacts": {
-    "description": "Return contacts of an alliance",
-    "headers": [
-      {
-        "name": "contact_id"
-      },
-      {
-        "name": "contact_type"
-      },
-      {
-        "name": "label_ids",
-        "sub_headers": [
-          "label_ids"
-        ]
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/alliances/{alliance_id}/contacts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-alliances.read_contacts.v1",
-    "summary": "A list of contacts"
-  },
-  "characters_character_assets_locations": {
-    "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      }
-    ],
-    "method": "POST",
-    "path": "/v2/characters/{character_id}/assets/locations/",
-    "parameters": [
-      {
-        "description": "A list of item ids",
-        "in": "body",
-        "name": "item_ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_assets.v1",
-    "summary": "List of asset locations"
-  },
-  "characters_character_blueprints": {
-    "description": "Return a list of blueprints the character owns",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "time_efficiency"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/blueprints/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_blueprints.v1",
-    "summary": "A list of blueprints"
-  },
-  "characters_character_bookmarks": {
-    "description": "A list of your character's personal bookmarks",
-    "headers": [
-      {
-        "name": "bookmark_id"
-      },
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "item",
-        "sub_headers": [
-          "item_id",
-          "type_id"
-        ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/bookmarks/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "A list of bookmarks"
-  },
-  "characters_character_bookmarks_folders": {
-    "description": "A list of your character's personal bookmark folders",
-    "headers": [
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/bookmarks/folders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "List of bookmark folders"
-  },
-  "characters_character_contacts": {
-    "description": "Return contacts of a character",
-    "headers": [
-      {
-        "name": "contact_id"
-      },
-      {
-        "name": "contact_type"
-      },
-      {
-        "name": "is_blocked"
-      },
-      {
-        "name": "is_watched"
-      },
-      {
-        "name": "label_ids",
-        "sub_headers": [
-          "label_ids"
-        ]
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "POST",
-    "path": "/v2/characters/{character_id}/contacts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_contacts.v1",
-    "summary": "A list of contacts"
-  },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications"
-  },
-  "characters_character_online": {
-    "description": "Checks if the character is currently online",
-    "headers": [
-      {
-        "name": "last_login"
-      },
-      {
-        "name": "last_logout"
-      },
-      {
-        "name": "logins"
-      },
-      {
-        "name": "online"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/online/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-location.read_online.v1",
-    "summary": "Object describing the character's online status"
-  },
-  "characters_character_orders": {
-    "description": "List open market orders placed by a character",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "escrow"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "is_corporation"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/orders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.read_character_orders.v1",
-    "summary": "Open market orders placed by a character"
-  },
-  "characters_character_portrait": {
-    "description": "Get portrait urls for a character",
-    "headers": [
-      {
-        "name": "px128x128"
-      },
-      {
-        "name": "px256x256"
-      },
-      {
-        "name": "px512x512"
-      },
-      {
-        "name": "px64x64"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/portrait/",
-    "parameters": [
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data for the given character"
-  },
-  "characters_character_roles": {
-    "description": "Returns a character's corporation roles",
-    "headers": [
-      {
-        "name": "roles",
-        "sub_headers": [
-          "roles_roles"
-        ]
-      },
-      {
-        "name": "roles_at_base",
-        "sub_headers": [
-          "at_bases"
-        ]
-      },
-      {
-        "name": "roles_at_hq",
-        "sub_headers": [
-          "at_hqs"
-        ]
-      },
-      {
-        "name": "roles_at_other",
-        "sub_headers": [
-          "at_others"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/roles/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_corporation_roles.v1",
-    "summary": "The character's roles in thier corporation"
-  },
-  "characters_character_skillqueue": {
-    "description": "List the configured skill queue for the given character",
-    "headers": [
-      {
-        "name": "finish_date"
-      },
-      {
-        "name": "finished_level"
-      },
-      {
-        "name": "level_end_sp"
-      },
-      {
-        "name": "level_start_sp"
-      },
-      {
-        "name": "queue_position"
-      },
-      {
-        "name": "skill_id"
-      },
-      {
-        "name": "start_date"
-      },
-      {
-        "name": "training_start_sp"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/skillqueue/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-skills.read_skillqueue.v1",
-    "summary": "The current skill queue, sorted ascending by finishing time"
-  },
-  "characters_character_stats": {
-    "description": "Returns aggregate yearly stats for a character",
-    "headers": [
-      {
-        "name": "character",
-        "sub_headers": [
-          "days_of_activity",
-          "minutes",
-          "sessions_started"
-        ]
-      },
-      {
-        "name": "combat",
-        "sub_headers": [
-          "cap_drainedby_npc",
-          "cap_drainedby_pc",
-          "cap_draining_pc",
-          "criminal_flag_set",
-          "damage_from_np_cs_amount",
-          "damage_from_np_cs_num_shots",
-          "damage_from_players_bomb_amount",
-          "damage_from_players_bomb_num_shots",
-          "damage_from_players_combat_drone_amount",
-          "damage_from_players_combat_drone_num_shots",
-          "damage_from_players_energy_amount",
-          "damage_from_players_energy_num_shots",
-          "damage_from_players_fighter_bomber_amount",
-          "damage_from_players_fighter_bomber_num_shots",
-          "damage_from_players_fighter_drone_amount",
-          "damage_from_players_fighter_drone_num_shots",
-          "damage_from_players_hybrid_amount",
-          "damage_from_players_hybrid_num_shots",
-          "damage_from_players_missile_amount",
-          "damage_from_players_missile_num_shots",
-          "damage_from_players_projectile_amount",
-          "damage_from_players_projectile_num_shots",
-          "damage_from_players_smart_bomb_amount",
-          "damage_from_players_smart_bomb_num_shots",
-          "damage_from_players_super_amount",
-          "damage_from_players_super_num_shots",
-          "damage_from_structures_total_amount",
-          "damage_from_structures_total_num_shots",
-          "damage_to_players_bomb_amount",
-          "damage_to_players_bomb_num_shots",
-          "damage_to_players_combat_drone_amount",
-          "damage_to_players_combat_drone_num_shots",
-          "damage_to_players_energy_amount",
-          "damage_to_players_energy_num_shots",
-          "damage_to_players_fighter_bomber_amount",
-          "damage_to_players_fighter_bomber_num_shots",
-          "damage_to_players_fighter_drone_amount",
-          "damage_to_players_fighter_drone_num_shots",
-          "damage_to_players_hybrid_amount",
-          "damage_to_players_hybrid_num_shots",
-          "damage_to_players_missile_amount",
-          "damage_to_players_missile_num_shots",
-          "damage_to_players_projectile_amount",
-          "damage_to_players_projectile_num_shots",
-          "damage_to_players_smart_bomb_amount",
-          "damage_to_players_smart_bomb_num_shots",
-          "damage_to_players_super_amount",
-          "damage_to_players_super_num_shots",
-          "damage_to_structures_total_amount",
-          "damage_to_structures_total_num_shots",
-          "deaths_high_sec",
-          "deaths_low_sec",
-          "deaths_null_sec",
-          "deaths_pod_high_sec",
-          "deaths_pod_low_sec",
-          "deaths_pod_null_sec",
-          "deaths_pod_wormhole",
-          "deaths_wormhole",
-          "drone_engage",
-          "dscans",
-          "duel_requested",
-          "engagement_register",
-          "kills_assists",
-          "kills_high_sec",
-          "kills_low_sec",
-          "kills_null_sec",
-          "kills_pod_high_sec",
-          "kills_pod_low_sec",
-          "kills_pod_null_sec",
-          "kills_pod_wormhole",
-          "kills_wormhole",
-          "npc_flag_set",
-          "probe_scans",
-          "pvp_flag_set",
-          "repair_armor_by_remote_amount",
-          "repair_armor_remote_amount",
-          "repair_armor_self_amount",
-          "repair_capacitor_by_remote_amount",
-          "repair_capacitor_remote_amount",
-          "repair_capacitor_self_amount",
-          "repair_hull_by_remote_amount",
-          "repair_hull_remote_amount",
-          "repair_hull_self_amount",
-          "repair_shield_by_remote_amount",
-          "repair_shield_remote_amount",
-          "repair_shield_self_amount",
-          "self_destructs",
-          "warp_scramble_pc",
-          "warp_scrambledby_npc",
-          "warp_scrambledby_pc",
-          "weapon_flag_set",
-          "webifiedby_npc",
-          "webifiedby_pc",
-          "webifying_pc"
-        ]
-      },
-      {
-        "name": "industry",
-        "sub_headers": [
-          "hacking_successes",
-          "jobs_cancelled",
-          "jobs_completed_copy_blueprint",
-          "jobs_completed_invention",
-          "jobs_completed_manufacture",
-          "jobs_completed_manufacture_asteroid",
-          "jobs_completed_manufacture_asteroid_quantity",
-          "jobs_completed_manufacture_charge",
-          "jobs_completed_manufacture_charge_quantity",
-          "jobs_completed_manufacture_commodity",
-          "jobs_completed_manufacture_commodity_quantity",
-          "jobs_completed_manufacture_deployable",
-          "jobs_completed_manufacture_deployable_quantity",
-          "jobs_completed_manufacture_drone",
-          "jobs_completed_manufacture_drone_quantity",
-          "jobs_completed_manufacture_implant",
-          "jobs_completed_manufacture_implant_quantity",
-          "jobs_completed_manufacture_module",
-          "jobs_completed_manufacture_module_quantity",
-          "jobs_completed_manufacture_other",
-          "jobs_completed_manufacture_other_quantity",
-          "jobs_completed_manufacture_ship",
-          "jobs_completed_manufacture_ship_quantity",
-          "jobs_completed_manufacture_structure",
-          "jobs_completed_manufacture_structure_quantity",
-          "jobs_completed_manufacture_subsystem",
-          "jobs_completed_manufacture_subsystem_quantity",
-          "jobs_completed_material_productivity",
-          "jobs_completed_time_productivity",
-          "jobs_started_copy_blueprint",
-          "jobs_started_invention",
-          "jobs_started_manufacture",
-          "jobs_started_material_productivity",
-          "jobs_started_time_productivity",
-          "reprocess_item",
-          "reprocess_item_quantity"
-        ]
-      },
-      {
-        "name": "inventory",
-        "sub_headers": [
-          "abandon_loot_quantity",
-          "trash_item_quantity"
-        ]
-      },
-      {
-        "name": "isk",
-        "sub_headers": [
-          "in",
-          "out"
-        ]
-      },
-      {
-        "name": "market",
-        "sub_headers": [
-          "accept_contracts_courier",
-          "accept_contracts_item_exchange",
-          "buy_orders_placed",
-          "cancel_market_order",
-          "create_contracts_auction",
-          "create_contracts_courier",
-          "create_contracts_item_exchange",
-          "deliver_courier_contract",
-          "isk_gained",
-          "isk_spent",
-          "modify_market_order",
-          "search_contracts",
-          "sell_orders_placed"
-        ]
-      },
-      {
-        "name": "mining",
-        "sub_headers": [
-          "drone_mine",
-          "ore_arkonor",
-          "ore_bistot",
-          "ore_crokite",
-          "ore_dark_ochre",
-          "ore_gneiss",
-          "ore_harvestable_cloud",
-          "ore_hedbergite",
-          "ore_hemorphite",
-          "ore_ice",
-          "ore_jaspet",
-          "ore_kernite",
-          "ore_mercoxit",
-          "ore_omber",
-          "ore_plagioclase",
-          "ore_pyroxeres",
-          "ore_scordite",
-          "ore_spodumain",
-          "ore_veldspar"
-        ]
-      },
-      {
-        "name": "module",
-        "sub_headers": [
-          "activations_armor_hardener",
-          "activations_armor_repair_unit",
-          "activations_armor_resistance_shift_hardener",
-          "activations_automated_targeting_system",
-          "activations_bastion",
-          "activations_bomb_launcher",
-          "activations_capacitor_booster",
-          "activations_cargo_scanner",
-          "activations_cloaking_device",
-          "activations_clone_vat_bay",
-          "activations_cynosural_field",
-          "activations_damage_control",
-          "activations_data_miners",
-          "activations_drone_control_unit",
-          "activations_drone_tracking_modules",
-          "activations_eccm",
-          "activations_ecm",
-          "activations_ecm_burst",
-          "activations_energy_destabilizer",
-          "activations_energy_vampire",
-          "activations_energy_weapon",
-          "activations_festival_launcher",
-          "activations_frequency_mining_laser",
-          "activations_fueled_armor_repairer",
-          "activations_fueled_shield_booster",
-          "activations_gang_coordinator",
-          "activations_gas_cloud_harvester",
-          "activations_hull_repair_unit",
-          "activations_hybrid_weapon",
-          "activations_industrial_core",
-          "activations_interdiction_sphere_launcher",
-          "activations_micro_jump_drive",
-          "activations_mining_laser",
-          "activations_missile_launcher",
-          "activations_passive_targeting_system",
-          "activations_probe_launcher",
-          "activations_projected_eccm",
-          "activations_projectile_weapon",
-          "activations_propulsion_module",
-          "activations_remote_armor_repairer",
-          "activations_remote_capacitor_transmitter",
-          "activations_remote_ecm_burst",
-          "activations_remote_hull_repairer",
-          "activations_remote_sensor_booster",
-          "activations_remote_sensor_damper",
-          "activations_remote_shield_booster",
-          "activations_remote_tracking_computer",
-          "activations_salvager",
-          "activations_sensor_booster",
-          "activations_shield_booster",
-          "activations_shield_hardener",
-          "activations_ship_scanner",
-          "activations_siege",
-          "activations_smart_bomb",
-          "activations_stasis_web",
-          "activations_strip_miner",
-          "activations_super_weapon",
-          "activations_survey_scanner",
-          "activations_target_breaker",
-          "activations_target_painter",
-          "activations_tracking_computer",
-          "activations_tracking_disruptor",
-          "activations_tractor_beam",
-          "activations_triage",
-          "activations_warp_disrupt_field_generator",
-          "activations_warp_scrambler",
-          "link_weapons",
-          "overload",
-          "repairs"
-        ]
-      },
-      {
-        "name": "orbital",
-        "sub_headers": [
-          "strike_characters_killed",
-          "strike_damage_to_players_armor_amount",
-          "strike_damage_to_players_shield_amount"
-        ]
-      },
-      {
-        "name": "pve",
-        "sub_headers": [
-          "dungeons_completed_agent",
-          "dungeons_completed_distribution",
-          "missions_succeeded",
-          "missions_succeeded_epic_arc"
-        ]
-      },
-      {
-        "name": "social",
-        "sub_headers": [
-          "add_contact_bad",
-          "add_contact_good",
-          "add_contact_high",
-          "add_contact_horrible",
-          "add_contact_neutral",
-          "add_note",
-          "added_as_contact_bad",
-          "added_as_contact_good",
-          "added_as_contact_high",
-          "added_as_contact_horrible",
-          "added_as_contact_neutral",
-          "calendar_event_created",
-          "chat_messages_alliance",
-          "chat_messages_constellation",
-          "chat_messages_corporation",
-          "chat_messages_fleet",
-          "chat_messages_region",
-          "chat_messages_solarsystem",
-          "chat_messages_warfaction",
-          "chat_total_message_length",
-          "direct_trades",
-          "fleet_broadcasts",
-          "fleet_joins",
-          "mails_received",
-          "mails_sent"
-        ]
-      },
-      {
-        "name": "travel",
-        "sub_headers": [
-          "acceleration_gate_activations",
-          "align_to",
-          "distance_warped_high_sec",
-          "distance_warped_low_sec",
-          "distance_warped_null_sec",
-          "distance_warped_wormhole",
-          "docks_high_sec",
-          "docks_low_sec",
-          "docks_null_sec",
-          "jumps_stargate_high_sec",
-          "jumps_stargate_low_sec",
-          "jumps_stargate_null_sec",
-          "jumps_wormhole",
-          "warps_high_sec",
-          "warps_low_sec",
-          "warps_null_sec",
-          "warps_to_bookmark",
-          "warps_to_celestial",
-          "warps_to_fleet_member",
-          "warps_to_scan_result",
-          "warps_wormhole"
-        ]
-      },
-      {
-        "name": "year"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/stats/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characterstats.read.v1",
-    "summary": "Character stats"
-  },
-  "corporations_corporation_alliancehistory": {
-    "description": "Get a list of all the alliances a corporation has been a member of",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "is_deleted"
-      },
-      {
-        "name": "record_id"
-      },
-      {
-        "name": "start_date"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/alliancehistory/",
-    "parameters": [
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Alliance history for the given corporation"
-  },
-  "corporations_corporation_assets_locations": {
-    "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      }
-    ],
-    "method": "POST",
-    "path": "/v2/corporations/{corporation_id}/assets/locations/",
-    "parameters": [
-      {
-        "description": "A list of item ids",
-        "in": "body",
-        "name": "item_ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "List of asset locations"
-  },
-  "corporations_corporation_blueprints": {
-    "description": "Returns a list of blueprints the corporation owns",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "time_efficiency"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/blueprints/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_blueprints.v1",
-    "summary": "List of corporation blueprints"
-  },
-  "corporations_corporation_contacts": {
-    "description": "Return contacts of a corporation",
-    "headers": [
-      {
-        "name": "contact_id"
-      },
-      {
-        "name": "contact_type"
-      },
-      {
-        "name": "is_watched"
-      },
-      {
-        "name": "label_ids",
-        "sub_headers": [
-          "label_ids"
-        ]
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/contacts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_contacts.v1",
-    "summary": "A list of contacts"
-  },
-  "corporations_corporation_containers_logs": {
-    "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
-    "headers": [
-      {
-        "name": "action"
-      },
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "container_id"
-      },
-      {
-        "name": "container_type_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "logged_at"
-      },
-      {
-        "name": "new_config_bitmask"
-      },
-      {
-        "name": "old_config_bitmask"
-      },
-      {
-        "name": "password_type"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/containers/logs/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_container_logs.v1",
-    "summary": "List of corporation ALSC logs"
-  },
-  "corporations_corporation_orders": {
-    "description": "List open market orders placed on behalf of a corporation",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "escrow"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "wallet_division"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/orders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "A list of open market orders"
-  },
-  "corporations_corporation_structures": {
-    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
-    "headers": [
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "fuel_expires"
-      },
-      {
-        "name": "next_reinforce_apply"
-      },
-      {
-        "name": "next_reinforce_hour"
-      },
-      {
-        "name": "next_reinforce_weekday"
-      },
-      {
-        "name": "profile_id"
-      },
-      {
-        "name": "reinforce_hour"
-      },
-      {
-        "name": "reinforce_weekday"
-      },
-      {
-        "name": "services",
-        "sub_headers": [
-          "name",
-          "state"
-        ]
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "state_timer_end"
-      },
-      {
-        "name": "state_timer_start"
-      },
-      {
-        "name": "structure_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unanchors_at"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/structures/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_structures.v1",
-    "summary": "List of corporation structures' information"
-  },
-  "dogma_effects_effect": {
-    "description": "Get information on a dogma effect",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "disallow_auto_repeat"
-      },
-      {
-        "name": "discharge_attribute_id"
-      },
-      {
-        "name": "display_name"
-      },
-      {
-        "name": "duration_attribute_id"
-      },
-      {
-        "name": "effect_category"
-      },
-      {
-        "name": "effect_id"
-      },
-      {
-        "name": "electronic_chance"
-      },
-      {
-        "name": "falloff_attribute_id"
-      },
-      {
-        "name": "icon_id"
-      },
-      {
-        "name": "is_assistance"
-      },
-      {
-        "name": "is_offensive"
-      },
-      {
-        "name": "is_warp_safe"
-      },
-      {
-        "name": "modifiers",
-        "sub_headers": [
-          "domain",
-          "effect_id",
-          "func",
-          "modified_attribute_id",
-          "modifying_attribute_id",
-          "operator"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "post_expression"
-      },
-      {
-        "name": "pre_expression"
-      },
-      {
-        "name": "published"
-      },
-      {
-        "name": "range_attribute_id"
-      },
-      {
-        "name": "range_chance"
-      },
-      {
-        "name": "tracking_speed_attribute_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/dogma/effects/{effect_id}/",
-    "parameters": [
-      {
-        "description": "A dogma effect ID",
-        "in": "path",
-        "name": "effect_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a dogma effect"
-  },
-  "fw_systems": {
-    "description": "An overview of the current ownership of faction warfare solar systems",
-    "headers": [
-      {
-        "name": "contested"
-      },
-      {
-        "name": "occupier_faction_id"
-      },
-      {
-        "name": "owner_faction_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "victory_points"
-      },
-      {
-        "name": "victory_points_threshold"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/fw/systems/",
-    "parameters": [
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "All faction warfare solar systems"
-  },
-  "eve_search": {
-    "description": "Search for entities that match a given sub",
-    "headers": [
-      {
-        "name": "agent",
-        "sub_headers": [
-          "agent_agents"
-        ]
-      },
-      {
-        "name": "alliance",
-        "sub_headers": [
-          "alliance_alliances"
-        ]
-      },
-      {
-        "name": "character",
-        "sub_headers": [
-          "character_characters"
-        ]
-      },
-      {
-        "name": "constellation",
-        "sub_headers": [
-          "constellation_constellations"
-        ]
-      },
-      {
-        "name": "corporation",
-        "sub_headers": [
-          "corporation_corporations"
-        ]
-      },
-      {
-        "name": "faction",
-        "sub_headers": [
-          "faction_factions"
-        ]
-      },
-      {
-        "name": "inventory_type",
-        "sub_headers": [
-          "inventory_types"
-        ]
-      },
-      {
-        "name": "region",
-        "sub_headers": [
-          "region_regions"
-        ]
-      },
-      {
-        "name": "solar_system",
-        "sub_headers": [
-          "solar_systems"
-        ]
-      },
-      {
-        "name": "station",
-        "sub_headers": [
-          "station_stations"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/search/",
-    "parameters": [
-      {
-        "description": "Type of entities to search for",
-        "in": "query",
-        "name": "categories",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "The string to search on",
-        "in": "query",
-        "name": "search",
-        "type": "string",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Whether the search should be a strict match",
-        "in": "query",
-        "name": "strict",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of search results"
-  },
-  "universe_factions": {
-    "description": "Get a list of factions",
-    "headers": [
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "is_unique"
-      },
-      {
-        "name": "militia_corporation_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "size_factor"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "station_count"
-      },
-      {
-        "name": "station_system_count"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/universe/factions/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of factions"
-  },
-  "universe_names": {
-    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.",
-    "headers": [
-      {
-        "name": "category"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "POST",
-    "path": "/v2/universe/names/",
-    "parameters": [
-      {
-        "description": "The ids to resolve",
-        "in": "body",
-        "name": "ids",
-        "type": "array",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned."
-  },
-  "universe_stations_station": {
-    "description": "Get information on a station",
-    "headers": [
-      {
-        "name": "max_dockable_ship_volume"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "office_rental_cost"
-      },
-      {
-        "name": "owner"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "race_id"
-      },
-      {
-        "name": "reprocessing_efficiency"
-      },
-      {
-        "name": "reprocessing_stations_take"
-      },
-      {
-        "name": "services",
-        "sub_headers": [
-          "id_services"
-        ]
-      },
-      {
-        "name": "station_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/universe/stations/{station_id}/",
-    "parameters": [
-      {
-        "description": "station_id integer",
-        "in": "path",
-        "name": "station_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a station"
-  },
-  "universe_system_kills": {
-    "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
-    "headers": [
-      {
-        "name": "npc_kills"
-      },
-      {
-        "name": "pod_kills"
-      },
-      {
-        "name": "ship_kills"
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/universe/system_kills/",
-    "parameters": [
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of systems and number of ship, pod and NPC kills"
-  },
   "alliances_alliance": {
     "description": "Public information about an alliance",
     "headers": [
       {
-        "name": "creator_corporation_id"
-      },
-      {
-        "name": "creator_id"
+        "name": "alliance_name"
       },
       {
         "name": "date_founded"
       },
       {
-        "name": "executor_corporation_id"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "name"
+        "name": "executor_corp"
       },
       {
         "name": "ticker"
       }
     ],
     "method": "GET",
-    "path": "/v3/alliances/{alliance_id}/",
+    "path": "/v2/alliances/{alliance_id}/",
     "parameters": [
       {
         "description": "An EVE alliance ID",
@@ -7862,9 +8257,6 @@ ENDPOINTS = {
   "characters_character_assets": {
     "description": "Return a list of the characters assets",
     "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
       {
         "name": "is_singleton"
       },
@@ -7888,7 +8280,7 @@ ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/assets/",
+    "path": "/v2/characters/{character_id}/assets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -7919,13 +8311,19 @@ ENDPOINTS = {
     "description": "Get all the information for a specific event",
     "headers": [
       {
-        "name": "date"
+        "name": "duration_in_minutes"
       },
       {
-        "name": "duration"
+        "name": "event_date"
       },
       {
         "name": "event_id"
+      },
+      {
+        "name": "event_response"
+      },
+      {
+        "name": "event_text"
       },
       {
         "name": "importance"
@@ -7937,20 +8335,14 @@ ENDPOINTS = {
         "name": "owner_name"
       },
       {
-        "name": "owner_type"
-      },
-      {
-        "name": "response"
-      },
-      {
-        "name": "text"
+        "name": "owner_type_id"
       },
       {
         "name": "title"
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/calendar/{event_id}/",
+    "path": "/v2/characters/{character_id}/calendar/{event_id}/",
     "parameters": [
       {
         "description": "The id of the event requested",
@@ -7991,21 +8383,16 @@ ENDPOINTS = {
         "name": "jump_clones",
         "sub_headers": [
           "implants",
-          "jump_clone_id",
           "location_id",
-          "location_type",
-          "name"
+          "location_type"
         ]
       },
       {
-        "name": "last_clone_jump_date"
-      },
-      {
-        "name": "last_station_change_date"
+        "name": "last_jump_date"
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/clones/",
+    "path": "/v2/characters/{character_id}/clones/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -8026,23 +8413,20 @@ ENDPOINTS = {
     "summary": "Clone information for the given character"
   },
   "characters_character_mail_labels": {
-    "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
+    "description": "Return a list of the users mail labels",
     "headers": [
       {
-        "name": "labels",
-        "sub_headers": [
-          "color",
-          "label_id",
-          "name",
-          "unread_count"
-        ]
+        "name": "color"
       },
       {
-        "name": "total_unread_count"
+        "name": "label_id"
+      },
+      {
+        "name": "name"
       }
     ],
-    "method": "GET",
-    "path": "/v3/characters/{character_id}/mail/labels/",
+    "method": "POST",
+    "path": "/v2/characters/{character_id}/mail/labels/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -8060,7 +8444,7 @@ ENDPOINTS = {
       }
     ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "A list of mail labels and unread counts"
+    "summary": "A list of mail labels"
   },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
@@ -8076,7 +8460,6 @@ ENDPOINTS = {
       {
         "name": "pins",
         "sub_headers": [
-          "contents",
           "expiry_time",
           "extractor_details",
           "factory_details",
@@ -8102,7 +8485,7 @@ ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/planets/{planet_id}/",
+    "path": "/v2/characters/{character_id}/planets/{planet_id}/",
     "parameters": [
       {
         "description": "Planet id of the target planet",
@@ -8169,9 +8552,9 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "inventory_type",
+        "name": "inventorytype",
         "sub_headers": [
-          "inventory_types"
+          "inventorytype_inventorytypes"
         ]
       },
       {
@@ -8181,9 +8564,9 @@ ENDPOINTS = {
         ]
       },
       {
-        "name": "solar_system",
+        "name": "solarsystem",
         "sub_headers": [
-          "solar_systems"
+          "solarsystem_solarsystems"
         ]
       },
       {
@@ -8197,10 +8580,16 @@ ENDPOINTS = {
         "sub_headers": [
           "structure_structures"
         ]
+      },
+      {
+        "name": "wormhole",
+        "sub_headers": [
+          "wormhole_wormholes"
+        ]
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/search/",
+    "path": "/v2/characters/{character_id}/search/",
     "parameters": [
       {
         "description": "Type of entities to search for",
@@ -8248,12 +8637,58 @@ ENDPOINTS = {
     "scope": "esi-search.search_structures.v1",
     "summary": "A list of search results"
   },
+  "characters_character_skillqueue": {
+    "description": "List the configured skill queue for the given character",
+    "headers": [
+      {
+        "name": "finish_date"
+      },
+      {
+        "name": "finished_level"
+      },
+      {
+        "name": "level_end_sp"
+      },
+      {
+        "name": "level_start_sp"
+      },
+      {
+        "name": "queue_position"
+      },
+      {
+        "name": "skill_id"
+      },
+      {
+        "name": "start_date"
+      },
+      {
+        "name": "training_start_sp"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/characters/{character_id}/skillqueue/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-skills.read_skillqueue.v1",
+    "summary": "The current skill queue, sorted ascending by finishing time"
+  },
   "corporations_corporation_assets": {
     "description": "Return a list of the corporation assets",
     "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
       {
         "name": "is_singleton"
       },
@@ -8277,7 +8712,7 @@ ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/assets/",
+    "path": "/v2/corporations/{corporation_id}/assets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -8305,14 +8740,14 @@ ENDPOINTS = {
     "summary": "A list of assets"
   },
   "corporations_corporation_members": {
-    "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
+    "description": "Read the current list of members if the calling character is a member.",
     "headers": [
       {
-        "name": "member_ids"
+        "name": "character_id"
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/members/",
+    "path": "/v2/corporations/{corporation_id}/members/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
@@ -8331,6 +8766,301 @@ ENDPOINTS = {
     ],
     "scope": "esi-corporations.read_corporation_membership.v1",
     "summary": "List of member character IDs"
+  },
+  "universe_systems_system": {
+    "description": "Get information on a solar system",
+    "headers": [
+      {
+        "name": "constellation_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "planets",
+        "sub_headers": [
+          "moons",
+          "planet_id"
+        ]
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "security_class"
+      },
+      {
+        "name": "security_status"
+      },
+      {
+        "name": "star_id"
+      },
+      {
+        "name": "stargates",
+        "sub_headers": [
+          "id_stargates"
+        ]
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/universe/systems/{system_id}/",
+    "parameters": [
+      {
+        "description": "system_id integer",
+        "in": "path",
+        "name": "system_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a solar system"
+  },
+  "universe_types_type": {
+    "description": "Get information on a type",
+    "headers": [
+      {
+        "name": "capacity"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "dogma_attributes",
+        "sub_headers": [
+          "attribute_id",
+          "value"
+        ]
+      },
+      {
+        "name": "dogma_effects",
+        "sub_headers": [
+          "effect_id",
+          "is_default"
+        ]
+      },
+      {
+        "name": "graphic_id"
+      },
+      {
+        "name": "group_id"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "mass"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "portion_size"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "radius"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/universe/types/{type_id}/",
+    "parameters": [
+      {
+        "description": "An Eve item type ID",
+        "in": "path",
+        "name": "type_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a type"
+  },
+  "characters_character": {
+    "description": "Public information about a character",
+    "headers": [
+      {
+        "name": "ancestry_id"
+      },
+      {
+        "name": "birthday"
+      },
+      {
+        "name": "bloodline_id"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "gender"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "race_id"
+      },
+      {
+        "name": "security_status"
+      }
+    ],
+    "method": "GET",
+    "path": "/v3/characters/{character_id}/",
+    "parameters": [
+      {
+        "description": "An EVE character ID",
+        "in": "path",
+        "name": "character_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Public data for the given character"
+  },
+  "characters_character_skills": {
+    "description": "List all trained skills for the given character",
+    "headers": [
+      {
+        "name": "skills",
+        "sub_headers": [
+          "current_skill_level",
+          "skill_id",
+          "skillpoints_in_skill"
+        ]
+      },
+      {
+        "name": "total_sp"
+      }
+    ],
+    "method": "GET",
+    "path": "/v3/characters/{character_id}/skills/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-skills.read_skills.v1",
+    "summary": "Known skills for the character"
+  },
+  "corporations_corporation": {
+    "description": "Public information about a corporation",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "ceo_id"
+      },
+      {
+        "name": "corporation_description"
+      },
+      {
+        "name": "corporation_name"
+      },
+      {
+        "name": "creation_date"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "faction"
+      },
+      {
+        "name": "member_count"
+      },
+      {
+        "name": "tax_rate"
+      },
+      {
+        "name": "ticker"
+      },
+      {
+        "name": "url"
+      }
+    ],
+    "method": "GET",
+    "path": "/v3/corporations/{corporation_id}/",
+    "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Public data about a corporation"
   },
   "corporations_corporation_wallets_division_journal": {
     "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
@@ -8410,267 +9140,6 @@ ENDPOINTS = {
     "scope": "esi-wallet.read_corporation_wallets.v1",
     "summary": "Journal entries"
   },
-  "universe_systems_system": {
-    "description": "Get information on a solar system. NOTE: This route does not work with abyssal systems.",
-    "headers": [
-      {
-        "name": "constellation_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "planets",
-        "sub_headers": [
-          "asteroid_belts",
-          "moons",
-          "planet_id"
-        ]
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "security_class"
-      },
-      {
-        "name": "security_status"
-      },
-      {
-        "name": "star_id"
-      },
-      {
-        "name": "stargates",
-        "sub_headers": [
-          "id_stargates"
-        ]
-      },
-      {
-        "name": "stations",
-        "sub_headers": [
-          "id_stations"
-        ]
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v3/universe/systems/{system_id}/",
-    "parameters": [
-      {
-        "description": "system_id integer",
-        "in": "path",
-        "name": "system_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a solar system"
-  },
-  "universe_types_type": {
-    "description": "Get information on a type",
-    "headers": [
-      {
-        "name": "capacity"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "dogma_attributes",
-        "sub_headers": [
-          "attribute_id",
-          "value"
-        ]
-      },
-      {
-        "name": "dogma_effects",
-        "sub_headers": [
-          "effect_id",
-          "is_default"
-        ]
-      },
-      {
-        "name": "graphic_id"
-      },
-      {
-        "name": "group_id"
-      },
-      {
-        "name": "icon_id"
-      },
-      {
-        "name": "market_group_id"
-      },
-      {
-        "name": "mass"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "packaged_volume"
-      },
-      {
-        "name": "portion_size"
-      },
-      {
-        "name": "published"
-      },
-      {
-        "name": "radius"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume"
-      }
-    ],
-    "method": "GET",
-    "path": "/v3/universe/types/{type_id}/",
-    "parameters": [
-      {
-        "description": "An Eve item type ID",
-        "in": "path",
-        "name": "type_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a type"
-  },
-  "characters_character": {
-    "description": "Public information about a character",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "ancestry_id"
-      },
-      {
-        "name": "birthday"
-      },
-      {
-        "name": "bloodline_id"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "gender"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "race_id"
-      },
-      {
-        "name": "security_status"
-      }
-    ],
-    "method": "GET",
-    "path": "/v4/characters/{character_id}/",
-    "parameters": [
-      {
-        "description": "An EVE character ID",
-        "in": "path",
-        "name": "character_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data for the given character"
-  },
-  "characters_character_skills": {
-    "description": "List all trained skills for the given character",
-    "headers": [
-      {
-        "name": "skills",
-        "sub_headers": [
-          "active_skill_level",
-          "skill_id",
-          "skillpoints_in_skill",
-          "trained_skill_level"
-        ]
-      },
-      {
-        "name": "total_sp"
-      },
-      {
-        "name": "unallocated_sp"
-      }
-    ],
-    "method": "GET",
-    "path": "/v4/characters/{character_id}/skills/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-skills.read_skills.v1",
-    "summary": "Known skills for the character"
-  },
   "characters_character_wallet_journal": {
     "description": "Retrieve the given character's wallet journal going 30 days back",
     "headers": [
@@ -8741,68 +9210,5 @@ ENDPOINTS = {
     ],
     "scope": "esi-wallet.read_character_wallet.v1",
     "summary": "Journal entries"
-  },
-  "corporations_corporation": {
-    "description": "Public information about a corporation",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "ceo_id"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "date_founded"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "home_station_id"
-      },
-      {
-        "name": "member_count"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "shares"
-      },
-      {
-        "name": "tax_rate"
-      },
-      {
-        "name": "ticker"
-      },
-      {
-        "name": "url"
-      }
-    ],
-    "method": "GET",
-    "path": "/v4/corporations/{corporation_id}/",
-    "parameters": [
-      {
-        "description": "An EVE corporation ID",
-        "in": "path",
-        "name": "corporation_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public information about a corporation"
   }
 };

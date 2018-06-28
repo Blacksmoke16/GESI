@@ -705,18 +705,6 @@ function corporations_corporation_membertracking(name, opt_headers) {
 }
 
 /**
-* List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Expired and cancelled market orders placed on behalf of a corporation
-* @customfunction
-*/
-function corporations_corporation_orders_history(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
 * Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -1489,19 +1477,6 @@ function universe_structures(opt_headers) {
 }
 
 /**
-* Returns information on requested structure, if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
-* @param {integer} structure_id (Required) An Eve structure ID
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Data about a structure
-* @customfunction
-*/
-function universe_structures_structure(structure_id, name, opt_headers) {
-  if(!structure_id) throw 'structure_id is required';
-  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,opt_headers:opt_headers})
-}
-
-/**
 * Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of systems and number of jumps
@@ -1777,14 +1752,14 @@ function corporations_corporation_containers_logs(name, page, opt_headers) {
 }
 
 /**
-* List open market orders placed on behalf of a corporation
+* List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of open market orders
+* @return Expired and cancelled market orders placed on behalf of a corporation
 * @customfunction
 */
-function corporations_corporation_orders(name, page, opt_headers) {
+function corporations_corporation_orders_history(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
 
@@ -1872,6 +1847,19 @@ function universe_names(ids, opt_headers) {
 function universe_stations_station(station_id, opt_headers) {
   if(!station_id) throw 'station_id is required';
   return parseData_(arguments.callee.name,{station_id:station_id,opt_headers:opt_headers})
+}
+
+/**
+* Returns information on requested structure if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
+* @param {integer} structure_id (Required) An Eve structure ID
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Data about a structure
+* @customfunction
+*/
+function universe_structures_structure(structure_id, name, opt_headers) {
+  if(!structure_id) throw 'structure_id is required';
+  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,opt_headers:opt_headers})
 }
 
 /**
@@ -1997,6 +1985,18 @@ function corporations_corporation_members(name, opt_headers) {
 }
 
 /**
+* List open market orders placed on behalf of a corporation
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of open market orders
+* @customfunction
+*/
+function corporations_corporation_orders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Retrieve the given corporation's wallet journal for the given division going 30 days back
 * @param {integer} division (Required) Wallet key of the division to fetch journals from
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -2008,19 +2008,6 @@ function corporations_corporation_members(name, opt_headers) {
 function corporations_corporation_wallets_division_journal(division, name, page, opt_headers) {
   if(!division) throw 'division is required';
   return parseData_(arguments.callee.name,{division:division,name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get information on a solar system. NOTE: This route does not work with abyssal systems.
-* @param {integer} system_id (Required) system_id integer
-* @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Information about a solar system
-* @customfunction
-*/
-function universe_systems_system(system_id, language, opt_headers) {
-  if(!system_id) throw 'system_id is required';
-  return parseData_(arguments.callee.name,{system_id:system_id,language:language,opt_headers:opt_headers})
 }
 
 /**
@@ -2081,5 +2068,18 @@ function characters_character_wallet_journal(name, page, opt_headers) {
 function corporations_corporation(corporation_id, opt_headers) {
   if(!corporation_id) throw 'corporation_id is required';
   return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers})
+}
+
+/**
+* Get information on a solar system.
+* @param {integer} system_id (Required) system_id integer
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Information about a solar system
+* @customfunction
+*/
+function universe_systems_system(system_id, language, opt_headers) {
+  if(!system_id) throw 'system_id is required';
+  return parseData_(arguments.callee.name,{system_id:system_id,language:language,opt_headers:opt_headers})
 }
 

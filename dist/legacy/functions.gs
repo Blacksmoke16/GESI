@@ -9,6 +9,18 @@ function alliances(opt_headers) {
 }
 
 /**
+* Return contacts of an alliance
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of contacts
+* @customfunction
+*/
+function alliances_alliance_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Return custom labels for an alliance's contacts
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -63,6 +75,19 @@ function characters_character_agents_research(name, opt_headers) {
 }
 
 /**
+* Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset locations
+* @customfunction
+*/
+function characters_character_assets_locations(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.
 * @param {array} item_ids (Required) A list of item ids
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -83,6 +108,39 @@ function characters_character_assets_names(item_ids, name, opt_headers) {
 * @customfunction
 */
 function characters_character_attributes(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* Return a list of blueprints the character has
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of blueprints
+* @customfunction
+*/
+function characters_character_blueprints(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* List your character's personal bookmarks
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of bookmarks
+* @customfunction
+*/
+function characters_character_bookmarks(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* List your character's personal bookmark folders
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of bookmark folders
+* @customfunction
+*/
+function characters_character_bookmarks_folders(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
 
@@ -109,6 +167,18 @@ function characters_character_calendar(from_event, name, opt_headers) {
 function characters_character_calendar_event_attendees(event_id, name, opt_headers) {
   if(!event_id) throw 'event_id is required';
   return parseData_(arguments.callee.name,{event_id:event_id,name:name,opt_headers:opt_headers})
+}
+
+/**
+* Return contacts of a character
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of contacts
+* @customfunction
+*/
+function characters_character_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
 
 /**
@@ -296,6 +366,17 @@ function characters_character_mail_lists(name, opt_headers) {
 }
 
 /**
+* Return the number of unread mails for the character
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Unread mail count
+* @customfunction
+*/
+function characters_character_mail_unread(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return the contents of an EVE mail
 * @param {integer} mail_id (Required) An EVE mail ID
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -332,6 +413,17 @@ function characters_character_mining(name, page, opt_headers) {
 }
 
 /**
+* Return character notifications
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Returns your recent notifications
+* @customfunction
+*/
+function characters_character_notifications(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return notifications about having been added to someone's contact list
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -343,6 +435,17 @@ function characters_character_notifications_contacts(name, opt_headers) {
 }
 
 /**
+* Checks if the character is currently online
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Boolean of if the character is currently online
+* @customfunction
+*/
+function characters_character_online(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return a list of tasks finished by a character
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -350,6 +453,17 @@ function characters_character_notifications_contacts(name, opt_headers) {
 * @customfunction
 */
 function characters_character_opportunities(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* List market orders placed by a character
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Market orders placed by a character
+* @customfunction
+*/
+function characters_character_orders(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
 
@@ -377,6 +491,27 @@ function characters_character_planets(name, opt_headers) {
 }
 
 /**
+* Get portrait urls for a character
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Public data for the given character
+* @customfunction
+*/
+function characters_character_portrait(opt_headers) {
+  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+}
+
+/**
+* Returns a character's corporation roles
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return The character's roles in thier corporation
+* @customfunction
+*/
+function characters_character_roles(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
 * Get the current ship type, name and id
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -395,6 +530,17 @@ function characters_character_ship(name, opt_headers) {
 * @customfunction
 */
 function characters_character_standings(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* Returns aggregate yearly stats for a character
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Character stats
+* @customfunction
+*/
+function characters_character_stats(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
 
@@ -481,6 +627,29 @@ function corporations_npccorps(opt_headers) {
 }
 
 /**
+* Get a list of all the alliances a corporation has been a member of
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Alliance history for the given corporation
+* @customfunction
+*/
+function corporations_corporation_alliancehistory(opt_headers) {
+  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+}
+
+/**
+* Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
+* @param {array} item_ids (Required) A list of item ids
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of asset locations
+* @customfunction
+*/
+function corporations_corporation_assets_locations(item_ids, name, opt_headers) {
+  if(!item_ids) throw 'item_ids is required';
+  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.
 * @param {array} item_ids (Required) A list of item ids
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -491,6 +660,18 @@ function corporations_npccorps(opt_headers) {
 function corporations_corporation_assets_names(item_ids, name, opt_headers) {
   if(!item_ids) throw 'item_ids is required';
   return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
+}
+
+/**
+* Returns a list of blueprints the corporation owns
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of corporation blueprints
+* @customfunction
+*/
+function corporations_corporation_blueprints(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
 
 /**
@@ -518,6 +699,18 @@ function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
 }
 
 /**
+* Return contacts of a corporation
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of contacts
+* @customfunction
+*/
+function corporations_corporation_contacts(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Return custom labels for a corporation's contacts
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -526,6 +719,18 @@ function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
 */
 function corporations_corporation_contacts_labels(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of corporation ALSC logs
+* @customfunction
+*/
+function corporations_corporation_containers_logs(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
 
 /**
@@ -705,6 +910,18 @@ function corporations_corporation_membertracking(name, opt_headers) {
 }
 
 /**
+* List open market orders placed on behalf of a corporation
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of open market orders
+* @customfunction
+*/
+function corporations_corporation_orders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -816,6 +1033,19 @@ function corporations_corporation_starbases_starbase(starbase_id, system_id, nam
 }
 
 /**
+* Get a list of corporation structures
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of corporation structures' information
+* @customfunction
+*/
+function corporations_corporation_structures(language, name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{language:language,name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Returns a corporation's titles
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -898,6 +1128,18 @@ function dogma_effects(opt_headers) {
 }
 
 /**
+* Get information on a dogma effect
+* @param {integer} effect_id (Required) A dogma effect ID
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Information about a dogma effect
+* @customfunction
+*/
+function dogma_effects_effect(effect_id, opt_headers) {
+  if(!effect_id) throw 'effect_id is required';
+  return parseData_(arguments.callee.name,{effect_id:effect_id,opt_headers:opt_headers})
+}
+
+/**
 * Return details about a fleet
 * @param {integer} fleet_id (Required) ID for a fleet
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
@@ -975,6 +1217,16 @@ function fw_leaderboards_corporations(opt_headers) {
 * @customfunction
 */
 function fw_stats(opt_headers) {
+  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+}
+
+/**
+* An overview of the current ownership of faction warfare solar systems
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return All faction warfare solar systems
+* @customfunction
+*/
+function fw_systems(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
 
@@ -1206,6 +1458,22 @@ function route_origin_destination(destination, origin, avoid, connections, flag,
 }
 
 /**
+* Search for entities that match a given sub
+* @param {array} categories (Required) Type of entities to search for
+* @param {string} search (Required) The string to search on
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {boolean} strict  Whether the search should be a strict match
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of search results
+* @customfunction
+*/
+function eve_search(categories, search, language, strict, opt_headers) {
+  if(!categories) throw 'categories is required';
+  if(!search) throw 'search is required';
+  return parseData_(arguments.callee.name,{categories:categories,search:search,language:language,strict:strict,opt_headers:opt_headers})
+}
+
+/**
 * Shows sovereignty data for campaigns.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of sovereignty campaigns
@@ -1326,6 +1594,17 @@ function universe_constellations_constellation(constellation_id, language, opt_h
 }
 
 /**
+* Get a list of factions
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of factions
+* @customfunction
+*/
+function universe_factions(language, opt_headers) {
+  return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
+}
+
+/**
 * Get a list of graphics
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of graphic ids
@@ -1394,6 +1673,18 @@ function universe_ids(names, language, opt_headers) {
 function universe_moons_moon(moon_id, opt_headers) {
   if(!moon_id) throw 'moon_id is required';
   return parseData_(arguments.callee.name,{moon_id:moon_id,opt_headers:opt_headers})
+}
+
+/**
+* Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.
+* @param {object} ids (Required) The ids to resolve
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned.
+* @customfunction
+*/
+function universe_names(ids, opt_headers) {
+  if(!ids) throw 'ids is required';
+  return parseData_(arguments.callee.name,{ids:ids,opt_headers:opt_headers})
 }
 
 /**
@@ -1479,6 +1770,18 @@ function universe_stars_star(star_id, opt_headers) {
 }
 
 /**
+* Public information on stations
+* @param {integer} station_id (Required) An Eve station ID
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Public data about a station
+* @customfunction
+*/
+function universe_stations_station(station_id, opt_headers) {
+  if(!station_id) throw 'station_id is required';
+  return parseData_(arguments.callee.name,{station_id:station_id,opt_headers:opt_headers})
+}
+
+/**
 * List all public structures
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of public structure IDs
@@ -1508,6 +1811,16 @@ function universe_structures_structure(structure_id, name, opt_headers) {
 * @customfunction
 */
 function universe_system_jumps(opt_headers) {
+  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
+}
+
+/**
+* Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of systems and number of ship, pod and NPC kills
+* @customfunction
+*/
+function universe_system_kills(opt_headers) {
   return parseData_(arguments.callee.name,{opt_headers:opt_headers})
 }
 
@@ -1569,322 +1882,6 @@ function wars_war_killmails(war_id, page, opt_headers) {
 }
 
 /**
-* Return contacts of an alliance
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of contacts
-* @customfunction
-*/
-function alliances_alliance_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
-* @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of asset locations
-* @customfunction
-*/
-function characters_character_assets_locations(item_ids, name, opt_headers) {
-  if(!item_ids) throw 'item_ids is required';
-  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
-}
-
-/**
-* Return a list of blueprints the character owns
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of blueprints
-* @customfunction
-*/
-function characters_character_blueprints(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* A list of your character's personal bookmarks
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of bookmarks
-* @customfunction
-*/
-function characters_character_bookmarks(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* A list of your character's personal bookmark folders
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of bookmark folders
-* @customfunction
-*/
-function characters_character_bookmarks_folders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Return contacts of a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of contacts
-* @customfunction
-*/
-function characters_character_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Return character notifications
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Returns your recent notifications
-* @customfunction
-*/
-function characters_character_notifications(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* Checks if the character is currently online
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Object describing the character's online status
-* @customfunction
-*/
-function characters_character_online(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* List open market orders placed by a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Open market orders placed by a character
-* @customfunction
-*/
-function characters_character_orders(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* Get portrait urls for a character
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Public data for the given character
-* @customfunction
-*/
-function characters_character_portrait(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
-}
-
-/**
-* Returns a character's corporation roles
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return The character's roles in thier corporation
-* @customfunction
-*/
-function characters_character_roles(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* List the configured skill queue for the given character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return The current skill queue, sorted ascending by finishing time
-* @customfunction
-*/
-function characters_character_skillqueue(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* Returns aggregate yearly stats for a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Character stats
-* @customfunction
-*/
-function characters_character_stats(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
-* Get a list of all the alliances a corporation has been a member of
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Alliance history for the given corporation
-* @customfunction
-*/
-function corporations_corporation_alliancehistory(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
-}
-
-/**
-* Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
-* @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of asset locations
-* @customfunction
-*/
-function corporations_corporation_assets_locations(item_ids, name, opt_headers) {
-  if(!item_ids) throw 'item_ids is required';
-  return parseData_(arguments.callee.name,{item_ids:item_ids,name:name,opt_headers:opt_headers})
-}
-
-/**
-* Returns a list of blueprints the corporation owns
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of corporation blueprints
-* @customfunction
-*/
-function corporations_corporation_blueprints(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Return contacts of a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of contacts
-* @customfunction
-*/
-function corporations_corporation_contacts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of corporation ALSC logs
-* @customfunction
-*/
-function corporations_corporation_containers_logs(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* List open market orders placed on behalf of a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of open market orders
-* @customfunction
-*/
-function corporations_corporation_orders(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
-* @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of corporation structures' information
-* @customfunction
-*/
-function corporations_corporation_structures(language, name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{language:language,name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get information on a dogma effect
-* @param {integer} effect_id (Required) A dogma effect ID
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Information about a dogma effect
-* @customfunction
-*/
-function dogma_effects_effect(effect_id, opt_headers) {
-  if(!effect_id) throw 'effect_id is required';
-  return parseData_(arguments.callee.name,{effect_id:effect_id,opt_headers:opt_headers})
-}
-
-/**
-* An overview of the current ownership of faction warfare solar systems
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return All faction warfare solar systems
-* @customfunction
-*/
-function fw_systems(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
-}
-
-/**
-* Search for entities that match a given sub
-* @param {array} categories (Required) Type of entities to search for
-* @param {string} search (Required) The string to search on
-* @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {boolean} strict  Whether the search should be a strict match
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of search results
-* @customfunction
-*/
-function eve_search(categories, search, language, strict, opt_headers) {
-  if(!categories) throw 'categories is required';
-  if(!search) throw 'search is required';
-  return parseData_(arguments.callee.name,{categories:categories,search:search,language:language,strict:strict,opt_headers:opt_headers})
-}
-
-/**
-* Get a list of factions
-* @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of factions
-* @customfunction
-*/
-function universe_factions(language, opt_headers) {
-  return parseData_(arguments.callee.name,{language:language,opt_headers:opt_headers})
-}
-
-/**
-* Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.
-* @param {array} ids (Required) The ids to resolve
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned.
-* @customfunction
-*/
-function universe_names(ids, opt_headers) {
-  if(!ids) throw 'ids is required';
-  return parseData_(arguments.callee.name,{ids:ids,opt_headers:opt_headers})
-}
-
-/**
-* Get information on a station
-* @param {integer} station_id (Required) station_id integer
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Information about a station
-* @customfunction
-*/
-function universe_stations_station(station_id, opt_headers) {
-  if(!station_id) throw 'station_id is required';
-  return parseData_(arguments.callee.name,{station_id:station_id,opt_headers:opt_headers})
-}
-
-/**
-* Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of systems and number of ship, pod and NPC kills
-* @customfunction
-*/
-function universe_system_kills(opt_headers) {
-  return parseData_(arguments.callee.name,{opt_headers:opt_headers})
-}
-
-/**
 * Public information about an alliance
 * @param {integer} alliance_id (Required) An EVE alliance ID
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -1933,10 +1930,10 @@ function characters_character_clones(name, opt_headers) {
 }
 
 /**
-* Return a list of the users mail labels, unread counts for each label and a total unread count.
+* Return a list of the users mail labels
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of mail labels and unread counts
+* @return A list of mail labels
 * @customfunction
 */
 function characters_character_mail_labels(name, opt_headers) {
@@ -1974,6 +1971,17 @@ function characters_character_search(categories, search, language, strict, name,
 }
 
 /**
+* List the configured skill queue for the given character
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return The current skill queue, sorted ascending by finishing time
+* @customfunction
+*/
+function characters_character_skillqueue(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
 * Return a list of the corporation assets
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -1986,7 +1994,7 @@ function corporations_corporation_assets(name, page, opt_headers) {
 }
 
 /**
-* Return the current member list of a corporation, the token's character need to be a member of the corporation.
+* Read the current list of members if the calling character is a member.
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character IDs
@@ -1997,21 +2005,7 @@ function corporations_corporation_members(name, opt_headers) {
 }
 
 /**
-* Retrieve the given corporation's wallet journal for the given division going 30 days back
-* @param {integer} division (Required) Wallet key of the division to fetch journals from
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Journal entries
-* @customfunction
-*/
-function corporations_corporation_wallets_division_journal(division, name, page, opt_headers) {
-  if(!division) throw 'division is required';
-  return parseData_(arguments.callee.name,{division:division,name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get information on a solar system. NOTE: This route does not work with abyssal systems.
+* Get information on a solar system
 * @param {integer} system_id (Required) system_id integer
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -2060,6 +2054,32 @@ function characters_character_skills(name, opt_headers) {
 }
 
 /**
+* Public information about a corporation
+* @param {integer} corporation_id (Required) An EVE corporation ID
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Public data about a corporation
+* @customfunction
+*/
+function corporations_corporation(corporation_id, opt_headers) {
+  if(!corporation_id) throw 'corporation_id is required';
+  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers})
+}
+
+/**
+* Retrieve the given corporation's wallet journal for the given division going 30 days back
+* @param {integer} division (Required) Wallet key of the division to fetch journals from
+* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Journal entries
+* @customfunction
+*/
+function corporations_corporation_wallets_division_journal(division, name, page, opt_headers) {
+  if(!division) throw 'division is required';
+  return parseData_(arguments.callee.name,{division:division,name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Retrieve the given character's wallet journal going 30 days back
 * @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
 * @param {integer} page  Which page of results to return
@@ -2069,17 +2089,5 @@ function characters_character_skills(name, opt_headers) {
 */
 function characters_character_wallet_journal(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Public information about a corporation
-* @param {integer} corporation_id (Required) An EVE corporation ID
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Public information about a corporation
-* @customfunction
-*/
-function corporations_corporation(corporation_id, opt_headers) {
-  if(!corporation_id) throw 'corporation_id is required';
-  return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers})
 }
 
