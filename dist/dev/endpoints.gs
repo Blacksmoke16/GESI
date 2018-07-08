@@ -30,7 +30,6 @@ SCOPES = [
   "esi-corporations.read_facilities.v1",
   "esi-corporations.read_fw_stats.v1",
   "esi-corporations.read_medals.v1",
-  "esi-corporations.read_outposts.v1",
   "esi-corporations.read_standings.v1",
   "esi-corporations.read_starbases.v1",
   "esi-corporations.read_structures.v1",
@@ -96,10 +95,10 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -215,10 +214,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/agents_research/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -253,10 +252,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -302,10 +301,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/attributes/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -349,10 +348,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -387,10 +386,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -418,10 +417,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -509,10 +508,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/contracts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -560,10 +559,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -610,10 +609,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -673,10 +672,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/fatigue/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -718,10 +717,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/fittings/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -755,10 +754,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/fleet/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -808,10 +807,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/fw/stats/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -836,10 +835,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/implants/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -934,10 +933,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -965,10 +964,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/killmails/recent/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1006,10 +1005,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/location/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1037,10 +1036,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/loyalty/points/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1104,10 +1103,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1135,10 +1134,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/mail/lists/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1195,10 +1194,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1253,10 +1252,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/medals/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1290,10 +1289,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/mining/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1337,10 +1336,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/notifications/contacts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1368,10 +1367,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/opportunities/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1438,10 +1437,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/orders/history/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1491,10 +1490,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/planets/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1525,10 +1524,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/ship/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1559,10 +1558,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/standings/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1590,10 +1589,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/titles/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1614,10 +1613,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/wallet/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1676,10 +1675,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1716,10 +1715,10 @@ ENDPOINTS = {
     "path": "/v1/corporation/{corporation_id}/mining/extractions/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1757,10 +1756,10 @@ ENDPOINTS = {
     "path": "/v1/corporation/{corporation_id}/mining/observers/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1811,10 +1810,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1876,10 +1875,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1937,10 +1936,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/bookmarks/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -1978,10 +1977,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2016,10 +2015,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/contacts/labels/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2107,10 +2106,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/contracts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2158,10 +2157,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2215,10 +2214,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2282,10 +2281,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/customs_offices/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2328,10 +2327,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/divisions/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2362,10 +2361,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/facilities/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2412,10 +2411,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/fw/stats/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2536,10 +2535,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2574,10 +2573,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/killmails/recent/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2621,10 +2620,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/medals/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2671,10 +2670,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/medals/issued/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2702,10 +2701,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/members/limit/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2736,10 +2735,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/members/titles/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2782,10 +2781,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/membertracking/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -2798,114 +2797,6 @@ ENDPOINTS = {
     ],
     "scope": "esi-corporations.track_members.v1",
     "summary": "List of member character IDs"
-  },
-  "corporations_corporation_outposts": {
-    "description": "Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
-    "headers": [
-      {
-        "name": "outpost_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/outposts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "integer",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_outposts.v1",
-    "summary": "List of corporation outpost IDs"
-  },
-  "corporations_corporation_outposts_outpost": {
-    "description": "Get details about a given outpost. Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev",
-    "headers": [
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "docking_cost_per_ship_volume"
-      },
-      {
-        "name": "office_rental_cost"
-      },
-      {
-        "name": "owner_id"
-      },
-      {
-        "name": "reprocessing_efficiency"
-      },
-      {
-        "name": "reprocessing_station_take"
-      },
-      {
-        "name": "services",
-        "sub_headers": [
-          "discount_per_good_standing",
-          "minimum_standing",
-          "service_name",
-          "surcharge_per_bad_standing"
-        ]
-      },
-      {
-        "name": "standing_owner_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/outposts/{outpost_id}/",
-    "parameters": [
-      {
-        "description": "A station (outpost) ID",
-        "in": "path",
-        "name": "outpost_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_outposts.v1",
-    "summary": "Details about the given outpost"
   },
   "corporations_corporation_roles": {
     "description": "Return the roles of all members if the character has the personnel manager role or any grantable role.",
@@ -2966,10 +2857,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/roles/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3015,10 +2906,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/roles/history/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3056,10 +2947,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/shareholders/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3097,10 +2988,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/standings/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3153,10 +3044,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/starbases/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3245,10 +3136,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3324,10 +3215,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/titles/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3355,10 +3246,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/wallets/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3421,10 +3312,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3613,10 +3504,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3682,10 +3573,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -3734,10 +3625,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -4314,10 +4205,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -5920,10 +5811,10 @@ ENDPOINTS = {
     "path": "/v2/alliances/{alliance_id}/contacts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -5970,10 +5861,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6019,10 +5910,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/blueprints/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6087,10 +5978,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/bookmarks/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6125,10 +6016,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/bookmarks/folders/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6178,10 +6069,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/contacts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6231,10 +6122,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/notifications/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6268,10 +6159,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/online/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6335,10 +6226,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/orders/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6413,10 +6304,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/roles/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6462,10 +6353,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/skillqueue/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6841,10 +6732,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/stats/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6913,10 +6804,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -6962,10 +6853,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/blueprints/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7012,10 +6903,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/contacts/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7080,10 +6971,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/containers/logs/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7160,10 +7051,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/orders/history/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7251,10 +7142,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7700,10 +7591,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7823,10 +7714,10 @@ ENDPOINTS = {
     "path": "/v3/characters/{character_id}/assets/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7892,10 +7783,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7940,10 +7831,10 @@ ENDPOINTS = {
     "path": "/v3/characters/{character_id}/clones/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -7977,10 +7868,10 @@ ENDPOINTS = {
     "path": "/v3/characters/{character_id}/mail/labels/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8044,10 +7935,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8163,10 +8054,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8212,10 +8103,10 @@ ENDPOINTS = {
     "path": "/v3/corporations/{corporation_id}/assets/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8247,10 +8138,10 @@ ENDPOINTS = {
     "path": "/v3/corporations/{corporation_id}/members/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8317,10 +8208,10 @@ ENDPOINTS = {
     "path": "/v3/corporations/{corporation_id}/orders/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8395,10 +8286,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8586,10 +8477,10 @@ ENDPOINTS = {
     "path": "/v4/characters/{character_id}/skills/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {
@@ -8650,10 +8541,10 @@ ENDPOINTS = {
     "path": "/v4/characters/{character_id}/wallet/journal/",
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.",
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
         "in": "parameters",
         "name": "name",
-        "type": "boolean",
+        "type": "string",
         "required": false
       },
       {

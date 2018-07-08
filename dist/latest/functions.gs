@@ -10,7 +10,7 @@ function alliances(opt_headers) {
 
 /**
 * Return custom labels for an alliance's contacts
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of alliance contact labels
 * @customfunction
@@ -53,7 +53,7 @@ function characters_affiliation(characters, opt_headers) {
 
 /**
 * Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime 
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of agents research information
 * @customfunction
@@ -65,7 +65,7 @@ function characters_character_agents_research(name, opt_headers) {
 /**
 * Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.
 * @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of asset names
 * @customfunction
@@ -77,7 +77,7 @@ function characters_character_assets_names(item_ids, name, opt_headers) {
 
 /**
 * Return attributes of a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Attributes of a character
 * @customfunction
@@ -89,7 +89,7 @@ function characters_character_attributes(name, opt_headers) {
 /**
 * Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event.
 * @param {integer} from_event  The event ID to retrieve events from
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A collection of event summaries
 * @customfunction
@@ -101,7 +101,7 @@ function characters_character_calendar(from_event, name, opt_headers) {
 /**
 * Get all invited attendees for a given event
 * @param {integer} event_id (Required) The id of the event requested
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of attendees
 * @customfunction
@@ -113,7 +113,7 @@ function characters_character_calendar_event_attendees(event_id, name, opt_heade
 
 /**
 * Return custom labels for a character's contacts
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contact labels
 * @customfunction
@@ -124,7 +124,7 @@ function characters_character_contacts_labels(name, opt_headers) {
 
 /**
 * Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contracts
@@ -137,7 +137,7 @@ function characters_character_contracts(name, page, opt_headers) {
 /**
 * Lists bids on a particular auction contract
 * @param {integer} contract_id (Required) ID of a contract
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bids
 * @customfunction
@@ -150,7 +150,7 @@ function characters_character_contracts_contract_bids(contract_id, name, opt_hea
 /**
 * Lists items of a particular contract
 * @param {integer} contract_id (Required) ID of a contract
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of items in this contract
 * @customfunction
@@ -172,7 +172,7 @@ function characters_character_corporationhistory(opt_headers) {
 
 /**
 * Return a character's jump activation and fatigue information
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Jump activation and fatigue information
 * @customfunction
@@ -183,7 +183,7 @@ function characters_character_fatigue(name, opt_headers) {
 
 /**
 * Return fittings of a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fittings
 * @customfunction
@@ -194,7 +194,7 @@ function characters_character_fittings(name, opt_headers) {
 
 /**
 * Return the fleet ID the character is in, if any.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about the character's fleet
 * @customfunction
@@ -205,7 +205,7 @@ function characters_character_fleet(name, opt_headers) {
 
 /**
 * Statistical overview of a character involved in faction warfare
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Faction warfare statistics for a given character
 * @customfunction
@@ -216,7 +216,7 @@ function characters_character_fw_stats(name, opt_headers) {
 
 /**
 * Return implants on the active clone of a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of implant type ids
 * @customfunction
@@ -228,7 +228,7 @@ function characters_character_implants(name, opt_headers) {
 /**
 * List industry jobs placed by a character
 * @param {boolean} include_completed  Whether retrieve completed character industry jobs as well
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Industry jobs placed by a character
 * @customfunction
@@ -239,7 +239,7 @@ function characters_character_industry_jobs(include_completed, name, opt_headers
 
 /**
 * Return a list of a character's kills and losses going back 90 days
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of killmail IDs and hashes
@@ -251,7 +251,7 @@ function characters_character_killmails_recent(name, page, opt_headers) {
 
 /**
 * Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
 * @customfunction
@@ -262,7 +262,7 @@ function characters_character_location(name, opt_headers) {
 
 /**
 * Return a list of loyalty points for all corporations the character has worked for
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of loyalty points
 * @customfunction
@@ -275,7 +275,7 @@ function characters_character_loyalty_points(name, opt_headers) {
 * Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards.
 * @param {array} labels  Fetch only mails that match one or more of the given labels
 * @param {integer} last_mail_id  List only mail with an ID lower than the given ID, if present
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The requested mail
 * @customfunction
@@ -286,7 +286,7 @@ function characters_character_mail(labels, last_mail_id, name, opt_headers) {
 
 /**
 * Return all mailing lists that the character is subscribed to
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mailing lists
 * @customfunction
@@ -298,7 +298,7 @@ function characters_character_mail_lists(name, opt_headers) {
 /**
 * Return the contents of an EVE mail
 * @param {integer} mail_id (Required) An EVE mail ID
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Contents of a mail
 * @customfunction
@@ -310,7 +310,7 @@ function characters_character_mail_mail(mail_id, name, opt_headers) {
 
 /**
 * Return a list of medals the character has
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of medals
 * @customfunction
@@ -321,7 +321,7 @@ function characters_character_medals(name, opt_headers) {
 
 /**
 * Paginated record of all mining done by a character for the past 30 days
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mining ledger of a character
@@ -333,7 +333,7 @@ function characters_character_mining(name, page, opt_headers) {
 
 /**
 * Return notifications about having been added to someone's contact list
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contact notifications
 * @customfunction
@@ -344,7 +344,7 @@ function characters_character_notifications_contacts(name, opt_headers) {
 
 /**
 * Return a list of tasks finished by a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of opportunities task ids
 * @customfunction
@@ -355,7 +355,7 @@ function characters_character_opportunities(name, opt_headers) {
 
 /**
 * List cancelled and expired market orders placed by a character up to 90 days in the past.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Expired and cancelled market orders placed by a character
@@ -367,7 +367,7 @@ function characters_character_orders_history(name, page, opt_headers) {
 
 /**
 * Returns a list of all planetary colonies owned by a character.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of colonies
 * @customfunction
@@ -378,7 +378,7 @@ function characters_character_planets(name, opt_headers) {
 
 /**
 * Get the current ship type, name and id
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Get the current ship type, name and id
 * @customfunction
@@ -389,7 +389,7 @@ function characters_character_ship(name, opt_headers) {
 
 /**
 * Return character standings from agents, NPC corporations, and factions
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of standings
 * @customfunction
@@ -400,7 +400,7 @@ function characters_character_standings(name, opt_headers) {
 
 /**
 * Returns a character's titles
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of titles
 * @customfunction
@@ -411,7 +411,7 @@ function characters_character_titles(name, opt_headers) {
 
 /**
 * Returns a character's wallet balance
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet balance
 * @customfunction
@@ -423,7 +423,7 @@ function characters_character_wallet(name, opt_headers) {
 /**
 * Get wallet transactions of a character
 * @param {integer} from_id  Only show transactions happened before the one referenced by this id
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet transactions
 * @customfunction
@@ -434,7 +434,7 @@ function characters_character_wallet_transactions(from_id, name, opt_headers) {
 
 /**
 * Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of chunk timers
@@ -446,7 +446,7 @@ function corporation_corporation_mining_extractions(name, page, opt_headers) {
 
 /**
 * Paginated list of all entities capable of observing and recording mining for a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Observer list of a corporation
@@ -459,7 +459,7 @@ function corporation_corporation_mining_observers(name, page, opt_headers) {
 /**
 * Paginated record of all mining seen by an observer
 * @param {integer} observer_id (Required) A mining observer id
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Mining ledger of an observer
@@ -483,7 +483,7 @@ function corporations_npccorps(opt_headers) {
 /**
 * Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.
 * @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of asset names
 * @customfunction
@@ -495,7 +495,7 @@ function corporations_corporation_assets_names(item_ids, name, opt_headers) {
 
 /**
 * A list of your corporation's bookmarks
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation owned bookmarks
@@ -507,7 +507,7 @@ function corporations_corporation_bookmarks(name, page, opt_headers) {
 
 /**
 * A list of your corporation's bookmark folders
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation owned bookmark folders
@@ -519,7 +519,7 @@ function corporations_corporation_bookmarks_folders(name, page, opt_headers) {
 
 /**
 * Return custom labels for a corporation's contacts
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of corporation contact labels
 * @customfunction
@@ -530,7 +530,7 @@ function corporations_corporation_contacts_labels(name, opt_headers) {
 
 /**
 * Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is "in_progress".
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contracts
@@ -543,7 +543,7 @@ function corporations_corporation_contracts(name, page, opt_headers) {
 /**
 * Lists bids on a particular auction contract
 * @param {integer} contract_id (Required) ID of a contract
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bids
@@ -557,7 +557,7 @@ function corporations_corporation_contracts_contract_bids(contract_id, name, pag
 /**
 * Lists items of a particular contract
 * @param {integer} contract_id (Required) ID of a contract
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of items in this contract
 * @customfunction
@@ -569,7 +569,7 @@ function corporations_corporation_contracts_contract_items(contract_id, name, op
 
 /**
 * List customs offices owned by a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of customs offices and their settings
@@ -581,7 +581,7 @@ function corporations_corporation_customs_offices(name, page, opt_headers) {
 
 /**
 * Return corporation hangar and wallet division names, only show if a division is not using the default name
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation division names
 * @customfunction
@@ -592,7 +592,7 @@ function corporations_corporation_divisions(name, opt_headers) {
 
 /**
 * Return a corporation's facilities
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation facilities
 * @customfunction
@@ -603,7 +603,7 @@ function corporations_corporation_facilities(name, opt_headers) {
 
 /**
 * Statistics about a corporation involved in faction warfare
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Faction warfare statistics for a given corporation
 * @customfunction
@@ -625,7 +625,7 @@ function corporations_corporation_icons(opt_headers) {
 /**
 * List industry jobs run by a corporation
 * @param {boolean} include_completed  Whether retrieve completed industry jobs as well
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of corporation industry jobs
@@ -637,7 +637,7 @@ function corporations_corporation_industry_jobs(include_completed, name, page, o
 
 /**
 * Get a list of a corporation's kills and losses going back 90 days
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of killmail IDs and hashes
@@ -649,7 +649,7 @@ function corporations_corporation_killmails_recent(name, page, opt_headers) {
 
 /**
 * Returns a corporation's medals
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of medals
@@ -661,7 +661,7 @@ function corporations_corporation_medals(name, page, opt_headers) {
 
 /**
 * Returns medals issued by a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of issued medals
@@ -673,7 +673,7 @@ function corporations_corporation_medals_issued(name, page, opt_headers) {
 
 /**
 * Return a corporation's member limit, not including CEO himself
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The corporation's member limit
 * @customfunction
@@ -684,7 +684,7 @@ function corporations_corporation_members_limit(name, opt_headers) {
 
 /**
 * Returns a corporation's members' titles
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of members and theirs titles
 * @customfunction
@@ -695,7 +695,7 @@ function corporations_corporation_members_titles(name, opt_headers) {
 
 /**
 * Returns additional information about a corporation's members which helps tracking their activities
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character IDs
 * @customfunction
@@ -705,45 +705,8 @@ function corporations_corporation_membertracking(name, opt_headers) {
 }
 
 /**
-* List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Expired and cancelled market orders placed on behalf of a corporation
-* @customfunction
-*/
-function corporations_corporation_orders_history(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get a list of corporation outpost IDs Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {integer} page  Which page of results to return
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return List of corporation outpost IDs
-* @customfunction
-*/
-function corporations_corporation_outposts(name, page, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get details about a given outpost. Note: This endpoint will be removed once outposts are migrated to Citadels as talked about in this blog: https://community.eveonline.com/news/dev
-* @param {integer} outpost_id (Required) A station (outpost) ID
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Details about the given outpost
-* @customfunction
-*/
-function corporations_corporation_outposts_outpost(outpost_id, name, opt_headers) {
-  if(!outpost_id) throw 'outpost_id is required';
-  return parseData_(arguments.callee.name,{outpost_id:outpost_id,name:name,opt_headers:opt_headers})
-}
-
-/**
 * Return the roles of all members if the character has the personnel manager role or any grantable role.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character ID's and roles
 * @customfunction
@@ -754,7 +717,7 @@ function corporations_corporation_roles(name, opt_headers) {
 
 /**
 * Return how roles have changed for a coporation's members, up to a month
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of role changes
@@ -766,7 +729,7 @@ function corporations_corporation_roles_history(name, page, opt_headers) {
 
 /**
 * Return the current shareholders of a corporation.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of shareholders
@@ -778,7 +741,7 @@ function corporations_corporation_shareholders(name, page, opt_headers) {
 
 /**
 * Return corporation standings from agents, NPC corporations, and factions
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of standings
@@ -790,7 +753,7 @@ function corporations_corporation_standings(name, page, opt_headers) {
 
 /**
 * Returns list of corporation starbases (POSes)
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of starbases (POSes)
@@ -804,7 +767,7 @@ function corporations_corporation_starbases(name, page, opt_headers) {
 * Returns various settings and fuels of a starbase (POS)
 * @param {integer} starbase_id (Required) An EVE starbase (POS) ID
 * @param {integer} system_id (Required) The solar system this starbase (POS) is located in,
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of starbases (POSes)
 * @customfunction
@@ -817,7 +780,7 @@ function corporations_corporation_starbases_starbase(starbase_id, system_id, nam
 
 /**
 * Returns a corporation's titles
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of titles
 * @customfunction
@@ -828,7 +791,7 @@ function corporations_corporation_titles(name, opt_headers) {
 
 /**
 * Get a corporation's wallets
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation wallets
 * @customfunction
@@ -841,7 +804,7 @@ function corporations_corporation_wallets(name, opt_headers) {
 * Get wallet transactions of a corporation
 * @param {integer} division (Required) Wallet key of the division to fetch journals from
 * @param {integer} from_id  Only show journal entries happened before the transaction referenced by this id
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Wallet transactions
 * @customfunction
@@ -900,7 +863,7 @@ function dogma_effects(opt_headers) {
 /**
 * Return details about a fleet
 * @param {integer} fleet_id (Required) ID for a fleet
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Details about a fleet
 * @customfunction
@@ -914,7 +877,7 @@ function fleets_fleet(fleet_id, name, opt_headers) {
 * Return information about fleet members
 * @param {integer} fleet_id (Required) ID for a fleet
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fleet members
 * @customfunction
@@ -928,7 +891,7 @@ function fleets_fleet_members(fleet_id, language, name, opt_headers) {
 * Return information about wings in a fleet
 * @param {integer} fleet_id (Required) ID for a fleet
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of fleet wings
 * @customfunction
@@ -1089,7 +1052,7 @@ function markets_prices(opt_headers) {
 /**
 * Return all orders in a structure
 * @param {integer} structure_id (Required) Return orders in this structure
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of orders
@@ -1489,19 +1452,6 @@ function universe_structures(opt_headers) {
 }
 
 /**
-* Returns information on requested structure, if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
-* @param {integer} structure_id (Required) An Eve structure ID
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Data about a structure
-* @customfunction
-*/
-function universe_structures_structure(structure_id, name, opt_headers) {
-  if(!structure_id) throw 'structure_id is required';
-  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,opt_headers:opt_headers})
-}
-
-/**
 * Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of systems and number of jumps
@@ -1570,7 +1520,7 @@ function wars_war_killmails(war_id, page, opt_headers) {
 
 /**
 * Return contacts of an alliance
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
@@ -1583,7 +1533,7 @@ function alliances_alliance_contacts(name, page, opt_headers) {
 /**
 * Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
 * @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of asset locations
 * @customfunction
@@ -1595,7 +1545,7 @@ function characters_character_assets_locations(item_ids, name, opt_headers) {
 
 /**
 * Return a list of blueprints the character owns
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of blueprints
@@ -1607,7 +1557,7 @@ function characters_character_blueprints(name, page, opt_headers) {
 
 /**
 * A list of your character's personal bookmarks
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of bookmarks
@@ -1619,7 +1569,7 @@ function characters_character_bookmarks(name, page, opt_headers) {
 
 /**
 * A list of your character's personal bookmark folders
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of bookmark folders
@@ -1631,7 +1581,7 @@ function characters_character_bookmarks_folders(name, page, opt_headers) {
 
 /**
 * Return contacts of a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
@@ -1643,7 +1593,7 @@ function characters_character_contacts(name, page, opt_headers) {
 
 /**
 * Return character notifications
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Returns your recent notifications
 * @customfunction
@@ -1654,7 +1604,7 @@ function characters_character_notifications(name, opt_headers) {
 
 /**
 * Checks if the character is currently online
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Object describing the character's online status
 * @customfunction
@@ -1665,7 +1615,7 @@ function characters_character_online(name, opt_headers) {
 
 /**
 * List open market orders placed by a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Open market orders placed by a character
 * @customfunction
@@ -1686,7 +1636,7 @@ function characters_character_portrait(opt_headers) {
 
 /**
 * Returns a character's corporation roles
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The character's roles in thier corporation
 * @customfunction
@@ -1697,7 +1647,7 @@ function characters_character_roles(name, opt_headers) {
 
 /**
 * List the configured skill queue for the given character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return The current skill queue, sorted ascending by finishing time
 * @customfunction
@@ -1708,7 +1658,7 @@ function characters_character_skillqueue(name, opt_headers) {
 
 /**
 * Returns aggregate yearly stats for a character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Character stats
 * @customfunction
@@ -1730,7 +1680,7 @@ function corporations_corporation_alliancehistory(opt_headers) {
 /**
 * Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)
 * @param {array} item_ids (Required) A list of item ids
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of asset locations
 * @customfunction
@@ -1742,7 +1692,7 @@ function corporations_corporation_assets_locations(item_ids, name, opt_headers) 
 
 /**
 * Returns a list of blueprints the corporation owns
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation blueprints
@@ -1754,7 +1704,7 @@ function corporations_corporation_blueprints(name, page, opt_headers) {
 
 /**
 * Return contacts of a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of contacts
@@ -1766,7 +1716,7 @@ function corporations_corporation_contacts(name, page, opt_headers) {
 
 /**
 * Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation ALSC logs
@@ -1777,21 +1727,21 @@ function corporations_corporation_containers_logs(name, page, opt_headers) {
 }
 
 /**
-* List open market orders placed on behalf of a corporation
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return A list of open market orders
+* @return Expired and cancelled market orders placed on behalf of a corporation
 * @customfunction
 */
-function corporations_corporation_orders(name, page, opt_headers) {
+function corporations_corporation_orders_history(name, page, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
 }
 
 /**
 * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of corporation structures' information
@@ -1875,6 +1825,19 @@ function universe_stations_station(station_id, opt_headers) {
 }
 
 /**
+* Returns information on requested structure if you are on the ACL. Otherwise, returns "Forbidden" for all inputs.
+* @param {integer} structure_id (Required) An Eve structure ID
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Data about a structure
+* @customfunction
+*/
+function universe_structures_structure(structure_id, name, opt_headers) {
+  if(!structure_id) throw 'structure_id is required';
+  return parseData_(arguments.callee.name,{structure_id:structure_id,name:name,opt_headers:opt_headers})
+}
+
+/**
 * Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of systems and number of ship, pod and NPC kills
@@ -1898,7 +1861,7 @@ function alliances_alliance(alliance_id, opt_headers) {
 
 /**
 * Return a list of the characters assets
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A flat list of the users assets
@@ -1911,7 +1874,7 @@ function characters_character_assets(name, page, opt_headers) {
 /**
 * Get all the information for a specific event
 * @param {integer} event_id (Required) The id of the event requested
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Full details of a specific event
 * @customfunction
@@ -1923,7 +1886,7 @@ function characters_character_calendar_event(event_id, name, opt_headers) {
 
 /**
 * A list of the character's clones
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Clone information for the given character
 * @customfunction
@@ -1934,7 +1897,7 @@ function characters_character_clones(name, opt_headers) {
 
 /**
 * Return a list of the users mail labels, unread counts for each label and a total unread count.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of mail labels and unread counts
 * @customfunction
@@ -1946,7 +1909,7 @@ function characters_character_mail_labels(name, opt_headers) {
 /**
 * Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.
 * @param {integer} planet_id (Required) Planet id of the target planet
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Colony layout
 * @customfunction
@@ -1962,7 +1925,7 @@ function characters_character_planets_planet(planet_id, name, opt_headers) {
 * @param {string} search (Required) The string to search on
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
 * @param {boolean} strict  Whether the search should be a strict match
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of search results
 * @customfunction
@@ -1975,7 +1938,7 @@ function characters_character_search(categories, search, language, strict, name,
 
 /**
 * Return a list of the corporation assets
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return A list of assets
@@ -1987,7 +1950,7 @@ function corporations_corporation_assets(name, page, opt_headers) {
 
 /**
 * Return the current member list of a corporation, the token's character need to be a member of the corporation.
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return List of member character IDs
 * @customfunction
@@ -1997,9 +1960,21 @@ function corporations_corporation_members(name, opt_headers) {
 }
 
 /**
+* List open market orders placed on behalf of a corporation
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+* @param {integer} page  Which page of results to return
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return A list of open market orders
+* @customfunction
+*/
+function corporations_corporation_orders(name, page, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Retrieve the given corporation's wallet journal for the given division going 30 days back
 * @param {integer} division (Required) Wallet key of the division to fetch journals from
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Journal entries
@@ -2008,19 +1983,6 @@ function corporations_corporation_members(name, opt_headers) {
 function corporations_corporation_wallets_division_journal(division, name, page, opt_headers) {
   if(!division) throw 'division is required';
   return parseData_(arguments.callee.name,{division:division,name:name,page:page,opt_headers:opt_headers})
-}
-
-/**
-* Get information on a solar system. NOTE: This route does not work with abyssal systems.
-* @param {integer} system_id (Required) system_id integer
-* @param {string} language  Language to use in the response, takes precedence over Accept-Language
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Information about a solar system
-* @customfunction
-*/
-function universe_systems_system(system_id, language, opt_headers) {
-  if(!system_id) throw 'system_id is required';
-  return parseData_(arguments.callee.name,{system_id:system_id,language:language,opt_headers:opt_headers})
 }
 
 /**
@@ -2050,7 +2012,7 @@ function characters_character(character_id, opt_headers) {
 
 /**
 * List all trained skills for the given character
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Known skills for the character
 * @customfunction
@@ -2061,7 +2023,7 @@ function characters_character_skills(name, opt_headers) {
 
 /**
 * Retrieve the given character's wallet journal going 30 days back
-* @param {boolean} name  Name of the character used for auth. If none is given, defaults to AUTHING_CHARACTER.
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
 * @return Journal entries
@@ -2081,5 +2043,18 @@ function characters_character_wallet_journal(name, page, opt_headers) {
 function corporations_corporation(corporation_id, opt_headers) {
   if(!corporation_id) throw 'corporation_id is required';
   return parseData_(arguments.callee.name,{corporation_id:corporation_id,opt_headers:opt_headers})
+}
+
+/**
+* Get information on a solar system.
+* @param {integer} system_id (Required) system_id integer
+* @param {string} language  Language to use in the response, takes precedence over Accept-Language
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Information about a solar system
+* @customfunction
+*/
+function universe_systems_system(system_id, language, opt_headers) {
+  if(!system_id) throw 'system_id is required';
+  return parseData_(arguments.callee.name,{system_id:system_id,language:language,opt_headers:opt_headers})
 }
 
