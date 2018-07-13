@@ -66,7 +66,7 @@ function getData_(endpoint_name, params) {
       path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
     } else if (param['in'] === 'body' && params[param.name]) {
       if (param['type'] === 'array') {
-        data = Array.isArray(params[param.name]) ? params[param.name].map(function(id) { return id[0]; }) : [params[param.name]];
+        data = Array.isArray(params[param.name]) ? params[param.name].filter(function(id) { return id[0] }).map(function(id) { return id[0]; }) : [params[param.name]];
       } else {
         throw new 'Unexepcted param type.  Please report this on Github.';
       }
