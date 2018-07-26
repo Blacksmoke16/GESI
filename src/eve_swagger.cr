@@ -265,7 +265,7 @@ module EveSwagger
       end
 
       # Add opt_headers parameter
-      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "string", description: "Default: True, Boolean if column headings should be listed or not."}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
+      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "boolean", description: "Default: true, Boolean if column headings should be listed or not."}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
     end
 
     private def get_headers(schema : Schema | Nil)
