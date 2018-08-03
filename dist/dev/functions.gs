@@ -1592,17 +1592,6 @@ function characters_character_contacts(name, page, opt_headers) {
 }
 
 /**
-* Return character notifications
-* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
-* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
-* @return Returns your recent notifications
-* @customfunction
-*/
-function characters_character_notifications(name, opt_headers) {
-  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
-}
-
-/**
 * Checks if the character is currently online
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
@@ -1903,6 +1892,17 @@ function characters_character_clones(name, opt_headers) {
 * @customfunction
 */
 function characters_character_mail_labels(name, opt_headers) {
+  return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
+}
+
+/**
+* Return character notifications
+* @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+* @param {string} opt_headers  Default: True, Boolean if column headings should be listed or not.
+* @return Returns your recent notifications
+* @customfunction
+*/
+function characters_character_notifications(name, opt_headers) {
   return parseData_(arguments.callee.name,{name:name,opt_headers:opt_headers})
 }
 
