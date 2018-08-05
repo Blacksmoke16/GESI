@@ -72,10 +72,10 @@ ENDPOINTS = {
     "path": "/v1/alliances/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -102,10 +102,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -123,10 +123,10 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/corporations/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -146,10 +146,10 @@ ENDPOINTS = {
     "path": "/v1/alliances/{alliance_id}/icons/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -182,10 +182,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -221,10 +221,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -259,10 +259,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -308,10 +308,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -355,10 +355,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -393,10 +393,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -424,10 +424,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -522,10 +522,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -566,10 +566,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -616,10 +616,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -646,10 +646,10 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/corporationhistory/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -679,10 +679,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -724,10 +724,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -761,10 +761,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -814,10 +814,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -842,10 +842,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -940,10 +940,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -978,10 +978,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1012,10 +1012,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1043,10 +1043,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1110,10 +1110,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1141,10 +1141,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1201,10 +1201,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1259,10 +1259,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1303,10 +1303,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1343,10 +1343,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1374,10 +1374,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1451,10 +1451,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1497,10 +1497,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1531,10 +1531,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1565,10 +1565,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1596,10 +1596,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1620,10 +1620,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1682,10 +1682,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1729,10 +1729,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1770,10 +1770,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1824,10 +1824,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1845,10 +1845,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/npccorps/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1882,10 +1882,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1950,10 +1950,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -1991,10 +1991,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2022,10 +2022,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2120,10 +2120,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2171,10 +2171,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2221,10 +2221,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2295,10 +2295,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2334,10 +2334,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2368,10 +2368,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2418,10 +2418,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2445,10 +2445,10 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/icons/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2549,10 +2549,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2587,10 +2587,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2634,10 +2634,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2684,10 +2684,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2708,10 +2708,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2742,10 +2742,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2788,10 +2788,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2864,10 +2864,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2920,10 +2920,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -2961,10 +2961,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3002,10 +3002,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3058,10 +3058,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3143,10 +3143,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3222,10 +3222,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3253,10 +3253,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3319,10 +3319,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3340,10 +3340,10 @@ ENDPOINTS = {
     "path": "/v1/dogma/attributes/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3394,10 +3394,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3448,10 +3448,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3468,10 +3468,10 @@ ENDPOINTS = {
     "path": "/v1/dogma/effects/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3511,10 +3511,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3580,10 +3580,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3632,10 +3632,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3666,10 +3666,10 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3699,10 +3699,10 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/characters/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3732,10 +3732,10 @@ ENDPOINTS = {
     "path": "/v1/fw/leaderboards/corporations/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3774,10 +3774,10 @@ ENDPOINTS = {
     "path": "/v1/fw/stats/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3797,10 +3797,10 @@ ENDPOINTS = {
     "path": "/v1/fw/wars/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3841,10 +3841,10 @@ ENDPOINTS = {
     "path": "/v1/incursions/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3876,10 +3876,10 @@ ENDPOINTS = {
     "path": "/v1/industry/facilities/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3903,10 +3903,10 @@ ENDPOINTS = {
     "path": "/v1/industry/systems/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -3938,10 +3938,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4011,10 +4011,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4053,10 +4053,10 @@ ENDPOINTS = {
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4073,10 +4073,10 @@ ENDPOINTS = {
     "path": "/v1/markets/groups/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4122,10 +4122,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4148,10 +4148,10 @@ ENDPOINTS = {
     "path": "/v1/markets/prices/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4219,10 +4219,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4269,10 +4269,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4350,10 +4350,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4384,10 +4384,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4404,10 +4404,10 @@ ENDPOINTS = {
     "path": "/v1/opportunities/groups/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4459,10 +4459,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4479,10 +4479,10 @@ ENDPOINTS = {
     "path": "/v1/opportunities/tasks/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4515,10 +4515,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4570,10 +4570,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4621,10 +4621,10 @@ ENDPOINTS = {
     "path": "/v1/sovereignty/campaigns/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4650,10 +4650,10 @@ ENDPOINTS = {
     "path": "/v1/sovereignty/map/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4688,10 +4688,10 @@ ENDPOINTS = {
     "path": "/v1/sovereignty/structures/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4717,10 +4717,10 @@ ENDPOINTS = {
     "path": "/v1/status/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4759,10 +4759,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4797,10 +4797,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4854,10 +4854,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4874,10 +4874,10 @@ ENDPOINTS = {
     "path": "/v1/universe/categories/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4920,10 +4920,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4940,10 +4940,10 @@ ENDPOINTS = {
     "path": "/v1/universe/constellations/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -4994,10 +4994,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5014,10 +5014,10 @@ ENDPOINTS = {
     "path": "/v1/universe/graphics/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5062,10 +5062,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5089,10 +5089,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5138,10 +5138,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5239,10 +5239,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5280,10 +5280,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5324,10 +5324,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5360,10 +5360,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5380,10 +5380,10 @@ ENDPOINTS = {
     "path": "/v1/universe/regions/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5426,10 +5426,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5456,10 +5456,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5507,10 +5507,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5555,10 +5555,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5575,10 +5575,10 @@ ENDPOINTS = {
     "path": "/v1/universe/structures/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5598,10 +5598,10 @@ ENDPOINTS = {
     "path": "/v1/universe/system_jumps/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5618,10 +5618,10 @@ ENDPOINTS = {
     "path": "/v1/universe/systems/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5645,10 +5645,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5672,10 +5672,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5742,10 +5742,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5779,10 +5779,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5825,10 +5825,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5868,10 +5868,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5924,10 +5924,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -5992,10 +5992,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6030,10 +6030,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6083,10 +6083,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6120,10 +6120,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6187,10 +6187,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6217,10 +6217,10 @@ ENDPOINTS = {
     "path": "/v2/characters/{character_id}/portrait/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6265,10 +6265,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6314,10 +6314,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6693,10 +6693,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6723,10 +6723,10 @@ ENDPOINTS = {
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6765,10 +6765,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6821,10 +6821,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6871,10 +6871,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -6939,10 +6939,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7019,10 +7019,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7110,10 +7110,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7206,10 +7206,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7241,10 +7241,10 @@ ENDPOINTS = {
     "path": "/v2/fw/systems/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7346,10 +7346,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7400,10 +7400,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7433,10 +7433,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7501,10 +7501,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7552,10 +7552,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7582,10 +7582,10 @@ ENDPOINTS = {
     "path": "/v2/universe/system_kills/",
     "parameters": [
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7627,10 +7627,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7682,10 +7682,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7744,10 +7744,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7792,10 +7792,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7829,10 +7829,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7875,10 +7875,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -7942,10 +7942,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8061,10 +8061,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8117,10 +8117,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8145,10 +8145,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8222,10 +8222,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8300,10 +8300,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8388,10 +8388,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8445,10 +8445,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8484,10 +8484,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8555,10 +8555,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8619,10 +8619,10 @@ ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
@@ -8696,10 +8696,10 @@ ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
+        "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
-        "type": "string",
+        "type": "boolean",
         "required": false
       }
     ],
