@@ -926,7 +926,7 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "Whether retrieve completed character industry jobs as well",
+        "description": "Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days.",
         "in": "query",
         "name": "include_completed",
         "type": "boolean",
@@ -2528,7 +2528,7 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "Whether retrieve completed industry jobs as well",
+        "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days.",
         "in": "query",
         "name": "include_completed",
         "type": "boolean",

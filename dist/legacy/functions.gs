@@ -297,7 +297,7 @@ function characters_character_implants(name, opt_headers) {
 
 /**
 * List industry jobs placed by a character
-* @param {boolean} include_completed  Whether retrieve completed character industry jobs as well
+* @param {boolean} include_completed  Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days.
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
 * @return Industry jobs placed by a character
@@ -829,7 +829,7 @@ function corporations_corporation_icons(opt_headers) {
 
 /**
 * List industry jobs run by a corporation
-* @param {boolean} include_completed  Whether retrieve completed industry jobs as well
+* @param {boolean} include_completed  Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days.
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
