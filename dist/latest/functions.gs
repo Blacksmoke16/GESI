@@ -433,6 +433,45 @@ function characters_character_wallet_transactions(from_id, name, opt_headers) {
 }
 
 /**
+* Lists bids on a public auction contract
+* @param {integer} contract_id (Required) ID of a contract
+* @param {integer} page  Which page of results to return
+* @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
+* @return A list of bids
+* @customfunction
+*/
+function contracts_public_bids_contract(contract_id, page, opt_headers) {
+  if(!contract_id) throw 'contract_id is required';
+  return parseData_(arguments.callee.name,{contract_id:contract_id,page:page,opt_headers:opt_headers})
+}
+
+/**
+* Lists items of a public contract
+* @param {integer} contract_id (Required) ID of a contract
+* @param {integer} page  Which page of results to return
+* @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
+* @return A list of items in this contract
+* @customfunction
+*/
+function contracts_public_items_contract(contract_id, page, opt_headers) {
+  if(!contract_id) throw 'contract_id is required';
+  return parseData_(arguments.callee.name,{contract_id:contract_id,page:page,opt_headers:opt_headers})
+}
+
+/**
+* Returns a paginated list of all public contracts in the given region
+* @param {integer} region_id (Required) An EVE region id
+* @param {integer} page  Which page of results to return
+* @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
+* @return A list of contracts
+* @customfunction
+*/
+function contracts_public_region(region_id, page, opt_headers) {
+  if(!region_id) throw 'region_id is required';
+  return parseData_(arguments.callee.name,{region_id:region_id,page:page,opt_headers:opt_headers})
+}
+
+/**
 * Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return

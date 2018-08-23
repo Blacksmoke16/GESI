@@ -3092,6 +3092,186 @@ ENDPOINTS = {
     "scope": "esi-wallet.read_character_wallet.v1",
     "summary": "Wallet transactions"
   },
+  "contracts_public_bids_contract": {
+    "description": "Lists bids on a public auction contract",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "bid_id"
+      },
+      {
+        "name": "bidder_id"
+      },
+      {
+        "name": "date_bid"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/contracts/public/bids/{contract_id}/",
+    "parameters": [
+      {
+        "description": "ID of a contract",
+        "in": "path",
+        "name": "contract_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "summary": "A list of bids"
+  },
+  "contracts_public_items_contract": {
+    "description": "Lists items of a public contract",
+    "headers": [
+      {
+        "name": "is_blueprint_copy"
+      },
+      {
+        "name": "is_included"
+      },
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "material_efficiency"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "time_efficiency"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/contracts/public/items/{contract_id}/",
+    "parameters": [
+      {
+        "description": "ID of a contract",
+        "in": "path",
+        "name": "contract_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "summary": "A list of items in this contract"
+  },
+  "contracts_public_region": {
+    "description": "Returns a paginated list of all public contracts in the given region",
+    "headers": [
+      {
+        "name": "buyout"
+      },
+      {
+        "name": "collateral"
+      },
+      {
+        "name": "contract_id"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "for_corporation"
+      },
+      {
+        "name": "issuer_corporation_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "start_location_id"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "type"
+      },
+      {
+        "name": "volume"
+      }
+    ],
+    "method": "GET",
+    "path": "/v1/contracts/public/{region_id}/",
+    "parameters": [
+      {
+        "description": "An EVE region id",
+        "in": "path",
+        "name": "region_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "integer",
+        "required": false
+      },
+      {
+        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "summary": "A list of contracts"
+  },
   "corporation_corporation_mining_extractions": {
     "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
     "headers": [
