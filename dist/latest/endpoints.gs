@@ -175,7 +175,7 @@ ENDPOINTS = {
     "path": "/v1/characters/affiliation/",
     "parameters": [
       {
-        "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned.",
+        "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned",
         "in": "body",
         "name": "characters",
         "type": "array",
@@ -319,7 +319,7 @@ ENDPOINTS = {
     "summary": "Attributes of a character"
   },
   "characters_character_calendar": {
-    "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event.",
+    "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event",
     "headers": [
       {
         "name": "event_date"
@@ -926,7 +926,7 @@ ENDPOINTS = {
     "path": "/v1/characters/{character_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days.",
+        "description": "Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days",
         "in": "query",
         "name": "include_completed",
         "type": "boolean",
@@ -989,7 +989,7 @@ ENDPOINTS = {
     "summary": "A list of killmail IDs and hashes"
   },
   "characters_character_location": {
-    "description": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.",
+    "description": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable",
     "headers": [
       {
         "name": "solar_system_id"
@@ -1020,7 +1020,7 @@ ENDPOINTS = {
       }
     ],
     "scope": "esi-location.read_location.v1",
-    "summary": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable."
+    "summary": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable"
   },
   "characters_character_loyalty_points": {
     "description": "Return a list of loyalty points for all corporations the character has worked for",
@@ -1054,7 +1054,7 @@ ENDPOINTS = {
     "summary": "A list of loyalty points"
   },
   "characters_character_mail": {
-    "description": "Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards.",
+    "description": "Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards",
     "headers": [
       {
         "name": "from"
@@ -2035,7 +2035,7 @@ ENDPOINTS = {
     "summary": "A list of npc corporation ids"
   },
   "corporations_corporation_assets_names": {
-    "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.",
+    "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships",
     "headers": [
       {
         "name": "item_id"
@@ -2708,7 +2708,7 @@ ENDPOINTS = {
     "path": "/v1/corporations/{corporation_id}/industry/jobs/",
     "parameters": [
       {
-        "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days.",
+        "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days",
         "in": "query",
         "name": "include_completed",
         "type": "boolean",
@@ -3823,7 +3823,7 @@ ENDPOINTS = {
     "summary": "A list of fleet wings"
   },
   "fw_leaderboards": {
-    "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday.",
+    "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday",
     "headers": [
       {
         "name": "kills",
@@ -3853,10 +3853,10 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare."
+    "summary": "Corporation leaderboard of kills and victory points within faction warfare"
   },
   "fw_leaderboards_characters": {
-    "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday.",
+    "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday",
     "headers": [
       {
         "name": "kills",
@@ -3886,10 +3886,10 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "Character leaderboard of kills and victory points within faction warfare."
+    "summary": "Character leaderboard of kills and victory points within faction warfare"
   },
   "fw_leaderboards_corporations": {
-    "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday.",
+    "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday",
     "headers": [
       {
         "name": "kills",
@@ -3919,7 +3919,7 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare."
+    "summary": "Corporation leaderboard of kills and victory points within faction warfare"
   },
   "fw_stats": {
     "description": "Statistical overviews of factions involved in faction warfare",
@@ -4502,7 +4502,7 @@ ENDPOINTS = {
     "path": "/v1/markets/{region_id}/orders/",
     "parameters": [
       {
-        "description": "Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders.",
+        "description": "Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders",
         "in": "query",
         "name": "order_type",
         "type": "string",
@@ -5328,7 +5328,7 @@ ENDPOINTS = {
     "summary": "Information about an item group"
   },
   "universe_ids": {
-    "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours.",
+    "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours",
     "headers": [
       {
         "name": "agents",
@@ -5426,7 +5426,7 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted."
+    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted"
   },
   "universe_moons_moon": {
     "description": "Get information on a moon",
@@ -5845,7 +5845,7 @@ ENDPOINTS = {
     "path": "/v1/wars/",
     "parameters": [
       {
-        "description": "Only return wars with ID smaller than this.",
+        "description": "Only return wars with ID smaller than this",
         "in": "query",
         "name": "max_war_id",
         "type": "integer",
@@ -5859,7 +5859,7 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "A list of war IDs, in decending order by war_id."
+    "summary": "A list of war IDs, in descending order by war_id"
   },
   "wars_war": {
     "description": "Return details about a war",
@@ -7636,7 +7636,7 @@ ENDPOINTS = {
     "summary": "A list of factions"
   },
   "universe_names": {
-    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.",
+    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types",
     "headers": [
       {
         "name": "category"
@@ -7666,7 +7666,7 @@ ENDPOINTS = {
         "required": false
       }
     ],
-    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned."
+    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned"
   },
   "universe_stations_station": {
     "description": "Get information on a station",

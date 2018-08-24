@@ -41,7 +41,7 @@ function alliances_alliance_icons(opt_headers) {
 
 /**
 * Bulk lookup of character IDs to corporation, alliance and faction
-* @param {array} characters (Required) The character IDs to fetch affiliations for. All characters must exist, or none will be returned.
+* @param {array} characters (Required) The character IDs to fetch affiliations for. All characters must exist, or none will be returned
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
 * @return Character corporation, alliance and faction IDs
 * @customfunction
@@ -87,7 +87,7 @@ function characters_character_attributes(name, opt_headers) {
 }
 
 /**
-* Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event.
+* Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event
 * @param {integer} from_event  The event ID to retrieve events from
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
@@ -227,7 +227,7 @@ function characters_character_implants(name, opt_headers) {
 
 /**
 * List industry jobs placed by a character
-* @param {boolean} include_completed  Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days.
+* @param {boolean} include_completed  Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
 * @return Industry jobs placed by a character
@@ -250,10 +250,10 @@ function characters_character_killmails_recent(name, page, opt_headers) {
 }
 
 /**
-* Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
+* Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable.
+* @return Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable
 * @customfunction
 */
 function characters_character_location(name, opt_headers) {
@@ -272,7 +272,7 @@ function characters_character_loyalty_points(name, opt_headers) {
 }
 
 /**
-* Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards.
+* Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards
 * @param {array} labels  Fetch only mails that match one or more of the given labels
 * @param {integer} last_mail_id  List only mail with an ID lower than the given ID, if present
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
@@ -520,7 +520,7 @@ function corporations_npccorps(opt_headers) {
 }
 
 /**
-* Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships.
+* Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships
 * @param {array} item_ids (Required) A list of item ids
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
@@ -663,7 +663,7 @@ function corporations_corporation_icons(opt_headers) {
 
 /**
 * List industry jobs run by a corporation
-* @param {boolean} include_completed  Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days.
+* @param {boolean} include_completed  Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days
 * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
 * @param {integer} page  Which page of results to return
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
@@ -941,9 +941,9 @@ function fleets_fleet_wings(fleet_id, language, name, opt_headers) {
 }
 
 /**
-* Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday.
+* Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return Corporation leaderboard of kills and victory points within faction warfare.
+* @return Corporation leaderboard of kills and victory points within faction warfare
 * @customfunction
 */
 function fw_leaderboards(opt_headers) {
@@ -951,9 +951,9 @@ function fw_leaderboards(opt_headers) {
 }
 
 /**
-* Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday.
+* Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return Character leaderboard of kills and victory points within faction warfare.
+* @return Character leaderboard of kills and victory points within faction warfare
 * @customfunction
 */
 function fw_leaderboards_characters(opt_headers) {
@@ -961,9 +961,9 @@ function fw_leaderboards_characters(opt_headers) {
 }
 
 /**
-* Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday.
+* Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return Corporation leaderboard of kills and victory points within faction warfare.
+* @return Corporation leaderboard of kills and victory points within faction warfare
 * @customfunction
 */
 function fw_leaderboards_corporations(opt_headers) {
@@ -1118,7 +1118,7 @@ function markets_region_history(region_id, type_id, opt_headers) {
 
 /**
 * Return a list of orders in a region
-* @param {string} order_type (Required) Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders.
+* @param {string} order_type (Required) Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders
 * @param {integer} region_id (Required) Return orders in this region
 * @param {integer} page  Which page of results to return
 * @param {integer} type_id  Return orders only for this type
@@ -1374,11 +1374,11 @@ function universe_groups_group(group_id, language, opt_headers) {
 }
 
 /**
-* Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours.
+* Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours
 * @param {array} names (Required) The names to resolve
 * @param {string} language  Language to use in the response, takes precedence over Accept-Language
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted.
+* @return List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted
 * @customfunction
 */
 function universe_ids(names, language, opt_headers) {
@@ -1523,9 +1523,9 @@ function universe_types(page, opt_headers) {
 
 /**
 * Return a list of wars
-* @param {integer} max_war_id  Only return wars with ID smaller than this.
+* @param {integer} max_war_id  Only return wars with ID smaller than this
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return A list of war IDs, in decending order by war_id.
+* @return A list of war IDs, in descending order by war_id
 * @customfunction
 */
 function wars(max_war_id, opt_headers) {
@@ -1829,10 +1829,10 @@ function universe_factions(language, opt_headers) {
 }
 
 /**
-* Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types.
+* Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types
 * @param {array} ids (Required) The ids to resolve
 * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
-* @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned.
+* @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned
 * @customfunction
 */
 function universe_names(ids, opt_headers) {
