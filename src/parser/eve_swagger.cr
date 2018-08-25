@@ -14,7 +14,7 @@ module EveSwagger
   # Default swagger version
   class_setter version = "latest"
   # Output directory for generated files
-  class_property out_dir = "dist/"
+  class_property out_dir = "src/script/"
 
   # Default parameters that will not be included in a function's argument list
   # either because they are not useful or they get handled automatically
@@ -86,14 +86,14 @@ module EveSwagger
           endpoint_name = "universe_ids" if endpoint_name == "universes"
 
           @endpoints[endpoint_name] = EndpointObj.new(
-            responses.post.nil? ? "GET" : "POST",
+            responses.get.nil? ? "POST" : "GET",
             path.description,
             success.schema,
             path.parameters,
             path_url,
             path.scope,
             success.description,
-            endpoint_name
+            endpoint_name,
           )
         end
       end
@@ -112,31 +112,31 @@ module EveSwagger
       functions = String.build do |str|
         @endpoints.each do |endpoint_name, endpoint_data|
           str << "/**\n"
-          str << "* #{endpoint_data.description}\n"
-          endpoint_data.parameters.each { |p| str << "* @param {#{p.type}} #{p.name} #{p.required ? "(Required)" : ""} #{p.description}\n" }
-          str << "* @return #{endpoint_data.summary}\n"
-          str << "* @customfunction\n"
-          str << "*/\n"
-          str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| p.name }.join(", ")}) {\n"
+          str << " * #{endpoint_data.description}\n"
+          endpoint_data.parameters.each { |p| str << " * @param {#{p.type}} #{p.name} #{p.required ? "(Required)" : ""} #{p.description}\n" }
+          str << " * @return #{endpoint_data.summary}\n"
+          str << " * @customfunction\n"
+          str << " */\n"
+          str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| "#{p.name}: #{p.type}" }.join(", ")}): any[][] {\n"
           endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw '#{p.name} is required';\n" if p.required }
-          str << "  return parseData_(arguments.callee.name,{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
+          str << "  return parseData_('#{endpoint_name}',{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
           str << "}\n\n"
         end
       end
 
-      File.open(EveSwagger.out_dir + "functions.gs", mode: "w") do |file|
+      File.open(EveSwagger.out_dir + "functions.ts", mode: "w") do |file|
         file.print(functions)
       end
     end
 
     private def save_endpoints
-      File.open(EveSwagger.out_dir + "endpoints.gs", mode: "w") do |file|
-        file.print("SCOPES = ")
+      File.open(EveSwagger.out_dir + "endpoints.ts", mode: "w") do |file|
+        file.print("const SCOPES = ")
         file.print(@scopes.sort!.to_pretty_json)
         file.print(";\n\n")
-        file.print("ENDPOINTS = ")
+        file.print("const ENDPOINTS = ")
         file.print(@endpoints.to_pretty_json)
-        file.print(';')
+        file.print(";\n")
       end
     end
   end
@@ -189,6 +189,7 @@ module EveSwagger
     JSON.mapping(
       description: {type: String, setter: false},
       in: {type: String, setter: false},
+      items: {type: Item, nilable: true, setter: true},
       name: {type: String, setter: false},
       type: {type: String, nilable: true, setter: true},
       required: {type: Bool, nilable: false, default: false, setter: false},
@@ -235,19 +236,32 @@ module EveSwagger
       @headers = get_headers(schema)
 
       # Set type of the parameter if there is a schema and remove schema
+      # Set/convert param types to TS types
       @parameters.each do |param|
         if schema = param.schema
           type = schema.type
-          param.type = type
+          if items = schema.items
+            type = type == "array" ? items.type + "[]" : items.type
+          end
+          param.type = type.includes?("integer") ? type.sub("integer", "number") : type
           param.schema = nil
         end
+        if item = param.items
+          type = item.type
+          if sub_items = item.items
+            type = sub_items.type
+          end
+          param.type = (type == "integer" ? "number" : type) + "[]"
+          param.items = nil
+        end
+        param.type = "number" if param.type == "integer"
       end
 
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
 
       # Remove character/corporation/alliance_id param if they are not one of the three endpoints that can be arbitrary
       @parameters.delete @parameters.find { |p| p.name == "character_id" } unless endpoint_name == "characters_character"
-      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless endpoint_name == "corporations_corporation"
+      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless %w(corporations_corporation loyalty_stores_corporation_offers).includes? endpoint_name
       @parameters.delete @parameters.find { |p| p.name == "alliance_id" } unless endpoint_name == "alliances_alliance"
 
       # Add name parameter if function requires auth
@@ -287,7 +301,9 @@ module EveSwagger
         else
           # of single type
           title = items.title
-          headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
+          if title = items.title
+           headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
+          end
         end
         # Single object
       elsif properties = schema.properties
@@ -303,7 +319,7 @@ module EveSwagger
     end
 
     private def parse_items(item : Item)
-      item.properties.nil? ? [item.title.match(/.*_(.*_.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
+      item.properties.nil? ? [item.title.not_nil!.match(/.*_(.*_.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
     end
   end
 
@@ -347,7 +363,7 @@ module EveSwagger
       items: {type: Item, nilable: true, setter: false},
       properties: {type: Hash(String, Item), nilable: true, setter: false},
       required: {type: Array(String), nilable: true, setter: false},
-      title: {type: String, nilable: false, setter: false},
+      title: {type: String, nilable: true, setter: false},
       type: {type: String, nilable: false, setter: false},
       uniqueItems: {type: Bool, nilable: true, setter: false},
     )

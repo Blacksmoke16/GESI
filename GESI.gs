@@ -3,26 +3,10 @@
 // /u/blacksmoke16 @ Reddit
 // @Blacksmoke16#0016 @ Discord
 // https://discord.gg/eEAH2et
-APP_VERSION = '6.5.0';
-BASE_URL = 'https://esi.evetech.net'
-
-// Setup variables used throughout script
-// From your dev app https://developers.eveonline.com/applications
-CLIENT_ID = 'YOUR_CLIENT_ID';
-CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
-
-// Name of your 'main' character to use when a function is called without a character name as a param
-MAIN_CHARACTER = "YOUR_MAIN_CHARACTER_NAME";
-
 CACHE = CacheService.getDocumentCache();
-
-function onOpen() {
-  SpreadsheetApp.getUi().createMenu('GESI')
-    .addItem('Authorize Sheet', 'showSidebar')
-    .addSeparator()
-    .addItem('Check for updates', 'checkForUpdates')
-    .addToUi();
-}
+DOCUMENT_PROPERTIES = PropertiesService.getDocumentProperties();
+SCRIPT_PROPERTIES = PropertiesService.getScriptProperties();
+BASE_URL = SCRIPT_PROPERTIES.getProperty('BASE_URL');
 
 /** 
 * Parses array data into more readable format
@@ -41,7 +25,8 @@ function parseArray(endpoint_name, column_name, array, opt_headers) {
 
   JSON.parse(array).forEach(function(a) {
     var temp = [];
-    endpoint.sub_headers.forEach(function(k) { temp.push(typeof(a) !== 'object' ? a : a[k]); });
+    
+    endpoint.sub_headers.forEach(function(k) { temp.push(Array.isArray(a[k]) ? JSON.stringify(a[k]) : typeof(a) !== 'object' ? a : a[k]); });
     result.push(temp);
   });
   return result;
@@ -56,7 +41,7 @@ function getData_(endpoint_name, params) {
   var path = endpoint.path;
   var name = params.name;
   var data = null;
-  if (!name) name = MAIN_CHARACTER;
+  if (!name) name = DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER');
   
   endpoint.parameters.forEach(function(param) {
     if (param['in'] === 'path' && params[param.name]) {
@@ -126,24 +111,29 @@ function parseData_(endpoint_name, params) {
  } else if (typeof(data) === 'number') {
      result = [data];
  } else {
-     throw new "Unexepcted data type.  Please report this on Github.";
+     throw new 'nexepcted data type.  Please report this on Github.'
  }
   
   return result;
 }
 
 function doRequest_(path, method, token, data) {
-  var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(CLIENT_ID + ':' + CLIENT_SECRET)
-  var options = {'method': method, 'muteHttpExceptions': true, headers: {'User-Agent': 'GESI user ' + SpreadsheetApp.getActiveSpreadsheet().getOwner().getEmail(),'Content-Type': 'application/json','Authorization': auth}};
+  var auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(SCRIPT_PROPERTIES.getProperty('CLIENT_ID') + ':' + SCRIPT_PROPERTIES.getProperty('CLIENT_SECRET'))
+  var options = {'method': method, 'muteHttpExceptions': true, headers: {'User-Agent': 'GESI','Content-Type': 'application/json','Authorization': auth}};
   if (data) options['payload'] = JSON.stringify(data)
   var response = UrlFetchApp.fetch(path, options);
   if (response.getResponseCode() !== 200) {
     var error_body = JSON.parse(response.getContentText());
-    var error = {};
-    error['error'] = error_body['error'];
-    error['error_description'] = error_body['error_description'];
-    error['sso_status'] = error_body['sso_status'];
-    error['code'] = response.getResponseCode();
+    var error = {
+      error: error_body['error'],
+      error_description: error_body['error_description'],
+      sso_status: error_body['sso_status'],
+      code: response.getResponseCode(),
+      path: path,
+      character: DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER'),
+      data: data
+    };
+    log_(JSON.stringify(error));
     throw 'ESI response error:  ' + JSON.stringify(error);
   }
   return {data: JSON.parse(response), headers: response.getHeaders()};
@@ -179,6 +169,35 @@ function findObjectByKey_(array, key, value) {
 //                                                                                                  Auth Functions
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+function onInstall() {
+  onOpen();
+}
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createAddonMenu()
+    .addItem('GESI Config', 'showConfigModal')
+    .addItem('Authorize Characters', 'showSSOModal')
+    .addToUi();
+}
+
+function showConfigModal() {
+  var template = HtmlService.createHtmlOutputFromFile('config')
+    .setTitle('GESI Config')
+    .setWidth(1000);
+  SpreadsheetApp.getUi().showModalDialog(template, 'GESI Config');
+}
+
+function getConfig() {
+  return {
+    main_character: DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER'),
+  };
+}
+
+function setConfig(configObj) {
+  DOCUMENT_PROPERTIES.setProperty('MAIN_CHARACTER', configObj.main_character);
+}
+
 function authCallback(request) {
   var tokenData = getAccessToken_(request.parameter.code);
   var characterData = extend_(tokenData, getCharacterDetails_(tokenData['access_token']));
@@ -188,10 +207,10 @@ function authCallback(request) {
   return HtmlService.createHtmlOutput('Thank you for using GESI ' + userData['CharacterName']);
 }
 
-function showSidebar() {
-  var scriptUrl = 'https://script.google.com/macros/d/' + ScriptApp.getScriptId() + '/usercallback';
-  var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(120).createToken();
-  var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + scriptUrl + '&client_id=' + CLIENT_ID + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
+function showSSOModal() {
+  var redirectUrl = 'https://script.google.com/macros/d/1HrSxMN3n_k6b3NdI7gc-QMO-G93Rve7TwXy_jWVhKa2AB6C6LbhIUWOC/usercallback';
+  var stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(300).createToken();
+  var authorizationUrl = 'https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri=' + redirectUrl + '&client_id=' + SCRIPT_PROPERTIES.getProperty('CLIENT_ID') + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
   var template = HtmlService.createTemplate('Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>');  
   template.authorizationUrl = authorizationUrl;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
@@ -238,20 +257,3 @@ function cacheData_(userData, access_token) {
   CACHE.put(character_name + '_access_token', access_token, 1080);
 }
 
-function checkForUpdates()
-{
-  var newVersion = JSON.parse(UrlFetchApp.fetch('https://api.github.com/repos/Blacksmoke16/GESI/releases/latest'))['tag_name'];
-  if (newVersion != null) {
-    var message = 'You are using the latest version of GESI.';
-    var title = 'No updates found';
-    if (newVersion > APP_VERSION) {
-      message = 'A new ';
-      var newSplit = newVersion.split('.');
-      var currentSplit = APP_VERSION.split('.');
-      if (newSplit[0] > currentSplit[0]) { message += 'major'; } else if (newSplit[1] > currentSplit[1]) { message += 'minor'; } else if (newSplit[2] > currentSplit[2]) { message += 'patch'; }
-      message += ' version of GESI is available on GitHub.';
-      title = 'GESI version ' + newVersion + ' is available!';
-    }
-    SpreadsheetApp.getActiveSpreadsheet().toast(message, title, 5);
-  }
-}
