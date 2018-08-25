@@ -1,77 +1,111 @@
 # GESI
-Google Sheets Script for interacting with EVE ESI
+
+Google Sheets add-on for interacting with EVE ESI API.
 
 ## Setup:
-   1. Create a new google sheet or go to the one you want to use the script on.
-   2. In the menu bar go to Tools -> Script Editor.
-   3. Copy the GESI files.  You may need to name the project to save it, so use any name.
-       * Copy the contents of GESI.gs into the `Code.gs` script file, replacing everything in the file, and save the script.  (Can rename Code.gs to GESI.gs if you want)
-       * Create a new script file (File -> New -> Script File) and name it `endpoints`.
-           * Pick which version of ESI you wish to use: legacy, latest, dev.
-           * Copy the contents of `dist/ESI_VERSION/endpoints.gs` into the script file, replacing everything in the file, and save the script.
-       * Create a new script file (File -> New -> Script File) and name it `functions`.
-           * Pick which version of ESI you wish to use: legacy, latest, dev.
-           * Copy the contents of `dist/ESI_VERSION/functions.gs` into the script file, replacing everything in the file, and save the script.
-   4. A this point setup is complete for unauthenticated endpoints.  If you need the authenticated endpoints continue on.
-   5. Go to File -> Project Properties and copy the Script ID.
-   6. Make a new app on the devsite https://developers.eveonline.com/applications/create.  
-        * Content Type:  Authentication & API Access
-        * PERMISSIONS:   Select all esi-* endpoints.
-        * CALLBACK URL:  https://script.google.com/macros/d/{SCRIPT_ID_COPIED_IN_STEP_FIVE}/usercallback
-        * Be sure to replace the `{SCRIPT_ID_COPIED_IN_STEP_FIVE}` in the URL with YOUR script ID!
-        * Also be sure to **not** include the `{` and `}` in your url; it should look something like this, but with your Script ID:
-        * `https://script.google.com/macros/d/15lw-cjwWYnHgLU_tmx6KnyHtZ9aR9Q/usercallback`
-   7. Replace the CLIENT_ID and CLIENT_SECRET variables towards the top with your info from the dev app, and save the script.
-   8. Replace `YOUR_MAIN_CHARACTER_NAME` with the name of your main (the character to default to if no name is given with a function) character in the MAIN_CHARACTER constant, and save the script.
-   9. Close the script and refresh the spreadsheet.
-   10. There will now be a GESI option in the menu bar.  Click it and then click 'Authorize Sheet'.
-   11. Give the script permission to do what it needs.
-   12. Click the EVE SSO button in the modal.  Login -> select what character you want to authorize -> Authorize.
-   13. Close the modal.
-   14. (Optional) Repeat step 12 to authorize other characters.
-   15. Done.
-   
-## Usage Tips
 
-### Checking the version
-Use the GESI option in the menu bar and click the `Check for updates` option.  Explanations of the types of updates for GESI.gs are below:
-* New major version - Indicates a major rework of the script, there will most likely be breaking changes that require reauth/edits of your sheet.
-* New minor version - New features/additions to the script that will work with current auths.  Just copy paste new code in.
-* New patch version - Bug fixes and minor improvements that will work with current auths.  Just copy paste new code in.
+1. Install the add-on [HERE](https://chrome.google.com/webstore/detail/gesi/haaceilfjgofjglobglglnafgnjbekoc?utm_source=permalink).
+2. Give the script access to what it needs.
+3. There will now be a GESI option under the `Add-Ons` option in the menu bar.  Click it and then click `GESI => Authorize Characters`.
+4. Click the EVE SSO button in the modal.  Login => select what character you want to authorize => Authorize.
+5. Close the modal.
+6. (Optional) Repeat step 4 to authorize other characters.
+7. Done.
 
-**NOTE:  Changes in the ESI spec, such as adding/removing columns, name changes etc., may still break your app.**
+### Script Editor
 
+By default, one does not have access to GESI functions for use in custom functions in the script editor.  In order to gain access to these functions for custom logic, add GESI as a library to your script:
 
-### Parameter datatype samples
-| Type    | Description                          | Sample                 |
-|---------|--------------------------------------|------------------------|
-| array   | A string with comma seperated values | "value1,value2,value3" |
-| boolean | True or False                        | true                   |
-| integer | An integer                           | 16                     |
-| string  | A string                             | "value"                |
+1. Install the add-on, following the instructions above.
+2. Within the script editor, click `Resources => Lbraries...` 
+3. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
+4. Select the latest version from the dropdown, and click `Save`.
 
-### Getting all pages of an endpoint datatype samples
-`-1` page param will return all pages, however it'll take longer to return.  See the troubleshooting section if you get the `Internal error when executing the custom function` error.
+In order to use this, functions must be prepended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
-### Using the parseArray function
-As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.  See the documentation above the function in GESI.gs right above the private utility functions header below the scopes list. 
+**NOTE:** Libraries _do not_ update on their own.  When a new version of GESI is released, you will have to manually update the `version` dropdown in the Libraries modal.
+
+## FAQ
+
+### How do I know if I have the latest version of GESI?
+
+GESI will automatically update when a new version is released.  To see what changed visit the [forum thread](https://forums.eveonline.com/t/6-5-0-gesi-google-sheets-esi-library-now-with-some-post-endpoints/13406) or the [Github Releases](https://github.com/Blacksmoke16/GESI/releases) page.
+
+**NOTE:  Changes in the ESI spec, such as adding/removing columns, name changes etc. may break your sheet.**
+
+### How do I know what functions are available?
+
+Check out the `function.ts` file under `src/script`.  This file lists all the functions available, as well as a description of  hat it returns and of each parameter.
+
+### Why is my data not updating?
+
+In order to improve performance, and reduce the number of requests to ESI (a user can only make 20,000 requests per day between all their sheets), GESI implements caching on the data returned from ESI.  The length of time that data will be cached depends on the function and when the data is expected to refresh on ESI's side.  
+
+### How can I get more than 1 page of data at a time?
+
+Use `-1` as the value for the page parameter.  This will return all pages, however it'll take longer to return.  If you see the error `Internal error when executing the custom function`, it means GESI reached the 30 second custom function execution time limit imposed by Google.  A solution for this would be to try calling the function again.  This will allow GESI to only fetch new data, and used the cached data for everything else.
+
+### What do the function parameter types mean?
+
+| Type    | Sample                             |
+| ------- | ---------------------------------- |
+| boolean | `true` or `false`                  |
+| number  | `12`                               |
+| string  | `"foo"` Notice the _double_ quotes |
+
+Array types are denoted with a `[]` following the data type of the parameter.  An example of an array type could be `number[]` where a value for that would be `A1:A1` where this range is a column of numbers.
+
+### Why does this cell contain all this random data?
+
+As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.
+
+An example of this would be `parseArray("character_character_skills", "skills", B2)` where `B2` is the cell that contains the data.
+
+### How do I know you're not stealing all my data?
+
+For one, since everyone is using my Developer Application, it would be in violation of the [EVE Developer License Agreement](https://developers.eveonline.com/resource/license-agreement), specifically section `2.3.c/d`.
+
+Secondly, the source for the add-on is still open source under `src/script/gesi.ts`.  The code is in Typescript, which gets compiled down to an earlier version of JavaScript by using `google/clasp` CLI tool.  Feel free to check it out for yourself.
+
+Thirdly, the compiled code can be seen on [Google Scripts](https://script.google.com/a/mail.rmu.edu/d/1KjnRVVFr2KiHH55sqBfHcZ-yXweJ7iv89V99ubaLy4A7B_YH8rB5u0s3/edit?usp=sharing).
+
+**HOWEVER,** I am collecting various debug information, on each request, for example:
+
+```json
+  {
+    "id": 1,
+    "datetime": "2018-08-22 00:21:03",
+    "endpoint_name": "characters_character_assets",
+    "character": "Blacksmoke17",
+    "main_character": "Blacksmoke16",
+    "sheet_id": "1XaFCiG8FdasLmnJ9jRfxG82slHA2UUaKeDwwLX-yo",
+    "params": "{\"name\": \"\", \"page\": 1, \"opt_headers\": false}",
+    "method": "GET",
+    "path": "/v3/characters/2047918291/assets/?page=1",
+    "data": null,
+    "errors": null
+  }
+```
+
+This is only used for debugging purposes, such as finding bugs, making pretty charts, etc.  Personal data, such as access_tokens, refresh_tokens, and response data are not logged.
 
 ### Using functions with multiple characters
+
 A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  Currently this can be achieved by calling `=characters_character_industry_jobs()` once, then leaving some space and adding more for each additional characters with opt_headers disabled.  While it is an ok workaround it is not optimal, since there could be empty rows, not easily expandable/editable, etc.  A better alternative would be to define a new custom function `getJobs(character_names)` that will output the industry jobs of the given characters, in a single function call.
 
 ```JavaScript
 /**
 * Returns the combined industry jobs belonging to the given characters
-* @param {array} character_names Character names to get jobs for.
+* @param {string[]} character_names Character names to get jobs for.
 * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
 * @return Combined industry job.
 * @customfunction
 */
 function getJobs(character_names, opt_headers) {
   var characters = character_names.split(",");
-  var jobs = characters_character_industry_jobs(false, characters.shift(), opt_headers);
+  var jobs = GESI.characters_character_industry_jobs(false, characters.shift(), opt_headers);
   characters.forEach(function(character) {
-    jobs = jobs.concat(characters_character_industry_jobs(false, character.trim(), false));
+    jobs = jobs.concat(GESI.characters_character_industry_jobs(false, character.trim(), false));
   });
   return jobs;
 }
@@ -81,94 +115,12 @@ Which would for three characters would be used like `=getJobs("Blacksmoke16, Cha
 
 This is of course just an example, but the general idea can be used as a template for other endpoint functions and uses.
 
-### Changing order of column headers
-   1. Find the corresponding object in the ENDPOINTS array in the `endpoints.gs` file
-      * E.x. 
-```JSON
-  "alliances_alliance": {
-    "description": "Public information about an alliance",
-    "headers": [
-      {
-        "name": "creator_corporation_id"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "date_founded"
-      },
-      {
-        "name": "executor_corporation_id"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "ticker"
-      }
-    ],
-    "path": "/v3/alliances/{alliance_id}/",
-    "parameters": [
-      {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Default: True, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data about an alliance"
-  }
-```
-   2. Re order the objects in the `headers` array to the order you want.
-      * The first object in the array is the first column on the sheet
-   3. If a header has a `sub_headers` array, the first value in that array is first as well.
-        
-## Troubleshooting
-
-### Login failed. Possible reasons can be: Your login session has expired. Please try again.
-* Remove scopes you are not using and try again.  Happens because sometime the state token + scopes is too long and causes issues.
-
-### Internal error when executing the custom function
-This happens when a request takes more than 30 seconds to complete, which is the limit for a custom function.  A workaround would be something like:
-```JavaScript
-function getAssets(startPage, endPage) {
-  var assets = [];
-  for (var page = startPage; page <= endPage; page++) {
-    var a = corporations_corporation_assets(null, page, false);
-    assets = assets.concat(a);
-  }
-  return assets;
-}
-```
-and call it like `=getAssets(1, 7)`.
-
-Overall the functionality is exactly the same as the `-1` page param, provided you make enough of the functions to account for the highest possible amount of pages.  I.e call `=getAssets(1, 7)` in cell A1, then in cell A7001 (since the assets endpoint returns 1000 items per page, which varies depending on the endpoint) call the function again for pages 8 thru 14, and repeat until you cover all pages of the response.
-
-For example if on average you get 25 pages and are able to get 7 pages within 30 sec you could use 4 functions:
-
-`=getAssets(1, 7)`
-`=getAssets(8, 14)`
-`=getAssets(15, 21)`
-`=getAssets(22, 28)`
-
-If you really wanted you could add in logic like `if (endPage === page && a.length === 1000) throw 'Need more functions to cover additional pages.';` This way if you end up getting 30 pages the last function would throw an error telling you that you need to add more functions to cover pages 29-35.
-
 ## Contact Info
+
 In-game:  Blacksmoke16  
 Discord:  Blacksmoke16#0016
 Discord Server: https://discordapp.com/invite/eEAH2et
-  
+
 ## Copyright
  EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
  trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.    CCP hf. has granted permission to GESI to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, the GESI. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.

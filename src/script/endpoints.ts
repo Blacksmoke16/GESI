@@ -1,4 +1,4 @@
-SCOPES = [
+const SCOPES = [
   "esi-alliances.read_contacts.v1",
   "esi-assets.read_assets.v1",
   "esi-assets.read_corporation_assets.v1",
@@ -60,7 +60,7 @@ SCOPES = [
   "esi-wallet.read_corporation_wallets.v1"
 ];
 
-ENDPOINTS = {
+const ENDPOINTS = {
   "alliances": {
     "description": "List all active player alliances",
     "headers": [
@@ -178,7 +178,7 @@ ENDPOINTS = {
         "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned",
         "in": "body",
         "name": "characters",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -248,7 +248,7 @@ ENDPOINTS = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -344,7 +344,7 @@ ENDPOINTS = {
         "description": "The event ID to retrieve events from",
         "in": "query",
         "name": "from_event",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -382,7 +382,7 @@ ENDPOINTS = {
         "description": "The id of the event requested",
         "in": "path",
         "name": "event_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -518,7 +518,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -555,7 +555,7 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -605,7 +605,7 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -713,7 +713,7 @@ ENDPOINTS = {
         "name": "ship_type_id"
       }
     ],
-    "method": "POST",
+    "method": "GET",
     "path": "/v1/characters/{character_id}/fittings/",
     "parameters": [
       {
@@ -974,7 +974,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1085,21 +1085,21 @@ ENDPOINTS = {
         "name": "timestamp"
       }
     ],
-    "method": "POST",
+    "method": "GET",
     "path": "/v1/characters/{character_id}/mail/",
     "parameters": [
       {
         "description": "Fetch only mails that match one or more of the given labels",
         "in": "query",
         "name": "labels",
-        "type": "array",
+        "type": "number[]",
         "required": false
       },
       {
         "description": "List only mail with an ID lower than the given ID, if present",
         "in": "query",
         "name": "last_mail_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1190,7 +1190,7 @@ ENDPOINTS = {
         "description": "An EVE mail ID",
         "in": "path",
         "name": "mail_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1299,7 +1299,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1447,7 +1447,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1671,7 +1671,7 @@ ENDPOINTS = {
         "description": "Only show transactions happened before the one referenced by this id",
         "in": "query",
         "name": "from_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1715,14 +1715,14 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1773,14 +1773,14 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1852,14 +1852,14 @@ ENDPOINTS = {
         "description": "An EVE region id",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1905,7 +1905,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1946,7 +1946,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -1986,7 +1986,7 @@ ENDPOINTS = {
         "description": "A mining observer id",
         "in": "path",
         "name": "observer_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2000,7 +2000,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2051,7 +2051,7 @@ ENDPOINTS = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -2126,7 +2126,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2167,7 +2167,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2296,7 +2296,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2333,7 +2333,7 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2347,7 +2347,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2390,7 +2390,7 @@ ENDPOINTS = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2471,7 +2471,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2725,7 +2725,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2763,7 +2763,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2810,7 +2810,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -2860,7 +2860,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3096,7 +3096,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3137,7 +3137,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3178,7 +3178,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3234,7 +3234,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3305,14 +3305,14 @@ ENDPOINTS = {
         "description": "An EVE starbase (POS) ID",
         "in": "path",
         "name": "starbase_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "The solar system this starbase (POS) is located in,",
         "in": "query",
         "name": "system_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -3481,14 +3481,14 @@ ENDPOINTS = {
         "description": "Wallet key of the division to fetch journals from",
         "in": "path",
         "name": "division",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Only show journal entries happened before the transaction referenced by this id",
         "in": "query",
         "name": "from_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -3570,7 +3570,7 @@ ENDPOINTS = {
         "description": "A dogma attribute ID",
         "in": "path",
         "name": "attribute_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -3617,14 +3617,14 @@ ENDPOINTS = {
         "description": "item_id integer",
         "in": "path",
         "name": "item_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "type_id integer",
         "in": "path",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -3680,7 +3680,7 @@ ENDPOINTS = {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -3735,14 +3735,14 @@ ENDPOINTS = {
         "name": "wing_id"
       }
     ],
-    "method": "POST",
+    "method": "GET",
     "path": "/v1/fleets/{fleet_id}/members/",
     "parameters": [
       {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -3787,14 +3787,14 @@ ENDPOINTS = {
         ]
       }
     ],
-    "method": "POST",
+    "method": "GET",
     "path": "/v1/fleets/{fleet_id}/wings/",
     "parameters": [
       {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4187,7 +4187,7 @@ ENDPOINTS = {
         "description": "The killmail ID to be queried",
         "in": "path",
         "name": "killmail_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4232,6 +4232,13 @@ ENDPOINTS = {
     "method": "GET",
     "path": "/v1/loyalty/stores/{corporation_id}/offers/",
     "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
@@ -4291,7 +4298,7 @@ ENDPOINTS = {
         "description": "An Eve item group ID",
         "in": "path",
         "name": "market_group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4381,7 +4388,7 @@ ENDPOINTS = {
         "description": "Return orders in this structure",
         "in": "path",
         "name": "structure_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4395,7 +4402,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -4438,14 +4445,14 @@ ENDPOINTS = {
         "description": "Return statistics in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Return statistics for this type",
         "in": "query",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4512,21 +4519,21 @@ ENDPOINTS = {
         "description": "Return orders in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
         "description": "Return orders only for this type",
         "in": "query",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -4553,14 +4560,14 @@ ENDPOINTS = {
         "description": "Return statistics in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -4628,7 +4635,7 @@ ENDPOINTS = {
         "description": "ID of an opportunities group",
         "in": "path",
         "name": "group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4691,7 +4698,7 @@ ENDPOINTS = {
         "description": "ID of an opportunities task",
         "in": "path",
         "name": "task_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -4718,28 +4725,28 @@ ENDPOINTS = {
         "description": "destination solar system ID",
         "in": "path",
         "name": "destination",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "origin solar system ID",
         "in": "path",
         "name": "origin",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "avoid solar system ID(s)",
         "in": "query",
         "name": "avoid",
-        "type": "array",
+        "type": "number[]",
         "required": false
       },
       {
         "description": "connected solar system pairs",
         "in": "query",
         "name": "connections",
-        "type": "array",
+        "type": "number[]",
         "required": false
       },
       {
@@ -4973,7 +4980,7 @@ ENDPOINTS = {
         "description": "asteroid_belt_id integer",
         "in": "path",
         "name": "asteroid_belt_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5089,7 +5096,7 @@ ENDPOINTS = {
         "description": "An Eve item category ID",
         "in": "path",
         "name": "category_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5163,7 +5170,7 @@ ENDPOINTS = {
         "description": "constellation_id integer",
         "in": "path",
         "name": "constellation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5238,7 +5245,7 @@ ENDPOINTS = {
         "description": "graphic_id integer",
         "in": "path",
         "name": "graphic_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5265,7 +5272,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -5307,7 +5314,7 @@ ENDPOINTS = {
         "description": "An Eve item group ID",
         "in": "path",
         "name": "group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5408,7 +5415,7 @@ ENDPOINTS = {
         "description": "The names to resolve",
         "in": "body",
         "name": "names",
-        "type": "array",
+        "type": "string[]",
         "required": true
       },
       {
@@ -5456,7 +5463,7 @@ ENDPOINTS = {
         "description": "moon_id integer",
         "in": "path",
         "name": "moon_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5500,7 +5507,7 @@ ENDPOINTS = {
         "description": "planet_id integer",
         "in": "path",
         "name": "planet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5595,7 +5602,7 @@ ENDPOINTS = {
         "description": "region_id integer",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5632,7 +5639,7 @@ ENDPOINTS = {
         "description": "A PI schematic ID",
         "in": "path",
         "name": "schematic_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5683,7 +5690,7 @@ ENDPOINTS = {
         "description": "stargate_id integer",
         "in": "path",
         "name": "stargate_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5731,7 +5738,7 @@ ENDPOINTS = {
         "description": "star_id integer",
         "in": "path",
         "name": "star_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5821,7 +5828,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -5848,7 +5855,7 @@ ENDPOINTS = {
         "description": "Only return wars with ID smaller than this",
         "in": "query",
         "name": "max_war_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -5918,7 +5925,7 @@ ENDPOINTS = {
         "description": "ID for a war",
         "in": "path",
         "name": "war_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -5948,14 +5955,14 @@ ENDPOINTS = {
         "description": "A valid war ID",
         "in": "path",
         "name": "war_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6001,7 +6008,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6037,7 +6044,7 @@ ENDPOINTS = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -6100,7 +6107,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6168,7 +6175,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6206,7 +6213,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6245,7 +6252,7 @@ ENDPOINTS = {
         "name": "standing"
       }
     ],
-    "method": "POST",
+    "method": "GET",
     "path": "/v2/characters/{character_id}/contacts/",
     "parameters": [
       {
@@ -6259,7 +6266,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -6272,6 +6279,52 @@ ENDPOINTS = {
     ],
     "scope": "esi-characters.read_contacts.v1",
     "summary": "A list of contacts"
+  },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
+      {
+        "name": "is_read"
+      },
+      {
+        "name": "notification_id"
+      },
+      {
+        "name": "sender_id"
+      },
+      {
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "GET",
+    "path": "/v2/characters/{character_id}/notifications/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Returns your recent notifications"
   },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
@@ -6934,7 +6987,7 @@ ENDPOINTS = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -6997,7 +7050,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7047,7 +7100,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7115,7 +7168,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7195,7 +7248,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7286,7 +7339,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7382,7 +7435,7 @@ ENDPOINTS = {
         "description": "A dogma effect ID",
         "in": "path",
         "name": "effect_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -7501,7 +7554,7 @@ ENDPOINTS = {
         "description": "Type of entities to search for",
         "in": "query",
         "name": "categories",
-        "type": "array",
+        "type": "string[]",
         "required": true
       },
       {
@@ -7609,7 +7662,7 @@ ENDPOINTS = {
         "description": "The ids to resolve",
         "in": "body",
         "name": "ids",
-        "type": "array",
+        "type": "number[]",
         "required": true
       },
       {
@@ -7677,7 +7730,7 @@ ENDPOINTS = {
         "description": "station_id integer",
         "in": "path",
         "name": "station_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -7721,7 +7774,7 @@ ENDPOINTS = {
         "description": "An Eve structure ID",
         "in": "path",
         "name": "structure_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -7803,7 +7856,7 @@ ENDPOINTS = {
         "description": "An EVE alliance ID",
         "in": "path",
         "name": "alliance_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -7858,7 +7911,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -7913,7 +7966,7 @@ ENDPOINTS = {
         "description": "The id of the event requested",
         "in": "path",
         "name": "event_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8019,52 +8072,6 @@ ENDPOINTS = {
     "scope": "esi-mail.read_mail.v1",
     "summary": "A list of mail labels and unread counts"
   },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/v3/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications"
-  },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
     "headers": [
@@ -8111,7 +8118,7 @@ ENDPOINTS = {
         "description": "Planet id of the target planet",
         "in": "path",
         "name": "planet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8209,7 +8216,7 @@ ENDPOINTS = {
         "description": "Type of entities to search for",
         "in": "query",
         "name": "categories",
-        "type": "array",
+        "type": "string[]",
         "required": true
       },
       {
@@ -8293,7 +8300,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -8398,7 +8405,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -8462,7 +8469,7 @@ ENDPOINTS = {
         "description": "Wallet key of the division to fetch journals from",
         "in": "path",
         "name": "division",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8476,7 +8483,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -8557,7 +8564,7 @@ ENDPOINTS = {
         "description": "An Eve item type ID",
         "in": "path",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8621,7 +8628,7 @@ ENDPOINTS = {
         "description": "An EVE character ID",
         "in": "path",
         "name": "character_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8731,7 +8738,7 @@ ENDPOINTS = {
         "description": "Which page of results to return",
         "in": "query",
         "name": "page",
-        "type": "integer",
+        "type": "number",
         "required": false
       },
       {
@@ -8795,7 +8802,7 @@ ENDPOINTS = {
         "description": "An EVE corporation ID",
         "in": "path",
         "name": "corporation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -8865,7 +8872,7 @@ ENDPOINTS = {
         "description": "system_id integer",
         "in": "path",
         "name": "system_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {

@@ -5,58 +5,55 @@ echo "Current ETag: $VERSION"
 echo "ESI ETag: $ETAG"
 
 if [ "$ETAG" != "$VERSION" ]; then
-	echo 'New ESI version...updating GESI files'
+    echo 'New ESI version...updating GESI files'
 
-	# Save new ETag
-	sed -i "s/.*/$ETAG/" ./src/version.cr
+    # Save new ETag
+    sed -i "s/.*/$ETAG/" ./src/version.cr
 
-	# Generate new files for each ESI version
-	./bin/GESI-linux-x86_64 -v legacy -o ./dist/legacy/
-	./bin/GESI-linux-x86_64 -v latest -o ./dist/latest/
-	./bin/GESI-linux-x86_64 -v dev -o ./dist/dev/
+    # Generate new files for latest ESI version
+    ./bin/GESI-linux-x86_64 -v latest
 
-	# Checkout correct branch
-	git checkout $TRAVIS_BRANCH
-	
-	# Set user settings
-	git config --global user.name "GESI Bot" 
-	git config --global user.email "Blacksmoke16+GESIBot@eve.tools"
+    # Checkout correct branch
+    git checkout $TRAVIS_BRANCH
 
-	# Check if anything actually changed
-    if [[ -n $(git diff ./dist/) ]]; then
-    	echo "endpoints changed...pushing changes to Github"
+    # Set user settings
+    git config --global user.name "GESI Bot"
+    git config --global user.email "Blacksmoke16+GESIBot@eve.tools"
 
-		# Bump APP_VERSION
-		APP_VERSION=$(cat GESI.gs | grep -o "\.[0-9]*\." | sed 's/\.//g')
-		let "APP_VERSION++"
-		sed -i "s/\.[0-9]*\./\.$APP_VERSION\./" ./GESI.gs
+    # Check if anything actually changed
+    if [[ -n $(git diff ./src/script/) ]]; then
+        echo "endpoints changed...pushing changes to Github"
 
-		git add -A
-		git commit -am "$(date '+%B %d') ESI Updates"
-		PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
+        git add -A
+        git commit -am "$(date '+%B %d') ESI Updates"
+        PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
 
-		if [[ -z $PUSH ]]; then
-			# Cut a new pre release
-			echo "Creating a new pre release"
-			curl -s -o /dev/null -X POST \
-			  	https://api.github.com/repos/Blacksmoke16/GESI/releases \
-				-H "Authorization: Bearer $GITHUB_TOKEN" \
-			  	-H 'Content-Type: application/json' \
-			  	-d '{
-			  		  "tag_name": "6.'"$APP_VERSION".'0",
-			  		  "target_commitish": "master",
-			  		  "name": "'"$(date '+%B %d') ESI Updates"'",
-					  "body": "'"https://github.com/esi/esi-issues/blob/master/changelog.md#$(date +%F)"'",
-					  "draft": false,
-					  "prerelease": true
-					}'
+        if [[ -z $PUSH ]]; then
+             Push changes to Google Scripts
+            cd ./src/script/
+            clasp login --creds ./src/script/.clasprc.json
+            clasp push
 
-		fi
-	else
-		echo "Nothing actually changed...bump version.cr"
-		git commit -am "Bump version.cr"
-		git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git
-	fi
+            # Cut a new pre release draft
+            echo "Creating a new pre release draft"
+            curl -s -o /dev/null -X POST \
+                https://api.github.com/repos/Blacksmoke16/GESI/releases \
+                -H "Authorization: Bearer $GITHUB_TOKEN" \
+                -H 'Content-Type: application/json' \
+                -d '{
+                      "tag_name": "$(date '+%B %d')",
+                      "target_commitish": "master",
+                      "name": "'"$(date '+%B %d') ESI Updates"'",
+                      "body": "'"https://github.com/esi/esi-issues/blob/master/changelog.md#$(date +%F)"'",
+                      "draft": true,
+                      "prerelease": true
+                    }'
+        fi
+    else
+        echo "Nothing actually changed...bump version.cr"
+        git commit -am "Bump version.cr"
+        git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git
+    fi
 else
-	echo "GESI is up-to-date!"
+    echo "GESI is up-to-date!"
 fi
