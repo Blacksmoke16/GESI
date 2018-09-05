@@ -37,6 +37,26 @@ GESI will automatically update when a new version is released.  To see what chan
 
 Check out the `function.ts` file under `src/script`.  This file lists all the functions available, as well as a description of  hat it returns and of each parameter.
 
+### The `Authorize Characters` option in the add-on menu is missing?
+
+This happens when `GESI` is not authorized to run in the current document.  This can be solved by:
+
+1. Go to `Add-Ons => Manage add-ons`
+2. Click on `manage` on the `GESI` row
+3. Make sure `Use in this document` is checked
+4. Refresh the sheet and should be good
+
+### How do I get data from a specific character?
+
+Each authed endpoint that has a `name` property that can be used to specify which character's token should be used in that request.  
+
+The first character that you auth gets set as your `MAIN_CHARACTER` which will be used if you do not provide a value for the `name` param for an authed endpoint. 
+
+For example `=characters_character_assets()` would get the assets for the first character that you authed, i.e. your `MAIN_CHARACTER`.  `=characters_character_assets("My Other Character")` would get assets for `My Other Character`.
+
+- `=getMainCharacter()` will return your current `MAIN_CHARACTER`.
+- `=setMainCharacter("Blacksmoke16")` would update your `MAIN_CHARACTER` to be `Blacksmoke16`.  
+
 ### Why is my data not updating?
 
 In order to improve performance, and reduce the number of requests to ESI (a user can only make 20,000 requests per day between all their sheets), GESI implements caching on the data returned from ESI.  The length of time that data will be cached depends on the function and when the data is expected to refresh on ESI's side.  
@@ -60,6 +80,20 @@ Array types are denoted with a `[]` following the data type of the parameter.  A
 As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.
 
 An example of this would be `parseArray("character_character_skills", "skills", B2)` where `B2` is the cell that contains the data.
+
+### How can I limit what scopes are used?
+
+There is not built-in way to do this currently, however it is possible.
+
+1. Open the `Authorize Characters` modal
+2. Right click on the SSO button and click `Copy link address`
+3. Paste this link into notepad or some text editor
+4. Within the URL there is query param like `&scopes=`, which is set to a list of all ESI scopes separated by  `+` signs
+5. Remove all the scopes that you do not want, or add ones that are not added by default
+6. Copy the URL and paste it into your browser
+7. Follow SSO flow as normal
+8. Characters authed using this modified URL will not be able to use any function that requires a scope that was not requested.
+9. Repeat for additional characters if desired
 
 ### How do I know you're not stealing all my data?
 
