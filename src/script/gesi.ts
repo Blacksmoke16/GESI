@@ -28,9 +28,9 @@ function onOpen(): void {
 
 /**
  * Parses array data into more readable format
- * @param {string} endpoint_name Name of the endpoint data to be parsed is from.
- * @param {string} column_name Name of the column to be parsed.
- * @param {array} array Cell that holds the array data to be parsed.
+ * @param {string} endpoint_name (Required) Name of the endpoint data to be parsed is from.
+ * @param {string} column_name (Required) Name of the column to be parsed.
+ * @param {array} array (Required) Cell that holds the array data to be parsed.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Parsed array data.
  * @customfunction
@@ -58,7 +58,7 @@ function parseArray(endpoint_name: string, column_name: string, array: string, o
 
 /**
  * Returns a character's access_token if not expired
- * @param {string} character_name Who's access_token to fetch
+ * @param {string} character_name (Required) Who's access_token to fetch.
  * @return Access token
  * @customfunction
  */
@@ -77,13 +77,34 @@ function getMainCharacter(): string {
 
 /**
  * Sets the sheets' MAIN_CHARACTER to the given character
- * @param {string} name Name of the character to use as the new MAIN_CHARACTER.
+ * @param {string} character_name (Required) Name of the character to use as the new MAIN_CHARACTER.
  * @return If it was successful.  Should be deleted if it was.
  * @customfunction
  */
-function setMainCharacter(name: string): string {
+function setMainCharacter(character_name: string): string {
   DOCUMENT_PROPERTIES.setProperty('MAIN_CHARACTER', name);
   return 'Done! Delete me.';
+}
+
+/**
+ * Gets the raw response from the given ESI endpoint
+ * @param {string} endpoint_name (Required) Name of the endpoint to fetch data from.
+ * @param {string} params params to use for the request.
+ * @return Hash of JSON data and headers
+ * @customfunction
+ */
+function getRawData(endpoint_name: string, params: IFunctionParam = {} as IFunctionParam): IRequestResponse {
+  return getData_(endpoint_name, params);
+}
+
+/**
+ * Refreshes the access token for a given character and returns a new access token
+ * @param {string} character_name (Required) Name of the character to refresh the token.
+ * @return A new access token for the character
+ * @customfunction
+ */
+function refreshToken(character_name: string): string {
+  return refreshToken_(character_name);
 }
 
 function showSSOModal(): void {
@@ -145,7 +166,7 @@ function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
   return result;
 }
 
-function getData_(endpoint_name: string, params: IFunctionParam) {
+function getData_(endpoint_name: string, params: IFunctionParam): IRequestResponse {
   const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
   const character_name = params.name || DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER');
   const character = getCharacterRow_(character_name);
