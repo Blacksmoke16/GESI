@@ -82,7 +82,7 @@ function getMainCharacter(): string {
  * @customfunction
  */
 function setMainCharacter(character_name: string): string {
-  DOCUMENT_PROPERTIES.setProperty('MAIN_CHARACTER', name);
+  DOCUMENT_PROPERTIES.setProperty('MAIN_CHARACTER', character_name);
   return 'Done! Delete me.';
 }
 
