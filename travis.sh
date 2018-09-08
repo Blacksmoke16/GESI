@@ -29,7 +29,7 @@ if [ "$ETAG" != "$VERSION" ]; then
         PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
 
         if [[ -z $PUSH ]]; then
-             Push changes to Google Scripts
+            # Push changes to Google Scripts
             cd ./src/script/
             clasp login --creds ./src/script/.clasprc.json
             clasp push
@@ -41,7 +41,7 @@ if [ "$ETAG" != "$VERSION" ]; then
                 -H "Authorization: Bearer $GITHUB_TOKEN" \
                 -H 'Content-Type: application/json' \
                 -d '{
-                      "tag_name": "$(date '+%B %d')",
+                      "tag_name": "$(date '+%dUpdates')",
                       "target_commitish": "master",
                       "name": "'"$(date '+%B %d') ESI Updates"'",
                       "body": "'"https://github.com/esi/esi-issues/blob/master/changelog.md#$(date +%F)"'",
