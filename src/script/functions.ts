@@ -162,12 +162,14 @@ function characters_character_contracts_contract_items(contract_id: number, name
 
 /**
  * Get a list of all the corporations a character has been a member of
+ * @param {number} character_id (Required) An EVE character ID
  * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
  * @return Corporation history for the given character
  * @customfunction
  */
-function characters_character_corporationhistory(opt_headers: boolean): any[][] {
-  return parseData_('characters_character_corporationhistory',{opt_headers:opt_headers})
+function characters_character_corporationhistory(character_id: number, opt_headers: boolean): any[][] {
+  if(!character_id) throw 'character_id is required';
+  return parseData_('characters_character_corporationhistory',{character_id:character_id,opt_headers:opt_headers})
 }
 
 /**
@@ -1633,17 +1635,6 @@ function characters_character_contacts(name: string, page: number, opt_headers: 
 }
 
 /**
- * Return character notifications
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
- * @return Returns your recent notifications
- * @customfunction
- */
-function characters_character_notifications(name: string, opt_headers: boolean): any[][] {
-  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers})
-}
-
-/**
  * Checks if the character is currently online
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
@@ -1710,12 +1701,14 @@ function characters_character_stats(name: string, opt_headers: boolean): any[][]
 
 /**
  * Get a list of all the alliances a corporation has been a member of
+ * @param {number} corporation_id (Required) An EVE corporation ID
  * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
  * @return Alliance history for the given corporation
  * @customfunction
  */
-function corporations_corporation_alliancehistory(opt_headers: boolean): any[][] {
-  return parseData_('corporations_corporation_alliancehistory',{opt_headers:opt_headers})
+function corporations_corporation_alliancehistory(corporation_id: number, opt_headers: boolean): any[][] {
+  if(!corporation_id) throw 'corporation_id is required';
+  return parseData_('corporations_corporation_alliancehistory',{corporation_id:corporation_id,opt_headers:opt_headers})
 }
 
 /**
@@ -1945,6 +1938,17 @@ function characters_character_clones(name: string, opt_headers: boolean): any[][
  */
 function characters_character_mail_labels(name: string, opt_headers: boolean): any[][] {
   return parseData_('characters_character_mail_labels',{name:name,opt_headers:opt_headers})
+}
+
+/**
+ * Return character notifications
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {boolean} opt_headers  Default: true, Boolean if column headings should be listed or not.
+ * @return Returns your recent notifications
+ * @customfunction
+ */
+function characters_character_notifications(name: string, opt_headers: boolean): any[][] {
+  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers})
 }
 
 /**

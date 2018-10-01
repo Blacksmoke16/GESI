@@ -646,6 +646,13 @@ const ENDPOINTS = {
     "path": "/v1/characters/{character_id}/corporationhistory/",
     "parameters": [
       {
+        "description": "An EVE character ID",
+        "in": "path",
+        "name": "character_id",
+        "type": "number",
+        "required": true
+      },
+      {
         "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
         "name": "opt_headers",
@@ -1700,9 +1707,6 @@ const ENDPOINTS = {
       },
       {
         "name": "bid_id"
-      },
-      {
-        "name": "bidder_id"
       },
       {
         "name": "date_bid"
@@ -6280,52 +6284,6 @@ const ENDPOINTS = {
     "scope": "esi-characters.read_contacts.v1",
     "summary": "A list of contacts"
   },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/v2/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications"
-  },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
     "headers": [
@@ -6955,6 +6913,13 @@ const ENDPOINTS = {
     "method": "GET",
     "path": "/v2/corporations/{corporation_id}/alliancehistory/",
     "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Default: true, Boolean if column headings should be listed or not.",
         "in": "parameters",
@@ -8071,6 +8036,52 @@ const ENDPOINTS = {
     ],
     "scope": "esi-mail.read_mail.v1",
     "summary": "A list of mail labels and unread counts"
+  },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
+      {
+        "name": "is_read"
+      },
+      {
+        "name": "notification_id"
+      },
+      {
+        "name": "sender_id"
+      },
+      {
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "GET",
+    "path": "/v3/characters/{character_id}/notifications/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Returns your recent notifications"
   },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",

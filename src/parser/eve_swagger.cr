@@ -259,9 +259,9 @@ module EveSwagger
 
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
 
-      # Remove character/corporation/alliance_id param if they are not one of the three endpoints that can be arbitrary
-      @parameters.delete @parameters.find { |p| p.name == "character_id" } unless endpoint_name == "characters_character"
-      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless %w(corporations_corporation loyalty_stores_corporation_offers).includes? endpoint_name
+      # Remove character/corporation/alliance_id param if they are not one of the endpoints that can be arbitrary
+      @parameters.delete @parameters.find { |p| p.name == "character_id" } unless %w(characters_character characters_character_corporationhistory).includes? endpoint_name
+      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless %w(corporations_corporation loyalty_stores_corporation_offers corporations_corporation_alliancehistory).includes? endpoint_name
       @parameters.delete @parameters.find { |p| p.name == "alliance_id" } unless endpoint_name == "alliances_alliance"
 
       # Add name parameter if function requires auth
@@ -302,7 +302,7 @@ module EveSwagger
           # of single type
           title = items.title
           if title = items.title
-           headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
+            headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
           end
         end
         # Single object
