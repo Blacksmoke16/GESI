@@ -170,7 +170,7 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
   const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
   const character_name = params.name || DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER');
   const character = getCharacterRow_(character_name);
-  if (!character) throw character_name + ' is not authed, or is misspelled.';
+  if (!character && endpoint.scope) throw character_name + ' is not authed, or is misspelled.';
 
   let path = endpoint.path;
   let data = null;
@@ -201,15 +201,6 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
   let token = CACHE.get(character_name + '_access_token');
   if (!token && endpoint.scope) token = refreshToken_(character_name);
 
-  const log_data = {
-    character: character_name,
-    data,
-    endpoint_name,
-    method: endpoint.method,
-    params,
-    path
-  };
-
   const hash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, character_name + endpoint_name + JSON.stringify(params) + JSON.stringify(data)));
   let cached_data = CACHE.get(hash + '_0');
   if (cached_data) {
@@ -225,7 +216,6 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
 
   try {
     const response = doRequest_(BASE_URL + path, endpoint.method, token, data);
-    const date = response.headers['Expires'];
     const date_expires = new Date(response.headers['Expires']);
     const cache_time = Math.min(21600, Math.ceil((date_expires.getTime() - (new Date()).getTime()) / 1000));
     try {
@@ -249,10 +239,7 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
     }
   } catch (e) {
     const error = JSON.parse(e);
-    log_data['errors'] = error;
     throw 'ESI response error:  ' + error.error;
-  } finally {
-    log_(log_data);
   }
 }
 
@@ -308,14 +295,11 @@ function saveCharacter_(character_data: any[], access_token: string): void {
 
 function getCharacterRow_(character_name: string): Range {
   const auth_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data');
+  if (null === auth_sheet) return null;
   const row_index = auth_sheet.getDataRange().getValues().map(function (r) {
     return r[CharacterRowData.character_name];
   }).indexOf(character_name);
-  try {
-    return auth_sheet.getRange(row_index + 1, 1, 1, 5);
-  } catch (e) {
-    return null;
-  }
+  return auth_sheet.getRange(row_index + 1, 1, 1, 5);
 }
 
 function getProperty_(character: Range, property: number): Range {
@@ -337,15 +321,6 @@ function doRequest_(path: string, method: string, token: string, data: any): IRe
   const response = UrlFetchApp.fetch(path, options);
   if (response.getResponseCode() !== 200) {
     const error_body = JSON.parse(response.getContentText());
-    if (path.indexOf('login.eveonline.com') !== -1) {
-      log_({
-        endpoint_name: 'Auth',
-        errors: error_body,
-        method,
-        params: {},
-        path
-      });
-    }
     throw JSON.stringify({
       error: error_body['error'],
       code: response.getResponseCode(),
@@ -354,31 +329,6 @@ function doRequest_(path: string, method: string, token: string, data: any): IRe
     });
   }
   return {data: JSON.parse(response.getContentText()), headers: response.getHeaders()};
-}
-
-function log_(object) {
-  const user = SCRIPT_PROPERTIES.getProperty('DB_USER');
-  const userPwd = SCRIPT_PROPERTIES.getProperty('DB_PASSWORD');
-  const dbUrl = 'jdbc:mysql://' + SCRIPT_PROPERTIES.getProperty('DB_URL');
-
-  try {
-    const conn = Jdbc.getConnection(dbUrl, user, userPwd);
-  } catch (e) {
-    return;
-  }
-
-  const stmt = conn.prepareStatement('INSERT INTO gesi_log (endpoint_name, `character`, main_character, sheet_id, method, `path`, params, data, errors) VALUES (?,?,?,?,?,?,?,?,?);');
-  stmt.setString(1, object.endpoint_name);
-  stmt.setString(2, object.character);
-  DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER') ? stmt.setString(3, DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER')) : stmt.setNull(3, 0);
-  stmt.setString(4, SpreadsheetApp.getActiveSpreadsheet().getId());
-  stmt.setString(5, object.method);
-  stmt.setString(6, object.path);
-  stmt.setString(7, JSON.stringify(object.params));
-  object.data ? stmt.setString(8, JSON.stringify(object.data)) : stmt.setNull(8, 0);
-  object.errors ? stmt.setString(9, JSON.stringify(object.errors)) : stmt.setNull(9, 0);
-  stmt.execute();
-  stmt.close();
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

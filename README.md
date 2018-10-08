@@ -95,34 +95,6 @@ There is not built-in way to do this currently, however it is possible.
 8. Characters authed using this modified URL will not be able to use any function that requires a scope that was not requested.
 9. Repeat for additional characters if desired
 
-### How do I know you're not stealing all my data?
-
-For one, since everyone is using my Developer Application, it would be in violation of the [EVE Developer License Agreement](https://developers.eveonline.com/resource/license-agreement), specifically section `2.3.c/d`.
-
-Secondly, the source for the add-on is still open source under `src/script/gesi.ts`.  The code is in Typescript, which gets compiled down to an earlier version of JavaScript by using `google/clasp` CLI tool.  Feel free to check it out for yourself.
-
-Thirdly, the compiled code can be seen on [Google Scripts](https://script.google.com/a/mail.rmu.edu/d/1KjnRVVFr2KiHH55sqBfHcZ-yXweJ7iv89V99ubaLy4A7B_YH8rB5u0s3/edit?usp=sharing).
-
-**HOWEVER,** I am collecting various debug information, on each request, for example:
-
-```json
-  {
-    "id": 1,
-    "datetime": "2018-08-22 00:21:03",
-    "endpoint_name": "characters_character_assets",
-    "character": "Blacksmoke17",
-    "main_character": "Blacksmoke16",
-    "sheet_id": "1XaFCiG8FdasLmnJ9jRfxG82slHA2UUaKeDwwLX-yo",
-    "params": "{\"name\": \"\", \"page\": 1, \"opt_headers\": false}",
-    "method": "GET",
-    "path": "/v3/characters/2047918291/assets/?page=1",
-    "data": null,
-    "errors": null
-  }
-```
-
-This is only used for debugging purposes, such as finding bugs, making pretty charts, etc.  Personal data, such as access_tokens, refresh_tokens, and response data are not logged.
-
 ### Using functions with multiple characters
 
 A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  Currently this can be achieved by calling `=characters_character_industry_jobs()` once, then leaving some space and adding more for each additional characters with opt_headers disabled.  While it is an ok workaround it is not optimal, since there could be empty rows, not easily expandable/editable, etc.  A better alternative would be to define a new custom function `getJobs(character_names)` that will output the industry jobs of the given characters, in a single function call.
