@@ -214,32 +214,27 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
     return {data: result, headers: {}} as IRequestResponse;
   }
 
+  const response = doRequest_(BASE_URL + path, endpoint.method, token, data);
+  const date_expires = new Date(response.headers['Expires']);
+  const cache_time = Math.min(21600, Math.ceil((date_expires.getTime() - (new Date()).getTime()) / 1000));
   try {
-    const response = doRequest_(BASE_URL + path, endpoint.method, token, data);
-    const date_expires = new Date(response.headers['Expires']);
-    const cache_time = Math.min(21600, Math.ceil((date_expires.getTime() - (new Date()).getTime()) / 1000));
+    CACHE.put(hash + '_0', JSON.stringify(response.data), cache_time);
+  } catch (e) {
     try {
-      CACHE.put(hash + '_0', JSON.stringify(response.data), cache_time);
+      const chunked_data = chunkArray_(response.data as any[], 350);
+      for (let i = 0; i < chunked_data.length; i++) {
+        CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
+      }
     } catch (e) {
-      try {
-        const chunked_data = chunkArray_(response.data as any[], 350);
-        for (let i = 0; i < chunked_data.length; i++) {
-          CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
-        }
-      } catch (e) {
-        const chunked_data = chunkArray_(response.data as any[], 75);
-        for (let i = 0; i < chunked_data.length; i++) {
-          CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
-        }
-      } finally {
-        return response;
+      const chunked_data = chunkArray_(response.data as any[], 75);
+      for (let i = 0; i < chunked_data.length; i++) {
+        CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
       }
     } finally {
       return response;
     }
-  } catch (e) {
-    const error = JSON.parse(e);
-    throw 'ESI response error:  ' + error.error;
+  } finally {
+    return response;
   }
 }
 
@@ -319,16 +314,17 @@ function doRequest_(path: string, method: string, token: string, data: any): IRe
   } as URLFetchRequestOptions;
   if (data) options['payload'] = JSON.stringify(data);
   const response = UrlFetchApp.fetch(path, options);
+  const response_body = JSON.parse(response.getContentText());
   if (response.getResponseCode() !== 200) {
-    const error_body = JSON.parse(response.getContentText());
     throw JSON.stringify({
-      error: error_body['error'],
+      body: response_body,
       code: response.getResponseCode(),
-      error_description: error_body['error_description'],
-      sso_status: error_body['sso_status']
+      character: getMainCharacter(),
+      sheet_id: SpreadsheetApp.getActiveSheet().getSheetId(),
+      path
     });
   }
-  return {data: JSON.parse(response.getContentText()), headers: response.getHeaders()};
+  return {data: response_body, headers: response.getHeaders()};
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
