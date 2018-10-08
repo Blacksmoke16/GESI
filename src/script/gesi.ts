@@ -10,11 +10,6 @@ import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import User = GoogleAppsScript.Base.User;
 import Range = GoogleAppsScript.Spreadsheet.Range;
 
-const CACHE = CacheService.getDocumentCache();
-const DOCUMENT_PROPERTIES = PropertiesService.getDocumentProperties();
-const SCRIPT_PROPERTIES = PropertiesService.getScriptProperties();
-const BASE_URL = SCRIPT_PROPERTIES.getProperty('BASE_URL');
-
 function onInstall(): void {
   onOpen();
 }
@@ -63,7 +58,7 @@ function parseArray(endpoint_name: string, column_name: string, array: string, o
  * @customfunction
  */
 function getAccessToken(character_name: string): string {
-  return CACHE.get(`${character_name}_access_token`) || 'Expired';
+  return CacheService.getDocumentCache().get(`${character_name}_access_token`) || 'Expired';
 }
 
 /**
@@ -72,7 +67,7 @@ function getAccessToken(character_name: string): string {
  * @customfunction
  */
 function getMainCharacter(): string {
-  return DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER');
+  return PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER');
 }
 
 /**
@@ -82,7 +77,7 @@ function getMainCharacter(): string {
  * @customfunction
  */
 function setMainCharacter(character_name: string): string {
-  DOCUMENT_PROPERTIES.setProperty('MAIN_CHARACTER', character_name);
+  PropertiesService.getDocumentProperties().setProperty('MAIN_CHARACTER', character_name);
   return 'Done! Delete me.';
 }
 
@@ -110,7 +105,7 @@ function refreshToken(character_name: string): string {
 function showSSOModal(): void {
   const redirectUrl = `https://script.google.com/macros/d/${ScriptApp.getScriptId()}/usercallback`;
   const stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(1200).createToken();
-  const authorizationUrl = 'https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=' + redirectUrl + '&client_id=' + SCRIPT_PROPERTIES.getProperty('CLIENT_ID') + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
+  const authorizationUrl = 'https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=' + redirectUrl + '&client_id=' + PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
   const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
   template.authorizationUrl = authorizationUrl;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
@@ -168,7 +163,7 @@ function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
 
 function getData_(endpoint_name: string, params: IFunctionParam): IRequestResponse {
   const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
-  const character_name = params.name || DOCUMENT_PROPERTIES.getProperty('MAIN_CHARACTER');
+  const character_name = params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER');
   const character = getCharacterRow_(character_name);
   if (!character && endpoint.scope) throw character_name + ' is not authed, or is misspelled.';
 
@@ -198,37 +193,37 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
   if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', getProperty_(character, CharacterRowData.alliance_id).getValue() as string);
   if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(character, CharacterRowData.corporation_id).getValue() as string);
 
-  let token = CACHE.get(character_name + '_access_token');
+  let token = CacheService.getDocumentCache().get(character_name + '_access_token');
   if (!token && endpoint.scope) token = refreshToken_(character_name);
 
   const hash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, character_name + endpoint_name + JSON.stringify(params) + JSON.stringify(data)));
-  let cached_data = CACHE.get(hash + '_0');
+  let cached_data = CacheService.getDocumentCache().get(hash + '_0');
   if (cached_data) {
     let result = [];
     let idx = 1;
     while (cached_data) {
       result = result.concat(JSON.parse(cached_data));
-      cached_data = CACHE.get(hash + `_${idx}`);
+      cached_data = CacheService.getDocumentCache().get(hash + `_${idx}`);
       idx++;
     }
     return {data: result, headers: {}} as IRequestResponse;
   }
 
-  const response = doRequest_(BASE_URL + path, endpoint.method, token, data);
+  const response = doRequest_(PropertiesService.getScriptProperties().getProperty('BASE_URL') + path, endpoint.method, token, data);
   const date_expires = new Date(response.headers['Expires']);
   const cache_time = Math.min(21600, Math.ceil((date_expires.getTime() - (new Date()).getTime()) / 1000));
   try {
-    CACHE.put(hash + '_0', JSON.stringify(response.data), cache_time);
+    CacheService.getDocumentCache().put(hash + '_0', JSON.stringify(response.data), cache_time);
   } catch (e) {
     try {
       const chunked_data = chunkArray_(response.data as any[], 350);
       for (let i = 0; i < chunked_data.length; i++) {
-        CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
+        CacheService.getDocumentCache().put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
       }
     } catch (e) {
       const chunked_data = chunkArray_(response.data as any[], 75);
       for (let i = 0; i < chunked_data.length; i++) {
-        CACHE.put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
+        CacheService.getDocumentCache().put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
       }
     } finally {
       return response;
@@ -246,13 +241,13 @@ function getAccessToken_(code: string): IAccessToken {
 }
 
 function getCharacterAffiliation_(character_id: number): ICharacterAffiliation {
-  return doRequest_(BASE_URL + '/v1/characters/affiliation/', 'post', null, [character_id]).data[0] as ICharacterAffiliation;
+  return doRequest_(PropertiesService.getScriptProperties().getProperty('BASE_URL') + '/v1/characters/affiliation/', 'post', null, [character_id]).data[0] as ICharacterAffiliation;
 }
 
 function parseJWT_(access_token: string): ICharacterData {
   const jwt = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
   if (jwt.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
-  if (jwt.azp !== SCRIPT_PROPERTIES.getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
+  if (jwt.azp !== PropertiesService.getScriptProperties().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
   return {character_name: jwt.name, character_id: jwt.sub.split(':')[2]}
 }
 
@@ -263,7 +258,7 @@ function refreshToken_(character_name: string): string {
     refresh_token: refresh_token.getValue()
   }).data as IAccessToken;
   // !TODO Rotate refresh_tokens refresh_token.setValue(response.refresh_token);
-  CACHE.put(character_name + '_access_token', response.access_token, 1080);
+  CacheService.getDocumentCache().put(character_name + '_access_token', response.access_token, 1080);
   return response.access_token;
 }
 
@@ -285,7 +280,7 @@ function saveCharacter_(character_data: any[], access_token: string): void {
   character_row ? character_row.setValues([character_data]) : authSheet.appendRow(character_data);
   authSheet.autoResizeColumns(1, 5);
   if (!getMainCharacter()) setMainCharacter(character_data[0]);
-  CACHE.put(character_data[0] + '_access_token', access_token, 1080)
+  CacheService.getDocumentCache().put(character_data[0] + '_access_token', access_token, 1080)
 }
 
 function getCharacterRow_(character_name: string): Range {
@@ -294,6 +289,7 @@ function getCharacterRow_(character_name: string): Range {
   const row_index = auth_sheet.getDataRange().getValues().map(function (r) {
     return r[CharacterRowData.character_name];
   }).indexOf(character_name);
+  if (-1 === row_index) return null;
   return auth_sheet.getRange(row_index + 1, 1, 1, 5);
 }
 
@@ -306,7 +302,7 @@ function chunkArray_(array: any[], chunk_size: number): any[][] {
 }
 
 function doRequest_(path: string, method: string, token: string, data: any): IRequestResponse {
-  const auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(SCRIPT_PROPERTIES.getProperty('CLIENT_ID') + ':' + SCRIPT_PROPERTIES.getProperty('CLIENT_SECRET'));
+  const auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
   const options = {
     method,
     muteHttpExceptions: true,
