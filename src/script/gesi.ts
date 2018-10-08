@@ -320,7 +320,7 @@ function doRequest_(path: string, method: string, token: string, data: any): IRe
       body: response_body,
       code: response.getResponseCode(),
       character: getMainCharacter(),
-      sheet_id: SpreadsheetApp.getActiveSheet().getSheetId(),
+      sheet_id: SpreadsheetApp.getActiveSpreadsheet().getId(),
       path
     });
   }
