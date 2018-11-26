@@ -166,6 +166,7 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
   const character_name = params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER');
   const character = getCharacterRow_(character_name);
   if (!character && endpoint.scope) throw character_name + ' is not authed, or is misspelled.';
+  if (!params.version) params.version = endpoint.version;
 
   let path = endpoint.path;
   let data = null;
@@ -337,6 +338,7 @@ interface IEndpoint {
   parameters: IParameter[];
   scope?: string;
   summary: string;
+  version: string;
 }
 
 interface IParameter {
@@ -378,6 +380,7 @@ interface ICharacterAffiliation {
 
 interface IFunctionParam {
   opt_headers: boolean;
+  version?: string;
   name?: string;
   page?: number;
 

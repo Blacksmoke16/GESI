@@ -69,17 +69,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/alliances/",
+    "path": "/{version}/alliances/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "List of Alliance IDs"
+    "summary": "List of Alliance IDs",
+    "version": "v1"
   },
   "alliances_alliance_contacts_labels": {
     "description": "Return custom labels for an alliance's contacts",
@@ -92,7 +100,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/alliances/{alliance_id}/contacts/labels/",
+    "path": "/{version}/alliances/{alliance_id}/contacts/labels/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -102,15 +110,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-alliances.read_contacts.v1",
-    "summary": "A list of alliance contact labels"
+    "summary": "A list of alliance contact labels",
+    "version": "v1"
   },
   "alliances_alliance_corporations": {
     "description": "List all current member corporations of an alliance",
@@ -120,17 +136,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/alliances/{alliance_id}/corporations/",
+    "path": "/{version}/alliances/{alliance_id}/corporations/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "List of corporation IDs"
+    "summary": "List of corporation IDs",
+    "version": "v1"
   },
   "alliances_alliance_icons": {
     "description": "Get the icon urls for a alliance",
@@ -143,17 +167,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/alliances/{alliance_id}/icons/",
+    "path": "/{version}/alliances/{alliance_id}/icons/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Icon URLs for the given alliance id and server"
+    "summary": "Icon URLs for the given alliance id and server",
+    "version": "v1"
   },
   "characters_affiliation": {
     "description": "Bulk lookup of character IDs to corporation, alliance and faction",
@@ -172,7 +204,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v1/characters/affiliation/",
+    "path": "/{version}/characters/affiliation/",
     "parameters": [
       {
         "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned",
@@ -182,14 +214,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Character corporation, alliance and faction IDs"
+    "summary": "Character corporation, alliance and faction IDs",
+    "version": "v1"
   },
   "characters_character_agents_research": {
     "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
@@ -211,7 +251,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/agents_research/",
+    "path": "/{version}/characters/{character_id}/agents_research/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -221,15 +261,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_agents_research.v1",
-    "summary": "A list of agents research information"
+    "summary": "A list of agents research information",
+    "version": "v1"
   },
   "characters_character_assets_names": {
     "description": "Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.",
@@ -242,7 +290,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v1/characters/{character_id}/assets/names/",
+    "path": "/{version}/characters/{character_id}/assets/names/",
     "parameters": [
       {
         "description": "A list of item ids",
@@ -259,15 +307,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_assets.v1",
-    "summary": "List of asset names"
+    "summary": "List of asset names",
+    "version": "v1"
   },
   "characters_character_attributes": {
     "description": "Return attributes of a character",
@@ -298,7 +354,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/attributes/",
+    "path": "/{version}/characters/{character_id}/attributes/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -308,15 +364,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-skills.read_skills.v1",
-    "summary": "Attributes of a character"
+    "summary": "Attributes of a character",
+    "version": "v1"
   },
   "characters_character_calendar": {
     "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event",
@@ -338,7 +402,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/calendar/",
+    "path": "/{version}/characters/{character_id}/calendar/",
     "parameters": [
       {
         "description": "The event ID to retrieve events from",
@@ -355,15 +419,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "A collection of event summaries"
+    "summary": "A collection of event summaries",
+    "version": "v1"
   },
   "characters_character_calendar_event_attendees": {
     "description": "Get all invited attendees for a given event",
@@ -376,7 +448,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/calendar/{event_id}/attendees/",
+    "path": "/{version}/characters/{character_id}/calendar/{event_id}/attendees/",
     "parameters": [
       {
         "description": "The id of the event requested",
@@ -393,15 +465,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "List of attendees"
+    "summary": "List of attendees",
+    "version": "v1"
   },
   "characters_character_contacts_labels": {
     "description": "Return custom labels for a character's contacts",
@@ -414,7 +494,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/contacts/labels/",
+    "path": "/{version}/characters/{character_id}/contacts/labels/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -424,15 +504,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_contacts.v1",
-    "summary": "A list of contact labels"
+    "summary": "A list of contact labels",
+    "version": "v1"
   },
   "characters_character_contracts": {
     "description": "Returns contracts available to a character, only if the character is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -505,7 +593,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/contracts/",
+    "path": "/{version}/characters/{character_id}/contracts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -522,15 +610,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of contracts"
+    "summary": "A list of contracts",
+    "version": "v1"
   },
   "characters_character_contracts_contract_bids": {
     "description": "Lists bids on a particular auction contract",
@@ -549,7 +645,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/contracts/{contract_id}/bids/",
+    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/bids/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -566,15 +662,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of bids"
+    "summary": "A list of bids",
+    "version": "v1"
   },
   "characters_character_contracts_contract_items": {
     "description": "Lists items of a particular contract",
@@ -599,7 +703,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/contracts/{contract_id}/items/",
+    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/items/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -616,15 +720,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of items in this contract"
+    "summary": "A list of items in this contract",
+    "version": "v1"
   },
   "characters_character_corporationhistory": {
     "description": "Get a list of all the corporations a character has been a member of",
@@ -643,7 +755,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/corporationhistory/",
+    "path": "/{version}/characters/{character_id}/corporationhistory/",
     "parameters": [
       {
         "description": "An EVE character ID",
@@ -653,14 +765,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Corporation history for the given character"
+    "summary": "Corporation history for the given character",
+    "version": "v1"
   },
   "characters_character_fatigue": {
     "description": "Return a character's jump activation and fatigue information",
@@ -676,7 +796,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/fatigue/",
+    "path": "/{version}/characters/{character_id}/fatigue/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -686,15 +806,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_fatigue.v1",
-    "summary": "Jump activation and fatigue information"
+    "summary": "Jump activation and fatigue information",
+    "version": "v1"
   },
   "characters_character_fittings": {
     "description": "Return fittings of a character",
@@ -721,7 +849,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/fittings/",
+    "path": "/{version}/characters/{character_id}/fittings/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -731,15 +859,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-fittings.read_fittings.v1",
-    "summary": "A list of fittings"
+    "summary": "A list of fittings",
+    "version": "v1"
   },
   "characters_character_fleet": {
     "description": "Return the fleet ID the character is in, if any.",
@@ -758,7 +894,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/fleet/",
+    "path": "/{version}/characters/{character_id}/fleet/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -768,15 +904,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-fleets.read_fleet.v1",
-    "summary": "Details about the character's fleet"
+    "summary": "Details about the character's fleet",
+    "version": "v1"
   },
   "characters_character_fw_stats": {
     "description": "Statistical overview of a character involved in faction warfare",
@@ -811,7 +955,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/fw/stats/",
+    "path": "/{version}/characters/{character_id}/fw/stats/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -821,15 +965,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_fw_stats.v1",
-    "summary": "Faction warfare statistics for a given character"
+    "summary": "Faction warfare statistics for a given character",
+    "version": "v1"
   },
   "characters_character_implants": {
     "description": "Return implants on the active clone of a character",
@@ -839,7 +991,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/implants/",
+    "path": "/{version}/characters/{character_id}/implants/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -849,15 +1001,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-clones.read_implants.v1",
-    "summary": "A list of implant type ids"
+    "summary": "A list of implant type ids",
+    "version": "v1"
   },
   "characters_character_industry_jobs": {
     "description": "List industry jobs placed by a character",
@@ -930,7 +1090,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/industry/jobs/",
+    "path": "/{version}/characters/{character_id}/industry/jobs/",
     "parameters": [
       {
         "description": "Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days",
@@ -947,15 +1107,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_character_jobs.v1",
-    "summary": "Industry jobs placed by a character"
+    "summary": "Industry jobs placed by a character",
+    "version": "v1"
   },
   "characters_character_killmails_recent": {
     "description": "Return a list of a character's kills and losses going back 90 days",
@@ -968,7 +1136,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/killmails/recent/",
+    "path": "/{version}/characters/{character_id}/killmails/recent/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -985,15 +1153,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-killmails.read_killmails.v1",
-    "summary": "A list of killmail IDs and hashes"
+    "summary": "A list of killmail IDs and hashes",
+    "version": "v1"
   },
   "characters_character_location": {
     "description": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable",
@@ -1009,7 +1185,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/location/",
+    "path": "/{version}/characters/{character_id}/location/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1019,15 +1195,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-location.read_location.v1",
-    "summary": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable"
+    "summary": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable",
+    "version": "v1"
   },
   "characters_character_loyalty_points": {
     "description": "Return a list of loyalty points for all corporations the character has worked for",
@@ -1040,7 +1224,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/loyalty/points/",
+    "path": "/{version}/characters/{character_id}/loyalty/points/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1050,15 +1234,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_loyalty.v1",
-    "summary": "A list of loyalty points"
+    "summary": "A list of loyalty points",
+    "version": "v1"
   },
   "characters_character_mail": {
     "description": "Return the 50 most recent mail headers belonging to the character that match the query criteria. Queries can be filtered by label, and last_mail_id can be used to paginate backwards",
@@ -1093,7 +1285,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/mail/",
+    "path": "/{version}/characters/{character_id}/mail/",
     "parameters": [
       {
         "description": "Fetch only mails that match one or more of the given labels",
@@ -1117,15 +1309,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "The requested mail"
+    "summary": "The requested mail",
+    "version": "v1"
   },
   "characters_character_mail_lists": {
     "description": "Return all mailing lists that the character is subscribed to",
@@ -1138,7 +1338,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/mail/lists/",
+    "path": "/{version}/characters/{character_id}/mail/lists/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1148,15 +1348,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "Mailing lists"
+    "summary": "Mailing lists",
+    "version": "v1"
   },
   "characters_character_mail_mail": {
     "description": "Return the contents of an EVE mail",
@@ -1191,7 +1399,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/mail/{mail_id}/",
+    "path": "/{version}/characters/{character_id}/mail/{mail_id}/",
     "parameters": [
       {
         "description": "An EVE mail ID",
@@ -1208,15 +1416,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "Contents of a mail"
+    "summary": "Contents of a mail",
+    "version": "v1"
   },
   "characters_character_medals": {
     "description": "Return a list of medals the character has",
@@ -1256,7 +1472,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/medals/",
+    "path": "/{version}/characters/{character_id}/medals/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1266,15 +1482,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_medals.v1",
-    "summary": "A list of medals"
+    "summary": "A list of medals",
+    "version": "v1"
   },
   "characters_character_mining": {
     "description": "Paginated record of all mining done by a character for the past 30 days",
@@ -1293,7 +1517,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/mining/",
+    "path": "/{version}/characters/{character_id}/mining/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1310,15 +1534,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_character_mining.v1",
-    "summary": "Mining ledger of a character"
+    "summary": "Mining ledger of a character",
+    "version": "v1"
   },
   "characters_character_notifications_contacts": {
     "description": "Return notifications about having been added to someone's contact list",
@@ -1340,7 +1572,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/notifications/contacts/",
+    "path": "/{version}/characters/{character_id}/notifications/contacts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1350,15 +1582,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_notifications.v1",
-    "summary": "A list of contact notifications"
+    "summary": "A list of contact notifications",
+    "version": "v1"
   },
   "characters_character_opportunities": {
     "description": "Return a list of tasks finished by a character",
@@ -1371,7 +1611,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/opportunities/",
+    "path": "/{version}/characters/{character_id}/opportunities/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1381,15 +1621,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_opportunities.v1",
-    "summary": "A list of opportunities task ids"
+    "summary": "A list of opportunities task ids",
+    "version": "v1"
   },
   "characters_character_orders_history": {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
@@ -1441,7 +1689,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/orders/history/",
+    "path": "/{version}/characters/{character_id}/orders/history/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1458,15 +1706,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-markets.read_character_orders.v1",
-    "summary": "Expired and cancelled market orders placed by a character"
+    "summary": "Expired and cancelled market orders placed by a character",
+    "version": "v1"
   },
   "characters_character_planets": {
     "description": "Returns a list of all planetary colonies owned by a character.",
@@ -1494,7 +1750,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/planets/",
+    "path": "/{version}/characters/{character_id}/planets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1504,15 +1760,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-planets.manage_planets.v1",
-    "summary": "List of colonies"
+    "summary": "List of colonies",
+    "version": "v1"
   },
   "characters_character_ship": {
     "description": "Get the current ship type, name and id",
@@ -1528,7 +1792,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/ship/",
+    "path": "/{version}/characters/{character_id}/ship/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1538,15 +1802,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-location.read_ship_type.v1",
-    "summary": "Get the current ship type, name and id"
+    "summary": "Get the current ship type, name and id",
+    "version": "v1"
   },
   "characters_character_standings": {
     "description": "Return character standings from agents, NPC corporations, and factions",
@@ -1562,7 +1834,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/standings/",
+    "path": "/{version}/characters/{character_id}/standings/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1572,15 +1844,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_standings.v1",
-    "summary": "A list of standings"
+    "summary": "A list of standings",
+    "version": "v1"
   },
   "characters_character_titles": {
     "description": "Returns a character's titles",
@@ -1593,7 +1873,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/titles/",
+    "path": "/{version}/characters/{character_id}/titles/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1603,21 +1883,29 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_titles.v1",
-    "summary": "A list of titles"
+    "summary": "A list of titles",
+    "version": "v1"
   },
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",
     "headers": [],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/wallet/",
+    "path": "/{version}/characters/{character_id}/wallet/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1627,15 +1915,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Wallet balance"
+    "summary": "Wallet balance",
+    "version": "v1"
   },
   "characters_character_wallet_transactions": {
     "description": "Get wallet transactions of a character",
@@ -1672,7 +1968,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/characters/{character_id}/wallet/transactions/",
+    "path": "/{version}/characters/{character_id}/wallet/transactions/",
     "parameters": [
       {
         "description": "Only show transactions happened before the one referenced by this id",
@@ -1689,15 +1985,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Wallet transactions"
+    "summary": "Wallet transactions",
+    "version": "v1"
   },
   "contracts_public_bids_contract": {
     "description": "Lists bids on a public auction contract",
@@ -1713,7 +2017,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/contracts/public/bids/{contract_id}/",
+    "path": "/{version}/contracts/public/bids/{contract_id}/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -1730,14 +2034,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of bids"
+    "summary": "A list of bids",
+    "version": "v1"
   },
   "contracts_public_items_contract": {
     "description": "Lists items of a public contract",
@@ -1771,7 +2083,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/contracts/public/items/{contract_id}/",
+    "path": "/{version}/contracts/public/items/{contract_id}/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -1788,14 +2100,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of items in this contract"
+    "summary": "A list of items in this contract",
+    "version": "v1"
   },
   "contracts_public_region": {
     "description": "Returns a paginated list of all public contracts in the given region",
@@ -1850,7 +2170,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/contracts/public/{region_id}/",
+    "path": "/{version}/contracts/public/{region_id}/",
     "parameters": [
       {
         "description": "An EVE region id",
@@ -1867,14 +2187,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of contracts"
+    "summary": "A list of contracts",
+    "version": "v1"
   },
   "corporation_corporation_mining_extractions": {
     "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
@@ -1896,7 +2224,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporation/{corporation_id}/mining/extractions/",
+    "path": "/{version}/corporation/{corporation_id}/mining/extractions/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1913,15 +2241,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "A list of chunk timers"
+    "summary": "A list of chunk timers",
+    "version": "v1"
   },
   "corporation_corporation_mining_observers": {
     "description": "Paginated list of all entities capable of observing and recording mining for a corporation",
@@ -1937,7 +2273,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporation/{corporation_id}/mining/observers/",
+    "path": "/{version}/corporation/{corporation_id}/mining/observers/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -1954,15 +2290,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "Observer list of a corporation"
+    "summary": "Observer list of a corporation",
+    "version": "v1"
   },
   "corporation_corporation_mining_observers_observer": {
     "description": "Paginated record of all mining seen by an observer",
@@ -1984,7 +2328,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporation/{corporation_id}/mining/observers/{observer_id}/",
+    "path": "/{version}/corporation/{corporation_id}/mining/observers/{observer_id}/",
     "parameters": [
       {
         "description": "A mining observer id",
@@ -2008,15 +2352,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "Mining ledger of an observer"
+    "summary": "Mining ledger of an observer",
+    "version": "v1"
   },
   "corporations_npccorps": {
     "description": "Get a list of npc corporations",
@@ -2026,17 +2378,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/npccorps/",
+    "path": "/{version}/corporations/npccorps/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of npc corporation ids"
+    "summary": "A list of npc corporation ids",
+    "version": "v1"
   },
   "corporations_corporation_assets_names": {
     "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships",
@@ -2049,7 +2409,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v1/corporations/{corporation_id}/assets/names/",
+    "path": "/{version}/corporations/{corporation_id}/assets/names/",
     "parameters": [
       {
         "description": "A list of item ids",
@@ -2066,15 +2426,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "List of asset names"
+    "summary": "List of asset names",
+    "version": "v1"
   },
   "corporations_corporation_bookmarks": {
     "description": "A list of your corporation's bookmarks",
@@ -2117,7 +2485,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/bookmarks/",
+    "path": "/{version}/corporations/{corporation_id}/bookmarks/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2134,15 +2502,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List of corporation owned bookmarks"
+    "summary": "List of corporation owned bookmarks",
+    "version": "v1"
   },
   "corporations_corporation_bookmarks_folders": {
     "description": "A list of your corporation's bookmark folders",
@@ -2158,7 +2534,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/bookmarks/folders/",
+    "path": "/{version}/corporations/{corporation_id}/bookmarks/folders/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2175,15 +2551,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List of corporation owned bookmark folders"
+    "summary": "List of corporation owned bookmark folders",
+    "version": "v1"
   },
   "corporations_corporation_contacts_labels": {
     "description": "Return custom labels for a corporation's contacts",
@@ -2196,7 +2580,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/contacts/labels/",
+    "path": "/{version}/corporations/{corporation_id}/contacts/labels/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2206,15 +2590,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_contacts.v1",
-    "summary": "A list of corporation contact labels"
+    "summary": "A list of corporation contact labels",
+    "version": "v1"
   },
   "corporations_corporation_contracts": {
     "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -2287,7 +2679,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/contracts/",
+    "path": "/{version}/corporations/{corporation_id}/contracts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2304,15 +2696,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of contracts"
+    "summary": "A list of contracts",
+    "version": "v1"
   },
   "corporations_corporation_contracts_contract_bids": {
     "description": "Lists bids on a particular auction contract",
@@ -2331,7 +2731,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/bids/",
+    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/bids/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -2355,15 +2755,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of bids"
+    "summary": "A list of bids",
+    "version": "v1"
   },
   "corporations_corporation_contracts_contract_items": {
     "description": "Lists items of a particular contract",
@@ -2388,7 +2796,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/contracts/{contract_id}/items/",
+    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/items/",
     "parameters": [
       {
         "description": "ID of a contract",
@@ -2405,15 +2813,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of items in this contract"
+    "summary": "A list of items in this contract",
+    "version": "v1"
   },
   "corporations_corporation_customs_offices": {
     "description": "List customs offices owned by a corporation",
@@ -2462,7 +2878,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/customs_offices/",
+    "path": "/{version}/corporations/{corporation_id}/customs_offices/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2479,15 +2895,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-planets.read_customs_offices.v1",
-    "summary": "A list of customs offices and their settings"
+    "summary": "A list of customs offices and their settings",
+    "version": "v1"
   },
   "corporations_corporation_divisions": {
     "description": "Return corporation hangar and wallet division names, only show if a division is not using the default name",
@@ -2508,7 +2932,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/divisions/",
+    "path": "/{version}/corporations/{corporation_id}/divisions/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2518,15 +2942,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_divisions.v1",
-    "summary": "List of corporation division names"
+    "summary": "List of corporation division names",
+    "version": "v1"
   },
   "corporations_corporation_facilities": {
     "description": "Return a corporation's facilities",
@@ -2542,7 +2974,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/facilities/",
+    "path": "/{version}/corporations/{corporation_id}/facilities/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2552,15 +2984,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_facilities.v1",
-    "summary": "List of corporation facilities"
+    "summary": "List of corporation facilities",
+    "version": "v1"
   },
   "corporations_corporation_fw_stats": {
     "description": "Statistics about a corporation involved in faction warfare",
@@ -2592,7 +3032,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/fw/stats/",
+    "path": "/{version}/corporations/{corporation_id}/fw/stats/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2602,15 +3042,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_fw_stats.v1",
-    "summary": "Faction warfare statistics for a given corporation"
+    "summary": "Faction warfare statistics for a given corporation",
+    "version": "v1"
   },
   "corporations_corporation_icons": {
     "description": "Get the icon urls for a corporation",
@@ -2626,17 +3074,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/icons/",
+    "path": "/{version}/corporations/{corporation_id}/icons/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Urls for icons for the given corporation id and server"
+    "summary": "Urls for icons for the given corporation id and server",
+    "version": "v1"
   },
   "corporations_corporation_industry_jobs": {
     "description": "List industry jobs run by a corporation",
@@ -2709,7 +3165,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/industry/jobs/",
+    "path": "/{version}/corporations/{corporation_id}/industry/jobs/",
     "parameters": [
       {
         "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days",
@@ -2733,15 +3189,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-industry.read_corporation_jobs.v1",
-    "summary": "A list of corporation industry jobs"
+    "summary": "A list of corporation industry jobs",
+    "version": "v1"
   },
   "corporations_corporation_killmails_recent": {
     "description": "Get a list of a corporation's kills and losses going back 90 days",
@@ -2754,7 +3218,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/killmails/recent/",
+    "path": "/{version}/corporations/{corporation_id}/killmails/recent/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2771,15 +3235,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-killmails.read_corporation_killmails.v1",
-    "summary": "A list of killmail IDs and hashes"
+    "summary": "A list of killmail IDs and hashes",
+    "version": "v1"
   },
   "corporations_corporation_medals": {
     "description": "Returns a corporation's medals",
@@ -2801,7 +3273,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/medals/",
+    "path": "/{version}/corporations/{corporation_id}/medals/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2818,15 +3290,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_medals.v1",
-    "summary": "A list of medals"
+    "summary": "A list of medals",
+    "version": "v1"
   },
   "corporations_corporation_medals_issued": {
     "description": "Returns medals issued by a corporation",
@@ -2851,7 +3331,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/medals/issued/",
+    "path": "/{version}/corporations/{corporation_id}/medals/issued/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2868,21 +3348,29 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_medals.v1",
-    "summary": "A list of issued medals"
+    "summary": "A list of issued medals",
+    "version": "v1"
   },
   "corporations_corporation_members_limit": {
     "description": "Return a corporation's member limit, not including CEO himself",
     "headers": [],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/members/limit/",
+    "path": "/{version}/corporations/{corporation_id}/members/limit/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2892,15 +3380,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.track_members.v1",
-    "summary": "The corporation's member limit"
+    "summary": "The corporation's member limit",
+    "version": "v1"
   },
   "corporations_corporation_members_titles": {
     "description": "Returns a corporation's members' titles",
@@ -2916,7 +3412,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/members/titles/",
+    "path": "/{version}/corporations/{corporation_id}/members/titles/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2926,15 +3422,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_titles.v1",
-    "summary": "A list of members and theirs titles"
+    "summary": "A list of members and theirs titles",
+    "version": "v1"
   },
   "corporations_corporation_membertracking": {
     "description": "Returns additional information about a corporation's members which helps tracking their activities",
@@ -2962,7 +3466,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/membertracking/",
+    "path": "/{version}/corporations/{corporation_id}/membertracking/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -2972,15 +3476,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.track_members.v1",
-    "summary": "List of member character IDs"
+    "summary": "List of member character IDs",
+    "version": "v1"
   },
   "corporations_corporation_roles": {
     "description": "Return the roles of all members if the character has the personnel manager role or any grantable role.",
@@ -3038,7 +3550,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/roles/",
+    "path": "/{version}/corporations/{corporation_id}/roles/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3048,15 +3560,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of member character ID's and roles"
+    "summary": "List of member character ID's and roles",
+    "version": "v1"
   },
   "corporations_corporation_roles_history": {
     "description": "Return how roles have changed for a coporation's members, up to a month",
@@ -3087,7 +3607,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/roles/history/",
+    "path": "/{version}/corporations/{corporation_id}/roles/history/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3104,15 +3624,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of role changes"
+    "summary": "List of role changes",
+    "version": "v1"
   },
   "corporations_corporation_shareholders": {
     "description": "Return the current shareholders of a corporation.",
@@ -3128,7 +3656,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/shareholders/",
+    "path": "/{version}/corporations/{corporation_id}/shareholders/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3145,15 +3673,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "List of shareholders"
+    "summary": "List of shareholders",
+    "version": "v1"
   },
   "corporations_corporation_standings": {
     "description": "Return corporation standings from agents, NPC corporations, and factions",
@@ -3169,7 +3705,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/standings/",
+    "path": "/{version}/corporations/{corporation_id}/standings/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3186,15 +3722,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_standings.v1",
-    "summary": "A list of standings"
+    "summary": "A list of standings",
+    "version": "v1"
   },
   "corporations_corporation_starbases": {
     "description": "Returns list of corporation starbases (POSes)",
@@ -3225,7 +3769,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/starbases/",
+    "path": "/{version}/corporations/{corporation_id}/starbases/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3242,15 +3786,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_starbases.v1",
-    "summary": "List of starbases (POSes)"
+    "summary": "List of starbases (POSes)",
+    "version": "v1"
   },
   "corporations_corporation_starbases_starbase": {
     "description": "Returns various settings and fuels of a starbase (POS)",
@@ -3303,7 +3855,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/starbases/{starbase_id}/",
+    "path": "/{version}/corporations/{corporation_id}/starbases/{starbase_id}/",
     "parameters": [
       {
         "description": "An EVE starbase (POS) ID",
@@ -3327,15 +3879,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_starbases.v1",
-    "summary": "List of starbases (POSes)"
+    "summary": "List of starbases (POSes)",
+    "version": "v1"
   },
   "corporations_corporation_titles": {
     "description": "Returns a corporation's titles",
@@ -3396,7 +3956,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/titles/",
+    "path": "/{version}/corporations/{corporation_id}/titles/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3406,15 +3966,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_titles.v1",
-    "summary": "A list of titles"
+    "summary": "A list of titles",
+    "version": "v1"
   },
   "corporations_corporation_wallets": {
     "description": "Get a corporation's wallets",
@@ -3427,7 +3995,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/wallets/",
+    "path": "/{version}/corporations/{corporation_id}/wallets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -3437,15 +4005,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "List of corporation wallets"
+    "summary": "List of corporation wallets",
+    "version": "v1"
   },
   "corporations_corporation_wallets_division_transactions": {
     "description": "Get wallet transactions of a corporation",
@@ -3479,7 +4055,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/corporations/{corporation_id}/wallets/{division}/transactions/",
+    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/transactions/",
     "parameters": [
       {
         "description": "Wallet key of the division to fetch journals from",
@@ -3503,15 +4079,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "Wallet transactions"
+    "summary": "Wallet transactions",
+    "version": "v1"
   },
   "dogma_attributes": {
     "description": "Get a list of dogma attribute ids",
@@ -3521,17 +4105,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/dogma/attributes/",
+    "path": "/{version}/dogma/attributes/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of dogma attribute ids"
+    "summary": "A list of dogma attribute ids",
+    "version": "v1"
   },
   "dogma_attributes_attribute": {
     "description": "Get information on a dogma attribute",
@@ -3568,7 +4160,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/dogma/attributes/{attribute_id}/",
+    "path": "/{version}/dogma/attributes/{attribute_id}/",
     "parameters": [
       {
         "description": "A dogma attribute ID",
@@ -3578,14 +4170,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a dogma attribute"
+    "summary": "Information about a dogma attribute",
+    "version": "v1"
   },
   "dogma_dynamic_items_type_item": {
     "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
@@ -3615,7 +4215,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/dogma/dynamic/items/{type_id}/{item_id}/",
+    "path": "/{version}/dogma/dynamic/items/{type_id}/{item_id}/",
     "parameters": [
       {
         "description": "item_id integer",
@@ -3632,14 +4232,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Details about a dynamic item"
+    "summary": "Details about a dynamic item",
+    "version": "v1"
   },
   "dogma_effects": {
     "description": "Get a list of dogma effect ids",
@@ -3649,17 +4257,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/dogma/effects/",
+    "path": "/{version}/dogma/effects/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of dogma effect ids"
+    "summary": "A list of dogma effect ids",
+    "version": "v1"
   },
   "fleets_fleet": {
     "description": "Return details about a fleet",
@@ -3678,7 +4294,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fleets/{fleet_id}/",
+    "path": "/{version}/fleets/{fleet_id}/",
     "parameters": [
       {
         "description": "ID for a fleet",
@@ -3695,15 +4311,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-fleets.read_fleet.v1",
-    "summary": "Details about a fleet"
+    "summary": "Details about a fleet",
+    "version": "v1"
   },
   "fleets_fleet_members": {
     "description": "Return information about fleet members",
@@ -3740,7 +4364,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fleets/{fleet_id}/members/",
+    "path": "/{version}/fleets/{fleet_id}/members/",
     "parameters": [
       {
         "description": "ID for a fleet",
@@ -3764,15 +4388,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-fleets.read_fleet.v1",
-    "summary": "A list of fleet members"
+    "summary": "A list of fleet members",
+    "version": "v1"
   },
   "fleets_fleet_wings": {
     "description": "Return information about wings in a fleet",
@@ -3792,7 +4424,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fleets/{fleet_id}/wings/",
+    "path": "/{version}/fleets/{fleet_id}/wings/",
     "parameters": [
       {
         "description": "ID for a fleet",
@@ -3816,15 +4448,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-fleets.read_fleet.v1",
-    "summary": "A list of fleet wings"
+    "summary": "A list of fleet wings",
+    "version": "v1"
   },
   "fw_leaderboards": {
     "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday",
@@ -3847,17 +4487,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fw/leaderboards/",
+    "path": "/{version}/fw/leaderboards/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare"
+    "summary": "Corporation leaderboard of kills and victory points within faction warfare",
+    "version": "v1"
   },
   "fw_leaderboards_characters": {
     "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday",
@@ -3880,17 +4528,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fw/leaderboards/characters/",
+    "path": "/{version}/fw/leaderboards/characters/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Character leaderboard of kills and victory points within faction warfare"
+    "summary": "Character leaderboard of kills and victory points within faction warfare",
+    "version": "v1"
   },
   "fw_leaderboards_corporations": {
     "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday",
@@ -3913,17 +4569,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fw/leaderboards/corporations/",
+    "path": "/{version}/fw/leaderboards/corporations/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare"
+    "summary": "Corporation leaderboard of kills and victory points within faction warfare",
+    "version": "v1"
   },
   "fw_stats": {
     "description": "Statistical overviews of factions involved in faction warfare",
@@ -3955,17 +4619,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fw/stats/",
+    "path": "/{version}/fw/stats/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Per faction breakdown of faction warfare statistics"
+    "summary": "Per faction breakdown of faction warfare statistics",
+    "version": "v1"
   },
   "fw_wars": {
     "description": "Data about which NPC factions are at war",
@@ -3978,17 +4650,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/fw/wars/",
+    "path": "/{version}/fw/wars/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of NPC factions at war"
+    "summary": "A list of NPC factions at war",
+    "version": "v1"
   },
   "incursions": {
     "description": "Return a list of current incursions",
@@ -4022,17 +4702,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/incursions/",
+    "path": "/{version}/incursions/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of incursions"
+    "summary": "A list of incursions",
+    "version": "v1"
   },
   "industry_facilities": {
     "description": "Return a list of industry facilities",
@@ -4057,17 +4745,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/industry/facilities/",
+    "path": "/{version}/industry/facilities/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of facilities"
+    "summary": "A list of facilities",
+    "version": "v1"
   },
   "industry_systems": {
     "description": "Return cost indices for solar systems",
@@ -4084,17 +4780,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/industry/systems/",
+    "path": "/{version}/industry/systems/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of cost indicies"
+    "summary": "A list of cost indicies",
+    "version": "v1"
   },
   "insurance_prices": {
     "description": "Return available insurance levels for all ship types",
@@ -4112,7 +4816,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/insurance/prices/",
+    "path": "/{version}/insurance/prices/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -4122,14 +4826,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of insurance levels for all ship types"
+    "summary": "A list of insurance levels for all ship types",
+    "version": "v1"
   },
   "killmails_killmail_killmail_hash": {
     "description": "Return a single killmail from its ID and hash",
@@ -4178,7 +4890,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/killmails/{killmail_id}/{killmail_hash}/",
+    "path": "/{version}/killmails/{killmail_id}/{killmail_hash}/",
     "parameters": [
       {
         "description": "The killmail hash for verification",
@@ -4195,14 +4907,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A killmail"
+    "summary": "A killmail",
+    "version": "v1"
   },
   "loyalty_stores_corporation_offers": {
     "description": "Return a list of offers from a specific corporation's loyalty store",
@@ -4234,7 +4954,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/loyalty/stores/{corporation_id}/offers/",
+    "path": "/{version}/loyalty/stores/{corporation_id}/offers/",
     "parameters": [
       {
         "description": "An EVE corporation ID",
@@ -4244,14 +4964,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of offers"
+    "summary": "A list of offers",
+    "version": "v1"
   },
   "markets_groups": {
     "description": "Get a list of item groups",
@@ -4261,17 +4989,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/groups/",
+    "path": "/{version}/markets/groups/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of item group ids"
+    "summary": "A list of item group ids",
+    "version": "v1"
   },
   "markets_groups_market_group": {
     "description": "Get information on an item group",
@@ -4296,7 +5032,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/groups/{market_group_id}/",
+    "path": "/{version}/markets/groups/{market_group_id}/",
     "parameters": [
       {
         "description": "An Eve item group ID",
@@ -4313,14 +5049,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about an item group"
+    "summary": "Information about an item group",
+    "version": "v1"
   },
   "markets_prices": {
     "description": "Return a list of prices",
@@ -4336,17 +5080,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/prices/",
+    "path": "/{version}/markets/prices/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of prices"
+    "summary": "A list of prices",
+    "version": "v1"
   },
   "markets_structures_structure": {
     "description": "Return all orders in a structure",
@@ -4386,7 +5138,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/structures/{structure_id}/",
+    "path": "/{version}/markets/structures/{structure_id}/",
     "parameters": [
       {
         "description": "Return orders in this structure",
@@ -4410,15 +5162,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-markets.structure_markets.v1",
-    "summary": "A list of orders"
+    "summary": "A list of orders",
+    "version": "v1"
   },
   "markets_region_history": {
     "description": "Return a list of historical market statistics for the specified type in a region",
@@ -4443,7 +5203,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/{region_id}/history/",
+    "path": "/{version}/markets/{region_id}/history/",
     "parameters": [
       {
         "description": "Return statistics in this region",
@@ -4460,14 +5220,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of historical market statistics"
+    "summary": "A list of historical market statistics",
+    "version": "v1"
   },
   "markets_region_orders": {
     "description": "Return a list of orders in a region",
@@ -4510,7 +5278,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/{region_id}/orders/",
+    "path": "/{version}/markets/{region_id}/orders/",
     "parameters": [
       {
         "description": "Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders",
@@ -4541,14 +5309,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of orders"
+    "summary": "A list of orders",
+    "version": "v1"
   },
   "markets_region_types": {
     "description": "Return a list of type IDs that have active orders in the region, for efficient market indexing.",
@@ -4558,7 +5334,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/markets/{region_id}/types/",
+    "path": "/{version}/markets/{region_id}/types/",
     "parameters": [
       {
         "description": "Return statistics in this region",
@@ -4575,14 +5351,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of type IDs"
+    "summary": "A list of type IDs",
+    "version": "v1"
   },
   "opportunities_groups": {
     "description": "Return a list of opportunities groups",
@@ -4592,17 +5376,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/opportunities/groups/",
+    "path": "/{version}/opportunities/groups/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of opportunities group ids"
+    "summary": "A list of opportunities group ids",
+    "version": "v1"
   },
   "opportunities_groups_group": {
     "description": "Return information of an opportunities group",
@@ -4633,7 +5425,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/opportunities/groups/{group_id}/",
+    "path": "/{version}/opportunities/groups/{group_id}/",
     "parameters": [
       {
         "description": "ID of an opportunities group",
@@ -4650,14 +5442,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Details of an opportunities group"
+    "summary": "Details of an opportunities group",
+    "version": "v1"
   },
   "opportunities_tasks": {
     "description": "Return a list of opportunities tasks",
@@ -4667,17 +5467,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/opportunities/tasks/",
+    "path": "/{version}/opportunities/tasks/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of opportunities task ids"
+    "summary": "A list of opportunities task ids",
+    "version": "v1"
   },
   "opportunities_tasks_task": {
     "description": "Return information of an opportunities task",
@@ -4696,7 +5504,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/opportunities/tasks/{task_id}/",
+    "path": "/{version}/opportunities/tasks/{task_id}/",
     "parameters": [
       {
         "description": "ID of an opportunities task",
@@ -4706,14 +5514,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Details of an opportunities task"
+    "summary": "Details of an opportunities task",
+    "version": "v1"
   },
   "route_origin_destination": {
     "description": "Get the systems between origin and destination",
@@ -4723,7 +5539,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/route/{origin}/{destination}/",
+    "path": "/{version}/route/{origin}/{destination}/",
     "parameters": [
       {
         "description": "destination solar system ID",
@@ -4761,14 +5577,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Solar systems in route from origin to destination"
+    "summary": "Solar systems in route from origin to destination",
+    "version": "v1"
   },
   "sovereignty_campaigns": {
     "description": "Shows sovereignty data for campaigns.",
@@ -4809,17 +5633,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/sovereignty/campaigns/",
+    "path": "/{version}/sovereignty/campaigns/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of sovereignty campaigns"
+    "summary": "A list of sovereignty campaigns",
+    "version": "v1"
   },
   "sovereignty_map": {
     "description": "Shows sovereignty information for solar systems",
@@ -4838,17 +5670,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/sovereignty/map/",
+    "path": "/{version}/sovereignty/map/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of sovereignty information for solar systems in New Eden"
+    "summary": "A list of sovereignty information for solar systems in New Eden",
+    "version": "v1"
   },
   "sovereignty_structures": {
     "description": "Shows sovereignty data for structures.",
@@ -4876,17 +5716,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/sovereignty/structures/",
+    "path": "/{version}/sovereignty/structures/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of sovereignty structures"
+    "summary": "A list of sovereignty structures",
+    "version": "v1"
   },
   "status": {
     "description": "EVE Server status",
@@ -4905,17 +5753,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/status/",
+    "path": "/{version}/status/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Server status"
+    "summary": "Server status",
+    "version": "v1"
   },
   "universe_ancestries": {
     "description": "Get all character ancestries",
@@ -4940,7 +5796,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/ancestries/",
+    "path": "/{version}/universe/ancestries/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -4950,14 +5806,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of ancestries"
+    "summary": "A list of ancestries",
+    "version": "v1"
   },
   "universe_asteroid_belts_asteroid_belt": {
     "description": "Get information on an asteroid belt",
@@ -4978,7 +5842,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/asteroid_belts/{asteroid_belt_id}/",
+    "path": "/{version}/universe/asteroid_belts/{asteroid_belt_id}/",
     "parameters": [
       {
         "description": "asteroid_belt_id integer",
@@ -4988,14 +5852,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about an asteroid belt"
+    "summary": "Information about an asteroid belt",
+    "version": "v1"
   },
   "universe_bloodlines": {
     "description": "Get a list of bloodlines",
@@ -5035,7 +5907,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/bloodlines/",
+    "path": "/{version}/universe/bloodlines/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -5045,14 +5917,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of bloodlines"
+    "summary": "A list of bloodlines",
+    "version": "v1"
   },
   "universe_categories": {
     "description": "Get a list of item categories",
@@ -5062,17 +5942,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/categories/",
+    "path": "/{version}/universe/categories/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of item category ids"
+    "summary": "A list of item category ids",
+    "version": "v1"
   },
   "universe_categories_category": {
     "description": "Get information of an item category",
@@ -5094,7 +5982,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/categories/{category_id}/",
+    "path": "/{version}/universe/categories/{category_id}/",
     "parameters": [
       {
         "description": "An Eve item category ID",
@@ -5111,14 +5999,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about an item category"
+    "summary": "Information about an item category",
+    "version": "v1"
   },
   "universe_constellations": {
     "description": "Get a list of constellations",
@@ -5128,17 +6024,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/constellations/",
+    "path": "/{version}/universe/constellations/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of constellation ids"
+    "summary": "A list of constellation ids",
+    "version": "v1"
   },
   "universe_constellations_constellation": {
     "description": "Get information on a constellation",
@@ -5168,7 +6072,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/constellations/{constellation_id}/",
+    "path": "/{version}/universe/constellations/{constellation_id}/",
     "parameters": [
       {
         "description": "constellation_id integer",
@@ -5185,14 +6089,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a constellation"
+    "summary": "Information about a constellation",
+    "version": "v1"
   },
   "universe_graphics": {
     "description": "Get a list of graphics",
@@ -5202,17 +6114,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/graphics/",
+    "path": "/{version}/universe/graphics/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of graphic ids"
+    "summary": "A list of graphic ids",
+    "version": "v1"
   },
   "universe_graphics_graphic": {
     "description": "Get information on a graphic",
@@ -5243,7 +6163,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/graphics/{graphic_id}/",
+    "path": "/{version}/universe/graphics/{graphic_id}/",
     "parameters": [
       {
         "description": "graphic_id integer",
@@ -5253,14 +6173,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a graphic"
+    "summary": "Information about a graphic",
+    "version": "v1"
   },
   "universe_groups": {
     "description": "Get a list of item groups",
@@ -5270,7 +6198,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/groups/",
+    "path": "/{version}/universe/groups/",
     "parameters": [
       {
         "description": "Which page of results to return",
@@ -5280,14 +6208,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of item group ids"
+    "summary": "A list of item group ids",
+    "version": "v1"
   },
   "universe_groups_group": {
     "description": "Get information on an item group",
@@ -5312,7 +6248,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/groups/{group_id}/",
+    "path": "/{version}/universe/groups/{group_id}/",
     "parameters": [
       {
         "description": "An Eve item group ID",
@@ -5329,14 +6265,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about an item group"
+    "summary": "Information about an item group",
+    "version": "v1"
   },
   "universe_ids": {
     "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours",
@@ -5413,7 +6357,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v1/universe/ids/",
+    "path": "/{version}/universe/ids/",
     "parameters": [
       {
         "description": "The names to resolve",
@@ -5430,14 +6374,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted"
+    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted",
+    "version": "v1"
   },
   "universe_moons_moon": {
     "description": "Get information on a moon",
@@ -5461,7 +6413,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/moons/{moon_id}/",
+    "path": "/{version}/universe/moons/{moon_id}/",
     "parameters": [
       {
         "description": "moon_id integer",
@@ -5471,14 +6423,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a moon"
+    "summary": "Information about a moon",
+    "version": "v1"
   },
   "universe_planets_planet": {
     "description": "Get information on a planet",
@@ -5505,7 +6465,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/planets/{planet_id}/",
+    "path": "/{version}/universe/planets/{planet_id}/",
     "parameters": [
       {
         "description": "planet_id integer",
@@ -5515,14 +6475,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a planet"
+    "summary": "Information about a planet",
+    "version": "v1"
   },
   "universe_races": {
     "description": "Get a list of character races",
@@ -5541,7 +6509,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/races/",
+    "path": "/{version}/universe/races/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -5551,14 +6519,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of character races"
+    "summary": "A list of character races",
+    "version": "v1"
   },
   "universe_regions": {
     "description": "Get a list of regions",
@@ -5568,17 +6544,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/regions/",
+    "path": "/{version}/universe/regions/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of region ids"
+    "summary": "A list of region ids",
+    "version": "v1"
   },
   "universe_regions_region": {
     "description": "Get information on a region",
@@ -5600,7 +6584,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/regions/{region_id}/",
+    "path": "/{version}/universe/regions/{region_id}/",
     "parameters": [
       {
         "description": "region_id integer",
@@ -5617,14 +6601,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a region"
+    "summary": "Information about a region",
+    "version": "v1"
   },
   "universe_schematics_schematic": {
     "description": "Get information on a planetary factory schematic",
@@ -5637,7 +6629,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/schematics/{schematic_id}/",
+    "path": "/{version}/universe/schematics/{schematic_id}/",
     "parameters": [
       {
         "description": "A PI schematic ID",
@@ -5647,14 +6639,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Public data about a schematic"
+    "summary": "Public data about a schematic",
+    "version": "v1"
   },
   "universe_stargates_stargate": {
     "description": "Get information on a stargate",
@@ -5688,7 +6688,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/stargates/{stargate_id}/",
+    "path": "/{version}/universe/stargates/{stargate_id}/",
     "parameters": [
       {
         "description": "stargate_id integer",
@@ -5698,14 +6698,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a stargate"
+    "summary": "Information about a stargate",
+    "version": "v1"
   },
   "universe_stars_star": {
     "description": "Get information on a star",
@@ -5736,7 +6744,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/stars/{star_id}/",
+    "path": "/{version}/universe/stars/{star_id}/",
     "parameters": [
       {
         "description": "star_id integer",
@@ -5746,14 +6754,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a star"
+    "summary": "Information about a star",
+    "version": "v1"
   },
   "universe_structures": {
     "description": "List all public structures",
@@ -5763,17 +6779,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/structures/",
+    "path": "/{version}/universe/structures/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "List of public structure IDs"
+    "summary": "List of public structure IDs",
+    "version": "v1"
   },
   "universe_system_jumps": {
     "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
@@ -5786,17 +6810,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/system_jumps/",
+    "path": "/{version}/universe/system_jumps/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of systems and number of jumps"
+    "summary": "A list of systems and number of jumps",
+    "version": "v1"
   },
   "universe_systems": {
     "description": "Get a list of solar systems",
@@ -5806,17 +6838,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/systems/",
+    "path": "/{version}/universe/systems/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of solar system ids"
+    "summary": "A list of solar system ids",
+    "version": "v1"
   },
   "universe_types": {
     "description": "Get a list of type ids",
@@ -5826,7 +6866,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/universe/types/",
+    "path": "/{version}/universe/types/",
     "parameters": [
       {
         "description": "Which page of results to return",
@@ -5836,14 +6876,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of type ids"
+    "summary": "A list of type ids",
+    "version": "v1"
   },
   "wars": {
     "description": "Return a list of wars",
@@ -5853,7 +6901,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/wars/",
+    "path": "/{version}/wars/",
     "parameters": [
       {
         "description": "Only return wars with ID smaller than this",
@@ -5863,14 +6911,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of war IDs, in descending order by war_id"
+    "summary": "A list of war IDs, in descending order by war_id",
+    "version": "v1"
   },
   "wars_war": {
     "description": "Return details about a war",
@@ -5923,7 +6979,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/wars/{war_id}/",
+    "path": "/{version}/wars/{war_id}/",
     "parameters": [
       {
         "description": "ID for a war",
@@ -5933,14 +6989,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Details about a war"
+    "summary": "Details about a war",
+    "version": "v1"
   },
   "wars_war_killmails": {
     "description": "Return a list of kills related to a war",
@@ -5953,7 +7017,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v1/wars/{war_id}/killmails/",
+    "path": "/{version}/wars/{war_id}/killmails/",
     "parameters": [
       {
         "description": "A valid war ID",
@@ -5970,14 +7034,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of killmail IDs and hashes"
+    "summary": "A list of killmail IDs and hashes",
+    "version": "v1"
   },
   "alliances_alliance_contacts": {
     "description": "Return contacts of an alliance",
@@ -5999,7 +7071,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/alliances/{alliance_id}/contacts/",
+    "path": "/{version}/alliances/{alliance_id}/contacts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6016,15 +7088,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-alliances.read_contacts.v1",
-    "summary": "A list of contacts"
+    "summary": "A list of contacts",
+    "version": "v2"
   },
   "characters_character_assets_locations": {
     "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
@@ -6042,7 +7122,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v2/characters/{character_id}/assets/locations/",
+    "path": "/{version}/characters/{character_id}/assets/locations/",
     "parameters": [
       {
         "description": "A list of item ids",
@@ -6059,15 +7139,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_assets.v1",
-    "summary": "List of asset locations"
+    "summary": "List of asset locations",
+    "version": "v2"
   },
   "characters_character_blueprints": {
     "description": "Return a list of blueprints the character owns",
@@ -6098,7 +7186,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/blueprints/",
+    "path": "/{version}/characters/{character_id}/blueprints/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6115,15 +7203,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_blueprints.v1",
-    "summary": "A list of blueprints"
+    "summary": "A list of blueprints",
+    "version": "v2"
   },
   "characters_character_bookmarks": {
     "description": "A list of your character's personal bookmarks",
@@ -6166,7 +7262,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/bookmarks/",
+    "path": "/{version}/characters/{character_id}/bookmarks/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6183,15 +7279,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "A list of bookmarks"
+    "summary": "A list of bookmarks",
+    "version": "v2"
   },
   "characters_character_bookmarks_folders": {
     "description": "A list of your character's personal bookmark folders",
@@ -6204,7 +7308,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/bookmarks/folders/",
+    "path": "/{version}/characters/{character_id}/bookmarks/folders/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6221,15 +7325,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "List of bookmark folders"
+    "summary": "List of bookmark folders",
+    "version": "v2"
   },
   "characters_character_contacts": {
     "description": "Return contacts of a character",
@@ -6257,7 +7369,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/contacts/",
+    "path": "/{version}/characters/{character_id}/contacts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6274,15 +7386,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_contacts.v1",
-    "summary": "A list of contacts"
+    "summary": "A list of contacts",
+    "version": "v2"
   },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
@@ -6301,7 +7421,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/online/",
+    "path": "/{version}/characters/{character_id}/online/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6311,15 +7431,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-location.read_online.v1",
-    "summary": "Object describing the character's online status"
+    "summary": "Object describing the character's online status",
+    "version": "v2"
   },
   "characters_character_orders": {
     "description": "List open market orders placed by a character",
@@ -6368,7 +7496,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/orders/",
+    "path": "/{version}/characters/{character_id}/orders/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6378,15 +7506,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-markets.read_character_orders.v1",
-    "summary": "Open market orders placed by a character"
+    "summary": "Open market orders placed by a character",
+    "version": "v2"
   },
   "characters_character_portrait": {
     "description": "Get portrait urls for a character",
@@ -6405,17 +7541,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/portrait/",
+    "path": "/{version}/characters/{character_id}/portrait/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Public data for the given character"
+    "summary": "Public data for the given character",
+    "version": "v2"
   },
   "characters_character_roles": {
     "description": "Returns a character's corporation roles",
@@ -6446,7 +7590,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/roles/",
+    "path": "/{version}/characters/{character_id}/roles/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6456,15 +7600,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_corporation_roles.v1",
-    "summary": "The character's roles in thier corporation"
+    "summary": "The character's roles in thier corporation",
+    "version": "v2"
   },
   "characters_character_skillqueue": {
     "description": "List the configured skill queue for the given character",
@@ -6495,7 +7647,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/skillqueue/",
+    "path": "/{version}/characters/{character_id}/skillqueue/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6505,15 +7657,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-skills.read_skillqueue.v1",
-    "summary": "The current skill queue, sorted ascending by finishing time"
+    "summary": "The current skill queue, sorted ascending by finishing time",
+    "version": "v2"
   },
   "characters_character_stats": {
     "description": "Returns aggregate yearly stats for a character",
@@ -6874,7 +8034,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/characters/{character_id}/stats/",
+    "path": "/{version}/characters/{character_id}/stats/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -6884,15 +8044,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characterstats.read.v1",
-    "summary": "Character stats"
+    "summary": "Character stats",
+    "version": "v2"
   },
   "corporations_corporation_alliancehistory": {
     "description": "Get a list of all the alliances a corporation has been a member of",
@@ -6911,7 +8079,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/alliancehistory/",
+    "path": "/{version}/corporations/{corporation_id}/alliancehistory/",
     "parameters": [
       {
         "description": "An EVE corporation ID",
@@ -6921,14 +8089,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Alliance history for the given corporation"
+    "summary": "Alliance history for the given corporation",
+    "version": "v2"
   },
   "corporations_corporation_assets_locations": {
     "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
@@ -6946,7 +8122,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v2/corporations/{corporation_id}/assets/locations/",
+    "path": "/{version}/corporations/{corporation_id}/assets/locations/",
     "parameters": [
       {
         "description": "A list of item ids",
@@ -6963,15 +8139,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "List of asset locations"
+    "summary": "List of asset locations",
+    "version": "v2"
   },
   "corporations_corporation_blueprints": {
     "description": "Returns a list of blueprints the corporation owns",
@@ -7002,7 +8186,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/blueprints/",
+    "path": "/{version}/corporations/{corporation_id}/blueprints/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7019,15 +8203,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_blueprints.v1",
-    "summary": "List of corporation blueprints"
+    "summary": "List of corporation blueprints",
+    "version": "v2"
   },
   "corporations_corporation_contacts": {
     "description": "Return contacts of a corporation",
@@ -7052,7 +8244,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/contacts/",
+    "path": "/{version}/corporations/{corporation_id}/contacts/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7069,15 +8261,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_contacts.v1",
-    "summary": "A list of contacts"
+    "summary": "A list of contacts",
+    "version": "v2"
   },
   "corporations_corporation_containers_logs": {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
@@ -7120,7 +8320,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/containers/logs/",
+    "path": "/{version}/corporations/{corporation_id}/containers/logs/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7137,15 +8337,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_container_logs.v1",
-    "summary": "List of corporation ALSC logs"
+    "summary": "List of corporation ALSC logs",
+    "version": "v2"
   },
   "corporations_corporation_orders_history": {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
@@ -7200,7 +8408,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/orders/history/",
+    "path": "/{version}/corporations/{corporation_id}/orders/history/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7217,15 +8425,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "Expired and cancelled market orders placed on behalf of a corporation"
+    "summary": "Expired and cancelled market orders placed on behalf of a corporation",
+    "version": "v2"
   },
   "corporations_corporation_structures": {
     "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
@@ -7284,7 +8500,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/corporations/{corporation_id}/structures/",
+    "path": "/{version}/corporations/{corporation_id}/structures/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -7308,15 +8524,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_structures.v1",
-    "summary": "List of corporation structures' information"
+    "summary": "List of corporation structures' information",
+    "version": "v2"
   },
   "dogma_effects_effect": {
     "description": "Get information on a dogma effect",
@@ -7394,7 +8618,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/dogma/effects/{effect_id}/",
+    "path": "/{version}/dogma/effects/{effect_id}/",
     "parameters": [
       {
         "description": "A dogma effect ID",
@@ -7404,14 +8628,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a dogma effect"
+    "summary": "Information about a dogma effect",
+    "version": "v2"
   },
   "fw_systems": {
     "description": "An overview of the current ownership of faction warfare solar systems",
@@ -7436,17 +8668,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/fw/systems/",
+    "path": "/{version}/fw/systems/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "All faction warfare solar systems"
+    "summary": "All faction warfare solar systems",
+    "version": "v2"
   },
   "eve_search": {
     "description": "Search for entities that match a given sub",
@@ -7513,7 +8753,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/search/",
+    "path": "/{version}/search/",
     "parameters": [
       {
         "description": "Type of entities to search for",
@@ -7544,14 +8784,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of search results"
+    "summary": "A list of search results",
+    "version": "v2"
   },
   "universe_factions": {
     "description": "Get a list of factions",
@@ -7588,7 +8836,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/universe/factions/",
+    "path": "/{version}/universe/factions/",
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -7598,14 +8846,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of factions"
+    "summary": "A list of factions",
+    "version": "v2"
   },
   "universe_names": {
     "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types",
@@ -7621,7 +8877,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "POST",
-    "path": "/v2/universe/names/",
+    "path": "/{version}/universe/names/",
     "parameters": [
       {
         "description": "The ids to resolve",
@@ -7631,14 +8887,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned"
+    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned",
+    "version": "v2"
   },
   "universe_stations_station": {
     "description": "Get information on a station",
@@ -7689,7 +8953,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/universe/stations/{station_id}/",
+    "path": "/{version}/universe/stations/{station_id}/",
     "parameters": [
       {
         "description": "station_id integer",
@@ -7699,14 +8963,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a station"
+    "summary": "Information about a station",
+    "version": "v2"
   },
   "universe_structures_structure": {
     "description": "Returns information on requested structure if you are on the ACL. Otherwise, returns \"Forbidden\" for all inputs.",
@@ -7733,7 +9005,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/universe/structures/{structure_id}/",
+    "path": "/{version}/universe/structures/{structure_id}/",
     "parameters": [
       {
         "description": "An Eve structure ID",
@@ -7750,15 +9022,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-universe.read_structures.v1",
-    "summary": "Data about a structure"
+    "summary": "Data about a structure",
+    "version": "v2"
   },
   "universe_system_kills": {
     "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
@@ -7777,17 +9057,25 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v2/universe/system_kills/",
+    "path": "/{version}/universe/system_kills/",
     "parameters": [
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "A list of systems and number of ship, pod and NPC kills"
+    "summary": "A list of systems and number of ship, pod and NPC kills",
+    "version": "v2"
   },
   "alliances_alliance": {
     "description": "Public information about an alliance",
@@ -7815,7 +9103,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/alliances/{alliance_id}/",
+    "path": "/{version}/alliances/{alliance_id}/",
     "parameters": [
       {
         "description": "An EVE alliance ID",
@@ -7825,14 +9113,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Public data about an alliance"
+    "summary": "Public data about an alliance",
+    "version": "v3"
   },
   "characters_character_assets": {
     "description": "Return a list of the characters assets",
@@ -7863,7 +9159,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/assets/",
+    "path": "/{version}/characters/{character_id}/assets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7880,15 +9176,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_assets.v1",
-    "summary": "A flat list of the users assets"
+    "summary": "A flat list of the users assets",
+    "version": "v3"
   },
   "characters_character_calendar_event": {
     "description": "Get all the information for a specific event",
@@ -7925,7 +9229,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/calendar/{event_id}/",
+    "path": "/{version}/characters/{character_id}/calendar/{event_id}/",
     "parameters": [
       {
         "description": "The id of the event requested",
@@ -7942,15 +9246,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "Full details of a specific event"
+    "summary": "Full details of a specific event",
+    "version": "v3"
   },
   "characters_character_clones": {
     "description": "A list of the character's clones",
@@ -7980,7 +9292,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/clones/",
+    "path": "/{version}/characters/{character_id}/clones/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -7990,15 +9302,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-clones.read_clones.v1",
-    "summary": "Clone information for the given character"
+    "summary": "Clone information for the given character",
+    "version": "v3"
   },
   "characters_character_mail_labels": {
     "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
@@ -8017,7 +9337,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/mail/labels/",
+    "path": "/{version}/characters/{character_id}/mail/labels/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8027,15 +9347,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "A list of mail labels and unread counts"
+    "summary": "A list of mail labels and unread counts",
+    "version": "v3"
   },
   "characters_character_notifications": {
     "description": "Return character notifications",
@@ -8063,7 +9391,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/notifications/",
+    "path": "/{version}/characters/{character_id}/notifications/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8073,15 +9401,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications"
+    "summary": "Returns your recent notifications",
+    "version": "v3"
   },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
@@ -8123,7 +9459,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/planets/{planet_id}/",
+    "path": "/{version}/characters/{character_id}/planets/{planet_id}/",
     "parameters": [
       {
         "description": "Planet id of the target planet",
@@ -8140,15 +9476,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-planets.manage_planets.v1",
-    "summary": "Colony layout"
+    "summary": "Colony layout",
+    "version": "v3"
   },
   "characters_character_search": {
     "description": "Search for entities that match a given sub",
@@ -8221,7 +9565,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/characters/{character_id}/search/",
+    "path": "/{version}/characters/{character_id}/search/",
     "parameters": [
       {
         "description": "Type of entities to search for",
@@ -8259,15 +9603,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-search.search_structures.v1",
-    "summary": "A list of search results"
+    "summary": "A list of search results",
+    "version": "v3"
   },
   "corporations_corporation_assets": {
     "description": "Return a list of the corporation assets",
@@ -8298,7 +9650,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/assets/",
+    "path": "/{version}/corporations/{corporation_id}/assets/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8315,15 +9667,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "A list of assets"
+    "summary": "A list of assets",
+    "version": "v3"
   },
   "corporations_corporation_members": {
     "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
@@ -8333,7 +9693,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/members/",
+    "path": "/{version}/corporations/{corporation_id}/members/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8343,15 +9703,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of member character IDs"
+    "summary": "List of member character IDs",
+    "version": "v3"
   },
   "corporations_corporation_orders": {
     "description": "List open market orders placed on behalf of a corporation",
@@ -8403,7 +9771,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/orders/",
+    "path": "/{version}/corporations/{corporation_id}/orders/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8420,15 +9788,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "A list of open market orders"
+    "summary": "A list of open market orders",
+    "version": "v3"
   },
   "corporations_corporation_wallets_division_journal": {
     "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
@@ -8474,7 +9850,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/corporations/{corporation_id}/wallets/{division}/journal/",
+    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/journal/",
     "parameters": [
       {
         "description": "Wallet key of the division to fetch journals from",
@@ -8498,15 +9874,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "Journal entries"
+    "summary": "Journal entries",
+    "version": "v3"
   },
   "universe_types_type": {
     "description": "Get information on a type",
@@ -8569,7 +9953,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v3/universe/types/{type_id}/",
+    "path": "/{version}/universe/types/{type_id}/",
     "parameters": [
       {
         "description": "An Eve item type ID",
@@ -8586,14 +9970,22 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a type"
+    "summary": "Information about a type",
+    "version": "v3"
   },
   "characters_character": {
     "description": "Public information about a character",
@@ -8633,7 +10025,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v4/characters/{character_id}/",
+    "path": "/{version}/characters/{character_id}/",
     "parameters": [
       {
         "description": "An EVE character ID",
@@ -8643,14 +10035,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Public data for the given character"
+    "summary": "Public data for the given character",
+    "version": "v4"
   },
   "characters_character_skills": {
     "description": "List all trained skills for the given character",
@@ -8672,7 +10072,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v4/characters/{character_id}/skills/",
+    "path": "/{version}/characters/{character_id}/skills/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8682,15 +10082,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-skills.read_skills.v1",
-    "summary": "Known skills for the character"
+    "summary": "Known skills for the character",
+    "version": "v4"
   },
   "characters_character_wallet_journal": {
     "description": "Retrieve the given character's wallet journal going 30 days back",
@@ -8736,7 +10144,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v4/characters/{character_id}/wallet/journal/",
+    "path": "/{version}/characters/{character_id}/wallet/journal/",
     "parameters": [
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -8753,15 +10161,23 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
     "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Journal entries"
+    "summary": "Journal entries",
+    "version": "v4"
   },
   "corporations_corporation": {
     "description": "Public information about a corporation",
@@ -8807,7 +10223,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v4/corporations/{corporation_id}/",
+    "path": "/{version}/corporations/{corporation_id}/",
     "parameters": [
       {
         "description": "An EVE corporation ID",
@@ -8817,14 +10233,22 @@ const ENDPOINTS = {
         "required": true
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Public information about a corporation"
+    "summary": "Public information about a corporation",
+    "version": "v4"
   },
   "universe_systems_system": {
     "description": "Get information on a solar system.",
@@ -8877,7 +10301,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/v4/universe/systems/{system_id}/",
+    "path": "/{version}/universe/systems/{system_id}/",
     "parameters": [
       {
         "description": "system_id integer",
@@ -8894,13 +10318,21 @@ const ENDPOINTS = {
         "required": false
       },
       {
-        "description": "Default: true, Boolean if column headings should be listed or not.",
+        "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
         "type": "boolean",
         "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
       }
     ],
-    "summary": "Information about a solar system"
+    "summary": "Information about a solar system",
+    "version": "v4"
   }
 };

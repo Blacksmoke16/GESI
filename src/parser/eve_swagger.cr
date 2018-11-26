@@ -85,6 +85,10 @@ module EveSwagger
           endpoint_name = "eve_search" if endpoint_name == "search"
           endpoint_name = "universe_ids" if endpoint_name == "universes"
 
+          # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
+          version = path_url.match(/\/(v\d)\//).not_nil![1]
+          path_url = path_url.sub(/v\d/,"{version}")
+
           @endpoints[endpoint_name] = EndpointObj.new(
             responses.get.nil? ? "POST" : "GET",
             path.description,
@@ -94,6 +98,7 @@ module EveSwagger
             path.scope,
             success.description,
             endpoint_name,
+            version,
           )
         end
       end
@@ -229,9 +234,10 @@ module EveSwagger
       parameters: {type: Array(Parameter), setter: false},
       scope: {type: String | Nil, setter: false},
       summary: {type: String, setter: false},
+      version: {type: String, setter: false},
     )
 
-    def initialize(@method : String, @description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String)
+    def initialize(@method : String, @description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String, @version : String)
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
       @headers = get_headers(schema)
 
@@ -279,7 +285,10 @@ module EveSwagger
       end
 
       # Add opt_headers parameter
-      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "boolean", description: "Default: true, Boolean if column headings should be listed or not."}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
+      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "boolean", description: "Boolean if column headings should be listed or not. Default: true"}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
+
+      # Add version parameter
+      @parameters << Parameter.from_json({name: "version", in: "path", type: "string", description: "Which ESI version to use for the request. Default: Current ESI latest stable version."}.to_json) unless EveSwagger.rejected_params.includes? "version"
     end
 
     private def get_headers(schema : Schema | Nil)
