@@ -37,6 +37,10 @@ GESI will automatically update when a new version is released.  To see what chan
 
 Check out the `function.ts` file under `src/script`.  This file lists all the functions available, as well as a description of  hat it returns and of each parameter.
 
+### What if I want to use a specific ESI route version?
+
+By default GESI uses the version currently on the `latest` label.  If you wish to use a different version, use the `version` parameter.  `=characters_character_wallet_journal("Blacksmoke16", 1, true, "v5")`.  The version can either be a specific version like `"v4"` or a label: `dev`, `legacy`, or `latest`.
+
 ### The `Authorize Characters` option in the add-on menu is missing?
 
 This happens when `GESI` is not authorized to run in the current document.  This can be solved by:
