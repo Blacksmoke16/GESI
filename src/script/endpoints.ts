@@ -9807,7 +9807,7 @@ const ENDPOINTS = {
     "version": "v3"
   },
   "corporations_corporation_wallets_division_journal": {
-    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
+    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back. Note: any journal records having to do with the new navigation structures from the release of Onslaught will not show up in this version. To see those, use the v4 version of this route.",
     "headers": [
       {
         "name": "amount"

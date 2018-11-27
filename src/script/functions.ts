@@ -2189,7 +2189,7 @@ function corporations_corporation_orders(name: string, page: number, opt_headers
 }
 
 /**
- * Retrieve the given corporation's wallet journal for the given division going 30 days back
+ * Retrieve the given corporation's wallet journal for the given division going 30 days back. Note: any journal records having to do with the new navigation structures from the release of Onslaught will not show up in this version. To see those, use the v4 version of this route.
  * @param {number} division (Required) Wallet key of the division to fetch journals from
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {number} page  Which page of results to return
