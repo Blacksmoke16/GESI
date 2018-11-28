@@ -35,7 +35,7 @@ GESI will automatically update when a new version is released.  To see what chan
 
 ### How do I know what functions are available?
 
-Check out the `function.ts` file under `src/script`.  This file lists all the functions available, as well as a description of  hat it returns and of each parameter.
+Check out [functions.ts](https://github.com/Blacksmoke16/GESI/blob/master/src/script/functions.ts).  This file lists all the available functions, as well as a description of what they return and the avaliable parameters.
 
 ### What if I want to use a specific ESI route version?
 
