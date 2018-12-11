@@ -6782,6 +6782,13 @@ const ENDPOINTS = {
     "path": "/{version}/universe/structures/",
     "parameters": [
       {
+        "description": "Only list public structures that have this service online",
+        "in": "query",
+        "name": "filter",
+        "type": "string",
+        "required": false
+      },
+      {
         "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
@@ -9365,60 +9372,6 @@ const ENDPOINTS = {
     "summary": "A list of mail labels and unread counts",
     "version": "v3"
   },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications",
-    "version": "v3"
-  },
   "characters_character_planets_planet": {
     "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
     "headers": [
@@ -10052,6 +10005,60 @@ const ENDPOINTS = {
     "summary": "Public data for the given character",
     "version": "v4"
   },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
+      {
+        "name": "is_read"
+      },
+      {
+        "name": "notification_id"
+      },
+      {
+        "name": "sender_id"
+      },
+      {
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/characters/{character_id}/notifications/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Returns your recent notifications",
+    "version": "v4"
+  },
   "characters_character_skills": {
     "description": "List all trained skills for the given character",
     "headers": [
@@ -10220,6 +10227,9 @@ const ENDPOINTS = {
       },
       {
         "name": "url"
+      },
+      {
+        "name": "war_eligible"
       }
     ],
     "method": "GET",

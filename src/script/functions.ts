@@ -1613,13 +1613,14 @@ function universe_stars_star(star_id: number, opt_headers: boolean, version: str
 
 /**
  * List all public structures
+ * @param {string} filter  Only list public structures that have this service online
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
  * @return List of public structure IDs
  * @customfunction
  */
-function universe_structures(opt_headers: boolean, version: string): any[][] {
-  return parseData_('universe_structures',{opt_headers:opt_headers,version:version})
+function universe_structures(filter: string, opt_headers: boolean, version: string): any[][] {
+  return parseData_('universe_structures',{filter:filter,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -2107,18 +2108,6 @@ function characters_character_mail_labels(name: string, opt_headers: boolean, ve
 }
 
 /**
- * Return character notifications
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return Returns your recent notifications
- * @customfunction
- */
-function characters_character_notifications(name: string, opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.
  * @param {number} planet_id (Required) Planet id of the target planet
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
@@ -2228,6 +2217,18 @@ function universe_types_type(type_id: number, language: string, opt_headers: boo
 function characters_character(character_id: number, opt_headers: boolean, version: string): any[][] {
   if(!character_id) throw 'character_id is required';
   return parseData_('characters_character',{character_id:character_id,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Return character notifications
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Returns your recent notifications
+ * @customfunction
+ */
+function characters_character_notifications(name: string, opt_headers: boolean, version: string): any[][] {
+  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers,version:version})
 }
 
 /**
