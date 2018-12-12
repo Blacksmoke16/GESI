@@ -25,9 +25,10 @@ if [ "$ETAG" != "$VERSION" ]; then
         echo "endpoints changed...pushing changes to Github"
 
         # Push changes to Google Scripts
-        clasp login --creds ./src/script/.clasprc.json
+        cd ./src/script
+        clasp login --creds ./.clasprc.json
         clasp push
-        rm ./src/script/.clasprc.json
+        rm ./.clasprc.json
 
         git add -A
         git commit -am "$(date '+%B %d') ESI Updates"
