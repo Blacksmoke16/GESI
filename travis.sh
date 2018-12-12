@@ -24,12 +24,6 @@ if [ "$ETAG" != "$VERSION" ]; then
     if [[ -n $(git diff ./src/script/) ]]; then
         echo "endpoints changed...pushing changes to Github"
 
-        # Push changes to Google Scripts
-        cd ./src/script
-        clasp login --creds ./.clasprc.json
-        clasp push
-        rm ./.clasprc.json
-
         git add -A
         git commit -am "$(date '+%B %d') ESI Updates"
         PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
