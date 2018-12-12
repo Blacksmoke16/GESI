@@ -69,7 +69,7 @@ const ENDPOINTS = {
       }
     ],
     "method": "GET",
-    "path": "/{version}/alliances",
+    "path": "/{version}/alliances/",
     "parameters": [
       {
         "description": "Boolean if column headings should be listed or not. Default: true",
