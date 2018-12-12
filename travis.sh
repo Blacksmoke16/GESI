@@ -24,16 +24,16 @@ if [ "$ETAG" != "$VERSION" ]; then
     if [[ -n $(git diff ./src/script/) ]]; then
         echo "endpoints changed...pushing changes to Github"
 
+        # Push changes to Google Scripts
+        clasp login --creds ./src/script/.clasprc.json
+        clasp push
+        rm ./src/script/.clasprc.json
+
         git add -A
         git commit -am "$(date '+%B %d') ESI Updates"
         PUSH=$(git push -q https://$GITHUB_TOKEN@github.com/Blacksmoke16/GESI.git)
 
         if [[ -z $PUSH ]]; then
-            # Push changes to Google Scripts
-            cd ./src/script/
-            clasp login --creds ./src/script/.clasprc.json
-            clasp push
-
             # Cut a new pre release draft
             echo "Creating a new pre release draft"
             curl -s -o /dev/null -X POST \
