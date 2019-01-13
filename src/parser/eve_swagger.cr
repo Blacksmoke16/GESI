@@ -123,7 +123,7 @@ module EveSwagger
           str << " * @customfunction\n"
           str << " */\n"
           str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| "#{p.name}: #{p.type}" }.join(", ")}): any[][] {\n"
-          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw '#{p.name} is required';\n" if p.required }
+          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw buildError_({body: '#{p.name} is required', code: 400, method: '#{endpoint_name}'});\n" if p.required }
           str << "  return parseData_('#{endpoint_name}',{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
           str << "}\n\n"
         end
