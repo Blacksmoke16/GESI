@@ -8450,105 +8450,6 @@ const ENDPOINTS = {
     "summary": "Expired and cancelled market orders placed on behalf of a corporation",
     "version": "v2"
   },
-  "corporations_corporation_structures": {
-    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
-    "headers": [
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "fuel_expires"
-      },
-      {
-        "name": "next_reinforce_apply"
-      },
-      {
-        "name": "next_reinforce_hour"
-      },
-      {
-        "name": "next_reinforce_weekday"
-      },
-      {
-        "name": "profile_id"
-      },
-      {
-        "name": "reinforce_hour"
-      },
-      {
-        "name": "reinforce_weekday"
-      },
-      {
-        "name": "services",
-        "sub_headers": [
-          "name",
-          "state"
-        ]
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "state_timer_end"
-      },
-      {
-        "name": "state_timer_start"
-      },
-      {
-        "name": "structure_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unanchors_at"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/structures/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_structures.v1",
-    "summary": "List of corporation structures' information",
-    "version": "v2"
-  },
   "dogma_effects_effect": {
     "description": "Get information on a dogma effect",
     "headers": [
@@ -9759,58 +9660,71 @@ const ENDPOINTS = {
     "summary": "A list of open market orders",
     "version": "v3"
   },
-  "corporations_corporation_wallets_division_journal": {
-    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back. Note: any journal records having to do with the new navigation structures from the release of Onslaught will not show up in this version. To see those, use the v4 version of this route.",
+  "corporations_corporation_structures": {
+    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
     "headers": [
       {
-        "name": "amount"
+        "name": "corporation_id"
       },
       {
-        "name": "balance"
+        "name": "fuel_expires"
       },
       {
-        "name": "context_id"
+        "name": "next_reinforce_apply"
       },
       {
-        "name": "context_id_type"
+        "name": "next_reinforce_hour"
       },
       {
-        "name": "date"
+        "name": "next_reinforce_weekday"
       },
       {
-        "name": "description"
+        "name": "profile_id"
       },
       {
-        "name": "first_party_id"
+        "name": "reinforce_hour"
       },
       {
-        "name": "id"
+        "name": "reinforce_weekday"
       },
       {
-        "name": "reason"
+        "name": "services",
+        "sub_headers": [
+          "name",
+          "state"
+        ]
       },
       {
-        "name": "ref_type"
+        "name": "state"
       },
       {
-        "name": "second_party_id"
+        "name": "state_timer_end"
       },
       {
-        "name": "tax"
+        "name": "state_timer_start"
       },
       {
-        "name": "tax_receiver_id"
+        "name": "structure_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unanchors_at"
       }
     ],
     "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/journal/",
+    "path": "/{version}/corporations/{corporation_id}/structures/",
     "parameters": [
       {
-        "description": "Wallet key of the division to fetch journals from",
-        "in": "path",
-        "name": "division",
-        "type": "number",
-        "required": true
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
       },
       {
         "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
@@ -9841,8 +9755,8 @@ const ENDPOINTS = {
         "required": false
       }
     ],
-    "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "Journal entries",
+    "scope": "esi-corporations.read_structures.v1",
+    "summary": "List of corporation structures' information",
     "version": "v3"
   },
   "universe_types_type": {
@@ -10107,85 +10021,6 @@ const ENDPOINTS = {
     "summary": "Known skills for the character",
     "version": "v4"
   },
-  "characters_character_wallet_journal": {
-    "description": "Retrieve the given character's wallet journal going 30 days back",
-    "headers": [
-      {
-        "name": "amount"
-      },
-      {
-        "name": "balance"
-      },
-      {
-        "name": "context_id"
-      },
-      {
-        "name": "context_id_type"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "first_party_id"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "reason"
-      },
-      {
-        "name": "ref_type"
-      },
-      {
-        "name": "second_party_id"
-      },
-      {
-        "name": "tax"
-      },
-      {
-        "name": "tax_receiver_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/wallet/journal/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Journal entries",
-    "version": "v4"
-  },
   "corporations_corporation": {
     "description": "Public information about a corporation",
     "headers": [
@@ -10258,6 +10093,92 @@ const ENDPOINTS = {
       }
     ],
     "summary": "Public information about a corporation",
+    "version": "v4"
+  },
+  "corporations_corporation_wallets_division_journal": {
+    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "balance"
+      },
+      {
+        "name": "context_id"
+      },
+      {
+        "name": "context_id_type"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "first_party_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "second_party_id"
+      },
+      {
+        "name": "tax"
+      },
+      {
+        "name": "tax_receiver_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/journal/",
+    "parameters": [
+      {
+        "description": "Wallet key of the division to fetch journals from",
+        "in": "path",
+        "name": "division",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "number",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-wallet.read_corporation_wallets.v1",
+    "summary": "Journal entries",
     "version": "v4"
   },
   "universe_systems_system": {
@@ -10344,5 +10265,84 @@ const ENDPOINTS = {
     ],
     "summary": "Information about a solar system",
     "version": "v4"
+  },
+  "characters_character_wallet_journal": {
+    "description": "Retrieve the given character's wallet journal going 30 days back",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "balance"
+      },
+      {
+        "name": "context_id"
+      },
+      {
+        "name": "context_id_type"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "first_party_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "second_party_id"
+      },
+      {
+        "name": "tax"
+      },
+      {
+        "name": "tax_receiver_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/characters/{character_id}/wallet/journal/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "number",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-wallet.read_character_wallet.v1",
+    "summary": "Journal entries",
+    "version": "v5"
   }
 };
