@@ -1926,20 +1926,6 @@ function corporations_corporation_orders_history(name: string, page: number, opt
 }
 
 /**
- * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
- * @param {string} language  Language to use in the response, takes precedence over Accept-Language
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {number} page  Which page of results to return
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return List of corporation structures' information
- * @customfunction
- */
-function corporations_corporation_structures(language: string, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  return parseData_('corporations_corporation_structures',{language:language,name:name,page:page,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Get information on a dogma effect
  * @param {number} effect_id (Required) A dogma effect ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -2178,18 +2164,17 @@ function corporations_corporation_orders(name: string, page: number, opt_headers
 }
 
 /**
- * Retrieve the given corporation's wallet journal for the given division going 30 days back. Note: any journal records having to do with the new navigation structures from the release of Onslaught will not show up in this version. To see those, use the v4 version of this route.
- * @param {number} division (Required) Wallet key of the division to fetch journals from
+ * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell
+ * @param {string} language  Language to use in the response, takes precedence over Accept-Language
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {number} page  Which page of results to return
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return Journal entries
+ * @return List of corporation structures' information
  * @customfunction
  */
-function corporations_corporation_wallets_division_journal(division: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!division) throw buildError_({body: 'division is required', code: 400, method: 'corporations_corporation_wallets_division_journal'});
-  return parseData_('corporations_corporation_wallets_division_journal',{division:division,name:name,page:page,opt_headers:opt_headers,version:version})
+function corporations_corporation_structures(language: string, name: string, page: number, opt_headers: boolean, version: string): any[][] {
+  return parseData_('corporations_corporation_structures',{language:language,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -2244,19 +2229,6 @@ function characters_character_skills(name: string, opt_headers: boolean, version
 }
 
 /**
- * Retrieve the given character's wallet journal going 30 days back
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {number} page  Which page of results to return
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return Journal entries
- * @customfunction
- */
-function characters_character_wallet_journal(name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_wallet_journal',{name:name,page:page,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Public information about a corporation
  * @param {number} corporation_id (Required) An EVE corporation ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -2267,6 +2239,21 @@ function characters_character_wallet_journal(name: string, page: number, opt_hea
 function corporations_corporation(corporation_id: number, opt_headers: boolean, version: string): any[][] {
   if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'corporations_corporation'});
   return parseData_('corporations_corporation',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Retrieve the given corporation's wallet journal for the given division going 30 days back
+ * @param {number} division (Required) Wallet key of the division to fetch journals from
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {number} page  Which page of results to return
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Journal entries
+ * @customfunction
+ */
+function corporations_corporation_wallets_division_journal(division: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
+  if(!division) throw buildError_({body: 'division is required', code: 400, method: 'corporations_corporation_wallets_division_journal'});
+  return parseData_('corporations_corporation_wallets_division_journal',{division:division,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -2281,5 +2268,18 @@ function corporations_corporation(corporation_id: number, opt_headers: boolean, 
 function universe_systems_system(system_id: number, language: string, opt_headers: boolean, version: string): any[][] {
   if(!system_id) throw buildError_({body: 'system_id is required', code: 400, method: 'universe_systems_system'});
   return parseData_('universe_systems_system',{system_id:system_id,language:language,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Retrieve the given character's wallet journal going 30 days back
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {number} page  Which page of results to return
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Journal entries
+ * @customfunction
+ */
+function characters_character_wallet_journal(name: string, page: number, opt_headers: boolean, version: string): any[][] {
+  return parseData_('characters_character_wallet_journal',{name:name,page:page,opt_headers:opt_headers,version:version})
 }
 

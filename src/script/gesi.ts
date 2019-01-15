@@ -301,7 +301,7 @@ function doRequests_(requests: IRequest[]): any | any[] {
       });
     }
 
-    data = JSON.parse(response.getContentText());
+    data = data.concat(JSON.parse(response.getContentText()));
   });
 
   return {
