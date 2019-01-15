@@ -4,7 +4,7 @@ Google Sheets add-on for interacting with EVE ESI API.
 
 ## Setup:
 
-1. Install the add-on [HERE](https://chrome.google.com/webstore/detail/gesi/haaceilfjgofjglobglglnafgnjbekoc?utm_source=permalink).
+1. Install the add-on [HERE](https://gsuite.google.com/marketplace/app/gesi/337869328721).
 2. Give the script access to what it needs.
 3. There will now be a GESI option under the `Add-Ons` option in the menu bar.  Click it and then click `GESI => Authorize Characters`.
 4. Click the EVE SSO button in the modal.  Login => select what character you want to authorize => Authorize.

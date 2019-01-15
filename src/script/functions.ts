@@ -52,7 +52,7 @@ function alliances_alliance_icons(opt_headers: boolean, version: string): any[][
  * @customfunction
  */
 function characters_affiliation(characters: number[], opt_headers: boolean, version: string): any[][] {
-  if(!characters) throw 'characters is required';
+  if(!characters) throw buildError_({body: 'characters is required', code: 400, method: 'characters_affiliation'});
   return parseData_('characters_affiliation',{characters:characters,opt_headers:opt_headers,version:version})
 }
 
@@ -78,7 +78,7 @@ function characters_character_agents_research(name: string, opt_headers: boolean
  * @customfunction
  */
 function characters_character_assets_names(item_ids: number[], name: string, opt_headers: boolean, version: string): any[][] {
-  if(!item_ids) throw 'item_ids is required';
+  if(!item_ids) throw buildError_({body: 'item_ids is required', code: 400, method: 'characters_character_assets_names'});
   return parseData_('characters_character_assets_names',{item_ids:item_ids,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -117,7 +117,7 @@ function characters_character_calendar(from_event: number, name: string, opt_hea
  * @customfunction
  */
 function characters_character_calendar_event_attendees(event_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!event_id) throw 'event_id is required';
+  if(!event_id) throw buildError_({body: 'event_id is required', code: 400, method: 'characters_character_calendar_event_attendees'});
   return parseData_('characters_character_calendar_event_attendees',{event_id:event_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -156,7 +156,7 @@ function characters_character_contracts(name: string, page: number, opt_headers:
  * @customfunction
  */
 function characters_character_contracts_contract_bids(contract_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'characters_character_contracts_contract_bids'});
   return parseData_('characters_character_contracts_contract_bids',{contract_id:contract_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -170,7 +170,7 @@ function characters_character_contracts_contract_bids(contract_id: number, name:
  * @customfunction
  */
 function characters_character_contracts_contract_items(contract_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'characters_character_contracts_contract_items'});
   return parseData_('characters_character_contracts_contract_items',{contract_id:contract_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -183,7 +183,7 @@ function characters_character_contracts_contract_items(contract_id: number, name
  * @customfunction
  */
 function characters_character_corporationhistory(character_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!character_id) throw 'character_id is required';
+  if(!character_id) throw buildError_({body: 'character_id is required', code: 400, method: 'characters_character_corporationhistory'});
   return parseData_('characters_character_corporationhistory',{character_id:character_id,opt_headers:opt_headers,version:version})
 }
 
@@ -333,7 +333,7 @@ function characters_character_mail_lists(name: string, opt_headers: boolean, ver
  * @customfunction
  */
 function characters_character_mail_mail(mail_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!mail_id) throw 'mail_id is required';
+  if(!mail_id) throw buildError_({body: 'mail_id is required', code: 400, method: 'characters_character_mail_mail'});
   return parseData_('characters_character_mail_mail',{mail_id:mail_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -482,7 +482,7 @@ function characters_character_wallet_transactions(from_id: number, name: string,
  * @customfunction
  */
 function contracts_public_bids_contract(contract_id: number, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'contracts_public_bids_contract'});
   return parseData_('contracts_public_bids_contract',{contract_id:contract_id,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -496,7 +496,7 @@ function contracts_public_bids_contract(contract_id: number, page: number, opt_h
  * @customfunction
  */
 function contracts_public_items_contract(contract_id: number, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'contracts_public_items_contract'});
   return parseData_('contracts_public_items_contract',{contract_id:contract_id,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -510,7 +510,7 @@ function contracts_public_items_contract(contract_id: number, page: number, opt_
  * @customfunction
  */
 function contracts_public_region(region_id: number, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!region_id) throw 'region_id is required';
+  if(!region_id) throw buildError_({body: 'region_id is required', code: 400, method: 'contracts_public_region'});
   return parseData_('contracts_public_region',{region_id:region_id,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -551,7 +551,7 @@ function corporation_corporation_mining_observers(name: string, page: number, op
  * @customfunction
  */
 function corporation_corporation_mining_observers_observer(observer_id: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!observer_id) throw 'observer_id is required';
+  if(!observer_id) throw buildError_({body: 'observer_id is required', code: 400, method: 'corporation_corporation_mining_observers_observer'});
   return parseData_('corporation_corporation_mining_observers_observer',{observer_id:observer_id,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -576,7 +576,7 @@ function corporations_npccorps(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function corporations_corporation_assets_names(item_ids: number[], name: string, opt_headers: boolean, version: string): any[][] {
-  if(!item_ids) throw 'item_ids is required';
+  if(!item_ids) throw buildError_({body: 'item_ids is required', code: 400, method: 'corporations_corporation_assets_names'});
   return parseData_('corporations_corporation_assets_names',{item_ids:item_ids,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -642,7 +642,7 @@ function corporations_corporation_contracts(name: string, page: number, opt_head
  * @customfunction
  */
 function corporations_corporation_contracts_contract_bids(contract_id: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'corporations_corporation_contracts_contract_bids'});
   return parseData_('corporations_corporation_contracts_contract_bids',{contract_id:contract_id,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -656,7 +656,7 @@ function corporations_corporation_contracts_contract_bids(contract_id: number, n
  * @customfunction
  */
 function corporations_corporation_contracts_contract_items(contract_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!contract_id) throw 'contract_id is required';
+  if(!contract_id) throw buildError_({body: 'contract_id is required', code: 400, method: 'corporations_corporation_contracts_contract_items'});
   return parseData_('corporations_corporation_contracts_contract_items',{contract_id:contract_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -884,8 +884,8 @@ function corporations_corporation_starbases(name: string, page: number, opt_head
  * @customfunction
  */
 function corporations_corporation_starbases_starbase(starbase_id: number, system_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!starbase_id) throw 'starbase_id is required';
-  if(!system_id) throw 'system_id is required';
+  if(!starbase_id) throw buildError_({body: 'starbase_id is required', code: 400, method: 'corporations_corporation_starbases_starbase'});
+  if(!system_id) throw buildError_({body: 'system_id is required', code: 400, method: 'corporations_corporation_starbases_starbase'});
   return parseData_('corporations_corporation_starbases_starbase',{starbase_id:starbase_id,system_id:system_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -924,7 +924,7 @@ function corporations_corporation_wallets(name: string, opt_headers: boolean, ve
  * @customfunction
  */
 function corporations_corporation_wallets_division_transactions(division: number, from_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!division) throw 'division is required';
+  if(!division) throw buildError_({body: 'division is required', code: 400, method: 'corporations_corporation_wallets_division_transactions'});
   return parseData_('corporations_corporation_wallets_division_transactions',{division:division,from_id:from_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -948,7 +948,7 @@ function dogma_attributes(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function dogma_attributes_attribute(attribute_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!attribute_id) throw 'attribute_id is required';
+  if(!attribute_id) throw buildError_({body: 'attribute_id is required', code: 400, method: 'dogma_attributes_attribute'});
   return parseData_('dogma_attributes_attribute',{attribute_id:attribute_id,opt_headers:opt_headers,version:version})
 }
 
@@ -962,8 +962,8 @@ function dogma_attributes_attribute(attribute_id: number, opt_headers: boolean, 
  * @customfunction
  */
 function dogma_dynamic_items_type_item(item_id: number, type_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!item_id) throw 'item_id is required';
-  if(!type_id) throw 'type_id is required';
+  if(!item_id) throw buildError_({body: 'item_id is required', code: 400, method: 'dogma_dynamic_items_type_item'});
+  if(!type_id) throw buildError_({body: 'type_id is required', code: 400, method: 'dogma_dynamic_items_type_item'});
   return parseData_('dogma_dynamic_items_type_item',{item_id:item_id,type_id:type_id,opt_headers:opt_headers,version:version})
 }
 
@@ -988,7 +988,7 @@ function dogma_effects(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function fleets_fleet(fleet_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!fleet_id) throw 'fleet_id is required';
+  if(!fleet_id) throw buildError_({body: 'fleet_id is required', code: 400, method: 'fleets_fleet'});
   return parseData_('fleets_fleet',{fleet_id:fleet_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -1003,7 +1003,7 @@ function fleets_fleet(fleet_id: number, name: string, opt_headers: boolean, vers
  * @customfunction
  */
 function fleets_fleet_members(fleet_id: number, language: string, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!fleet_id) throw 'fleet_id is required';
+  if(!fleet_id) throw buildError_({body: 'fleet_id is required', code: 400, method: 'fleets_fleet_members'});
   return parseData_('fleets_fleet_members',{fleet_id:fleet_id,language:language,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -1018,7 +1018,7 @@ function fleets_fleet_members(fleet_id: number, language: string, name: string, 
  * @customfunction
  */
 function fleets_fleet_wings(fleet_id: number, language: string, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!fleet_id) throw 'fleet_id is required';
+  if(!fleet_id) throw buildError_({body: 'fleet_id is required', code: 400, method: 'fleets_fleet_wings'});
   return parseData_('fleets_fleet_wings',{fleet_id:fleet_id,language:language,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -1132,8 +1132,8 @@ function insurance_prices(language: string, opt_headers: boolean, version: strin
  * @customfunction
  */
 function killmails_killmail_killmail_hash(killmail_hash: string, killmail_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!killmail_hash) throw 'killmail_hash is required';
-  if(!killmail_id) throw 'killmail_id is required';
+  if(!killmail_hash) throw buildError_({body: 'killmail_hash is required', code: 400, method: 'killmails_killmail_killmail_hash'});
+  if(!killmail_id) throw buildError_({body: 'killmail_id is required', code: 400, method: 'killmails_killmail_killmail_hash'});
   return parseData_('killmails_killmail_killmail_hash',{killmail_hash:killmail_hash,killmail_id:killmail_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1146,7 +1146,7 @@ function killmails_killmail_killmail_hash(killmail_hash: string, killmail_id: nu
  * @customfunction
  */
 function loyalty_stores_corporation_offers(corporation_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!corporation_id) throw 'corporation_id is required';
+  if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'loyalty_stores_corporation_offers'});
   return parseData_('loyalty_stores_corporation_offers',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1171,7 +1171,7 @@ function markets_groups(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function markets_groups_market_group(market_group_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!market_group_id) throw 'market_group_id is required';
+  if(!market_group_id) throw buildError_({body: 'market_group_id is required', code: 400, method: 'markets_groups_market_group'});
   return parseData_('markets_groups_market_group',{market_group_id:market_group_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1197,7 +1197,7 @@ function markets_prices(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function markets_structures_structure(structure_id: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!structure_id) throw 'structure_id is required';
+  if(!structure_id) throw buildError_({body: 'structure_id is required', code: 400, method: 'markets_structures_structure'});
   return parseData_('markets_structures_structure',{structure_id:structure_id,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -1211,8 +1211,8 @@ function markets_structures_structure(structure_id: number, name: string, page: 
  * @customfunction
  */
 function markets_region_history(region_id: number, type_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!region_id) throw 'region_id is required';
-  if(!type_id) throw 'type_id is required';
+  if(!region_id) throw buildError_({body: 'region_id is required', code: 400, method: 'markets_region_history'});
+  if(!type_id) throw buildError_({body: 'type_id is required', code: 400, method: 'markets_region_history'});
   return parseData_('markets_region_history',{region_id:region_id,type_id:type_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1228,8 +1228,8 @@ function markets_region_history(region_id: number, type_id: number, opt_headers:
  * @customfunction
  */
 function markets_region_orders(order_type: string, region_id: number, page: number, type_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!order_type) throw 'order_type is required';
-  if(!region_id) throw 'region_id is required';
+  if(!order_type) throw buildError_({body: 'order_type is required', code: 400, method: 'markets_region_orders'});
+  if(!region_id) throw buildError_({body: 'region_id is required', code: 400, method: 'markets_region_orders'});
   return parseData_('markets_region_orders',{order_type:order_type,region_id:region_id,page:page,type_id:type_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1243,7 +1243,7 @@ function markets_region_orders(order_type: string, region_id: number, page: numb
  * @customfunction
  */
 function markets_region_types(region_id: number, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!region_id) throw 'region_id is required';
+  if(!region_id) throw buildError_({body: 'region_id is required', code: 400, method: 'markets_region_types'});
   return parseData_('markets_region_types',{region_id:region_id,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -1268,7 +1268,7 @@ function opportunities_groups(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function opportunities_groups_group(group_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!group_id) throw 'group_id is required';
+  if(!group_id) throw buildError_({body: 'group_id is required', code: 400, method: 'opportunities_groups_group'});
   return parseData_('opportunities_groups_group',{group_id:group_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1292,7 +1292,7 @@ function opportunities_tasks(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function opportunities_tasks_task(task_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!task_id) throw 'task_id is required';
+  if(!task_id) throw buildError_({body: 'task_id is required', code: 400, method: 'opportunities_tasks_task'});
   return parseData_('opportunities_tasks_task',{task_id:task_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1309,8 +1309,8 @@ function opportunities_tasks_task(task_id: number, opt_headers: boolean, version
  * @customfunction
  */
 function route_origin_destination(destination: number, origin: number, avoid: number[], connections: number[], flag: string, opt_headers: boolean, version: string): any[][] {
-  if(!destination) throw 'destination is required';
-  if(!origin) throw 'origin is required';
+  if(!destination) throw buildError_({body: 'destination is required', code: 400, method: 'route_origin_destination'});
+  if(!origin) throw buildError_({body: 'origin is required', code: 400, method: 'route_origin_destination'});
   return parseData_('route_origin_destination',{destination:destination,origin:origin,avoid:avoid,connections:connections,flag:flag,opt_headers:opt_headers,version:version})
 }
 
@@ -1379,7 +1379,7 @@ function universe_ancestries(language: string, opt_headers: boolean, version: st
  * @customfunction
  */
 function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!asteroid_belt_id) throw 'asteroid_belt_id is required';
+  if(!asteroid_belt_id) throw buildError_({body: 'asteroid_belt_id is required', code: 400, method: 'universe_asteroid_belts_asteroid_belt'});
   return parseData_('universe_asteroid_belts_asteroid_belt',{asteroid_belt_id:asteroid_belt_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1416,7 +1416,7 @@ function universe_categories(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function universe_categories_category(category_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!category_id) throw 'category_id is required';
+  if(!category_id) throw buildError_({body: 'category_id is required', code: 400, method: 'universe_categories_category'});
   return parseData_('universe_categories_category',{category_id:category_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1441,7 +1441,7 @@ function universe_constellations(opt_headers: boolean, version: string): any[][]
  * @customfunction
  */
 function universe_constellations_constellation(constellation_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!constellation_id) throw 'constellation_id is required';
+  if(!constellation_id) throw buildError_({body: 'constellation_id is required', code: 400, method: 'universe_constellations_constellation'});
   return parseData_('universe_constellations_constellation',{constellation_id:constellation_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1465,7 +1465,7 @@ function universe_graphics(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function universe_graphics_graphic(graphic_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!graphic_id) throw 'graphic_id is required';
+  if(!graphic_id) throw buildError_({body: 'graphic_id is required', code: 400, method: 'universe_graphics_graphic'});
   return parseData_('universe_graphics_graphic',{graphic_id:graphic_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1491,7 +1491,7 @@ function universe_groups(page: number, opt_headers: boolean, version: string): a
  * @customfunction
  */
 function universe_groups_group(group_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!group_id) throw 'group_id is required';
+  if(!group_id) throw buildError_({body: 'group_id is required', code: 400, method: 'universe_groups_group'});
   return parseData_('universe_groups_group',{group_id:group_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1505,7 +1505,7 @@ function universe_groups_group(group_id: number, language: string, opt_headers: 
  * @customfunction
  */
 function universe_ids(names: string[], language: string, opt_headers: boolean, version: string): any[][] {
-  if(!names) throw 'names is required';
+  if(!names) throw buildError_({body: 'names is required', code: 400, method: 'universe_ids'});
   return parseData_('universe_ids',{names:names,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1518,7 +1518,7 @@ function universe_ids(names: string[], language: string, opt_headers: boolean, v
  * @customfunction
  */
 function universe_moons_moon(moon_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!moon_id) throw 'moon_id is required';
+  if(!moon_id) throw buildError_({body: 'moon_id is required', code: 400, method: 'universe_moons_moon'});
   return parseData_('universe_moons_moon',{moon_id:moon_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1531,7 +1531,7 @@ function universe_moons_moon(moon_id: number, opt_headers: boolean, version: str
  * @customfunction
  */
 function universe_planets_planet(planet_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!planet_id) throw 'planet_id is required';
+  if(!planet_id) throw buildError_({body: 'planet_id is required', code: 400, method: 'universe_planets_planet'});
   return parseData_('universe_planets_planet',{planet_id:planet_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1568,7 +1568,7 @@ function universe_regions(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function universe_regions_region(region_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!region_id) throw 'region_id is required';
+  if(!region_id) throw buildError_({body: 'region_id is required', code: 400, method: 'universe_regions_region'});
   return parseData_('universe_regions_region',{region_id:region_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -1581,7 +1581,7 @@ function universe_regions_region(region_id: number, language: string, opt_header
  * @customfunction
  */
 function universe_schematics_schematic(schematic_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!schematic_id) throw 'schematic_id is required';
+  if(!schematic_id) throw buildError_({body: 'schematic_id is required', code: 400, method: 'universe_schematics_schematic'});
   return parseData_('universe_schematics_schematic',{schematic_id:schematic_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1594,7 +1594,7 @@ function universe_schematics_schematic(schematic_id: number, opt_headers: boolea
  * @customfunction
  */
 function universe_stargates_stargate(stargate_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!stargate_id) throw 'stargate_id is required';
+  if(!stargate_id) throw buildError_({body: 'stargate_id is required', code: 400, method: 'universe_stargates_stargate'});
   return parseData_('universe_stargates_stargate',{stargate_id:stargate_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1607,7 +1607,7 @@ function universe_stargates_stargate(stargate_id: number, opt_headers: boolean, 
  * @customfunction
  */
 function universe_stars_star(star_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!star_id) throw 'star_id is required';
+  if(!star_id) throw buildError_({body: 'star_id is required', code: 400, method: 'universe_stars_star'});
   return parseData_('universe_stars_star',{star_id:star_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1678,7 +1678,7 @@ function wars(max_war_id: number, opt_headers: boolean, version: string): any[][
  * @customfunction
  */
 function wars_war(war_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!war_id) throw 'war_id is required';
+  if(!war_id) throw buildError_({body: 'war_id is required', code: 400, method: 'wars_war'});
   return parseData_('wars_war',{war_id:war_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1692,7 +1692,7 @@ function wars_war(war_id: number, opt_headers: boolean, version: string): any[][
  * @customfunction
  */
 function wars_war_killmails(war_id: number, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!war_id) throw 'war_id is required';
+  if(!war_id) throw buildError_({body: 'war_id is required', code: 400, method: 'wars_war_killmails'});
   return parseData_('wars_war_killmails',{war_id:war_id,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -1719,7 +1719,7 @@ function alliances_alliance_contacts(name: string, page: number, opt_headers: bo
  * @customfunction
  */
 function characters_character_assets_locations(item_ids: number[], name: string, opt_headers: boolean, version: string): any[][] {
-  if(!item_ids) throw 'item_ids is required';
+  if(!item_ids) throw buildError_({body: 'item_ids is required', code: 400, method: 'characters_character_assets_locations'});
   return parseData_('characters_character_assets_locations',{item_ids:item_ids,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -1855,7 +1855,7 @@ function characters_character_stats(name: string, opt_headers: boolean, version:
  * @customfunction
  */
 function corporations_corporation_alliancehistory(corporation_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!corporation_id) throw 'corporation_id is required';
+  if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'corporations_corporation_alliancehistory'});
   return parseData_('corporations_corporation_alliancehistory',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1869,7 +1869,7 @@ function corporations_corporation_alliancehistory(corporation_id: number, opt_he
  * @customfunction
  */
 function corporations_corporation_assets_locations(item_ids: number[], name: string, opt_headers: boolean, version: string): any[][] {
-  if(!item_ids) throw 'item_ids is required';
+  if(!item_ids) throw buildError_({body: 'item_ids is required', code: 400, method: 'corporations_corporation_assets_locations'});
   return parseData_('corporations_corporation_assets_locations',{item_ids:item_ids,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -1934,7 +1934,7 @@ function corporations_corporation_orders_history(name: string, page: number, opt
  * @customfunction
  */
 function dogma_effects_effect(effect_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!effect_id) throw 'effect_id is required';
+  if(!effect_id) throw buildError_({body: 'effect_id is required', code: 400, method: 'dogma_effects_effect'});
   return parseData_('dogma_effects_effect',{effect_id:effect_id,opt_headers:opt_headers,version:version})
 }
 
@@ -1961,8 +1961,8 @@ function fw_systems(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function eve_search(categories: string[], search: string, language: string, strict: boolean, opt_headers: boolean, version: string): any[][] {
-  if(!categories) throw 'categories is required';
-  if(!search) throw 'search is required';
+  if(!categories) throw buildError_({body: 'categories is required', code: 400, method: 'eve_search'});
+  if(!search) throw buildError_({body: 'search is required', code: 400, method: 'eve_search'});
   return parseData_('eve_search',{categories:categories,search:search,language:language,strict:strict,opt_headers:opt_headers,version:version})
 }
 
@@ -1987,7 +1987,7 @@ function universe_factions(language: string, opt_headers: boolean, version: stri
  * @customfunction
  */
 function universe_names(ids: number[], opt_headers: boolean, version: string): any[][] {
-  if(!ids) throw 'ids is required';
+  if(!ids) throw buildError_({body: 'ids is required', code: 400, method: 'universe_names'});
   return parseData_('universe_names',{ids:ids,opt_headers:opt_headers,version:version})
 }
 
@@ -2000,7 +2000,7 @@ function universe_names(ids: number[], opt_headers: boolean, version: string): a
  * @customfunction
  */
 function universe_stations_station(station_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!station_id) throw 'station_id is required';
+  if(!station_id) throw buildError_({body: 'station_id is required', code: 400, method: 'universe_stations_station'});
   return parseData_('universe_stations_station',{station_id:station_id,opt_headers:opt_headers,version:version})
 }
 
@@ -2014,7 +2014,7 @@ function universe_stations_station(station_id: number, opt_headers: boolean, ver
  * @customfunction
  */
 function universe_structures_structure(structure_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!structure_id) throw 'structure_id is required';
+  if(!structure_id) throw buildError_({body: 'structure_id is required', code: 400, method: 'universe_structures_structure'});
   return parseData_('universe_structures_structure',{structure_id:structure_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -2038,7 +2038,7 @@ function universe_system_kills(opt_headers: boolean, version: string): any[][] {
  * @customfunction
  */
 function alliances_alliance(alliance_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!alliance_id) throw 'alliance_id is required';
+  if(!alliance_id) throw buildError_({body: 'alliance_id is required', code: 400, method: 'alliances_alliance'});
   return parseData_('alliances_alliance',{alliance_id:alliance_id,opt_headers:opt_headers,version:version})
 }
 
@@ -2065,7 +2065,7 @@ function characters_character_assets(name: string, page: number, opt_headers: bo
  * @customfunction
  */
 function characters_character_calendar_event(event_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!event_id) throw 'event_id is required';
+  if(!event_id) throw buildError_({body: 'event_id is required', code: 400, method: 'characters_character_calendar_event'});
   return parseData_('characters_character_calendar_event',{event_id:event_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -2103,7 +2103,7 @@ function characters_character_mail_labels(name: string, opt_headers: boolean, ve
  * @customfunction
  */
 function characters_character_planets_planet(planet_id: number, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!planet_id) throw 'planet_id is required';
+  if(!planet_id) throw buildError_({body: 'planet_id is required', code: 400, method: 'characters_character_planets_planet'});
   return parseData_('characters_character_planets_planet',{planet_id:planet_id,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -2120,8 +2120,8 @@ function characters_character_planets_planet(planet_id: number, name: string, op
  * @customfunction
  */
 function characters_character_search(categories: string[], search: string, language: string, strict: boolean, name: string, opt_headers: boolean, version: string): any[][] {
-  if(!categories) throw 'categories is required';
-  if(!search) throw 'search is required';
+  if(!categories) throw buildError_({body: 'categories is required', code: 400, method: 'characters_character_search'});
+  if(!search) throw buildError_({body: 'search is required', code: 400, method: 'characters_character_search'});
   return parseData_('characters_character_search',{categories:categories,search:search,language:language,strict:strict,name:name,opt_headers:opt_headers,version:version})
 }
 
@@ -2187,7 +2187,7 @@ function corporations_corporation_structures(language: string, name: string, pag
  * @customfunction
  */
 function universe_types_type(type_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!type_id) throw 'type_id is required';
+  if(!type_id) throw buildError_({body: 'type_id is required', code: 400, method: 'universe_types_type'});
   return parseData_('universe_types_type',{type_id:type_id,language:language,opt_headers:opt_headers,version:version})
 }
 
@@ -2200,7 +2200,7 @@ function universe_types_type(type_id: number, language: string, opt_headers: boo
  * @customfunction
  */
 function characters_character(character_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!character_id) throw 'character_id is required';
+  if(!character_id) throw buildError_({body: 'character_id is required', code: 400, method: 'characters_character'});
   return parseData_('characters_character',{character_id:character_id,opt_headers:opt_headers,version:version})
 }
 
@@ -2237,7 +2237,7 @@ function characters_character_skills(name: string, opt_headers: boolean, version
  * @customfunction
  */
 function corporations_corporation(corporation_id: number, opt_headers: boolean, version: string): any[][] {
-  if(!corporation_id) throw 'corporation_id is required';
+  if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'corporations_corporation'});
   return parseData_('corporations_corporation',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
 }
 
@@ -2252,7 +2252,7 @@ function corporations_corporation(corporation_id: number, opt_headers: boolean, 
  * @customfunction
  */
 function corporations_corporation_wallets_division_journal(division: number, name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  if(!division) throw 'division is required';
+  if(!division) throw buildError_({body: 'division is required', code: 400, method: 'corporations_corporation_wallets_division_journal'});
   return parseData_('corporations_corporation_wallets_division_journal',{division:division,name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
@@ -2266,7 +2266,7 @@ function corporations_corporation_wallets_division_journal(division: number, nam
  * @customfunction
  */
 function universe_systems_system(system_id: number, language: string, opt_headers: boolean, version: string): any[][] {
-  if(!system_id) throw 'system_id is required';
+  if(!system_id) throw buildError_({body: 'system_id is required', code: 400, method: 'universe_systems_system'});
   return parseData_('universe_systems_system',{system_id:system_id,language:language,opt_headers:opt_headers,version:version})
 }
 

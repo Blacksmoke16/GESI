@@ -5,10 +5,11 @@
  * @Blacksmoke16#0016 @ Discord
  * https://discord.gg/eEAH2et
  */
-import URLFetchRequestOptions = GoogleAppsScript.URL_Fetch.URLFetchRequestOptions;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import User = GoogleAppsScript.Base.User;
-import Range = GoogleAppsScript.Spreadsheet.Range;
+import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
+
+const HEADERS: Object = { 'User-Agent': 'GESI V2', 'Content-Type': 'application/json' };
 
 function onInstall(): void {
   onOpen();
@@ -16,9 +17,9 @@ function onInstall(): void {
 
 function onOpen(): void {
   SpreadsheetApp.getUi()
-  .createAddonMenu()
-  .addItem('Authorize Characters', 'showSSOModal')
-  .addToUi();
+    .createAddonMenu()
+    .addItem('Authorize Characters', 'showSSOModal')
+    .addToUi();
 }
 
 /**
@@ -82,30 +83,19 @@ function setMainCharacter(character_name: string): string {
 }
 
 /**
- * Gets the raw response from the given ESI endpoint
- * @param {string} endpoint_name (Required) Name of the endpoint to fetch data from.
- * @param {string} params params to use for the request.
- * @return Hash of JSON data and headers
- * @customfunction
- */
-function getRawData(endpoint_name: string, params: IFunctionParam = {} as IFunctionParam): IRequestResponse {
-  return getData_(endpoint_name, params);
-}
-
-/**
  * Refreshes the access token for a given character and returns a new access token
  * @param {string} character_name (Required) Name of the character to refresh the token.
  * @return A new access token for the character
  * @customfunction
  */
 function refreshToken(character_name: string): string {
-  return refreshToken_(character_name);
+  return refreshToken_(getCharacterRowData_(character_name));
 }
 
 function showSSOModal(): void {
   const redirectUrl = `https://script.google.com/macros/d/${ScriptApp.getScriptId()}/usercallback`;
   const stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(1200).createToken();
-  const authorizationUrl = 'https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=' + redirectUrl + '&client_id=' + PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + '&scope=' + SCOPES.join('+') + '&state=' + stateToken;
+  const authorizationUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=${redirectUrl}&client_id=${PropertiesService.getScriptProperties().getProperty('CLIENT_ID')}&scope=${SCOPES.join('+')}&state=${stateToken}`;
   const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
   template.authorizationUrl = authorizationUrl;
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
@@ -117,70 +107,22 @@ function authCallback(request): HtmlOutput {
   const affiliationData = getCharacterAffiliation_(characterData.character_id);
   const userData = Object.assign(tokenData, characterData, affiliationData);
   saveCharacter_([userData.character_name, userData.character_id, userData.corporation_id, userData.alliance_id, userData.refresh_token], userData.access_token);
-  return HtmlService.createHtmlOutput('Thank you for using GESI ' + userData.character_name + '.  You can close this tab.');
+  return HtmlService.createHtmlOutput(`Thank you for using GESI ${userData.character_name}.  You can close this tab.`);
 }
 
-function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
-  const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
-  let result = [];
-  let data: any = [];
-
-  if (params.opt_headers || undefined === params.opt_headers) result.push(endpoint.headers.map((h: IEndpointHeader) => h.name));
-
-  if (-1 === params.page) {
-    params.page = 1;
-    let response = getData_(endpoint_name, params);
-    data = data.concat(response.data);
-    let page = 2;
-    while (response.data.length > 0) {
-      params.page = page;
-      response = getData_(endpoint_name, params);
-      data = data.concat(response.data);
-      page++;
-    }
-  } else {
-    data = getData_(endpoint_name, params).data;
-  }
-
-  if (Array.isArray(data) && typeof(data[0]) === 'number') {
-    result = result.concat(data);
-  } else if (Array.isArray(data) && typeof(data[0]) === 'object') {
-    result = result.concat(
-      data.map((obj) => {
-        return endpoint.headers.map((header: IEndpointHeader) => typeof(obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name])
-      })
-    )
-  } else if (typeof(data) === 'object') {
-    result.push(endpoint.headers.map((header: IEndpointHeader) => typeof(data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]))
-  } else if (typeof(data) === 'number') {
-    result = [data];
-  } else {
-    throw typeof(data) + ' is an unexpected type.';
-  }
-
-  return result;
-}
-
-function getData_(endpoint_name: string, params: IFunctionParam): IRequestResponse {
-  const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
-  const character_name = params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER');
-  const character = getCharacterRow_(character_name);
-  if (!character && endpoint.scope) throw character_name + ' is not authed, or is misspelled.';
-  if (!params.version) params.version = endpoint.version;
-
+function buildRequest_(endpoint: IEndpoint, character: ICharacterRowData, params: IFunctionParam, token: string, data: any = null): IRequest {
   let path = endpoint.path;
-  let data = null;
 
   endpoint.parameters.forEach((param: IParameter) => {
     if (param.in === 'path' && params[param.name]) {
-      path = path.replace('{' + param.name + '}', params[param.name])
+      path = path.replace('{' + param.name + '}', params[param.name]);
     } else if (param.in === 'query' && params[param.name]) {
       path += path.indexOf('?') !== -1 ? '&' : '?';
       path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
     } else if (param.in === 'body' && params[param.name]) {
       if (param.type.indexOf('[]') !== -1) {
         data = Array.isArray(params[param.name]) ? params[param.name].filter(function (id) {
-          return id[0]
+          return id[0];
         }).map(function (id) {
           return id[0];
         }) : [params[param.name]];
@@ -190,76 +132,117 @@ function getData_(endpoint_name: string, params: IFunctionParam): IRequestRespon
     }
   });
 
-  if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', getProperty_(character, CharacterRowData.character_id).getValue() as string);
-  if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', getProperty_(character, CharacterRowData.alliance_id).getValue() as string);
-  if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', getProperty_(character, CharacterRowData.corporation_id).getValue() as string);
+  if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', character.character_id.toString());
+  if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', character.alliance_id.toString());
+  if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', character.corporation_id.toString());
 
-  let token = CacheService.getDocumentCache().get(character_name + '_access_token');
-  if (!token && endpoint.scope) token = refreshToken_(character_name);
+  const request = {
+    method: endpoint.method,
+    url: `${PropertiesService.getScriptProperties().getProperty('BASE_URL')}${path}`,
+    headers: HEADERS,
+    muteHttpExceptions: true,
+  } as IRequest;
 
-  const hash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.MD5, character_name + endpoint_name + JSON.stringify(params) + JSON.stringify(data)));
-  let cached_data = CacheService.getDocumentCache().get(hash + '_0');
-  if (cached_data) {
-    let result = [];
-    let idx = 1;
-    while (cached_data) {
-      result = result.concat(JSON.parse(cached_data));
-      cached_data = CacheService.getDocumentCache().get(hash + `_${idx}`);
-      idx++;
+  if (data) request['payload'] = JSON.stringify(data);
+  if (endpoint.scope) request.headers['authorization'] = `Bearer ${token}`;
+  return request;
+}
+
+function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
+  const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
+  const character: ICharacterRowData = getCharacterRowData_((params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER')));
+  if (!character && endpoint.scope) throw `${character.character_name} is not authed, or is misspelled.`;
+  let result: any[][] = [];
+  let data: any = [];
+
+  // Add the header row if its not set or set to true
+  if (params.opt_headers || undefined === params.opt_headers) result.push(endpoint.headers.map((h: IEndpointHeader) => h.name));
+
+  // Set the token.  Refresh it if it's expired.
+  let token = CacheService.getDocumentCache().get(`${character.character_name}_access_token`);
+  if (!token && endpoint.scope) token = refreshToken_(character);
+  if (!params.version) params.version = endpoint.version;
+
+  if (params.page === -1) {
+    params.page = 1;
+    const response = doRequests_([buildRequest_(endpoint, character, params, token)]);
+    data = data.concat(response.data);
+    const requests: IRequest[] = [];
+    const pages = response.headers['x-pages'];
+
+    for (let p = 2; p <= pages; p++) {
+      params.page = p;
+      requests.push(buildRequest_(endpoint, character, params, token));
     }
-    return {data: result, headers: {}} as IRequestResponse;
+    data = data.concat(doRequests_(requests).data);
+  } else {
+    data = doRequests_([buildRequest_(endpoint, character, params, token)]).data;
   }
 
-  const response = doRequest_(PropertiesService.getScriptProperties().getProperty('BASE_URL') + path, endpoint.method, token, data);
-  const date_expires = new Date(response.headers['Expires']);
-  const cache_time = Math.min(21600, Math.ceil((date_expires.getTime() - (new Date()).getTime()) / 1000));
-  try {
-    CacheService.getDocumentCache().put(hash + '_0', JSON.stringify(response.data), cache_time);
-  } catch (e) {
-    try {
-      const chunked_data = chunkArray_(response.data as any[], 350);
-      for (let i = 0; i < chunked_data.length; i++) {
-        CacheService.getDocumentCache().put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
-      }
-    } catch (e) {
-      const chunked_data = chunkArray_(response.data as any[], 75);
-      for (let i = 0; i < chunked_data.length; i++) {
-        CacheService.getDocumentCache().put(hash + `_${i}`, JSON.stringify(chunked_data[i]), cache_time);
-      }
-    } finally {
-      return response;
-    }
-  } finally {
-    return response;
+  if (Array.isArray(data) && typeof (data[0]) === 'number') {
+    result = result.concat(data);
+  } else if (Array.isArray(data) && typeof (data[0]) === 'object') {
+    result = result.concat(
+      data.map((obj) => {
+        return endpoint.headers.map((header: IEndpointHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
+      }),
+    );
+  } else if (typeof (data) === 'object') {
+    result.push(endpoint.headers.map((header: IEndpointHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
+  } else if (typeof (data) === 'number') {
+    result = [data];
+  } else {
+    throw typeof (data) + ' is an unexpected type.';
   }
+
+  return result;
 }
 
 function getAccessToken_(code: string): IAccessToken {
-  return doRequest_('https://login.eveonline.com/v2/oauth/token', 'post', null, {
-    grant_type: "authorization_code",
-    code
-  }).data as IAccessToken;
+  const headers = HEADERS;
+  headers['authorization'] = 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
+  const request: IRequest = {
+    url: 'https://login.eveonline.com/v2/oauth/token',
+    method: 'POST',
+    headers: headers,
+    payload: JSON.stringify({ grant_type: 'authorization_code', code }),
+    muteHttpExceptions: true,
+  };
+
+  return doRequests_([request]).data[0] as IAccessToken;
 }
 
 function getCharacterAffiliation_(character_id: number): ICharacterAffiliation {
-  return doRequest_(PropertiesService.getScriptProperties().getProperty('BASE_URL') + '/v1/characters/affiliation/', 'post', null, [character_id]).data[0] as ICharacterAffiliation;
+  const request: IRequest = {
+    url: `${PropertiesService.getScriptProperties().getProperty('BASE_URL')}/v1/characters/affiliation/`,
+    method: 'POST',
+    headers: HEADERS,
+    payload: JSON.stringify([character_id]),
+    muteHttpExceptions: true,
+
+  };
+  return doRequests_([request]).data[0] as ICharacterAffiliation;
 }
 
 function parseJWT_(access_token: string): ICharacterData {
   const jwt = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
   if (jwt.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
   if (jwt.azp !== PropertiesService.getScriptProperties().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
-  return {character_name: jwt.name, character_id: jwt.sub.split(':')[2]}
+  return { character_name: jwt.name, character_id: jwt.sub.split(':')[2] };
 }
 
-function refreshToken_(character_name: string): string {
-  const refresh_token = getProperty_(getCharacterRow_(character_name), CharacterRowData.refresh_token);
-  const response = doRequest_('https://login.eveonline.com/v2/oauth/token', 'post', null, {
-    grant_type: "refresh_token",
-    refresh_token: refresh_token.getValue()
-  }).data as IAccessToken;
-  // !TODO Rotate refresh_tokens refresh_token.setValue(response.refresh_token);
-  CacheService.getDocumentCache().put(character_name + '_access_token', response.access_token, 1080);
+function refreshToken_(character: ICharacterRowData): string {
+  const headers = HEADERS;
+  headers['authorization'] = 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
+  const request: IRequest = {
+    url: 'https://login.eveonline.com/v2/oauth/token',
+    method: 'POST',
+    headers: headers,
+    payload: JSON.stringify({ grant_type: 'refresh_token', refresh_token: character.refresh_token }),
+    muteHttpExceptions: true,
+  };
+  const response = doRequests_([request]).data[0] as IAccessToken;
+  CacheService.getDocumentCache().put(character.character_name + '_access_token', response.access_token, 1080);
   return response.access_token;
 }
 
@@ -281,10 +264,21 @@ function saveCharacter_(character_data: any[], access_token: string): void {
   character_row ? character_row.setValues([character_data]) : authSheet.appendRow(character_data);
   authSheet.autoResizeColumns(1, 5);
   if (!getMainCharacter()) setMainCharacter(character_data[0]);
-  CacheService.getDocumentCache().put(character_data[0] + '_access_token', access_token, 1080)
+  CacheService.getDocumentCache().put(character_data[0] + '_access_token', access_token, 1080);
 }
 
-function getCharacterRow_(character_name: string): Range {
+function getCharacterRowData_(character_name: string): ICharacterRowData {
+  const character_range = getCharacterRow_(character_name);
+  return {
+    character_id: character_range.getCell(1, CharacterRowData.character_id + 1).getValue() as number,
+    character_name: character_range.getCell(1, CharacterRowData.character_name + 1).getValue() as string,
+    corporation_id: character_range.getCell(1, CharacterRowData.corporation_id + 1).getValue() as number,
+    alliance_id: character_range.getCell(1, CharacterRowData.alliance_id + 1).getValue() as number,
+    refresh_token: character_range.getCell(1, CharacterRowData.refresh_token + 1).getValue() as string,
+  };
+}
+
+function getCharacterRow_(character_name: string): GoogleAppsScript.Spreadsheet.Range {
   const auth_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data');
   if (null === auth_sheet) return null;
   const row_index = auth_sheet.getDataRange().getValues().map(function (r) {
@@ -294,34 +288,32 @@ function getCharacterRow_(character_name: string): Range {
   return auth_sheet.getRange(row_index + 1, 1, 1, 5);
 }
 
-function getProperty_(character: Range, property: number): Range {
-  return character.getCell(1, property + 1);
+function doRequests_(requests: IRequest[]): any | any[] {
+  let data = [];
+  const responses = UrlFetchApp.fetchAll(requests);
+
+  responses.forEach((response: HTTPResponse, idx: number) => {
+    if (response.getResponseCode() !== 200) {
+      throw buildError_({
+        body: response.getContentText(),
+        code: response.getResponseCode(),
+        path: requests[idx].url,
+      });
+    }
+
+    data = data.concat(JSON.parse(response.getContentText()));
+  });
+
+  return {
+    headers: responses[0] === undefined ? null : responses[0].getAllHeaders(),
+    data,
+  };
 }
 
-function chunkArray_(array: any[], chunk_size: number): any[][] {
-  return array.reduce((a, b, i, g) => !(i % chunk_size) ? a.concat([g.slice(i, i + chunk_size)]) : a, []);
-}
-
-function doRequest_(path: string, method: string, token: string, data: any): IRequestResponse {
-  const auth = token ? 'Bearer ' + token : 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
-  const options = {
-    method,
-    muteHttpExceptions: true,
-    headers: {'User-Agent': 'GESI V2', 'Content-Type': 'application/json', 'Authorization': auth}
-  } as URLFetchRequestOptions;
-  if (data) options['payload'] = JSON.stringify(data);
-  const response = UrlFetchApp.fetch(path, options);
-  const response_body = JSON.parse(response.getContentText());
-  if (response.getResponseCode() !== 200) {
-    throw JSON.stringify({
-      body: response_body,
-      code: response.getResponseCode(),
-      character: getMainCharacter(),
-      sheet_id: SpreadsheetApp.getActiveSpreadsheet().getId(),
-      path
-    });
-  }
-  return {data: response_body, headers: response.getHeaders()};
+function buildError_(error: Partial<IError>): string {
+  error.sheet_id = SpreadsheetApp.getActiveSpreadsheet().getId();
+  error.character = getMainCharacter();
+  return JSON.stringify(error);
 }
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -329,6 +321,15 @@ function doRequest_(path: string, method: string, token: string, data: any): IRe
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 enum CharacterRowData { character_name, character_id, corporation_id, alliance_id, refresh_token }
+
+interface IError {
+  body: string;
+  code: number;
+  character: string;
+  sheet_id: string;
+  path?: string;
+  method?: string;
+}
 
 interface IEndpoint {
   description: string;
@@ -352,11 +353,6 @@ interface IParameter {
 interface IEndpointHeader {
   name: string;
   sub_headers?: string[];
-}
-
-interface IRequestResponse {
-  data: IAccessToken | ICharacterAffiliation | string;
-  headers: object
 }
 
 interface IAccessToken {
@@ -385,4 +381,20 @@ interface IFunctionParam {
   page?: number;
 
   [param: string]: any;
+}
+
+interface ICharacterRowData {
+  character_id: number;
+  character_name: string;
+  corporation_id: number;
+  alliance_id: number;
+  refresh_token: string;
+}
+
+interface IRequest {
+  url: string;
+  method: string;
+  payload?: string;
+  headers: Object;
+  muteHttpExceptions: boolean;
 }

@@ -87,7 +87,7 @@ module EveSwagger
 
           # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
           version = path_url.match(/\/(v\d)\//).not_nil![1]
-          path_url = path_url.sub(/v\d/,"{version}")
+          path_url = path_url.sub(/v\d/, "{version}")
 
           @endpoints[endpoint_name] = EndpointObj.new(
             responses.get.nil? ? "POST" : "GET",
@@ -123,7 +123,7 @@ module EveSwagger
           str << " * @customfunction\n"
           str << " */\n"
           str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| "#{p.name}: #{p.type}" }.join(", ")}): any[][] {\n"
-          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw '#{p.name} is required';\n" if p.required }
+          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw buildError_({body: '#{p.name} is required', code: 400, method: '#{endpoint_name}'});\n" if p.required }
           str << "  return parseData_('#{endpoint_name}',{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
           str << "}\n\n"
         end
@@ -291,7 +291,7 @@ module EveSwagger
       @parameters << Parameter.from_json({name: "version", in: "path", type: "string", description: "Which ESI version to use for the request. Default: Current ESI latest stable version."}.to_json) unless EveSwagger.rejected_params.includes? "version"
     end
 
-    private def get_headers(schema : Schema | Nil)
+    private def get_headers(schema : Schema?)
       headers = [] of Header
 
       return headers if schema.nil?
@@ -309,7 +309,6 @@ module EveSwagger
           end
         else
           # of single type
-          title = items.title
           if title = items.title
             headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
           end
@@ -323,6 +322,14 @@ module EveSwagger
           sub_headers = v.properties.not_nil!.keys if v.type == "object"
           headers << Header.new(k, sub_headers)
         end
+      else
+        if schema.description == "200 ok integer"
+          title = schema.title.match(/.*_(\w+_\w+)_ok$/).not_nil![1]
+          title = title.sub("s_", '_')
+        else
+          title = schema.description.underscore.sub(' ', '_')
+        end
+        headers << Header.new(title)
       end
       headers.sort_by! { |h| h.name }
     end

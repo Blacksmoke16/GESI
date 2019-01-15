@@ -1903,7 +1903,11 @@ const ENDPOINTS = {
   },
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",
-    "headers": [],
+    "headers": [
+      {
+        "name": "wallet_balance"
+      }
+    ],
     "method": "GET",
     "path": "/{version}/characters/{character_id}/wallet/",
     "parameters": [
@@ -3368,7 +3372,11 @@ const ENDPOINTS = {
   },
   "corporations_corporation_members_limit": {
     "description": "Return a corporation's member limit, not including CEO himself",
-    "headers": [],
+    "headers": [
+      {
+        "name": "member_limit"
+      }
+    ],
     "method": "GET",
     "path": "/{version}/corporations/{corporation_id}/members/limit/",
     "parameters": [
