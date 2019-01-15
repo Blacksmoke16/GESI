@@ -1905,7 +1905,7 @@ const ENDPOINTS = {
     "description": "Returns a character's wallet balance",
     "headers": [
       {
-        "name": "Wallet balance"
+        "name": "wallet_balance"
       }
     ],
     "method": "GET",

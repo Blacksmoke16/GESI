@@ -327,7 +327,7 @@ module EveSwagger
           title = schema.title.match(/.*_(\w+_\w+)_ok$/).not_nil![1]
           title = title.sub("s_", '_')
         else
-          title = schema.description
+          title = schema.description.underscore.sub(' ', '_')
         end
         headers << Header.new(title)
       end
