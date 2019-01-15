@@ -87,7 +87,7 @@ module EveSwagger
 
           # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
           version = path_url.match(/\/(v\d)\//).not_nil![1]
-          path_url = path_url.sub(/v\d/,"{version}")
+          path_url = path_url.sub(/v\d/, "{version}")
 
           @endpoints[endpoint_name] = EndpointObj.new(
             responses.get.nil? ? "POST" : "GET",
@@ -322,7 +322,7 @@ module EveSwagger
           sub_headers = v.properties.not_nil!.keys if v.type == "object"
           headers << Header.new(k, sub_headers)
         end
-       else
+      else
         if schema.description == "200 ok integer"
           title = schema.title.match(/.*_(\w+_\w+)_ok$/).not_nil![1]
           title = title.sub("s_", '_')
