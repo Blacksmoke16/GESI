@@ -110,7 +110,7 @@ function authCallback(request): HtmlOutput {
   return HtmlService.createHtmlOutput(`Thank you for using GESI ${userData.character_name}.  You can close this tab.`);
 }
 
-function buildRequest_(endpoint: IEndpoint, character: ICharacterRowData, params: IFunctionParam, token: string, data: any = null): IRequest {
+function buildRequest_(endpoint: IEndpoint, character: ICharacterRowData | null, params: IFunctionParam, token: string, data: any = null): IRequest {
   let path = endpoint.path;
 
   endpoint.parameters.forEach((param: IParameter) => {
@@ -150,8 +150,9 @@ function buildRequest_(endpoint: IEndpoint, character: ICharacterRowData, params
 
 function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
   const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
-  const character: ICharacterRowData = getCharacterRowData_((params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER')));
-  if (!character && endpoint.scope) throw `${character.character_name} is not authed, or is misspelled.`;
+  const character_name = (params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER'));
+  const character: ICharacterRowData = getCharacterRowData_(character_name);
+  if (!character && endpoint.scope) throw `${character_name} is not authed, or is misspelled.`;
   let result: any[][] = [];
   let data: any = [];
 
@@ -159,7 +160,7 @@ function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
   if (params.opt_headers || undefined === params.opt_headers) result.push(endpoint.headers.map((h: IEndpointHeader) => h.name));
 
   // Set the token.  Refresh it if it's expired.
-  let token = CacheService.getDocumentCache().get(`${character.character_name}_access_token`);
+  let token = CacheService.getDocumentCache().get(`${character_name}_access_token`);
   if (!token && endpoint.scope) token = refreshToken_(character);
   if (!params.version) params.version = endpoint.version;
 
@@ -231,7 +232,8 @@ function parseJWT_(access_token: string): ICharacterData {
   return { character_name: jwt.name, character_id: jwt.sub.split(':')[2] };
 }
 
-function refreshToken_(character: ICharacterRowData): string {
+function refreshToken_(character: ICharacterRowData | null): string {
+  if (!character) throw buildError_({ body: 'Can\'t refresh token of character that isn\'t authed.' });
   const headers = HEADERS;
   headers['authorization'] = 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
   const request: IRequest = {
@@ -267,8 +269,9 @@ function saveCharacter_(character_data: any[], access_token: string): void {
   CacheService.getDocumentCache().put(character_data[0] + '_access_token', access_token, 1080);
 }
 
-function getCharacterRowData_(character_name: string): ICharacterRowData {
+function getCharacterRowData_(character_name: string): ICharacterRowData | null {
   const character_range = getCharacterRow_(character_name);
+  if (!character_range) return null;
   return {
     character_id: character_range.getCell(1, CharacterRowData.character_id + 1).getValue() as number,
     character_name: character_range.getCell(1, CharacterRowData.character_name + 1).getValue() as string,
