@@ -237,7 +237,7 @@ module EveSwagger
       version: {type: String, setter: false},
     )
 
-    def initialize(@method : String, @description : String, schema : Schema | Nil, @parameters : Array(Parameter), @path : String, @scope : String | Nil, @summary : String, endpoint_name : String, @version : String)
+    def initialize(@method : String, @description : String, schema : Schema?, @parameters : Array(Parameter), @path : String, @scope : String?, @summary : String, endpoint_name : String, @version : String)
       @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
       @headers = get_headers(schema)
 
@@ -265,10 +265,13 @@ module EveSwagger
 
       @parameters.sort_by! { |p| p.required ? 0 : 1 }
 
-      # Remove character/corporation/alliance_id param if they are not one of the endpoints that can be arbitrary
-      @parameters.delete @parameters.find { |p| p.name == "character_id" } unless %w(characters_character characters_character_corporationhistory).includes? endpoint_name
-      @parameters.delete @parameters.find { |p| p.name == "corporation_id" } unless %w(corporations_corporation loyalty_stores_corporation_offers corporations_corporation_alliancehistory).includes? endpoint_name
-      @parameters.delete @parameters.find { |p| p.name == "alliance_id" } unless endpoint_name == "alliances_alliance"
+      # Remove character/corporation/alliance_id param if they are an authed endpoint
+      # They will be auto filled in based on the authing character
+      if scope
+        @parameters.delete @parameters.find { |p| p.name == "character_id" }
+        @parameters.delete @parameters.find { |p| p.name == "corporation_id" }
+        @parameters.delete @parameters.find { |p| p.name == "alliance_id" }
+      end
 
       # Add name parameter if function requires auth
       name = Parameter.from_json({name: "name", in: "parameters", type: "string", description: "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER."}.to_json)

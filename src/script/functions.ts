@@ -23,24 +23,28 @@ function alliances_alliance_contacts_labels(name: string, opt_headers: boolean, 
 
 /**
  * List all current member corporations of an alliance
+ * @param {number} alliance_id (Required) An EVE alliance ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
  * @return List of corporation IDs
  * @customfunction
  */
-function alliances_alliance_corporations(opt_headers: boolean, version: string): any[][] {
-  return parseData_('alliances_alliance_corporations',{opt_headers:opt_headers,version:version})
+function alliances_alliance_corporations(alliance_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!alliance_id) throw buildError_({body: 'alliance_id is required', code: 400, method: 'alliances_alliance_corporations'});
+  return parseData_('alliances_alliance_corporations',{alliance_id:alliance_id,opt_headers:opt_headers,version:version})
 }
 
 /**
  * Get the icon urls for a alliance
+ * @param {number} alliance_id (Required) An EVE alliance ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
  * @return Icon URLs for the given alliance id and server
  * @customfunction
  */
-function alliances_alliance_icons(opt_headers: boolean, version: string): any[][] {
-  return parseData_('alliances_alliance_icons',{opt_headers:opt_headers,version:version})
+function alliances_alliance_icons(alliance_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!alliance_id) throw buildError_({body: 'alliance_id is required', code: 400, method: 'alliances_alliance_icons'});
+  return parseData_('alliances_alliance_icons',{alliance_id:alliance_id,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -711,13 +715,15 @@ function corporations_corporation_fw_stats(name: string, opt_headers: boolean, v
 
 /**
  * Get the icon urls for a corporation
+ * @param {number} corporation_id (Required) An EVE corporation ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
  * @return Urls for icons for the given corporation id and server
  * @customfunction
  */
-function corporations_corporation_icons(opt_headers: boolean, version: string): any[][] {
-  return parseData_('corporations_corporation_icons',{opt_headers:opt_headers,version:version})
+function corporations_corporation_icons(corporation_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'corporations_corporation_icons'});
+  return parseData_('corporations_corporation_icons',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -1801,13 +1807,15 @@ function characters_character_orders(name: string, opt_headers: boolean, version
 
 /**
  * Get portrait urls for a character
+ * @param {number} character_id (Required) An EVE character ID
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
  * @return Public data for the given character
  * @customfunction
  */
-function characters_character_portrait(opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_portrait',{opt_headers:opt_headers,version:version})
+function characters_character_portrait(character_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!character_id) throw buildError_({body: 'character_id is required', code: 400, method: 'characters_character_portrait'});
+  return parseData_('characters_character_portrait',{character_id:character_id,opt_headers:opt_headers,version:version})
 }
 
 /**

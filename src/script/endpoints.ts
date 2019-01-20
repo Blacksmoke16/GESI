@@ -139,6 +139,13 @@ const ENDPOINTS = {
     "path": "/{version}/alliances/{alliance_id}/corporations/",
     "parameters": [
       {
+        "description": "An EVE alliance ID",
+        "in": "path",
+        "name": "alliance_id",
+        "type": "number",
+        "required": true
+      },
+      {
         "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
         "name": "opt_headers",
@@ -169,6 +176,13 @@ const ENDPOINTS = {
     "method": "GET",
     "path": "/{version}/alliances/{alliance_id}/icons/",
     "parameters": [
+      {
+        "description": "An EVE alliance ID",
+        "in": "path",
+        "name": "alliance_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
@@ -3080,6 +3094,13 @@ const ENDPOINTS = {
     "method": "GET",
     "path": "/{version}/corporations/{corporation_id}/icons/",
     "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
@@ -7558,6 +7579,13 @@ const ENDPOINTS = {
     "method": "GET",
     "path": "/{version}/characters/{character_id}/portrait/",
     "parameters": [
+      {
+        "description": "An EVE character ID",
+        "in": "path",
+        "name": "character_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Boolean if column headings should be listed or not. Default: true",
         "in": "parameters",
