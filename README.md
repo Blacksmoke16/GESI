@@ -67,7 +67,7 @@ In order to improve performance, and reduce the number of requests to ESI (a use
 
 ### How can I get more than 1 page of data at a time?
 
-Use `-1` as the value for the page parameter.  This will return all pages, however it'll take longer to return.  If you see the error `Internal error when executing the custom function`, it means GESI reached the 30 second custom function execution time limit imposed by Google.  A solution for this would be to try calling the function again.  This will allow GESI to only fetch new data, and used the cached data for everything else.
+Use `-1` as the value for the page parameter.  This will return all pages, however it may take longer to return, depending on how many pages there are.
 
 ### What do the function parameter types mean?
 
