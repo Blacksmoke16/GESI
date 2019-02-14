@@ -83,7 +83,7 @@ Array types are denoted with a `[]` following the data type of the parameter.  A
 
 As of now if an endpoint returns a property that is an array of objects nested inside the response, I am JSON stringifying it and displaying it in the column.  The `parseArray` allows you to parse that array of values and output it like an endpoint function does, wherever you want to.  You supply it with the name of the function the data is from, the column you are parsing, and the cell with the array data.
 
-An example of this would be `parseArray("character_character_skills", "skills", B2)` where `B2` is the cell that contains the data.
+An example of this would be `parseArray("characters_character_skills", "skills", B2)` where `B2` is the cell that contains the data.
 
 ### How can I limit what scopes are used?
 
