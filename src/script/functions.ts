@@ -204,18 +204,6 @@ function characters_character_fatigue(name: string, opt_headers: boolean, versio
 }
 
 /**
- * Return fittings of a character
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return A list of fittings
- * @customfunction
- */
-function characters_character_fittings(name: string, opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_fittings',{name:name,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Return the fleet ID the character is in, if any.
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -1782,6 +1770,18 @@ function characters_character_contacts(name: string, page: number, opt_headers: 
 }
 
 /**
+ * Return fittings of a character
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return A list of fittings
+ * @customfunction
+ */
+function characters_character_fittings(name: string, opt_headers: boolean, version: string): any[][] {
+  return parseData_('characters_character_fittings',{name:name,opt_headers:opt_headers,version:version})
+}
+
+/**
  * Checks if the character is currently online
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -1987,19 +1987,6 @@ function universe_factions(language: string, opt_headers: boolean, version: stri
 }
 
 /**
- * Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types
- * @param {number[]} ids (Required) The ids to resolve
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned
- * @customfunction
- */
-function universe_names(ids: number[], opt_headers: boolean, version: string): any[][] {
-  if(!ids) throw buildError_({body: 'ids is required', code: 400, method: 'universe_names'});
-  return parseData_('universe_names',{ids:ids,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Get information on a station
  * @param {number} station_id (Required) station_id integer
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -2183,6 +2170,19 @@ function corporations_corporation_orders(name: string, page: number, opt_headers
  */
 function corporations_corporation_structures(language: string, name: string, page: number, opt_headers: boolean, version: string): any[][] {
   return parseData_('corporations_corporation_structures',{language:language,name:name,page:page,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types, Factions
+ * @param {number[]} ids (Required) The ids to resolve
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return List of id/name associations for a set of IDs. All IDs must resolve to a name, or nothing will be returned
+ * @customfunction
+ */
+function universe_names(ids: number[], opt_headers: boolean, version: string): any[][] {
+  if(!ids) throw buildError_({body: 'ids is required', code: 400, method: 'universe_names'});
+  return parseData_('universe_names',{ids:ids,opt_headers:opt_headers,version:version})
 }
 
 /**

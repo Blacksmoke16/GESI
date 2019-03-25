@@ -838,59 +838,6 @@ const ENDPOINTS = {
     "summary": "Jump activation and fatigue information",
     "version": "v1"
   },
-  "characters_character_fittings": {
-    "description": "Return fittings of a character",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "fitting_id"
-      },
-      {
-        "name": "items",
-        "sub_headers": [
-          "flag",
-          "quantity",
-          "type_id"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "ship_type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/fittings/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-fittings.read_fittings.v1",
-    "summary": "A list of fittings",
-    "version": "v1"
-  },
   "characters_character_fleet": {
     "description": "Return the fleet ID the character is in, if any.",
     "headers": [
@@ -7440,6 +7387,59 @@ const ENDPOINTS = {
     "summary": "A list of contacts",
     "version": "v2"
   },
+  "characters_character_fittings": {
+    "description": "Return fittings of a character",
+    "headers": [
+      {
+        "name": "description"
+      },
+      {
+        "name": "fitting_id"
+      },
+      {
+        "name": "items",
+        "sub_headers": [
+          "flag",
+          "quantity",
+          "type_id"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ship_type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/characters/{character_id}/fittings/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-fittings.read_fittings.v1",
+    "summary": "A list of fittings",
+    "version": "v2"
+  },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
     "headers": [
@@ -8807,47 +8807,6 @@ const ENDPOINTS = {
     "summary": "A list of factions",
     "version": "v2"
   },
-  "universe_names": {
-    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types",
-    "headers": [
-      {
-        "name": "category"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "POST",
-    "path": "/{version}/universe/names/",
-    "parameters": [
-      {
-        "description": "The ids to resolve",
-        "in": "body",
-        "name": "ids",
-        "type": "number[]",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations for a set of ID's. All ID's must resolve to a name, or nothing will be returned",
-    "version": "v2"
-  },
   "universe_stations_station": {
     "description": "Get information on a station",
     "headers": [
@@ -9793,6 +9752,47 @@ const ENDPOINTS = {
     ],
     "scope": "esi-corporations.read_structures.v1",
     "summary": "List of corporation structures' information",
+    "version": "v3"
+  },
+  "universe_names": {
+    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types, Factions",
+    "headers": [
+      {
+        "name": "category"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "POST",
+    "path": "/{version}/universe/names/",
+    "parameters": [
+      {
+        "description": "The ids to resolve",
+        "in": "body",
+        "name": "ids",
+        "type": "number[]",
+        "required": true
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "List of id/name associations for a set of IDs. All IDs must resolve to a name, or nothing will be returned",
     "version": "v3"
   },
   "universe_types_type": {
