@@ -9925,6 +9925,9 @@ const ENDPOINTS = {
       },
       {
         "name": "security_status"
+      },
+      {
+        "name": "title"
       }
     ],
     "method": "GET",
