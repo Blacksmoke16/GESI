@@ -10382,6 +10382,6 @@ const ENDPOINTS = {
     ],
     "scope": "esi-wallet.read_character_wallet.v1",
     "summary": "Journal entries",
-    "version": "v5"
+    "version": "v6"
   }
 };
