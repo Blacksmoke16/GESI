@@ -9958,60 +9958,6 @@ const ENDPOINTS = {
     "summary": "Public data for the given character",
     "version": "v4"
   },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications",
-    "version": "v4"
-  },
   "characters_character_skills": {
     "description": "List all trained skills for the given character",
     "headers": [
@@ -10304,6 +10250,60 @@ const ENDPOINTS = {
     ],
     "summary": "Information about a solar system",
     "version": "v4"
+  },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
+      {
+        "name": "is_read"
+      },
+      {
+        "name": "notification_id"
+      },
+      {
+        "name": "sender_id"
+      },
+      {
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/characters/{character_id}/notifications/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Returns your recent notifications",
+    "version": "v5"
   },
   "characters_character_wallet_journal": {
     "description": "Retrieve the given character's wallet journal going 30 days back",

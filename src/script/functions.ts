@@ -2213,18 +2213,6 @@ function characters_character(character_id: number, opt_headers: boolean, versio
 }
 
 /**
- * Return character notifications
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return Returns your recent notifications
- * @customfunction
- */
-function characters_character_notifications(name: string, opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers,version:version})
-}
-
-/**
  * List all trained skills for the given character
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -2276,6 +2264,18 @@ function corporations_corporation_wallets_division_journal(division: number, nam
 function universe_systems_system(system_id: number, language: string, opt_headers: boolean, version: string): any[][] {
   if(!system_id) throw buildError_({body: 'system_id is required', code: 400, method: 'universe_systems_system'});
   return parseData_('universe_systems_system',{system_id:system_id,language:language,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Return character notifications
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Returns your recent notifications
+ * @customfunction
+ */
+function characters_character_notifications(name: string, opt_headers: boolean, version: string): any[][] {
+  return parseData_('characters_character_notifications',{name:name,opt_headers:opt_headers,version:version})
 }
 
 /**
