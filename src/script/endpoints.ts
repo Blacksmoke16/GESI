@@ -4030,6 +4030,186 @@ const ENDPOINTS = {
     "summary": "Wallet transactions",
     "version": "v1"
   },
+  "dogma_attributes": {
+    "description": "Get a list of dogma attribute ids",
+    "headers": [
+      {
+        "name": "attribute_ids"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/dogma/attributes/",
+    "parameters": [
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "A list of dogma attribute ids",
+    "version": "v1"
+  },
+  "dogma_attributes_attribute": {
+    "description": "Get information on a dogma attribute",
+    "headers": [
+      {
+        "name": "attribute_id"
+      },
+      {
+        "name": "default_value"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "display_name"
+      },
+      {
+        "name": "high_is_good"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "stackable"
+      },
+      {
+        "name": "unit_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/dogma/attributes/{attribute_id}/",
+    "parameters": [
+      {
+        "description": "A dogma attribute ID",
+        "in": "path",
+        "name": "attribute_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a dogma attribute",
+    "version": "v1"
+  },
+  "dogma_dynamic_items_type_item": {
+    "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
+    "headers": [
+      {
+        "name": "created_by"
+      },
+      {
+        "name": "dogma_attributes",
+        "sub_headers": [
+          "attribute_id",
+          "value"
+        ]
+      },
+      {
+        "name": "dogma_effects",
+        "sub_headers": [
+          "effect_id",
+          "is_default"
+        ]
+      },
+      {
+        "name": "mutator_type_id"
+      },
+      {
+        "name": "source_type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/dogma/dynamic/items/{type_id}/{item_id}/",
+    "parameters": [
+      {
+        "description": "item_id integer",
+        "in": "path",
+        "name": "item_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "type_id integer",
+        "in": "path",
+        "name": "type_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Details about a dynamic item",
+    "version": "v1"
+  },
+  "dogma_effects": {
+    "description": "Get a list of dogma effect ids",
+    "headers": [
+      {
+        "name": "effect_ids"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/dogma/effects/",
+    "parameters": [
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "A list of dogma effect ids",
+    "version": "v1"
+  },
   "fleets_fleet": {
     "description": "Return details about a fleet",
     "headers": [
@@ -8261,6 +8441,109 @@ const ENDPOINTS = {
     ],
     "scope": "esi-markets.read_corporation_orders.v1",
     "summary": "Expired and cancelled market orders placed on behalf of a corporation",
+    "version": "v2"
+  },
+  "dogma_effects_effect": {
+    "description": "Get information on a dogma effect",
+    "headers": [
+      {
+        "name": "description"
+      },
+      {
+        "name": "disallow_auto_repeat"
+      },
+      {
+        "name": "discharge_attribute_id"
+      },
+      {
+        "name": "display_name"
+      },
+      {
+        "name": "duration_attribute_id"
+      },
+      {
+        "name": "effect_category"
+      },
+      {
+        "name": "effect_id"
+      },
+      {
+        "name": "electronic_chance"
+      },
+      {
+        "name": "falloff_attribute_id"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "is_assistance"
+      },
+      {
+        "name": "is_offensive"
+      },
+      {
+        "name": "is_warp_safe"
+      },
+      {
+        "name": "modifiers",
+        "sub_headers": [
+          "domain",
+          "effect_id",
+          "func",
+          "modified_attribute_id",
+          "modifying_attribute_id",
+          "operator"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "post_expression"
+      },
+      {
+        "name": "pre_expression"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "range_attribute_id"
+      },
+      {
+        "name": "range_chance"
+      },
+      {
+        "name": "tracking_speed_attribute_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/dogma/effects/{effect_id}/",
+    "parameters": [
+      {
+        "description": "A dogma effect ID",
+        "in": "path",
+        "name": "effect_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Information about a dogma effect",
     "version": "v2"
   },
   "fw_systems": {

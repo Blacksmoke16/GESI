@@ -911,6 +911,56 @@ function corporations_corporation_wallets_division_transactions(division: number
 }
 
 /**
+ * Get a list of dogma attribute ids
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return A list of dogma attribute ids
+ * @customfunction
+ */
+function dogma_attributes(opt_headers: boolean, version: string): any[][] {
+  return parseData_('dogma_attributes',{opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Get information on a dogma attribute
+ * @param {number} attribute_id (Required) A dogma attribute ID
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Information about a dogma attribute
+ * @customfunction
+ */
+function dogma_attributes_attribute(attribute_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!attribute_id) throw buildError_({body: 'attribute_id is required', code: 400, method: 'dogma_attributes_attribute'});
+  return parseData_('dogma_attributes_attribute',{attribute_id:attribute_id,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Returns info about a dynamic item resulting from mutation with a mutaplasmid.
+ * @param {number} item_id (Required) item_id integer
+ * @param {number} type_id (Required) type_id integer
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Details about a dynamic item
+ * @customfunction
+ */
+function dogma_dynamic_items_type_item(item_id: number, type_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!item_id) throw buildError_({body: 'item_id is required', code: 400, method: 'dogma_dynamic_items_type_item'});
+  if(!type_id) throw buildError_({body: 'type_id is required', code: 400, method: 'dogma_dynamic_items_type_item'});
+  return parseData_('dogma_dynamic_items_type_item',{item_id:item_id,type_id:type_id,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Get a list of dogma effect ids
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return A list of dogma effect ids
+ * @customfunction
+ */
+function dogma_effects(opt_headers: boolean, version: string): any[][] {
+  return parseData_('dogma_effects',{opt_headers:opt_headers,version:version})
+}
+
+/**
  * Return details about a fleet
  * @param {number} fleet_id (Required) ID for a fleet
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
@@ -1869,6 +1919,19 @@ function corporations_corporation_containers_logs(name: string, page: number, op
  */
 function corporations_corporation_orders_history(name: string, page: number, opt_headers: boolean, version: string): any[][] {
   return parseData_('corporations_corporation_orders_history',{name:name,page:page,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Get information on a dogma effect
+ * @param {number} effect_id (Required) A dogma effect ID
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Information about a dogma effect
+ * @customfunction
+ */
+function dogma_effects_effect(effect_id: number, opt_headers: boolean, version: string): any[][] {
+  if(!effect_id) throw buildError_({body: 'effect_id is required', code: 400, method: 'dogma_effects_effect'});
+  return parseData_('dogma_effects_effect',{effect_id:effect_id,opt_headers:opt_headers,version:version})
 }
 
 /**
