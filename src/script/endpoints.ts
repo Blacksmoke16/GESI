@@ -27,6 +27,7 @@ const SCOPES = [
   "esi-corporations.read_container_logs.v1",
   "esi-corporations.read_corporation_membership.v1",
   "esi-corporations.read_divisions.v1",
+  "esi-corporations.read_facilities.v1",
   "esi-corporations.read_fw_stats.v1",
   "esi-corporations.read_medals.v1",
   "esi-corporations.read_standings.v1",
@@ -2922,6 +2923,48 @@ const ENDPOINTS = {
     ],
     "scope": "esi-corporations.read_divisions.v1",
     "summary": "List of corporation division names",
+    "version": "v1"
+  },
+  "corporations_corporation_facilities": {
+    "description": "Return a corporation's facilities",
+    "headers": [
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/corporations/{corporation_id}/facilities/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-corporations.read_facilities.v1",
+    "summary": "List of corporation facilities",
     "version": "v1"
   },
   "corporations_corporation_fw_stats": {

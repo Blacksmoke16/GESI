@@ -678,6 +678,18 @@ function corporations_corporation_divisions(name: string, opt_headers: boolean, 
 }
 
 /**
+ * Return a corporation's facilities
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return List of corporation facilities
+ * @customfunction
+ */
+function corporations_corporation_facilities(name: string, opt_headers: boolean, version: string): any[][] {
+  return parseData_('corporations_corporation_facilities',{name:name,opt_headers:opt_headers,version:version})
+}
+
+/**
  * Statistics about a corporation involved in faction warfare
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
