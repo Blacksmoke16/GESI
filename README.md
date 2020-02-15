@@ -1,6 +1,6 @@
 # GESI
 
-Google Sheets add-on for interacting with EVE ESI API.
+Google Sheets add-on for interacting with EVE ESI API.  GESI providers an EVE Online SSO flow to authorize your character(s), as well as a wrapper around ESI in order to access your EVE Online data within Google Sheets; much like `=importXML()` worked with the old XML API.
 
 ## Setup:
 
@@ -21,7 +21,7 @@ By default, one does not have access to GESI functions for use in custom functio
 3. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
 4. Select the latest version from the dropdown, and click `Save`.
 
-In order to use this, functions must be prepended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
+In order to use this, functions must be perpended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
 **NOTE:** Libraries _do not_ update on their own.  When a new version of GESI is released, you will have to manually update the `version` dropdown in the Libraries modal.
 
@@ -52,14 +52,14 @@ This happens when `GESI` is not authorized to run in the current document.  This
 
 ### How do I get data from a specific character?
 
-Each authed endpoint that has a `name` property that can be used to specify which character's token should be used in that request.  
+Each authed endpoint that has a `name` property that can be used to specify which character's token should be used in that request.
 
-The first character that you auth gets set as your `MAIN_CHARACTER` which will be used if you do not provide a value for the `name` param for an authed endpoint. 
+The first character that you auth gets set as your `MAIN_CHARACTER` which will be used if you do not provide a value for the `name` param for an authed endpoint.
 
 For example `=characters_character_assets()` would get the assets for the first character that you authed, i.e. your `MAIN_CHARACTER`.  `=characters_character_assets("My Other Character")` would get assets for `My Other Character`.
 
 - `=getMainCharacter()` will return your current `MAIN_CHARACTER`.
-- `=setMainCharacter("Blacksmoke16")` would update your `MAIN_CHARACTER` to be `Blacksmoke16`.  
+- `=setMainCharacter("Blacksmoke16")` would update your `MAIN_CHARACTER` to be `Blacksmoke16`.
 
 ### Why is my data not updating?
 
@@ -125,12 +125,20 @@ Which would for three characters would be used like `=getJobs("Blacksmoke16, Cha
 
 This is of course just an example, but the general idea can be used as a template for other endpoint functions and uses.
 
+### How do I know my EVE data isn't being misued?
+
+In order to provide GESI, developers have to agree to the [EVE Developer License Agreement](https://developers.eveonline.com/resource/license-agreement).  Section 2.3 explicitly prohibits it.
+
 ## Contact Info
 
-In-game:  Blacksmoke16  
+In-game:  Blacksmoke16
 Discord:  Blacksmoke16#0016
 Discord Server: https://discordapp.com/invite/eEAH2et
 
 ## Copyright
- EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
- trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.    CCP hf. has granted permission to GESI to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, the GESI. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.
+EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
+trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.    CCP hf. has granted permission to GESI to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, the GESI. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.
+
+## Google Privacy Policy
+GESI only requires access to spreadsheets it is enabled on in order to operate.  GESI uses the spreadsheet's ID for error logging.
+GESI does not store, use, share, or access any other data related to your Google account.  The source code is available at https://github.com/Blacksmoke16/GESI.

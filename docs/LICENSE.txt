@@ -1,2 +1,0 @@
-GESI only requires access to spreadsheets it is enabled on in order to operate.  GESI uses the spreadsheet's ID for error logging.
-GESI does not store, use, share, or access any other data related to your Google account.  The source code is available at https://github.com/Blacksmoke16/GESI.
