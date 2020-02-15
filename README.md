@@ -125,7 +125,7 @@ Which would for three characters would be used like `=getJobs("Blacksmoke16, Cha
 
 This is of course just an example, but the general idea can be used as a template for other endpoint functions and uses.
 
-### How do I know my EVE data isn't being misued?
+### How do I know my EVE data isn't being misused?
 
 In order to provide GESI, developers have to agree to the [EVE Developer License Agreement](https://developers.eveonline.com/resource/license-agreement).  Section 2.3 explicitly prohibits it.
 
