@@ -1291,24 +1291,6 @@ function opportunities_tasks_task(task_id: number, opt_headers: boolean, version
 }
 
 /**
- * Get the systems between origin and destination
- * @param {number} destination (Required) destination solar system ID
- * @param {number} origin (Required) origin solar system ID
- * @param {number[]} avoid  avoid solar system ID(s)
- * @param {number[]} connections  connected solar system pairs
- * @param {string} flag  route security preference
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return Solar systems in route from origin to destination
- * @customfunction
- */
-function route_origin_destination(destination: number, origin: number, avoid: number[], connections: number[], flag: string, opt_headers: boolean, version: string): any[][] {
-  if(!destination) throw buildError_({body: 'destination is required', code: 400, method: 'route_origin_destination'});
-  if(!origin) throw buildError_({body: 'origin is required', code: 400, method: 'route_origin_destination'});
-  return parseData_('route_origin_destination',{destination:destination,origin:origin,avoid:avoid,connections:connections,flag:flag,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Shows sovereignty data for campaigns.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.

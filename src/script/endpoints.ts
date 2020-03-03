@@ -5507,69 +5507,6 @@ const ENDPOINTS = {
     "summary": "Details of an opportunities task",
     "version": "v1"
   },
-  "route_origin_destination": {
-    "description": "Get the systems between origin and destination",
-    "headers": [
-      {
-        "name": "Solar system IDs"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/route/{origin}/{destination}/",
-    "parameters": [
-      {
-        "description": "destination solar system ID",
-        "in": "path",
-        "name": "destination",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "origin solar system ID",
-        "in": "path",
-        "name": "origin",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "avoid solar system ID(s)",
-        "in": "query",
-        "name": "avoid",
-        "type": "number[]",
-        "required": false
-      },
-      {
-        "description": "connected solar system pairs",
-        "in": "query",
-        "name": "connections",
-        "type": "number[]",
-        "required": false
-      },
-      {
-        "description": "route security preference",
-        "in": "query",
-        "name": "flag",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Solar systems in route from origin to destination",
-    "version": "v1"
-  },
   "sovereignty_campaigns": {
     "description": "Shows sovereignty data for campaigns.",
     "headers": [
