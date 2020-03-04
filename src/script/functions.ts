@@ -1291,6 +1291,24 @@ function opportunities_tasks_task(task_id: number, opt_headers: boolean, version
 }
 
 /**
+ * Get the systems between origin and destination
+ * @param {number} destination (Required) destination solar system ID
+ * @param {number} origin (Required) origin solar system ID
+ * @param {number[]} avoid  avoid solar system ID(s)
+ * @param {number[]} connections  connected solar system pairs
+ * @param {string} flag  route security preference
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return Solar systems in route from origin to destination
+ * @customfunction
+ */
+function route_origin_destination(destination: number, origin: number, avoid: number[], connections: number[], flag: string, opt_headers: boolean, version: string): any[][] {
+  if(!destination) throw buildError_({body: 'destination is required', code: 400, method: 'route_origin_destination'});
+  if(!origin) throw buildError_({body: 'origin is required', code: 400, method: 'route_origin_destination'});
+  return parseData_('route_origin_destination',{destination:destination,origin:origin,avoid:avoid,connections:connections,flag:flag,opt_headers:opt_headers,version:version})
+}
+
+/**
  * Shows sovereignty data for campaigns.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
  * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
@@ -2020,19 +2038,6 @@ function alliances_alliance(alliance_id: number, opt_headers: boolean, version: 
 }
 
 /**
- * Return a list of the characters assets
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {number} page  Which page of results to return
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return A flat list of the users assets
- * @customfunction
- */
-function characters_character_assets(name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  return parseData_('characters_character_assets',{name:name,page:page,opt_headers:opt_headers,version:version})
-}
-
-/**
  * Get all the information for a specific event
  * @param {number} event_id (Required) The id of the event requested
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
@@ -2100,19 +2105,6 @@ function characters_character_search(categories: string[], search: string, langu
   if(!categories) throw buildError_({body: 'categories is required', code: 400, method: 'characters_character_search'});
   if(!search) throw buildError_({body: 'search is required', code: 400, method: 'characters_character_search'});
   return parseData_('characters_character_search',{categories:categories,search:search,language:language,strict:strict,name:name,opt_headers:opt_headers,version:version})
-}
-
-/**
- * Return a list of the corporation assets
- * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
- * @param {number} page  Which page of results to return
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return A list of assets
- * @customfunction
- */
-function corporations_corporation_assets(name: string, page: number, opt_headers: boolean, version: string): any[][] {
-  return parseData_('corporations_corporation_assets',{name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
 /**
@@ -2195,6 +2187,19 @@ function characters_character(character_id: number, opt_headers: boolean, versio
 }
 
 /**
+ * Return a list of the characters assets
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {number} page  Which page of results to return
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return A flat list of the users assets
+ * @customfunction
+ */
+function characters_character_assets(name: string, page: number, opt_headers: boolean, version: string): any[][] {
+  return parseData_('characters_character_assets',{name:name,page:page,opt_headers:opt_headers,version:version})
+}
+
+/**
  * List all trained skills for the given character
  * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
  * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
@@ -2217,6 +2222,19 @@ function characters_character_skills(name: string, opt_headers: boolean, version
 function corporations_corporation(corporation_id: number, opt_headers: boolean, version: string): any[][] {
   if(!corporation_id) throw buildError_({body: 'corporation_id is required', code: 400, method: 'corporations_corporation'});
   return parseData_('corporations_corporation',{corporation_id:corporation_id,opt_headers:opt_headers,version:version})
+}
+
+/**
+ * Return a list of the corporation assets
+ * @param {string} name  Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.
+ * @param {number} page  Which page of results to return
+ * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
+ * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
+ * @return A list of assets
+ * @customfunction
+ */
+function corporations_corporation_assets(name: string, page: number, opt_headers: boolean, version: string): any[][] {
+  return parseData_('corporations_corporation_assets',{name:name,page:page,opt_headers:opt_headers,version:version})
 }
 
 /**

@@ -5507,6 +5507,69 @@ const ENDPOINTS = {
     "summary": "Details of an opportunities task",
     "version": "v1"
   },
+  "route_origin_destination": {
+    "description": "Get the systems between origin and destination",
+    "headers": [
+      {
+        "name": "Solar system IDs"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/route/{origin}/{destination}/",
+    "parameters": [
+      {
+        "description": "destination solar system ID",
+        "in": "path",
+        "name": "destination",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "origin solar system ID",
+        "in": "path",
+        "name": "origin",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "avoid solar system ID(s)",
+        "in": "query",
+        "name": "avoid",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "description": "connected solar system pairs",
+        "in": "query",
+        "name": "connections",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "description": "route security preference",
+        "in": "query",
+        "name": "flag",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "summary": "Solar systems in route from origin to destination",
+    "version": "v1"
+  },
   "sovereignty_campaigns": {
     "description": "Shows sovereignty data for campaigns.",
     "headers": [
@@ -8970,70 +9033,6 @@ const ENDPOINTS = {
     "summary": "Public data about an alliance",
     "version": "v3"
   },
-  "characters_character_assets": {
-    "description": "Return a list of the characters assets",
-    "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
-      {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/assets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_assets.v1",
-    "summary": "A flat list of the users assets",
-    "version": "v3"
-  },
   "characters_character_calendar_event": {
     "description": "Get all the information for a specific event",
     "headers": [
@@ -9405,70 +9404,6 @@ const ENDPOINTS = {
     ],
     "scope": "esi-search.search_structures.v1",
     "summary": "A list of search results",
-    "version": "v3"
-  },
-  "corporations_corporation_assets": {
-    "description": "Return a list of the corporation assets",
-    "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
-      {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/assets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "A list of assets",
     "version": "v3"
   },
   "corporations_corporation_members": {
@@ -9895,6 +9830,70 @@ const ENDPOINTS = {
     "summary": "Public data for the given character",
     "version": "v4"
   },
+  "characters_character_assets": {
+    "description": "Return a list of the characters assets",
+    "headers": [
+      {
+        "name": "is_blueprint_copy"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/characters/{character_id}/assets/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "number",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "A flat list of the users assets",
+    "version": "v4"
+  },
   "characters_character_skills": {
     "description": "List all trained skills for the given character",
     "headers": [
@@ -10015,6 +10014,70 @@ const ENDPOINTS = {
       }
     ],
     "summary": "Public information about a corporation",
+    "version": "v4"
+  },
+  "corporations_corporation_assets": {
+    "description": "Return a list of the corporation assets",
+    "headers": [
+      {
+        "name": "is_blueprint_copy"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "GET",
+    "path": "/{version}/corporations/{corporation_id}/assets/",
+    "parameters": [
+      {
+        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
+        "in": "parameters",
+        "name": "name",
+        "type": "string",
+        "required": false
+      },
+      {
+        "description": "Which page of results to return",
+        "in": "query",
+        "name": "page",
+        "type": "number",
+        "required": false
+      },
+      {
+        "description": "Boolean if column headings should be listed or not. Default: true",
+        "in": "parameters",
+        "name": "opt_headers",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "in": "path",
+        "name": "version",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "A list of assets",
     "version": "v4"
   },
   "corporations_corporation_wallets_division_journal": {
