@@ -8589,49 +8589,6 @@ const ENDPOINTS = {
     "summary": "Information about a dogma effect",
     "version": "v2"
   },
-  "fw_systems": {
-    "description": "An overview of the current ownership of faction warfare solar systems",
-    "headers": [
-      {
-        "name": "contested"
-      },
-      {
-        "name": "occupier_faction_id"
-      },
-      {
-        "name": "owner_faction_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "victory_points"
-      },
-      {
-        "name": "victory_points_threshold"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/systems/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "All faction warfare solar systems",
-    "version": "v2"
-  },
   "eve_search": {
     "description": "Search for entities that match a given sub",
     "headers": [

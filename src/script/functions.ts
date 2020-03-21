@@ -1947,17 +1947,6 @@ function dogma_effects_effect(effect_id: number, opt_headers: boolean, version: 
 }
 
 /**
- * An overview of the current ownership of faction warfare solar systems
- * @param {boolean} opt_headers  Boolean if column headings should be listed or not. Default: true
- * @param {string} version  Which ESI version to use for the request. Default: Current ESI latest stable version.
- * @return All faction warfare solar systems
- * @customfunction
- */
-function fw_systems(opt_headers: boolean, version: string): any[][] {
-  return parseData_('fw_systems',{opt_headers:opt_headers,version:version})
-}
-
-/**
  * Search for entities that match a given sub
  * @param {string[]} categories (Required) Type of entities to search for
  * @param {string} search (Required) The string to search on
