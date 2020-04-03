@@ -1,0 +1,20 @@
+name: GESI
+
+version: 7.6.0
+
+# authors:
+#   - name <email@example.com>
+
+# description: |
+#   Short description of GESI
+
+# dependencies:
+#   pg:
+#     github: will/crystal-pg
+#     version: "~> 0.5"
+
+# development_dependencies:
+#   webmock:
+#     github: manastech/webmock.cr
+
+# license: MIT
