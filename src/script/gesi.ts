@@ -86,6 +86,11 @@ interface IEndpointList {
 
 type SheetsArray = any[][]
 
+function invoke(characterName: string): void {
+  const oauthService = getOAuthService_(characterNameToId_(characterName));
+
+}
+
 // SSO Methods
 interface IESIToken {
   readonly access_token: string;
@@ -111,6 +116,10 @@ interface ICharacterAffiliation {
   readonly faction_id?: number;
 }
 
+interface ICharacterMap {
+  [characterName: string]: string;
+}
+
 interface IStorage {
   getValue(key: string, optSkipMemoryCheck: boolean): any;
 
@@ -120,26 +129,29 @@ interface IStorage {
 }
 
 function showSSOModal(): void {
-  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>.`);
-  template.authorizationUrl = getOAuthService_('GESI').getAuthorizationUrl();
+  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img onclick="google.script.host.close();" alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>.`);
+  template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
 
 function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
-  const oauthService: OAuth2Service = getOAuthService_('GESI');
-  // @ts-ignore
-  const esiToken = oauthService.handleCallbackWithToken(request);
+  const id: string = request.parameter.serviceName;
+  const oauthService: OAuth2Service = getOAuthService_(id);
+  oauthService.handleCallback(request);
+  const esiToken = oauthService.getToken() as IESIToken;
   const jwtToken: IToken = parseToken_(esiToken);
   // @ts-ignore
-  oauthService.setServiceName(jwtToken.name);
-  // @ts-ignore
   const storage: IStorage = oauthService.getStorage();
-  storage.setValue('', esiToken);
   const affiliationData = getCharacterAffiliation_(jwtToken);
 
-  // Save affiliation data with this character
+  // Save affiliation data with this character's oauth service
   storage.setValue('alliance_id', affiliationData.alliance_id);
   storage.setValue('corporation_id', affiliationData.corporation_id);
+
+  // Update properties service to map this character to the id
+  const characterMap: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  characterMap[jwtToken.name] = id;
+  USER_PROPERTIES.setProperty('characters', JSON.stringify(characterMap));
 
   return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
 }
@@ -176,8 +188,14 @@ function buildRequest_(method: HttpMethod, path: string, payload: any): URLFetch
   }
 }
 
-function getOAuthService_(characterName: string): OAuth2Service {
-  return OAuth2.createService(characterName)
+function characterNameToId_(characterName: string): string {
+  const characters: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  if (!characters.hasOwnProperty(characterName)) throw new Error(`Not character with name '${characterName}' has been authenticated`);
+  return characters[characterName];
+}
+
+function getOAuthService_(id: string): OAuth2Service {
+  return OAuth2.createService(id)
     .setAuthorizationBaseUrl(SCRIPT_PROPERTIES.getProperty('AUTHORIZE_URL')!)
     .setTokenUrl(SCRIPT_PROPERTIES.getProperty('TOKEN_URL')!)
     .setClientId(SCRIPT_PROPERTIES.getProperty('CLIENT_ID')!)
