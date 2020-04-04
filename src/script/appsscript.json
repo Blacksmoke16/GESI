@@ -1,15 +1,9 @@
 {
-  "timeZone": "UTC",
-  "urlFetchWhitelist": [
-    "https://login.eveonline.com/",
-    "https://esi.evetech.net/"
-  ],
-  "exceptionLogging": "STACKDRIVER",
-  "oauthScopes": [
-    "https://www.googleapis.com/auth/script.container.ui",
-    "https://www.googleapis.com/auth/script.external_request",
-    "https://www.googleapis.com/auth/script.scriptapp",
-    "https://www.googleapis.com/auth/spreadsheets.currentonly"
-  ],
-  "runtimeVersion": "V8"
+    "timeZone": "Etc/GMT",
+    "dependencies": {
+    },
+    "exceptionLogging": "STACKDRIVER",
+    "oauthScopes": ["https://www.googleapis.com/auth/script.container.ui", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/script.scriptapp", "https://www.googleapis.com/auth/spreadsheets.currentonly"],
+    "urlFetchWhitelist": ["https://login.eveonline.com/", "https://esi.evetech.net/"],
+    "runtimeVersion": "V8"
 }

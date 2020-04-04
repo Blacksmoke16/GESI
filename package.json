@@ -2,10 +2,7 @@
     "name": "gesi",
     "version": "7.6.0",
     "description": "Google Sheets ESI Add-on",
-    "scripts": {
-        "lint": "eslint . --ext .ts",
-        "test": "karma start --single-run"
-    },
+    "scripts": {},
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Blacksmoke16/GESI.git"
@@ -24,11 +21,8 @@
     },
     "homepage": "https://github.com/Blacksmoke16/GESI#readme",
     "devDependencies": {
-        "@google/clasp": "^2.3.0",
         "@types/google-apps-script": "^1.0.11",
-        "@typescript-eslint/eslint-plugin": "^2.26.0",
-        "@typescript-eslint/parser": "^2.26.0",
-        "eslint": "^6.8.0",
+        "@types/google-apps-script-oauth2": "^24.0.2",
         "typescript": "^3.8.3"
     }
 }
