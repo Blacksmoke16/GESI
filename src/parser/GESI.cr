@@ -1,19 +1,17 @@
-require "option_parser"
 require "./eve_swagger"
 
-OptionParser.parse do |parser|
-  parser.banner = "Usage: GESI [arguments]"
-  parser.on("-h", "--help", "Show this help") { puts parser; exit(0) }
-end
-
-# Object mapping of swagger space starting from the root
-# excluding non GET requests and non 200 response code responses
+# Load and parse the swagger spec
 base = EveSwagger.load
 
-# pp base.endpoints.last
-
-functions = String.build do |str|
-  base.endpoints.join("\n", str) { |endpoint, io| endpoint.to_function io }
+# Save the function list
+File.open("#{EveSwagger::DIST_DIR}/functions.ts", "w") do |file|
+  base.endpoints.join("\n", file) { |endpoint, io| endpoint.to_function io }
 end
 
-puts functions
+# Save the endpoint list
+File.open("#{EveSwagger::DIST_DIR}/endpoints.ts", "w") do |file|
+  keys = base.endpoints.map &.name
+  file << "const ENDPOINTS: IEndpointList = "
+
+  Hash.zip(keys, base.endpoints).to_pretty_json file
+end

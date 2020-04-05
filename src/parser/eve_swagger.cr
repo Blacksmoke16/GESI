@@ -3,9 +3,10 @@ require "http/client"
 require "json"
 
 module EveSwagger
+  DIST_DIR = "../script"
   # Base url for the swagger spec
   ESI_HOST      = "https://esi.evetech.net"
-  IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
+  IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource page)
 
   class_getter! parameters : Hash(String, Parameter)
 
@@ -55,13 +56,19 @@ module EveSwagger
   end
 
   struct Endpoint
-    getter name : String
-    getter method : String
+    include JSON::Serializable
+    include Comparable(Endpoint)
+
     getter description : String
-    getter summary : String
-    getter path_url : String
-    getter version : String
+    getter method : String
+
+    @[JSON::Field(ignore: true)]
+    getter name : String
     getter parameters : Array(Parameter)
+    getter path : String
+    getter scope : String?
+    getter summary : String
+    getter version : String
 
     def initialize(
       @name : String,
@@ -74,7 +81,7 @@ module EveSwagger
     )
       # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
       @version = path_url.match(/\/(v\d)\//).not_nil![1]
-      @path_url = path_url.sub(/v\d/, "{version}")
+      @path = path_url.sub(/v\d/, "{version}")
 
       # Remove character/corporation/alliance_id param if they are an authed endpoint
       # They will be auto filled in based on the authing character
@@ -82,28 +89,37 @@ module EveSwagger
         @parameters.reject! { |p| p.name.in? "character_id", "corporation_id", "alliance_id" }
       end
 
-      # Add in common params
-      @parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string"
-      @parameters << Parameter.new "If column headings should be shown.", "parameters", "show_column_headings", "boolean", required: nil, default_value: "true"
-      @parameters << Parameter.new "Which ESI version to use for the request.", "parameters", "version", "string", required: nil, default_value: @version.dump
+      # Sort the prams so the required ones are first
+      @parameters.sort!
     end
 
     def to_function(io : IO)
+      parameters = @parameters.dup
+
+      # Add in common params
+      parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string"
+      parameters << Parameter.new "If column headings should be shown.", "parameters", "show_column_headings", "boolean", required: nil, default_value: "true"
+      parameters << Parameter.new "Which ESI version to use for the request.", "parameters", "version", "string", required: nil, default_value: @version.dump
+
       io.puts "/**"
       io.puts " * #{@description}"
-      @parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
+      parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
       io.puts " * @customfunction"
       io.puts " */"
       io << "function #{@name}("
-      @parameters.join(", ", io) { |param, join_io| param.to_s join_io }
+      parameters.join(", ", io) { |param, join_io| param.to_s join_io }
       io.puts "): SheetsArray {"
       io << "  return invoke_('#{@name}', { "
 
-      @parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
+      parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
 
       io << " })"
 
       io.puts "\n}"
+    end
+
+    def <=>(other : self) : Int32?
+      @name <=> other.name
     end
   end
 
@@ -113,7 +129,7 @@ module EveSwagger
     getter paths : Hash(String, Method)
 
     @[JSON::Field(ignore: true)]
-    getter endpoints : Array(Endpoint) = [] of Endpoint
+    getter endpoints : Array(Endpoint) = Array(Endpoint).new
 
     @[JSON::Field(key: "securityDefinitions")]
     @security_definitions : SecurityDefinitions
@@ -124,8 +140,8 @@ module EveSwagger
       @security_definitions.evesso.scopes.keys
     end
 
-    def parse # : Hash(String, Endpoint)
-      @paths.first(10).each do |path_url, responses|
+    def parse : Nil
+      @paths.each do |path_url, responses|
         route = responses.route
 
         # A non GET/POST route
@@ -134,9 +150,13 @@ module EveSwagger
         endpoint_name = route.operation_id.gsub(/^post_|^get_|_id/, "")
 
         # Rename search endpoint to not conflict with Sheets' `Search` function
-        # Rename universes to universe_ids due to regex matching `_ids`
         endpoint_name = "eve_search" if endpoint_name == "search"
+
+        # Rename universes to universe_ids due to regex matching `_ids`
         endpoint_name = "universe_ids" if endpoint_name == "universes"
+
+        # Rename status endpoint to not conflict with lib dom function
+        endpoint_name = "eve_status" if endpoint_name == "status"
 
         @endpoints << Endpoint.new(
           endpoint_name,
@@ -151,7 +171,8 @@ module EveSwagger
     end
 
     def after_initialize
-      parse
+      self.parse
+      @endpoints.sort!
     end
   end
 
@@ -180,20 +201,28 @@ module EveSwagger
     include JSON::Serializable
 
     def route : Path?
-      @post || @get
+      @get || @post
     end
 
     def method : String
-      @post ? "post" : "get"
+      @get ? "get" : "post"
     end
   end
 
-  record Parameter, description : String, in : String, name : String, type : String?, schema : Schema? = nil, required : Bool? = false, default_value : String? = nil do
+  record Parameter, description : String, in : String, name : String, type : String?, items : Item? = nil, schema : Schema? = nil, required : Bool? = false, default_value : String? = nil do
     include JSON::Serializable
+    include Comparable(Parameter)
+
+    @[JSON::Field(ignore: true)]
+    @default_value : String? = nil
 
     def type : String
       if schema = @schema
         schema.type
+      elsif items = @items
+        item_type = items.type
+        item_type = item_type == "integer" ? "number" : item_type
+        @type == "array" ? "#{item_type}[]" : item_type
       else
         @type == "integer" ? "number" : @type.not_nil!
       end
@@ -216,23 +245,18 @@ module EveSwagger
     end
 
     def to_doc_s(io : IO) : Nil
-      io << " * @param {#{self.type}} "
-
-      unless @required
-        io << "[#{@name}"
-
-        @default_value.try do |default|
-          io << "=#{default}"
-        end
-
-        io << ']'
-      else
-        io << "#{@name}"
-      end
-
-      io << " - "
+      io << " * @param {#{self.type}} #{@name} - "
 
       io.puts @description
+    end
+
+    def <=>(other : self) : Int32?
+      @required.try do |required|
+        return -1 if required
+        return 1 unless required
+      end
+
+      0
     end
   end
 

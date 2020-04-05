@@ -55,23 +55,23 @@ interface IEndpoint {
   /** @description The HTTP method this endpoint uses */
   readonly method: string;
 
-  /** @description The path, including parameters, of this endpoint */
-  readonly path: string;
+  /** @description Whether this endpoint is paginated */
+  readonly paginated: boolean;
 
   /** @description The parameters this endpoint accepts */
   readonly parameters: IParameter[];
+
+  /** @description The path, including parameters, of this endpoint */
+  readonly path: string;
+
+  /** @description An optional required scope if this endpoint is authenticated */
+  readonly scope?: string;
 
   /** @description Short description of the endpoint */
   readonly summary: string;
 
   /** @description The default version of this endpoint */
   readonly version: string;
-
-  /** @description An optional required scope if this endpoint is authenticated */
-  readonly scope?: string;
-
-  /** @description Whether this endpoint is paginated */
-  readonly paginated: boolean;
 }
 
 interface IEndpointList {
