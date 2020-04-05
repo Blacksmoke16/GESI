@@ -79,7 +79,7 @@ interface IEndpointList {
 }
 
 interface IFunctionParam {
-  opt_headers: boolean;
+  show_column_headings: boolean;
   version?: string;
   name?: string;
   page?: number;
@@ -96,7 +96,7 @@ interface ICharacterData {
 type SheetsArray = any[][]
 
 function test() {
-  console.log(invoke('alliances_alliance',{alliance_id:99000006,opt_headers:true,version:undefined}));
+  console.log(invoke_('alliances_alliance',{alliance_id:99000006,opt_headers:true,version:undefined}));
 }
 
 function getMainCharacter(): string | null {
@@ -107,7 +107,7 @@ function setMainCharacter(character_name: string): void {
   USER_PROPERTIES.setProperty('MAIN_CHARACTER', character_name);
 }
 
-function invoke(endpointName: string, params: IFunctionParam): SheetsArray {
+function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
   const oauthService = getOAuthService_(characterNameToId_(params.name || getMainCharacter()));
   const request = new ESIRequest(endpointName, oauthService);
 
@@ -123,8 +123,8 @@ class ESIRequest {
   #oauthClient: OAuth2Service;
   #characterData: ICharacterData;
 
-  public static parseToken(token: IESIToken): IToken {
-    const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(token.access_token.split('.')[1])).getDataAsString());
+  public static parseToken(access_token: string): IToken {
+    const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
     if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
     if (jwtToken.azp !== SCRIPT_PROPERTIES.getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
@@ -321,12 +321,22 @@ function showSSOModal(): void {
 
 function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   const id: string = request.parameter.serviceName;
+
+  // Fetch the oauthService used for this flow
   const oauthService = getOAuthService_(id);
+
+  // Complete the OAuth flow
   oauthService.handleCallback(request);
-  const jwtToken = ESIRequest.parseToken(oauthService.getToken() as IESIToken);
+
+  // Parse the JWT access token for some basic information about this character
+  const jwtToken = ESIRequest.parseToken(oauthService.getAccessToken());
   const characterId = parseInt(jwtToken.sub.split(':')[2]);
+
   // @ts-ignore
+  // TODO: Make a PR to update @types/google-apps-script-oauth2
   const storage: IStorage = oauthService.getStorage();
+
+  // Fetch additional data about this character
   const affiliationData = getCharacterAffiliation_(characterId, oauthService);
 
   // Save data about this character with its oauth service
@@ -338,6 +348,8 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   // update the ID of this character and reset the old service
   const characterMap: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
 
+  // If this character is already in the map,
+  // Reset/clear out data related to previous oauthService
   if (characterMap.hasOwnProperty(jwtToken.name)) {
     const previousService = getOAuthService_(characterMap[jwtToken.name]);
     previousService.reset();
@@ -345,17 +357,15 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
     const previousStorage: IStorage = previousService.getStorage();
     previousStorage.removeValue('alliance_id');
     previousStorage.removeValue('corporation_id');
+    previousStorage.removeValue('character_id');
   }
 
+  // Update the UUID for this character
   characterMap[jwtToken.name] = id;
   USER_PROPERTIES.setProperty('characters', JSON.stringify(characterMap));
 
   // Set the main character if there is not one already
   if (!getMainCharacter()) setMainCharacter(jwtToken.name);
-
-  console.log(characterMap);
-  console.log(jwtToken);
-  console.log(affiliationData);
 
   return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
 }

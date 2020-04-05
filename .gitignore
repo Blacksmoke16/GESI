@@ -1,3 +1,7 @@
 .idea/
 node_modules/
 src/script/package-lock.json
+
+src/parser/bin
+src/parser/lib
+src/parser/shard.lock

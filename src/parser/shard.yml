@@ -1,20 +1,26 @@
 name: GESI
 
-version: 7.6.0
+version: 8.0.0
 
-# authors:
-#   - name <email@example.com>
+crystal: 0.34.0
 
-# description: |
-#   Short description of GESI
+license: MIT
 
-# dependencies:
-#   pg:
-#     github: will/crystal-pg
-#     version: "~> 0.5"
+repository: https://github.com/athena-framework/COMPONENT_NAME
 
-# development_dependencies:
-#   webmock:
-#     github: manastech/webmock.cr
+documentation: https://athena-framework.github.io/COMPONENT_NAME/Athena/NAMESPACE_NAME.html
 
-# license: MIT
+description: |
+  Google Sheets ESI Add-on
+
+authors:
+  - George Dietrich <george@dietrich.app>
+
+targets:
+  gesi:
+    main: ./GESI.cr
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 0.12.0
