@@ -75,7 +75,7 @@ module EveSwagger
       @method : String,
       @description : String,
       @summary : String,
-      @parameters : Array(Parameter),
+      parameters : Array(Parameter),
       @scope : String?,
       path_url : String
     )
@@ -83,36 +83,30 @@ module EveSwagger
       @version = path_url.match(/\/(v\d)\//).not_nil![1]
       @path = path_url.sub(/v\d/, "{version}")
 
-      # Set type of the parameter if there is a schema and remove schema
-      # Set/convert param types to TS types
-      #
-      # OPTIMIZE: This is kinda a hack since you shouldn't mutate structs, but :shrug:
-      @parameters = @parameters.map do |param|
-        if schema = param.schema
-          type = schema.type
-          if items = schema.items
-            type = type == "array" ? items.type + "[]" : items.type
-          end
-          param.type = type.includes?("integer") ? type.sub("integer", "number") : type
-          param.schema = nil
-        end
-        if item = param.items
-          type = item.type
-          if sub_items = item.items
-            type = sub_items.type
-          end
-          param.type = (type == "integer" ? "number" : type) + "[]"
-          param.items = nil
-        end
-        param.type = "number" if param.type == "integer"
+      # Prepare the passed parameters, converting types to TS type
+      # and removing items/schema so it doesn't get serialized
+      @parameters = parameters.compact_map do |param|
+        # Remove character/corporation/alliance_id param if they are an authed endpoint
+        # They will be auto filled in based on the authing character
+        next if @scope && param.name.in? "character_id", "corporation_id", "alliance_id"
 
-        param
-      end
+        param_type = if schema = param.schema
+                       type = schema.type
+                       if items = schema.items
+                         type = type == "array" ? items.type + "[]" : items.type
+                       end
+                       type = type.includes?("integer") ? type.sub("integer", "number") : type
+                     elsif item = param.items
+                       type = item.type
+                       if sub_items = item.items
+                         type = sub_items.type
+                       end
+                       type = (type == "integer" ? "number" : type) + "[]"
+                     else
+                       param.type
+                     end
 
-      # Remove character/corporation/alliance_id param if they are an authed endpoint
-      # They will be auto filled in based on the authing character
-      if @scope
-        @parameters.reject! { |p| p.name.in? "character_id", "corporation_id", "alliance_id" }
+        param.copy_with(type: param_type == "integer" ? "number" : param_type, schema: nil, items: nil)
       end
 
       # Sort the prams so the required ones are first
@@ -224,8 +218,14 @@ module EveSwagger
 
     getter responses : ResponseCode
 
+    getter? paginated : Bool = false
+
     def description : String
       @description.each_line.first
+    end
+
+    def after_initialize
+      @paginated = @parameters.any? &.name.==("page")
     end
   end
 
