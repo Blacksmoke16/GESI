@@ -85,12 +85,14 @@ module EveSwagger
       # Add in common params
       @parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string"
       @parameters << Parameter.new "If column headings should be shown.", "parameters", "show_column_headings", "boolean", required: nil, default_value: "true"
-      @parameters << Parameter.new "Which ESI version to use for the request. Default: Current ESI latest stable version.", "parameters", "version", "string"
+      @parameters << Parameter.new "Which ESI version to use for the request.", "parameters", "version", "string", required: nil, default_value: @version.dump
     end
 
     def to_function(io : IO)
       io.puts "/**"
       io.puts " * #{@description}"
+      @parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
+      io.puts " * @customfunction"
       io.puts " */"
       io << "function #{@name}("
       @parameters.join(", ", io) { |param, join_io| param.to_s join_io }
@@ -207,8 +209,30 @@ module EveSwagger
       io << ": #{self.type}"
 
       @default_value.try do |default|
-        io << " = #{default}"
+        io << ' ' << '=' << ' '
+
+        default.to_s io
       end
+    end
+
+    def to_doc_s(io : IO) : Nil
+      io << " * @param {#{self.type}} "
+
+      unless @required
+        io << "[#{@name}"
+
+        @default_value.try do |default|
+          io << "=#{default}"
+        end
+
+        io << ']'
+      else
+        io << "#{@name}"
+      end
+
+      io << " - "
+
+      io.puts @description
     end
   end
 

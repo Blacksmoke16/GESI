@@ -80,7 +80,7 @@ interface IEndpointList {
 
 interface IFunctionParam {
   show_column_headings: boolean;
-  version?: string;
+  version: string;
   name?: string;
   page?: number;
 
@@ -96,7 +96,7 @@ interface ICharacterData {
 type SheetsArray = any[][]
 
 function test() {
-  console.log(invoke_('alliances_alliance',{alliance_id:99000006,opt_headers:true,version:undefined}));
+  console.log(invoke_('alliances_alliance',{alliance_id:99000006,show_column_headings:true,version:"v1"}));
 }
 
 function getMainCharacter(): string | null {
@@ -111,14 +111,10 @@ function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
   const oauthService = getOAuthService_(characterNameToId_(params.name || getMainCharacter()));
   const request = new ESIRequest(endpointName, oauthService);
 
-  // Set the version if it was supplied in the params
-  if (params.version) request.setVersion(params.version);
-
   return request.call(params);
 }
 
 class ESIRequest {
-  #version: string;
   #endpoint: IEndpoint;
   #oauthClient: OAuth2Service;
   #characterData: ICharacterData;
@@ -143,16 +139,11 @@ class ESIRequest {
 
     this.#endpoint = ENDPOINTS[endpointName];
     this.#oauthClient = oauthClient;
-    this.#version = this.#endpoint.version;
     this.#characterData = {
       alliance_id: this.getStorage().getValue('alliance_id'),
       character_id: this.getStorage().getValue('character_id'),
       corporation_id: this.getStorage().getValue('corporation_id'),
     };
-  }
-
-  public setVersion(version: string): void {
-    this.#version = version;
   }
 
   public call(params: IFunctionParam, payload: any = null): SheetsArray {
@@ -225,8 +216,6 @@ class ESIRequest {
   private buildRequest(params: IFunctionParam, payload: any = null): URLFetchRequest {
     let path = this.#endpoint.path;
 
-    if (!params.version) params.version = this.#endpoint.version;
-
     console.log(params);
 
     this.#endpoint.parameters.forEach((param: IParameter) => {
@@ -271,10 +260,6 @@ class ESIRequest {
     // @ts-ignore
     return this.#oauthClient.getStorage();
   }
-}
-
-function execute(): void {
-  invoke('alliances', { name: 'Blacksmoke16', opt_headers: true });
 }
 
 // SSO Methods
