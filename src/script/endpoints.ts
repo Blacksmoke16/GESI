@@ -452,7 +452,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "List only mail with an ID lower than the given ID, if present",
         "in": "query",
         "name": "last_mail_id",
-        "type": "integer"
+        "type": "integer",
+        "required": false
       }
     ],
     "path": "/{version}/characters/{character_id}/mail/",
@@ -643,13 +644,15 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       },
       {
         "description": "Whether the search should be a strict match",
         "in": "query",
         "name": "strict",
-        "type": "boolean"
+        "type": "boolean",
+        "required": false
       }
     ],
     "path": "/{version}/characters/{character_id}/search/",
@@ -1238,7 +1241,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/corporations/{corporation_id}/structures/",
@@ -1409,13 +1413,15 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       },
       {
         "description": "Whether the search should be a strict match",
         "in": "query",
         "name": "strict",
-        "type": "boolean"
+        "type": "boolean",
+        "required": false
       }
     ],
     "path": "/{version}/search/",
@@ -1462,7 +1468,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/fleets/{fleet_id}/members/",
@@ -1485,7 +1492,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/fleets/{fleet_id}/wings/",
@@ -1573,7 +1581,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/insurance/prices/",
@@ -1642,7 +1651,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/markets/groups/{market_group_id}/",
@@ -1766,7 +1776,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/opportunities/groups/{group_id}/",
@@ -1822,7 +1833,8 @@ const ENDPOINTS: IEndpointList = {
         "type": "array",
         "items": {
           "type": "integer"
-        }
+        },
+        "required": false
       },
       {
         "description": "connected solar system pairs",
@@ -1831,13 +1843,15 @@ const ENDPOINTS: IEndpointList = {
         "type": "array",
         "items": {
           "type": "array"
-        }
+        },
+        "required": false
       },
       {
         "description": "route security preference",
         "in": "query",
         "name": "flag",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/route/{origin}/{destination}/",
@@ -1876,7 +1890,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/ancestries/",
@@ -1907,7 +1922,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/bloodlines/",
@@ -1937,7 +1953,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/categories/{category_id}/",
@@ -1967,7 +1984,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/constellations/{constellation_id}/",
@@ -1982,7 +2000,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/factions/",
@@ -2036,7 +2055,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/groups/{group_id}/",
@@ -2063,7 +2083,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/ids/",
@@ -2131,7 +2152,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/races/",
@@ -2161,7 +2183,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/regions/{region_id}/",
@@ -2304,7 +2327,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/systems/{system_id}/",
@@ -2334,7 +2358,8 @@ const ENDPOINTS: IEndpointList = {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
-        "type": "string"
+        "type": "string",
+        "required": false
       }
     ],
     "path": "/{version}/universe/types/{type_id}/",

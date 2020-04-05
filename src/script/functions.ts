@@ -442,7 +442,7 @@ function characters_character_loyalty_points(name?: string, show_column_headings
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_mail(labels?: number[], last_mail_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_mail(labels?: number[], last_mail_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('characters_character_mail', { labels, last_mail_id, name, show_column_headings, version })
 }
 
@@ -641,7 +641,7 @@ function characters_character_roles(name?: string, show_column_headings: boolean
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_search(search: string, categories: string[], language: string, strict: boolean, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function characters_character_search(search: string, categories: string[], language?: string, strict?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke_('characters_character_search', { search, categories, language, strict, name, show_column_headings, version })
 }
 
@@ -1269,7 +1269,7 @@ function corporations_corporation_starbases_starbase(system_id: number, starbase
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_structures(language: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function corporations_corporation_structures(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke_('corporations_corporation_structures', { language, name, show_column_headings, version })
 }
 
@@ -1412,7 +1412,7 @@ function dogma_effects_effect(effect_id: number, name?: string, show_column_head
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function eve_search(search: string, categories: string[], language: string, strict: boolean, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function eve_search(search: string, categories: string[], language?: string, strict?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke_('eve_search', { search, categories, language, strict, name, show_column_headings, version })
 }
 
@@ -1451,7 +1451,7 @@ function fleets_fleet(fleet_id: number, name?: string, show_column_headings: boo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fleets_fleet_members(fleet_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function fleets_fleet_members(fleet_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('fleets_fleet_members', { fleet_id, language, name, show_column_headings, version })
 }
 
@@ -1465,7 +1465,7 @@ function fleets_fleet_members(fleet_id: number, language: string, name?: string,
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fleets_fleet_wings(fleet_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function fleets_fleet_wings(fleet_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('fleets_fleet_wings', { fleet_id, language, name, show_column_headings, version })
 }
 
@@ -1586,7 +1586,7 @@ function industry_systems(name?: string, show_column_headings: boolean = true, v
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function insurance_prices(language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function insurance_prices(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('insurance_prices', { language, name, show_column_headings, version })
 }
 
@@ -1639,7 +1639,7 @@ function markets_groups(name?: string, show_column_headings: boolean = true, ver
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_groups_market_group(market_group_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function markets_groups_market_group(market_group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('markets_groups_market_group', { market_group_id, language, name, show_column_headings, version })
 }
 
@@ -1732,7 +1732,7 @@ function opportunities_groups(name?: string, show_column_headings: boolean = tru
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function opportunities_groups_group(group_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function opportunities_groups_group(group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('opportunities_groups_group', { group_id, language, name, show_column_headings, version })
 }
 
@@ -1774,7 +1774,7 @@ function opportunities_tasks_task(task_id: number, name?: string, show_column_he
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function route_origin_destination(origin: number, destination: number, avoid: number[], connections: array[], flag: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: array[], flag?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('route_origin_destination', { origin, destination, avoid, connections, flag, name, show_column_headings, version })
 }
 
@@ -1823,7 +1823,7 @@ function sovereignty_structures(name?: string, show_column_headings: boolean = t
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_ancestries(language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_ancestries(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_ancestries', { language, name, show_column_headings, version })
 }
 
@@ -1849,7 +1849,7 @@ function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, name?: 
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_bloodlines(language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_bloodlines(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_bloodlines', { language, name, show_column_headings, version })
 }
 
@@ -1875,7 +1875,7 @@ function universe_categories(name?: string, show_column_headings: boolean = true
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_categories_category(category_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_categories_category(category_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_categories_category', { category_id, language, name, show_column_headings, version })
 }
 
@@ -1901,7 +1901,7 @@ function universe_constellations(name?: string, show_column_headings: boolean = 
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_constellations_constellation(constellation_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_constellations_constellation(constellation_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_constellations_constellation', { constellation_id, language, name, show_column_headings, version })
 }
 
@@ -1914,7 +1914,7 @@ function universe_constellations_constellation(constellation_id: number, languag
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_factions(language: string, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function universe_factions(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke_('universe_factions', { language, name, show_column_headings, version })
 }
 
@@ -1965,7 +1965,7 @@ function universe_groups(name?: string, show_column_headings: boolean = true, ve
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_groups_group(group_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_groups_group(group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_groups_group', { group_id, language, name, show_column_headings, version })
 }
 
@@ -1979,7 +1979,7 @@ function universe_groups_group(group_id: number, language: string, name?: string
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_ids(names: string[], language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_ids(names: string[], language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_ids', { names, language, name, show_column_headings, version })
 }
 
@@ -2031,7 +2031,7 @@ function universe_planets_planet(planet_id: number, name?: string, show_column_h
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_races(language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_races(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_races', { language, name, show_column_headings, version })
 }
 
@@ -2057,7 +2057,7 @@ function universe_regions(name?: string, show_column_headings: boolean = true, v
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_regions_region(region_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_regions_region(region_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('universe_regions_region', { region_id, language, name, show_column_headings, version })
 }
 
@@ -2185,7 +2185,7 @@ function universe_systems(name?: string, show_column_headings: boolean = true, v
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_systems_system(system_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function universe_systems_system(system_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   return invoke_('universe_systems_system', { system_id, language, name, show_column_headings, version })
 }
 
@@ -2211,7 +2211,7 @@ function universe_types(name?: string, show_column_headings: boolean = true, ver
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_types_type(type_id: number, language: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function universe_types_type(type_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke_('universe_types_type', { type_id, language, name, show_column_headings, version })
 }
 

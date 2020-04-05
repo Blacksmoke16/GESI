@@ -275,6 +275,10 @@ module EveSwagger
 
       0
     end
+
+    def after_initialize : Nil
+      @required = !!@required
+    end
   end
 
   record Schema, type : String, items : Item? do
