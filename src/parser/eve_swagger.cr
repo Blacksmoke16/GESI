@@ -6,7 +6,7 @@ module EveSwagger
   DIST_DIR = "../script"
   # Base url for the swagger spec
   ESI_HOST      = "https://esi.evetech.net"
-  IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource page)
+  IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
 
   class_getter! parameters : Hash(String, Parameter)
 
@@ -55,15 +55,26 @@ module EveSwagger
     end
   end
 
+  record Header, name : String, sub_headers : Array(String)? = nil do
+    include JSON::Serializable
+    include Comparable(Header)
+
+    def <=>(other : self) : Int32?
+      @name <=> other.name
+    end
+  end
+
   struct Endpoint
     include JSON::Serializable
     include Comparable(Endpoint)
 
     getter description : String
+    getter headers : Array(Header)
     getter method : String
 
     @[JSON::Field(ignore: true)]
     getter name : String
+    getter paginated : Bool
     getter parameters : Array(Parameter)
     getter path : String
     getter scope : String?
@@ -77,6 +88,8 @@ module EveSwagger
       @summary : String,
       parameters : Array(Parameter),
       @scope : String?,
+      @headers : Array(Header),
+      @paginated : Bool,
       path_url : String
     )
       # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
@@ -169,7 +182,7 @@ module EveSwagger
         next if route.nil?
 
         # A non 200 status route
-        next unless route.responses.success
+        next unless (success = route.responses.success)
 
         endpoint_name = route.operation_id.gsub(/^post_|^get_|_id/, "")
 
@@ -189,6 +202,8 @@ module EveSwagger
           route.summary,
           route.parameters,
           route.scope,
+          self.get_headers(success.schema),
+          route.paginated?,
           path_url
         )
       end
@@ -197,6 +212,53 @@ module EveSwagger
     def after_initialize
       self.parse
       @endpoints.sort!
+    end
+
+    private def get_headers(schema : Schema?)
+      headers = [] of Header
+
+      return headers if schema.nil?
+
+      # Array
+      if items = schema.items
+        # of objects
+        if properties = items.properties
+          properties.each do |k, v|
+            # sub array
+            sub_headers = parse_items(v.items.not_nil!) if v.type == "array"
+            # sub object
+            sub_headers = v.properties.not_nil!.keys if v.type == "object"
+            headers << Header.new(k, sub_headers)
+          end
+        else
+          # of single type
+          if title = items.title
+            headers << Header.new(title.includes?('_') ? title.match(/.*_(.*)_200_ok/).not_nil![1].chomp('s') + "_ids" : title + 's')
+          end
+        end
+        # Single object
+      elsif properties = schema.properties
+        properties.each do |k, v|
+          # sub array
+          sub_headers = parse_items(v.items.not_nil!) if v.type == "array"
+          # sub object
+          sub_headers = v.properties.not_nil!.keys if v.type == "object"
+          headers << Header.new(k, sub_headers)
+        end
+      else
+        if schema.description == "200 ok integer"
+          title = schema.title.match(/.*_(\w+_\w+)_ok$/).not_nil![1]
+          title = title.sub("s_", '_')
+        else
+          title = schema.description.underscore.sub(' ', '_')
+        end
+        headers << Header.new(title)
+      end
+      headers.sort!
+    end
+
+    private def parse_items(item : Item)
+      item.properties.nil? ? [item.title.not_nil!.match(/.*_(.*_.*)/).not_nil![1] + 's'] : item.properties.not_nil!.keys
     end
   end
 
@@ -226,6 +288,9 @@ module EveSwagger
 
     def after_initialize
       @paginated = @parameters.any? &.name.==("page")
+
+      # If the path is paginated, remove the page parameter
+      @parameters.reject! &.name.==("page") if @paginated
     end
   end
 
@@ -236,7 +301,7 @@ module EveSwagger
     getter success : Response?
   end
 
-  record Response, description : String do
+  record Response, description : String, schema : Schema? do
     include JSON::Serializable
   end
 
@@ -299,7 +364,7 @@ module EveSwagger
     end
   end
 
-  record Schema, type : String, items : Item? do
+  record Schema, type : String, items : Item?, properties : Hash(String, Item)?, description : String, title : String do
     include JSON::Serializable
   end
 
@@ -308,6 +373,8 @@ module EveSwagger
 
     getter type : String
     getter items : Item? = nil
+    getter properties : Hash(String, Item)?
+    getter title : String?
   end
 
   record EVESSO, scopes : Hash(String, String) do
