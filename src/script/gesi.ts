@@ -10,7 +10,6 @@ import CacheService = GoogleAppsScript.Cache.CacheService;
 import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
-import HttpMethod = GoogleAppsScript.URL_Fetch.HttpMethod;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 
 type ParameterType = 'path' | 'parameters' | 'body' | 'query';
@@ -18,7 +17,6 @@ type ParameterType = 'path' | 'parameters' | 'body' | 'query';
 const SCRIPT_PROPERTIES = PropertiesService.getScriptProperties();
 const USER_PROPERTIES = PropertiesService.getUserProperties();
 const USER_CACHE = CacheService.getUserCache()!;
-const SCOPES: string[] = ['esi-assets.read_assets.v1'];
 
 function onInstall(): void {
   onOpen();
@@ -152,9 +150,7 @@ class ESIRequest {
     let result: SheetsArray = [];
 
     // Add the header row if its not set, or set to true
-    if (params.opt_headers) this.appendHeaders(result);
-
-    console.log(result);
+    if (params.show_column_headings) this.appendHeaders(result);
 
     if (Array.isArray(data) && Number.isFinite(data[0])) {
       result = result.concat(data);
@@ -218,6 +214,7 @@ class ESIRequest {
 
     console.log(params);
 
+    // Process this endpoint's parameters
     this.#endpoint.parameters.forEach((param: IParameter) => {
       const paramValue = params[param.name];
 
@@ -228,6 +225,7 @@ class ESIRequest {
       }
     });
 
+    // Add the page param if set
     if (params.page) {
       path = ESIRequest.addQueryParam(path, 'page', params.page)
     }
@@ -240,7 +238,7 @@ class ESIRequest {
 
     const request: URLFetchRequest = {
       method: this.#endpoint.method,
-      url: `${SCRIPT_PROPERTIES.getProperty('BASE_URL')}${path}`,
+      url: `${SCRIPT_PROPERTIES.getProperty('BASE_URL')}${path.replace('{version}', params.version || this.#endpoint.version)}`,
       headers: {
         'user-agent': `GESI User ${this.#characterData.character_id}`,
       },

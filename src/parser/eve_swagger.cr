@@ -171,7 +171,7 @@ module EveSwagger
     @parameters : Hash(String, Parameter)
 
     def scopes : Array(String)
-      @security_definitions.evesso.scopes.keys
+      @security_definitions.evesso.scopes.keys.sort!
     end
 
     def parse : Nil
