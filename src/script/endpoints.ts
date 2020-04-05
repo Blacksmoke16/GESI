@@ -15,7 +15,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE alliance ID",
         "in": "path",
         "name": "alliance_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -49,7 +49,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE alliance ID",
         "in": "path",
         "name": "alliance_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -65,7 +65,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE alliance ID",
         "in": "path",
         "name": "alliance_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -81,12 +81,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned",
         "in": "body",
         "name": "characters",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -102,7 +97,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE character ID",
         "in": "path",
         "name": "character_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -136,12 +131,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -158,12 +148,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -216,7 +201,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The event ID to retrieve events from",
         "in": "query",
         "name": "from_event",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -233,7 +218,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The id of the event requested",
         "in": "path",
         "name": "event_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -250,7 +235,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The id of the event requested",
         "in": "path",
         "name": "event_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -303,7 +288,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -320,7 +305,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -337,7 +322,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE character ID",
         "in": "path",
         "name": "character_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -442,17 +427,14 @@ const ENDPOINTS: IEndpointList = {
         "description": "Fetch only mails that match one or more of the given labels",
         "in": "query",
         "name": "labels",
-        "type": "array",
-        "items": {
-          "type": "integer"
-        },
+        "type": "number[]",
         "required": false
       },
       {
         "description": "List only mail with an ID lower than the given ID, if present",
         "in": "query",
         "name": "last_mail_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -487,7 +469,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE mail ID",
         "in": "path",
         "name": "mail_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -585,7 +567,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Planet id of the target planet",
         "in": "path",
         "name": "planet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -602,7 +584,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE character ID",
         "in": "path",
         "name": "character_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -634,10 +616,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Type of entities to search for",
         "in": "query",
         "name": "categories",
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
+        "type": "string[]",
         "required": true
       },
       {
@@ -740,7 +719,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Only show transactions happened before the one referenced by this id",
         "in": "query",
         "name": "from_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -757,7 +736,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -773,7 +752,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -789,7 +768,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE region id",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -823,7 +802,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A mining observer id",
         "in": "path",
         "name": "observer_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -840,7 +819,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE corporation ID",
         "in": "path",
         "name": "corporation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -856,7 +835,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE corporation ID",
         "in": "path",
         "name": "corporation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -881,12 +860,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -903,12 +877,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A list of item ids",
         "in": "body",
         "name": "item_ids",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -988,7 +957,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1005,7 +974,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of a contract",
         "in": "path",
         "name": "contract_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1058,7 +1027,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE corporation ID",
         "in": "path",
         "name": "corporation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1217,14 +1186,14 @@ const ENDPOINTS: IEndpointList = {
         "description": "The solar system this starbase (POS) is located in,",
         "in": "query",
         "name": "system_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "An EVE starbase (POS) ID",
         "in": "path",
         "name": "starbase_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1276,7 +1245,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Wallet key of the division to fetch journals from",
         "in": "path",
         "name": "division",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1293,14 +1262,14 @@ const ENDPOINTS: IEndpointList = {
         "description": "Wallet key of the division to fetch journals from",
         "in": "path",
         "name": "division",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Only show journal entries happened before the transaction referenced by this id",
         "in": "query",
         "name": "from_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -1333,7 +1302,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A dogma attribute ID",
         "in": "path",
         "name": "attribute_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1349,14 +1318,14 @@ const ENDPOINTS: IEndpointList = {
         "description": "type_id integer",
         "in": "path",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "item_id integer",
         "in": "path",
         "name": "item_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1380,7 +1349,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A dogma effect ID",
         "in": "path",
         "name": "effect_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1403,10 +1372,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Type of entities to search for",
         "in": "query",
         "name": "categories",
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
+        "type": "string[]",
         "required": true
       },
       {
@@ -1444,7 +1410,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1461,7 +1427,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1485,7 +1451,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID for a fleet",
         "in": "path",
         "name": "fleet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1597,7 +1563,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The killmail ID to be queried",
         "in": "path",
         "name": "killmail_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1620,7 +1586,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An EVE corporation ID",
         "in": "path",
         "name": "corporation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1644,7 +1610,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An Eve item group ID",
         "in": "path",
         "name": "market_group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1675,14 +1641,14 @@ const ENDPOINTS: IEndpointList = {
         "description": "Return statistics for this type",
         "in": "query",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "Return statistics in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1698,7 +1664,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Return orders in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1712,7 +1678,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Return orders only for this type",
         "in": "query",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -1728,7 +1694,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Return statistics in this region",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1744,7 +1710,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Return orders in this structure",
         "in": "path",
         "name": "structure_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1769,7 +1735,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of an opportunities group",
         "in": "path",
         "name": "group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1800,7 +1766,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID of an opportunities task",
         "in": "path",
         "name": "task_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1816,34 +1782,28 @@ const ENDPOINTS: IEndpointList = {
         "description": "origin solar system ID",
         "in": "path",
         "name": "origin",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "destination solar system ID",
         "in": "path",
         "name": "destination",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
         "description": "avoid solar system ID(s)",
         "in": "query",
         "name": "avoid",
-        "type": "array",
-        "items": {
-          "type": "integer"
-        },
+        "type": "number[]",
         "required": false
       },
       {
         "description": "connected solar system pairs",
         "in": "query",
         "name": "connections",
-        "type": "array",
-        "items": {
-          "type": "array"
-        },
+        "type": "number[]",
         "required": false
       },
       {
@@ -1906,7 +1866,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "asteroid_belt_id integer",
         "in": "path",
         "name": "asteroid_belt_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -1946,7 +1906,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An Eve item category ID",
         "in": "path",
         "name": "category_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -1977,7 +1937,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "constellation_id integer",
         "in": "path",
         "name": "constellation_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2024,7 +1984,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "graphic_id integer",
         "in": "path",
         "name": "graphic_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2048,7 +2008,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An Eve item group ID",
         "in": "path",
         "name": "group_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2071,12 +2031,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The names to resolve",
         "in": "body",
         "name": "names",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
+        "type": "string[]",
         "required": true
       },
       {
@@ -2099,7 +2054,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "moon_id integer",
         "in": "path",
         "name": "moon_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2115,12 +2070,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "The ids to resolve",
         "in": "body",
         "name": "ids",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
+        "type": "number[]",
         "required": true
       }
     ],
@@ -2136,7 +2086,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "planet_id integer",
         "in": "path",
         "name": "planet_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2176,7 +2126,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "region_id integer",
         "in": "path",
         "name": "region_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2199,7 +2149,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A PI schematic ID",
         "in": "path",
         "name": "schematic_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2215,7 +2165,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "stargate_id integer",
         "in": "path",
         "name": "stargate_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2231,7 +2181,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "star_id integer",
         "in": "path",
         "name": "star_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2247,7 +2197,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "station_id integer",
         "in": "path",
         "name": "station_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2279,7 +2229,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An Eve structure ID",
         "in": "path",
         "name": "structure_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2320,7 +2270,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "system_id integer",
         "in": "path",
         "name": "system_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2351,7 +2301,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "An Eve item type ID",
         "in": "path",
         "name": "type_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       },
       {
@@ -2374,7 +2324,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "Only return wars with ID smaller than this",
         "in": "query",
         "name": "max_war_id",
-        "type": "integer",
+        "type": "number",
         "required": false
       }
     ],
@@ -2390,7 +2340,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "ID for a war",
         "in": "path",
         "name": "war_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],
@@ -2406,7 +2356,7 @@ const ENDPOINTS: IEndpointList = {
         "description": "A valid war ID",
         "in": "path",
         "name": "war_id",
-        "type": "integer",
+        "type": "number",
         "required": true
       }
     ],

@@ -1767,14 +1767,14 @@ function opportunities_tasks_task(task_id: number, name?: string, show_column_he
  * @param {number} origin - origin solar system ID
  * @param {number} destination - destination solar system ID
  * @param {number[]} avoid - avoid solar system ID(s)
- * @param {array[]} connections - connected solar system pairs
+ * @param {number[]} connections - connected solar system pairs
  * @param {string} flag - route security preference
  * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: array[], flag?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: number[], flag?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   return invoke_('route_origin_destination', { origin, destination, avoid, connections, flag, name, show_column_headings, version })
 }
 

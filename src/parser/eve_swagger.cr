@@ -83,6 +83,32 @@ module EveSwagger
       @version = path_url.match(/\/(v\d)\//).not_nil![1]
       @path = path_url.sub(/v\d/, "{version}")
 
+      # Set type of the parameter if there is a schema and remove schema
+      # Set/convert param types to TS types
+      #
+      # OPTIMIZE: This is kinda a hack since you shouldn't mutate structs, but :shrug:
+      @parameters = @parameters.map do |param|
+        if schema = param.schema
+          type = schema.type
+          if items = schema.items
+            type = type == "array" ? items.type + "[]" : items.type
+          end
+          param.type = type.includes?("integer") ? type.sub("integer", "number") : type
+          param.schema = nil
+        end
+        if item = param.items
+          type = item.type
+          if sub_items = item.items
+            type = sub_items.type
+          end
+          param.type = (type == "integer" ? "number" : type) + "[]"
+          param.items = nil
+        end
+        param.type = "number" if param.type == "integer"
+
+        param
+      end
+
       # Remove character/corporation/alliance_id param if they are an authed endpoint
       # They will be auto filled in based on the authing character
       if @scope
@@ -231,19 +257,11 @@ module EveSwagger
     include Comparable(Parameter)
 
     @[JSON::Field(ignore: true)]
-    @default_value : String? = nil
+    @default_value : String?
 
-    def type : String
-      if schema = @schema
-        schema.type
-      elsif items = @items
-        item_type = items.type
-        item_type = item_type == "integer" ? "number" : item_type
-        @type == "array" ? "#{item_type}[]" : item_type
-      else
-        @type == "integer" ? "number" : @type.not_nil!
-      end
-    end
+    setter type : String?
+    setter schema : Schema?
+    setter items : Item?
 
     def to_s(io : IO) : Nil
       io << @name
@@ -283,19 +301,13 @@ module EveSwagger
 
   record Schema, type : String, items : Item? do
     include JSON::Serializable
-
-    def type : String
-      if @type == "array"
-        item_type = @items.not_nil!.type
-        "#{item_type == "integer" ? "number" : item_type}[]"
-      else
-        @type
-      end
-    end
   end
 
-  record Item, type : String do
+  class Item
     include JSON::Serializable
+
+    getter type : String
+    getter items : Item? = nil
   end
 
   record EVESSO, scopes : Hash(String, String) do
