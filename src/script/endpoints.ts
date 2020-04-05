@@ -345,28 +345,6 @@ const ENDPOINTS: IEndpointList = {
     "summary": "Get corporation history",
     "version": "v1"
   },
-  "characters_character_cspa": {
-    "description": "Takes a source character ID in the url and a set of target character ID's in the body, returns a CSPA charge cost",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The target characters to calculate the charge for",
-        "in": "body",
-        "name": "characters",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "required": true
-      }
-    ],
-    "path": "/{version}/characters/{character_id}/cspa/",
-    "scope": "esi-characters.read_contacts.v1",
-    "summary": "Calculate a CSPA charge cost",
-    "version": "v4"
-  },
   "characters_character_fatigue": {
     "description": "Return a character's jump activation and fatigue information",
     "method": "get",
@@ -483,23 +461,13 @@ const ENDPOINTS: IEndpointList = {
     "version": "v1"
   },
   "characters_character_mail_labels": {
-    "description": "Create a mail label",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "Label to create",
-        "in": "body",
-        "name": "label",
-        "schema": {
-          "type": "object"
-        },
-        "required": true
-      }
-    ],
+    "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
+    "method": "get",
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/mail/labels/",
-    "scope": "esi-mail.organize_mail.v1",
-    "summary": "Create a mail label",
-    "version": "v2"
+    "scope": "esi-mail.read_mail.v1",
+    "summary": "Get mail labels and unread counts",
+    "version": "v3"
   },
   "characters_character_mail_lists": {
     "description": "Return all mailing lists that the character is subscribed to",
@@ -1525,30 +1493,6 @@ const ENDPOINTS: IEndpointList = {
     "summary": "Get fleet wings",
     "version": "v1"
   },
-  "fleets_fleet_wings_wing_squads": {
-    "description": "Create a new squad in a fleet",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The wing_id to create squad in",
-        "in": "path",
-        "name": "wing_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "ID for a fleet",
-        "in": "path",
-        "name": "fleet_id",
-        "type": "integer",
-        "required": true
-      }
-    ],
-    "path": "/{version}/fleets/{fleet_id}/wings/{wing_id}/squads/",
-    "scope": "esi-fleets.write_fleet.v1",
-    "summary": "Create fleet squad",
-    "version": "v1"
-  },
   "fw_leaderboards": {
     "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday",
     "method": "get",
@@ -1922,107 +1866,6 @@ const ENDPOINTS: IEndpointList = {
     "parameters": [],
     "path": "/{version}/sovereignty/structures/",
     "summary": "List sovereignty structures",
-    "version": "v1"
-  },
-  "ui_autopilot_waypoint": {
-    "description": "Set a solar system as autopilot waypoint",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The destination to travel to, can be solar system, station or structure's id",
-        "in": "query",
-        "name": "destination_id",
-        "type": "integer",
-        "required": true
-      },
-      {
-        "description": "Whether clean other waypoints beforing adding this one",
-        "in": "query",
-        "name": "clear_other_waypoints",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "description": "Whether this solar system should be added to the beginning of all waypoints",
-        "in": "query",
-        "name": "add_to_beginning",
-        "type": "boolean",
-        "required": true
-      }
-    ],
-    "path": "/{version}/ui/autopilot/waypoint/",
-    "scope": "esi-ui.write_waypoint.v1",
-    "summary": "Set Autopilot Waypoint",
-    "version": "v2"
-  },
-  "ui_openwindow_contract": {
-    "description": "Open the contract window inside the client",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The contract to open",
-        "in": "query",
-        "name": "contract_id",
-        "type": "integer",
-        "required": true
-      }
-    ],
-    "path": "/{version}/ui/openwindow/contract/",
-    "scope": "esi-ui.open_window.v1",
-    "summary": "Open Contract Window",
-    "version": "v1"
-  },
-  "ui_openwindow_information": {
-    "description": "Open the information window for a character, corporation or alliance inside the client",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The target to open",
-        "in": "query",
-        "name": "target_id",
-        "type": "integer",
-        "required": true
-      }
-    ],
-    "path": "/{version}/ui/openwindow/information/",
-    "scope": "esi-ui.open_window.v1",
-    "summary": "Open Information Window",
-    "version": "v1"
-  },
-  "ui_openwindow_marketdetails": {
-    "description": "Open the market details window for a specific typeID inside the client",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The item type to open in market window",
-        "in": "query",
-        "name": "type_id",
-        "type": "integer",
-        "required": true
-      }
-    ],
-    "path": "/{version}/ui/openwindow/marketdetails/",
-    "scope": "esi-ui.open_window.v1",
-    "summary": "Open Market Details",
-    "version": "v1"
-  },
-  "ui_openwindow_newmail": {
-    "description": "Open the New Mail window, according to settings from the request if applicable",
-    "method": "post",
-    "parameters": [
-      {
-        "description": "The details of mail to create",
-        "in": "body",
-        "name": "new_mail",
-        "schema": {
-          "type": "object"
-        },
-        "required": true
-      }
-    ],
-    "path": "/{version}/ui/openwindow/newmail/",
-    "scope": "esi-ui.open_window.v1",
-    "summary": "Open New Mail Window",
     "version": "v1"
   },
   "universe_ancestries": {

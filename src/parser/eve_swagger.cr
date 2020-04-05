@@ -103,6 +103,7 @@ module EveSwagger
 
       io.puts "/**"
       io.puts " * #{@description}"
+      io.puts " *"
       parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
       io.puts " * @customfunction"
       io.puts " */"
@@ -146,6 +147,9 @@ module EveSwagger
 
         # A non GET/POST route
         next if route.nil?
+
+        # A non 200 status route
+        next unless route.responses.success
 
         endpoint_name = route.operation_id.gsub(/^post_|^get_|_id/, "")
 
@@ -192,9 +196,22 @@ module EveSwagger
 
     getter summary : String
 
+    getter responses : ResponseCode
+
     def description : String
       @description.each_line.first
     end
+  end
+
+  struct ResponseCode
+    include JSON::Serializable
+
+    @[JSON::Field(key: "200")]
+    getter success : Response?
+  end
+
+  record Response, description : String do
+    include JSON::Serializable
   end
 
   record Method, get : Path?, post : Path? do
