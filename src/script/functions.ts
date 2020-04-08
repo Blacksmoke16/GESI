@@ -119,7 +119,7 @@ function characters_character_agents_research(name?: string, show_column_heading
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_assets(name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function characters_character_assets(name?: string, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
   return invoke_('characters_character_assets', { name, show_column_headings, version })
 }
 
@@ -864,7 +864,7 @@ function corporations_corporation_alliancehistory(corporation_id: number, name?:
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_assets(name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function corporations_corporation_assets(name?: string, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
   return invoke_('corporations_corporation_assets', { name, show_column_headings, version })
 }
 

@@ -78,7 +78,7 @@ interface IEndpointList {
 
 interface IFunctionParam {
   show_column_headings: boolean;
-  version: string;
+  version?: string;
   name?: string;
   page?: number;
 
@@ -93,10 +93,6 @@ interface ICharacterData {
 
 type SheetsArray = any[][]
 
-function test() {
-  console.log(invoke_('alliances_alliance',{alliance_id:99000006,show_column_headings:true,version:"v1"}));
-}
-
 function getMainCharacter(): string | null {
   return USER_PROPERTIES.getProperty('MAIN_CHARACTER');
 }
@@ -105,11 +101,47 @@ function setMainCharacter(character_name: string): void {
   USER_PROPERTIES.setProperty('MAIN_CHARACTER', character_name);
 }
 
-function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
-  const oauthService = getOAuthService_(characterNameToId_(params.name || getMainCharacter()));
-  const request = new ESIRequest(endpointName, oauthService);
+function getAccessToken(characterName: string): string {
+  return getOAuthService_(characterNameToId_(characterName)).getAccessToken();
+}
 
-  return request.call(params);
+function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
+  return prepareRequest_(endpointName, params).call(params);
+}
+
+function invokeMultiple(endpointName: string, characterNames: string | string[], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
+  const normalizedNames = Array.isArray(characterNames) ? characterNames.map((row: any) => row[0]) : characterNames.split(',');
+
+  const firstCharacter = normalizedNames.shift();
+
+  let result = invoke_(endpointName, { ...params, name: firstCharacter });
+
+  const headers = result[0];
+  headers.push('character_name');
+
+  result.forEach((item: any, idx: number) => {
+    if (idx > 0) result.push(firstCharacter);
+  });
+
+  normalizedNames.forEach((name: string) => {
+    const subResults = invoke_(endpointName, { ...params, name, show_column_headings: false });
+
+    subResults.forEach((item: any) => {
+      item.push(name);
+      result.push(item);
+    });
+  });
+
+  return result;
+}
+
+function invokeRaw(endpointName: string, params: IFunctionParam = {} as IFunctionParam): any {
+  return prepareRequest_(endpointName, params).callRaw(params);
+}
+
+function prepareRequest_(endpointName: string, params: IFunctionParam) {
+  const oauthService = getOAuthService_(characterNameToId_(params.name || getMainCharacter()));
+  return new ESIRequest(endpointName, oauthService);
 }
 
 class ESIRequest {
@@ -203,7 +235,7 @@ class ESIRequest {
 
     for (let p = 2; p <= totalPages; p++) {
       params.page = p;
-      requests.push(this.buildRequest(params, payload))
+      requests.push(this.buildRequest(params, payload));
     }
 
     return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
@@ -212,22 +244,20 @@ class ESIRequest {
   private buildRequest(params: IFunctionParam, payload: any = null): URLFetchRequest {
     let path = this.#endpoint.path;
 
-    console.log(params);
-
     // Process this endpoint's parameters
     this.#endpoint.parameters.forEach((param: IParameter) => {
       const paramValue = params[param.name];
 
-      if (param.in === "path" && paramValue) {
+      if (param.in === 'path' && paramValue) {
         path = path.replace(`{${param.name}}`, paramValue);
-      } else if (param.in === "query" && paramValue) {
+      } else if (param.in === 'query' && paramValue) {
         path = ESIRequest.addQueryParam(path, param.name, paramValue);
       }
     });
 
     // Add the page param if set
     if (params.page) {
-      path = ESIRequest.addQueryParam(path, 'page', params.page)
+      path = ESIRequest.addQueryParam(path, 'page', params.page);
     }
 
     if (this.#endpoint.scope) {
@@ -248,8 +278,6 @@ class ESIRequest {
 
     if (payload) request.payload = JSON.stringify(payload);
     if (this.#endpoint.scope) request.headers['authorization'] = `Bearer ${this.#oauthClient.getAccessToken()}`;
-
-    console.log(request);
 
     return request;
   }
@@ -334,13 +362,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   // If this character is already in the map,
   // Reset/clear out data related to previous oauthService
   if (characterMap.hasOwnProperty(jwtToken.name)) {
-    const previousService = getOAuthService_(characterMap[jwtToken.name]);
-    previousService.reset();
-    // @ts-ignore
-    const previousStorage: IStorage = previousService.getStorage();
-    previousStorage.removeValue('alliance_id');
-    previousStorage.removeValue('corporation_id');
-    previousStorage.removeValue('character_id');
+    getOAuthService_(characterMap[jwtToken.name]).reset();
   }
 
   // Update the UUID for this character

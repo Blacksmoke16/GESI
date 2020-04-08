@@ -114,7 +114,7 @@ module EveSwagger
                        if sub_items = item.items
                          type = sub_items.type
                        end
-                       type = (type == "integer" ? "number" : type) + "[]"
+                       (type == "integer" ? "number" : type) + "[]"
                      else
                        param.type
                      end

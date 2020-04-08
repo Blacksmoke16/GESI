@@ -362,7 +362,7 @@ const ENDPOINTS: IEndpointList = {
     "path": "/{version}/characters/{character_id}/assets/",
     "scope": "esi-assets.read_assets.v1",
     "summary": "Get character assets",
-    "version": "v4"
+    "version": "v5"
   },
   "characters_character_assets_locations": {
     "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
@@ -2854,7 +2854,7 @@ const ENDPOINTS: IEndpointList = {
     "path": "/{version}/corporations/{corporation_id}/assets/",
     "scope": "esi-assets.read_corporation_assets.v1",
     "summary": "Get corporation assets",
-    "version": "v4"
+    "version": "v5"
   },
   "corporations_corporation_assets_locations": {
     "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
