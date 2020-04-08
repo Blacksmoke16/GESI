@@ -6,10 +6,6 @@ crystal: 0.34.0
 
 license: MIT
 
-repository: https://github.com/athena-framework/COMPONENT_NAME
-
-documentation: https://athena-framework.github.io/COMPONENT_NAME/Athena/NAMESPACE_NAME.html
-
 description: |
   Google Sheets ESI Add-on
 
