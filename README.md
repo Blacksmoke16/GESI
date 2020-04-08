@@ -5,21 +5,20 @@ Google Sheets add-on for interacting with EVE ESI API.  GESI providers an EVE On
 ## Setup:
 
 1. Install the add-on.  From within Sheets: Go to, `Add-Ons` => `Get add-ons` => Search for `GESI`, and click the `+ Free`.
-2. Give the script access to what it needs.
-3. There will now be a GESI option under the `Add-Ons` option in the menu bar.  Click it and then click `GESI => Authorize Characters`.
-4. Click the EVE SSO button in the modal.  Login => select what character you want to authorize => Authorize.
-5. Close the modal.
-6. (Optional) Repeat step 4 to authorize other characters.
-7. Done.
+1. Give the script access to what it needs.
+1. There will now be a GESI option under the `Add-Ons` option in the menu bar.  Click it and then click `GESI => Authorize Character`.
+1. Click the EVE SSO button in the modal.  Login => select what character you want to authorize => Authorize.
+1. (Optional) Repeat step 4 to authorize other characters.
+1. Done.
 
 ### Script Editor
 
 By default, one does not have access to GESI functions for use in custom functions in the script editor.  In order to gain access to these functions for custom logic, add GESI as a library to your script:
 
 1. Install the add-on, following the instructions above.
-2. Within the script editor, click `Resources => Lbraries...` 
-3. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
-4. Select the latest version from the dropdown, and click `Save`.
+1. Within the script editor, click `Resources => Lbraries...`
+1. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
+1. Select the latest version from the dropdown, and click `Save`.
 
 In order to use this, functions must be perpended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
@@ -63,11 +62,7 @@ For example `=characters_character_assets()` would get the assets for the first 
 
 ### Why is my data not updating?
 
-In order to improve performance, and reduce the number of requests to ESI (a user can only make 20,000 requests per day between all their sheets), GESI implements caching on the data returned from ESI.  The length of time that data will be cached depends on the function and when the data is expected to refresh on ESI's side.  
-
-### How can I get more than 1 page of data at a time?
-
-Use `-1` as the value for the page parameter.  This will return all pages, however it may take longer to return, depending on how many pages there are.
+In order to improve performance, and reduce the number of requests to ESI (a user can only make 20,000 requests per day between all their sheets), GESI implements caching on the data returned from ESI.  The length of time that data will be cached depends on the function and when the data is expected to refresh on ESI's side.
 
 ### What do the function parameter types mean?
 
@@ -77,7 +72,7 @@ Use `-1` as the value for the page parameter.  This will return all pages, howev
 | number  | `12`                               |
 | string  | `"foo"` Notice the _double_ quotes |
 
-Array types are denoted with a `[]` following the data type of the parameter.  An example of an array type could be `number[]` where a value for that would be `A1:A1` where this range is a column of numbers.
+Array types are denoted with a `[]` following the data type of the parameter.  An example of an array type could be `number[]` where a value for that would be `A1:A10` where this range is a column of numbers.
 
 ### Why does this cell contain all this random data?
 
@@ -101,29 +96,24 @@ There is not built-in way to do this currently, however it is possible.
 
 ### Using functions with multiple characters
 
-A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  Currently this can be achieved by calling `=characters_character_industry_jobs()` once, then leaving some space and adding more for each additional characters with opt_headers disabled.  While it is an ok workaround it is not optimal, since there could be empty rows, not easily expandable/editable, etc.  A better alternative would be to define a new custom function `getJobs(character_names)` that will output the industry jobs of the given characters, in a single function call.
+A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  This can be achieved by using the `invokeMultiple` method within a custom function.
 
+> GESI must be included as a library for this to work.  See [Script Editor](./README.md#script-editor) for how to set that up.
 ```JavaScript
 /**
-* Returns the combined industry jobs belonging to the given characters
-* @param {string[]} character_names Character names to get jobs for.
-* @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
-* @return Combined industry job.
-* @customfunction
+ * Returns the combined industry jobs belonging to the given characters
+ *
+ * @param {string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return Combined industry job.
+ * @customfunction
 */
-function getJobs(character_names, opt_headers) {
-  var characters = character_names.split(",");
-  var jobs = GESI.characters_character_industry_jobs(false, characters.shift(), opt_headers);
-  characters.forEach(function(character) {
-    jobs = jobs.concat(GESI.characters_character_industry_jobs(false, character.trim(), false));
-  });
-  return jobs;
+function getJobs(characterNames, params) {
+  return GESI.invokeMultiple("characters_character_industry_jobs", characterNames);
 }
 ```
 
-Which would for three characters would be used like `=getJobs("Blacksmoke16, Character2, Character3")`.
-
-This is of course just an example, but the general idea can be used as a template for other endpoint functions and uses.
+Which would for three characters would be used like `=getJobs("Blacksmoke16, Character2, Character3")` or `=getJobs(A1:A3)` where that range consists of each character.
 
 ### How do I know my EVE data isn't being misused?
 
@@ -136,7 +126,7 @@ Discord:  Blacksmoke16#0016
 Discord Server: https://discordapp.com/invite/eEAH2et
 
 ## Copyright
-EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other 
+EVE Online and the EVE logo are the registered trademarks of CCP hf. All rights are reserved worldwide. All other
 trademarks are the property of their respective owners. EVE Online, the EVE logo, EVE and all associated logos and designs are the intellectual property of CCP hf. All artwork, screenshots, characters, vehicles, storylines, world facts or other recognizable features of the intellectual property relating to these trademarks are likewise the intellectual property of CCP hf.    CCP hf. has granted permission to GESI to use EVE Online and all associated logos and designs for promotional and information purposes on its website but does not endorse, and is not in any way affiliated with, the GESI. CCP is in no way responsible for the content on or functioning of this website, nor can it be liable for any damage arising from the use of this website.
 
 ## Privacy Policy

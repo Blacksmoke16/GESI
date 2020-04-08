@@ -93,22 +93,80 @@ interface ICharacterData {
 
 type SheetsArray = any[][]
 
+/**
+ * Parses array data into more readable format
+ * @param {string} endpoint_name (Required) Name of the endpoint data to be parsed is from.
+ * @param {string} column_name (Required) Name of the column to be parsed.
+ * @param {string} data (Required) Cell that holds the data to be parsed.
+ * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @return Parsed array data.
+ * @customfunction
+ */
+function parseArray(endpoint_name: string, column_name: string, data: string, opt_headers: boolean): any[][] {
+  let result: any[][] = [];
+  const endpoint_header: IHeader = ENDPOINTS[endpoint_name].headers.find((eh: IHeader) => eh.name === column_name)!;
+  if (opt_headers || undefined === opt_headers) result.push(endpoint_header ? endpoint_header.sub_headers! : [column_name.slice(0, -1) + '_id']);
+
+  // Kinda a hack but it works for now :shrug:
+  if (!endpoint_header || !endpoint_header.hasOwnProperty('sub_headers')) {
+    JSON.parse(data).forEach((o: any) => result.push([o]));
+  } else {
+    JSON.parse(data).forEach((o: any) => {
+      let temp: any[] = [];
+      endpoint_header.sub_headers!.forEach((k: string) => temp.push(Array.isArray(o[k]) ? JSON.stringify(o[k]) : o[k]));
+      result.push(temp);
+    });
+  }
+
+  return result;
+}
+
+/**
+ * @return The character that will be used by default for authenticated endpoints.
+ * @customfunction
+ */
 function getMainCharacter(): string | null {
   return USER_PROPERTIES.getProperty('MAIN_CHARACTER');
 }
 
-function setMainCharacter(character_name: string): void {
-  USER_PROPERTIES.setProperty('MAIN_CHARACTER', character_name);
+/**
+ * @param {string} characterName The name of the new main character
+ * @customfunction
+ */
+function setMainCharacter(characterName: string): void {
+  USER_PROPERTIES.setProperty('MAIN_CHARACTER', characterName);
 }
 
+/**
+ * @param {string} characterName The name of the character to get the token for
+ * @return {string} The access token for the provided characterName
+ * @customfunction
+ */
 function getAccessToken(characterName: string): string {
   return getOAuthService_(characterNameToId_(characterName)).getAccessToken();
+}
+
+/**
+ * @return {string[]} The characters that have been authenticated
+ * @customfunction
+ */
+function getAuthenticatedCharacters(): string[] {
+  return Object.keys(JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}'));
 }
 
 function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
   return prepareRequest_(endpointName, params).call(params);
 }
 
+/**
+ * Returns the data from the provided endpointName for each character as one list
+ *
+ * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return
+ * @customfunction
+ */
 function invokeMultiple(endpointName: string, characterNames: string | string[], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
   const normalizedNames = Array.isArray(characterNames) ? characterNames.map((row: any) => row[0]) : characterNames.split(',');
 
@@ -135,6 +193,14 @@ function invokeMultiple(endpointName: string, characterNames: string | string[],
   return result;
 }
 
+/**
+ * Return the raw JSON data related to an ESI call
+ *
+ * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return The raw JSON response from the provided endpointName
+ * @customfunction
+ */
 function invokeRaw(endpointName: string, params: IFunctionParam = {} as IFunctionParam): any {
   return prepareRequest_(endpointName, params).callRaw(params);
 }
