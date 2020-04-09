@@ -86,9 +86,18 @@ interface IFunctionParam {
 }
 
 interface ICharacterData {
-  readonly alliance_id: number | null;
+  readonly alliance_id?: number;
   readonly character_id: number;
   readonly corporation_id: number;
+}
+
+interface IAuthenticatedCharacter extends ICharacterData {
+  readonly id: string;
+  readonly name: string;
+}
+
+interface ICharacterMap {
+  [characterName: string]: IAuthenticatedCharacter;
 }
 
 type SheetsArray = any[][]
@@ -147,11 +156,23 @@ function getAccessToken(characterName: string): string {
 }
 
 /**
- * @return {string[]} The characters that have been authenticated
+ * @return {ICharacterMap} An object representing the characters that have been authenticated
  * @customfunction
  */
-function getAuthenticatedCharacters(): string[] {
-  return Object.keys(JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}'));
+function getAuthenticatedCharacters(): ICharacterMap {
+  return JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+}
+
+/**
+ * @param {string} characterName The name of the character
+ * @return {IAuthenticatedCharacter} A metadata object for this character
+ * @customfunction
+ */
+function getCharacterData(characterName: string | null): IAuthenticatedCharacter {
+  const characters: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  if (!characterName) throw new Error('No characters have been authenticated.  Visit Add-ons => GEST => Authorize Character to do so.');
+  if (!characters.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
+  return characters[characterName];
 }
 
 function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
@@ -378,10 +399,6 @@ interface ICharacterAffiliation {
   readonly faction_id?: number;
 }
 
-interface ICharacterMap {
-  [characterName: string]: string;
-}
-
 interface IStorage {
   getValue(key: string, optSkipMemoryCheck?: boolean): any;
 
@@ -428,11 +445,17 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   // If this character is already in the map,
   // Reset/clear out data related to previous oauthService
   if (characterMap.hasOwnProperty(jwtToken.name)) {
-    getOAuthService_(characterMap[jwtToken.name]).reset();
+    getOAuthService_(characterMap[jwtToken.name].id).reset();
   }
 
-  // Update the UUID for this character
-  characterMap[jwtToken.name] = id;
+  // Update the user object
+  characterMap[jwtToken.name] = {
+    alliance_id: affiliationData.alliance_id,
+    character_id: affiliationData.character_id,
+    corporation_id: affiliationData.corporation_id,
+    id,
+    name: jwtToken.name,
+  };
   USER_PROPERTIES.setProperty('characters', JSON.stringify(characterMap));
 
   // Set the main character if there is not one already
@@ -446,10 +469,7 @@ function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Servic
 }
 
 function characterNameToId_(characterName: string | null): string {
-  const characters: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
-  if (!characterName) throw new Error('No characters have been authenticated.  Visit Add-ons => GEST => Authorize Character to do so.');
-  if (!characters.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
-  return characters[characterName];
+  return getCharacterData(characterName).id;
 }
 
 function getOAuthService_(id: string): OAuth2Service {
