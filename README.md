@@ -104,11 +104,10 @@ A common use case is wanting to get the same data from multiple characters.  For
  * Returns the combined industry jobs belonging to the given characters
  *
  * @param {string[]} characterNames A single, comma separated, or vertical range of character names
- * @param {object} params Any extra parameters that should be included in the ESI call
  * @return Combined industry job.
  * @customfunction
 */
-function getJobs(characterNames, params) {
+function getJobs(characterNames) {
   return GESI.invokeMultiple("characters_character_industry_jobs", characterNames);
 }
 ```
