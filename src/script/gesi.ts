@@ -164,6 +164,14 @@ function getAuthenticatedCharacters(): ICharacterMap {
 }
 
 /**
+ * @return {string[]} An array of character names that have authenticated
+ * @customfunction
+ */
+function getAuthenticatedCharacterNames(): string[] {
+  return Object.keys(getAuthenticatedCharacters());
+}
+
+/**
  * @param {string} characterName The name of the character
  * @return {IAuthenticatedCharacter} A metadata object for this character
  * @customfunction
@@ -271,7 +279,7 @@ class ESIRequest {
     // Add the header row if its not set, or set to true
     if (params.show_column_headings) this.appendHeaders(result);
 
-    if (Array.isArray(data) && Number.isFinite(data[0])) {
+    if (Array.isArray(data) && isFinite(data[0])) {
       result = result.concat(data);
     } else if (Array.isArray(data) && data instanceof Object) {
       result = result.concat(
