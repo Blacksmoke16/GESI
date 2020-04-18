@@ -81,6 +81,7 @@ module EveSwagger
     getter summary : String
     getter version : String
 
+    # ameba:disable Metrics/CyclomaticComplexity
     def initialize(
       @name : String,
       @method : String,
@@ -215,6 +216,7 @@ module EveSwagger
       @endpoints.sort!
     end
 
+    # ameba:disable Metrics/CyclomaticComplexity
     private def get_headers(schema : Schema?)
       headers = [] of Header
 

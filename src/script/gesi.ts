@@ -232,9 +232,9 @@ function prepareRequest_(endpointName: string, params: IFunctionParam) {
 }
 
 class ESIRequest {
-  #endpoint: IEndpoint;
-  #oauthClient: OAuth2Service;
-  #characterData: ICharacterData;
+  private endpoint: IEndpoint;
+  private oauthClient: OAuth2Service;
+  private characterData: ICharacterData;
 
   public static parseToken(access_token: string): IToken {
     const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
@@ -254,9 +254,9 @@ class ESIRequest {
       throw new Error(`Unknown endpoint: '${endpointName}'`);
     }
 
-    this.#endpoint = ENDPOINTS[endpointName];
-    this.#oauthClient = oauthClient;
-    this.#characterData = {
+    this.endpoint = ENDPOINTS[endpointName];
+    this.oauthClient = oauthClient;
+    this.characterData = {
       alliance_id: this.getStorage().getValue('alliance_id'),
       character_id: this.getStorage().getValue('character_id'),
       corporation_id: this.getStorage().getValue('corporation_id'),
@@ -276,11 +276,11 @@ class ESIRequest {
     } else if (Array.isArray(data) && data instanceof Object) {
       result = result.concat(
         data.map((obj) => {
-          return this.#endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
+          return this.endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
         }),
       );
     } else if (data instanceof Object) {
-      result.push(this.#endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
+      result.push(this.endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
     }
 
     return result;
@@ -291,7 +291,7 @@ class ESIRequest {
   }
 
   private appendHeaders(result: SheetsArray): void {
-    result.push(this.#endpoint.headers.map((header: IHeader) => header.name));
+    result.push(this.endpoint.headers.map((header: IHeader) => header.name));
   }
 
   private doRequest<T>(params: IFunctionParam, payload: any = null): T | T[] {
@@ -309,7 +309,7 @@ class ESIRequest {
     if (headers.hasOwnProperty('Warning')) console.warn(headers['Warning']);
 
     // If the route is not paginated, just return the first response
-    if (!this.#endpoint.paginated) return JSON.parse(response.getContentText());
+    if (!this.endpoint.paginated) return JSON.parse(response.getContentText());
 
     // If the route is paginated but only has one page, just return it
     if (headers.hasOwnProperty('x-pages') && parseInt(headers['x-pages']) === 1) return JSON.parse(response.getContentText());
@@ -329,10 +329,10 @@ class ESIRequest {
   }
 
   private buildRequest(params: IFunctionParam, payload: any = null): URLFetchRequest {
-    let path = this.#endpoint.path;
+    let path = this.endpoint.path;
 
     // Process this endpoint's parameters
-    this.#endpoint.parameters.forEach((param: IParameter) => {
+    this.endpoint.parameters.forEach((param: IParameter) => {
       const paramValue = params[param.name];
 
       if (param.in === 'path' && paramValue) {
@@ -347,31 +347,31 @@ class ESIRequest {
       path = ESIRequest.addQueryParam(path, 'page', params.page);
     }
 
-    if (this.#endpoint.scope) {
-      if (this.#characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.#characterData.alliance_id.toString());
-      if (path.includes('{character_id}')) path = path.replace('{character_id}', this.#characterData.character_id.toString());
-      if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.#characterData.corporation_id.toString());
+    if (this.endpoint.scope) {
+      if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id.toString());
+      if (path.includes('{character_id}')) path = path.replace('{character_id}', this.characterData.character_id.toString());
+      if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.characterData.corporation_id.toString());
     }
 
     const request: URLFetchRequest = {
-      method: this.#endpoint.method,
-      url: `${SCRIPT_PROPERTIES.getProperty('BASE_URL')}${path.replace('{version}', params.version || this.#endpoint.version)}`,
+      method: this.endpoint.method,
+      url: `${SCRIPT_PROPERTIES.getProperty('BASE_URL')}${path.replace('{version}', params.version || this.endpoint.version)}`,
       headers: {
-        'user-agent': `GESI User ${this.#characterData.character_id}`,
+        'user-agent': `GESI User ${this.characterData.character_id}`,
       },
       contentType: 'application/json',
       muteHttpExceptions: true,
     };
 
     if (payload) request.payload = JSON.stringify(payload);
-    if (this.#endpoint.scope) request.headers['authorization'] = `Bearer ${this.#oauthClient.getAccessToken()}`;
+    if (this.endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
 
     return request;
   }
 
   private getStorage(): IStorage {
     // @ts-ignore
-    return this.#oauthClient.getStorage();
+    return this.oauthClient.getStorage();
   }
 }
 
