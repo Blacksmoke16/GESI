@@ -1,27 +1,25 @@
 /**
  * List all active player alliances
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function alliances(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('alliances', { name, show_column_headings, version })
+function alliances(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('alliances', { show_column_headings, version })
 }
 
 /**
  * Public information about an alliance
  *
  * @param {number} alliance_id - An EVE alliance ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function alliances_alliance(alliance_id: number, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function alliances_alliance(alliance_id: number, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance', { alliance_id, name, show_column_headings, version })
+  return invoke_('alliances_alliance', { alliance_id, show_column_headings, version })
 }
 
 /**
@@ -52,56 +50,52 @@ function alliances_alliance_contacts_labels(name?: string, show_column_headings:
  * List all current member corporations of an alliance
  *
  * @param {number} alliance_id - An EVE alliance ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function alliances_alliance_corporations(alliance_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function alliances_alliance_corporations(alliance_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance_corporations', { alliance_id, name, show_column_headings, version })
+  return invoke_('alliances_alliance_corporations', { alliance_id, show_column_headings, version })
 }
 
 /**
  * Get the icon urls for a alliance
  *
  * @param {number} alliance_id - An EVE alliance ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function alliances_alliance_icons(alliance_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function alliances_alliance_icons(alliance_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance_icons', { alliance_id, name, show_column_headings, version })
+  return invoke_('alliances_alliance_icons', { alliance_id, show_column_headings, version })
 }
 
 /**
  * Bulk lookup of character IDs to corporation, alliance and faction
  *
  * @param {number[]} characters - The character IDs to fetch affiliations for. All characters must exist, or none will be returned
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_affiliation(characters: number[], name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_affiliation(characters: number[], show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!characters) throw new Error(`characters is required`);
-  return invoke_('characters_affiliation', { characters, name, show_column_headings, version })
+  return invoke_('characters_affiliation', { characters, show_column_headings, version })
 }
 
 /**
  * Public information about a character
  *
  * @param {number} character_id - An EVE character ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character(character_id: number, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function characters_character(character_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character', { character_id, name, show_column_headings, version })
+  return invoke_('characters_character', { character_id, show_column_headings, version })
 }
 
 /**
@@ -325,14 +319,13 @@ function characters_character_contracts_contract_items(contract_id: number, name
  * Get a list of all the corporations a character has been a member of
  *
  * @param {number} character_id - An EVE character ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_corporationhistory(character_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_corporationhistory(character_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character_corporationhistory', { character_id, name, show_column_headings, version })
+  return invoke_('characters_character_corporationhistory', { character_id, show_column_headings, version })
 }
 
 /**
@@ -622,14 +615,13 @@ function characters_character_planets_planet(planet_id: number, name?: string, s
  * Get portrait urls for a character
  *
  * @param {number} character_id - An EVE character ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_portrait(character_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function characters_character_portrait(character_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character_portrait', { character_id, name, show_column_headings, version })
+  return invoke_('characters_character_portrait', { character_id, show_column_headings, version })
 }
 
 /**
@@ -775,42 +767,39 @@ function characters_character_wallet_transactions(from_id?: number, name?: strin
  * Lists bids on a public auction contract
  *
  * @param {number} contract_id - ID of a contract
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function contracts_public_bids_contract(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function contracts_public_bids_contract(contract_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('contracts_public_bids_contract', { contract_id, name, show_column_headings, version })
+  return invoke_('contracts_public_bids_contract', { contract_id, show_column_headings, version })
 }
 
 /**
  * Lists items of a public contract
  *
  * @param {number} contract_id - ID of a contract
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function contracts_public_items_contract(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function contracts_public_items_contract(contract_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('contracts_public_items_contract', { contract_id, name, show_column_headings, version })
+  return invoke_('contracts_public_items_contract', { contract_id, show_column_headings, version })
 }
 
 /**
  * Returns a paginated list of all public contracts in the given region
  *
  * @param {number} region_id - An EVE region id
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function contracts_public_region(region_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function contracts_public_region(region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('contracts_public_region', { region_id, name, show_column_headings, version })
+  return invoke_('contracts_public_region', { region_id, show_column_headings, version })
 }
 
 /**
@@ -855,28 +844,26 @@ function corporation_corporation_mining_observers_observer(observer_id: number, 
  * Public information about a corporation
  *
  * @param {number} corporation_id - An EVE corporation ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation(corporation_id: number, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function corporations_corporation(corporation_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation', { corporation_id, name, show_column_headings, version })
+  return invoke_('corporations_corporation', { corporation_id, show_column_headings, version })
 }
 
 /**
  * Get a list of all the alliances a corporation has been a member of
  *
  * @param {number} corporation_id - An EVE corporation ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_alliancehistory(corporation_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function corporations_corporation_alliancehistory(corporation_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation_alliancehistory', { corporation_id, name, show_column_headings, version })
+  return invoke_('corporations_corporation_alliancehistory', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -1083,14 +1070,13 @@ function corporations_corporation_fw_stats(name?: string, show_column_headings: 
  * Get the icon urls for a corporation
  *
  * @param {number} corporation_id - An EVE corporation ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_icons(corporation_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_icons(corporation_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation_icons', { corporation_id, name, show_column_headings, version })
+  return invoke_('corporations_corporation_icons', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -1359,39 +1345,36 @@ function corporations_corporation_wallets_division_transactions(division: number
 /**
  * Get a list of npc corporations
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_npccorps(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_npccorps', { name, show_column_headings, version })
+function corporations_npccorps(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('corporations_npccorps', { show_column_headings, version })
 }
 
 /**
  * Get a list of dogma attribute ids
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function dogma_attributes(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('dogma_attributes', { name, show_column_headings, version })
+function dogma_attributes(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('dogma_attributes', { show_column_headings, version })
 }
 
 /**
  * Get information on a dogma attribute
  *
  * @param {number} attribute_id - A dogma attribute ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function dogma_attributes_attribute(attribute_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function dogma_attributes_attribute(attribute_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!attribute_id) throw new Error(`attribute_id is required`);
-  return invoke_('dogma_attributes_attribute', { attribute_id, name, show_column_headings, version })
+  return invoke_('dogma_attributes_attribute', { attribute_id, show_column_headings, version })
 }
 
 /**
@@ -1399,41 +1382,38 @@ function dogma_attributes_attribute(attribute_id: number, name?: string, show_co
  *
  * @param {number} type_id - type_id integer
  * @param {number} item_id - item_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function dogma_dynamic_items_type_item(type_id: number, item_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function dogma_dynamic_items_type_item(type_id: number, item_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
   if (!item_id) throw new Error(`item_id is required`);
-  return invoke_('dogma_dynamic_items_type_item', { type_id, item_id, name, show_column_headings, version })
+  return invoke_('dogma_dynamic_items_type_item', { type_id, item_id, show_column_headings, version })
 }
 
 /**
  * Get a list of dogma effect ids
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function dogma_effects(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('dogma_effects', { name, show_column_headings, version })
+function dogma_effects(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('dogma_effects', { show_column_headings, version })
 }
 
 /**
  * Get information on a dogma effect
  *
  * @param {number} effect_id - A dogma effect ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function dogma_effects_effect(effect_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function dogma_effects_effect(effect_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!effect_id) throw new Error(`effect_id is required`);
-  return invoke_('dogma_effects_effect', { effect_id, name, show_column_headings, version })
+  return invoke_('dogma_effects_effect', { effect_id, show_column_headings, version })
 }
 
 /**
@@ -1443,27 +1423,25 @@ function dogma_effects_effect(effect_id: number, name?: string, show_column_head
  * @param {string[]} categories - Type of entities to search for
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
  * @param {boolean} strict - Whether the search should be a strict match
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function eve_search(search: string, categories: string[], language?: string, strict?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function eve_search(search: string, categories: string[], language?: string, strict?: boolean, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!search) throw new Error(`search is required`);
   if (!categories) throw new Error(`categories is required`);
-  return invoke_('eve_search', { search, categories, language, strict, name, show_column_headings, version })
+  return invoke_('eve_search', { search, categories, language, strict, show_column_headings, version })
 }
 
 /**
  * EVE Server status
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function eve_status(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('eve_status', { name, show_column_headings, version })
+function eve_status(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('eve_status', { show_column_headings, version })
 }
 
 /**
@@ -1513,122 +1491,112 @@ function fleets_fleet_wings(fleet_id: number, language?: string, name?: string, 
 /**
  * Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_leaderboards(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards', { name, show_column_headings, version })
+function fw_leaderboards(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('fw_leaderboards', { show_column_headings, version })
 }
 
 /**
  * Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_leaderboards_characters(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards_characters', { name, show_column_headings, version })
+function fw_leaderboards_characters(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('fw_leaderboards_characters', { show_column_headings, version })
 }
 
 /**
  * Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_leaderboards_corporations(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards_corporations', { name, show_column_headings, version })
+function fw_leaderboards_corporations(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('fw_leaderboards_corporations', { show_column_headings, version })
 }
 
 /**
  * Statistical overviews of factions involved in faction warfare
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_stats(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_stats', { name, show_column_headings, version })
+function fw_stats(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('fw_stats', { show_column_headings, version })
 }
 
 /**
  * An overview of the current ownership of faction warfare solar systems
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_systems(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('fw_systems', { name, show_column_headings, version })
+function fw_systems(show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+  return invoke_('fw_systems', { show_column_headings, version })
 }
 
 /**
  * Data about which NPC factions are at war
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function fw_wars(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_wars', { name, show_column_headings, version })
+function fw_wars(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('fw_wars', { show_column_headings, version })
 }
 
 /**
  * Return a list of current incursions
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function incursions(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('incursions', { name, show_column_headings, version })
+function incursions(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('incursions', { show_column_headings, version })
 }
 
 /**
  * Return a list of industry facilities
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function industry_facilities(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('industry_facilities', { name, show_column_headings, version })
+function industry_facilities(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('industry_facilities', { show_column_headings, version })
 }
 
 /**
  * Return cost indices for solar systems
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function industry_systems(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('industry_systems', { name, show_column_headings, version })
+function industry_systems(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('industry_systems', { show_column_headings, version })
 }
 
 /**
  * Return available insurance levels for all ship types
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function insurance_prices(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('insurance_prices', { language, name, show_column_headings, version })
+function insurance_prices(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('insurance_prices', { language, show_column_headings, version })
 }
 
 /**
@@ -1636,41 +1604,38 @@ function insurance_prices(language?: string, name?: string, show_column_headings
  *
  * @param {number} killmail_id - The killmail ID to be queried
  * @param {string} killmail_hash - The killmail hash for verification
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function killmails_killmail_killmail_hash(killmail_id: number, killmail_hash: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function killmails_killmail_killmail_hash(killmail_id: number, killmail_hash: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!killmail_id) throw new Error(`killmail_id is required`);
   if (!killmail_hash) throw new Error(`killmail_hash is required`);
-  return invoke_('killmails_killmail_killmail_hash', { killmail_id, killmail_hash, name, show_column_headings, version })
+  return invoke_('killmails_killmail_killmail_hash', { killmail_id, killmail_hash, show_column_headings, version })
 }
 
 /**
  * Return a list of offers from a specific corporation's loyalty store
  *
  * @param {number} corporation_id - An EVE corporation ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function loyalty_stores_corporation_offers(corporation_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function loyalty_stores_corporation_offers(corporation_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('loyalty_stores_corporation_offers', { corporation_id, name, show_column_headings, version })
+  return invoke_('loyalty_stores_corporation_offers', { corporation_id, show_column_headings, version })
 }
 
 /**
  * Get a list of item groups
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_groups(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('markets_groups', { name, show_column_headings, version })
+function markets_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('markets_groups', { show_column_headings, version })
 }
 
 /**
@@ -1678,26 +1643,24 @@ function markets_groups(name?: string, show_column_headings: boolean = true, ver
  *
  * @param {number} market_group_id - An Eve item group ID
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_groups_market_group(market_group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function markets_groups_market_group(market_group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!market_group_id) throw new Error(`market_group_id is required`);
-  return invoke_('markets_groups_market_group', { market_group_id, language, name, show_column_headings, version })
+  return invoke_('markets_groups_market_group', { market_group_id, language, show_column_headings, version })
 }
 
 /**
  * Return a list of prices
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_prices(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('markets_prices', { name, show_column_headings, version })
+function markets_prices(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('markets_prices', { show_column_headings, version })
 }
 
 /**
@@ -1705,15 +1668,14 @@ function markets_prices(name?: string, show_column_headings: boolean = true, ver
  *
  * @param {number} type_id - Return statistics for this type
  * @param {number} region_id - Return statistics in this region
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_region_history(type_id: number, region_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function markets_region_history(type_id: number, region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('markets_region_history', { type_id, region_id, name, show_column_headings, version })
+  return invoke_('markets_region_history', { type_id, region_id, show_column_headings, version })
 }
 
 /**
@@ -1722,29 +1684,27 @@ function markets_region_history(type_id: number, region_id: number, name?: strin
  * @param {number} region_id - Return orders in this region
  * @param {string} order_type - Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders
  * @param {number} type_id - Return orders only for this type
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_region_orders(region_id: number, order_type: string, type_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function markets_region_orders(region_id: number, order_type: string, type_id?: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
   if (!order_type) throw new Error(`order_type is required`);
-  return invoke_('markets_region_orders', { region_id, order_type, type_id, name, show_column_headings, version })
+  return invoke_('markets_region_orders', { region_id, order_type, type_id, show_column_headings, version })
 }
 
 /**
  * Return a list of type IDs that have active orders in the region, for efficient market indexing.
  *
  * @param {number} region_id - Return statistics in this region
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function markets_region_types(region_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function markets_region_types(region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('markets_region_types', { region_id, name, show_column_headings, version })
+  return invoke_('markets_region_types', { region_id, show_column_headings, version })
 }
 
 /**
@@ -1764,13 +1724,12 @@ function markets_structures_structure(structure_id: number, name?: string, show_
 /**
  * Return a list of opportunities groups
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function opportunities_groups(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('opportunities_groups', { name, show_column_headings, version })
+function opportunities_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('opportunities_groups', { show_column_headings, version })
 }
 
 /**
@@ -1778,40 +1737,37 @@ function opportunities_groups(name?: string, show_column_headings: boolean = tru
  *
  * @param {number} group_id - ID of an opportunities group
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function opportunities_groups_group(group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function opportunities_groups_group(group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!group_id) throw new Error(`group_id is required`);
-  return invoke_('opportunities_groups_group', { group_id, language, name, show_column_headings, version })
+  return invoke_('opportunities_groups_group', { group_id, language, show_column_headings, version })
 }
 
 /**
  * Return a list of opportunities tasks
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function opportunities_tasks(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('opportunities_tasks', { name, show_column_headings, version })
+function opportunities_tasks(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('opportunities_tasks', { show_column_headings, version })
 }
 
 /**
  * Return information of an opportunities task
  *
  * @param {number} task_id - ID of an opportunities task
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function opportunities_tasks_task(task_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function opportunities_tasks_task(task_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!task_id) throw new Error(`task_id is required`);
-  return invoke_('opportunities_tasks_task', { task_id, name, show_column_headings, version })
+  return invoke_('opportunities_tasks_task', { task_id, show_column_headings, version })
 }
 
 /**
@@ -1822,103 +1778,95 @@ function opportunities_tasks_task(task_id: number, name?: string, show_column_he
  * @param {number[]} avoid - avoid solar system ID(s)
  * @param {number[]} connections - connected solar system pairs
  * @param {string} flag - route security preference
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: number[], flag?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: number[], flag?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!origin) throw new Error(`origin is required`);
   if (!destination) throw new Error(`destination is required`);
-  return invoke_('route_origin_destination', { origin, destination, avoid, connections, flag, name, show_column_headings, version })
+  return invoke_('route_origin_destination', { origin, destination, avoid, connections, flag, show_column_headings, version })
 }
 
 /**
  * Shows sovereignty data for campaigns.
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function sovereignty_campaigns(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_campaigns', { name, show_column_headings, version })
+function sovereignty_campaigns(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('sovereignty_campaigns', { show_column_headings, version })
 }
 
 /**
  * Shows sovereignty information for solar systems
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function sovereignty_map(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_map', { name, show_column_headings, version })
+function sovereignty_map(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('sovereignty_map', { show_column_headings, version })
 }
 
 /**
  * Shows sovereignty data for structures.
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function sovereignty_structures(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_structures', { name, show_column_headings, version })
+function sovereignty_structures(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('sovereignty_structures', { show_column_headings, version })
 }
 
 /**
  * Get all character ancestries
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_ancestries(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_ancestries', { language, name, show_column_headings, version })
+function universe_ancestries(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_ancestries', { language, show_column_headings, version })
 }
 
 /**
  * Get information on an asteroid belt
  *
  * @param {number} asteroid_belt_id - asteroid_belt_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!asteroid_belt_id) throw new Error(`asteroid_belt_id is required`);
-  return invoke_('universe_asteroid_belts_asteroid_belt', { asteroid_belt_id, name, show_column_headings, version })
+  return invoke_('universe_asteroid_belts_asteroid_belt', { asteroid_belt_id, show_column_headings, version })
 }
 
 /**
  * Get a list of bloodlines
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_bloodlines(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_bloodlines', { language, name, show_column_headings, version })
+function universe_bloodlines(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_bloodlines', { language, show_column_headings, version })
 }
 
 /**
  * Get a list of item categories
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_categories(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_categories', { name, show_column_headings, version })
+function universe_categories(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_categories', { show_column_headings, version })
 }
 
 /**
@@ -1926,26 +1874,24 @@ function universe_categories(name?: string, show_column_headings: boolean = true
  *
  * @param {number} category_id - An Eve item category ID
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_categories_category(category_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_categories_category(category_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!category_id) throw new Error(`category_id is required`);
-  return invoke_('universe_categories_category', { category_id, language, name, show_column_headings, version })
+  return invoke_('universe_categories_category', { category_id, language, show_column_headings, version })
 }
 
 /**
  * Get a list of constellations
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_constellations(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_constellations', { name, show_column_headings, version })
+function universe_constellations(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_constellations', { show_column_headings, version })
 }
 
 /**
@@ -1953,65 +1899,60 @@ function universe_constellations(name?: string, show_column_headings: boolean = 
  *
  * @param {number} constellation_id - constellation_id integer
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_constellations_constellation(constellation_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_constellations_constellation(constellation_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!constellation_id) throw new Error(`constellation_id is required`);
-  return invoke_('universe_constellations_constellation', { constellation_id, language, name, show_column_headings, version })
+  return invoke_('universe_constellations_constellation', { constellation_id, language, show_column_headings, version })
 }
 
 /**
  * Get a list of factions
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_factions(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('universe_factions', { language, name, show_column_headings, version })
+function universe_factions(language?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+  return invoke_('universe_factions', { language, show_column_headings, version })
 }
 
 /**
  * Get a list of graphics
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_graphics(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_graphics', { name, show_column_headings, version })
+function universe_graphics(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_graphics', { show_column_headings, version })
 }
 
 /**
  * Get information on a graphic
  *
  * @param {number} graphic_id - graphic_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_graphics_graphic(graphic_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_graphics_graphic(graphic_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!graphic_id) throw new Error(`graphic_id is required`);
-  return invoke_('universe_graphics_graphic', { graphic_id, name, show_column_headings, version })
+  return invoke_('universe_graphics_graphic', { graphic_id, show_column_headings, version })
 }
 
 /**
  * Get a list of item groups
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_groups(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_groups', { name, show_column_headings, version })
+function universe_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_groups', { show_column_headings, version })
 }
 
 /**
@@ -2019,14 +1960,13 @@ function universe_groups(name?: string, show_column_headings: boolean = true, ve
  *
  * @param {number} group_id - An Eve item group ID
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_groups_group(group_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_groups_group(group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!group_id) throw new Error(`group_id is required`);
-  return invoke_('universe_groups_group', { group_id, language, name, show_column_headings, version })
+  return invoke_('universe_groups_group', { group_id, language, show_column_headings, version })
 }
 
 /**
@@ -2034,81 +1974,75 @@ function universe_groups_group(group_id: number, language?: string, name?: strin
  *
  * @param {string[]} names - The names to resolve
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_ids(names: string[], language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_ids(names: string[], language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!names) throw new Error(`names is required`);
-  return invoke_('universe_ids', { names, language, name, show_column_headings, version })
+  return invoke_('universe_ids', { names, language, show_column_headings, version })
 }
 
 /**
  * Get information on a moon
  *
  * @param {number} moon_id - moon_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_moons_moon(moon_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_moons_moon(moon_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!moon_id) throw new Error(`moon_id is required`);
-  return invoke_('universe_moons_moon', { moon_id, name, show_column_headings, version })
+  return invoke_('universe_moons_moon', { moon_id, show_column_headings, version })
 }
 
 /**
  * Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types, Factions
  *
  * @param {number[]} ids - The ids to resolve
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_names(ids: number[], name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function universe_names(ids: number[], show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!ids) throw new Error(`ids is required`);
-  return invoke_('universe_names', { ids, name, show_column_headings, version })
+  return invoke_('universe_names', { ids, show_column_headings, version })
 }
 
 /**
  * Get information on a planet
  *
  * @param {number} planet_id - planet_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_planets_planet(planet_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_planets_planet(planet_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!planet_id) throw new Error(`planet_id is required`);
-  return invoke_('universe_planets_planet', { planet_id, name, show_column_headings, version })
+  return invoke_('universe_planets_planet', { planet_id, show_column_headings, version })
 }
 
 /**
  * Get a list of character races
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_races(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_races', { language, name, show_column_headings, version })
+function universe_races(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_races', { language, show_column_headings, version })
 }
 
 /**
  * Get a list of regions
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_regions(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_regions', { name, show_column_headings, version })
+function universe_regions(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_regions', { show_column_headings, version })
 }
 
 /**
@@ -2116,83 +2050,77 @@ function universe_regions(name?: string, show_column_headings: boolean = true, v
  *
  * @param {number} region_id - region_id integer
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_regions_region(region_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_regions_region(region_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('universe_regions_region', { region_id, language, name, show_column_headings, version })
+  return invoke_('universe_regions_region', { region_id, language, show_column_headings, version })
 }
 
 /**
  * Get information on a planetary factory schematic
  *
  * @param {number} schematic_id - A PI schematic ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_schematics_schematic(schematic_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_schematics_schematic(schematic_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!schematic_id) throw new Error(`schematic_id is required`);
-  return invoke_('universe_schematics_schematic', { schematic_id, name, show_column_headings, version })
+  return invoke_('universe_schematics_schematic', { schematic_id, show_column_headings, version })
 }
 
 /**
  * Get information on a stargate
  *
  * @param {number} stargate_id - stargate_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_stargates_stargate(stargate_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_stargates_stargate(stargate_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!stargate_id) throw new Error(`stargate_id is required`);
-  return invoke_('universe_stargates_stargate', { stargate_id, name, show_column_headings, version })
+  return invoke_('universe_stargates_stargate', { stargate_id, show_column_headings, version })
 }
 
 /**
  * Get information on a star
  *
  * @param {number} star_id - star_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_stars_star(star_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function universe_stars_star(star_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!star_id) throw new Error(`star_id is required`);
-  return invoke_('universe_stars_star', { star_id, name, show_column_headings, version })
+  return invoke_('universe_stars_star', { star_id, show_column_headings, version })
 }
 
 /**
  * Get information on a station
  *
  * @param {number} station_id - station_id integer
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_stations_station(station_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function universe_stations_station(station_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!station_id) throw new Error(`station_id is required`);
-  return invoke_('universe_stations_station', { station_id, name, show_column_headings, version })
+  return invoke_('universe_stations_station', { station_id, show_column_headings, version })
 }
 
 /**
  * List all public structures
  *
  * @param {string} filter - Only list public structures that have this service online
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_structures(filter?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_structures', { filter, name, show_column_headings, version })
+function universe_structures(filter?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_structures', { filter, show_column_headings, version })
 }
 
 /**
@@ -2212,37 +2140,34 @@ function universe_structures_structure(structure_id: number, name?: string, show
 /**
  * Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last-Modified header, excluding wormhole space. Only systems with jumps will be listed
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_system_jumps(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_system_jumps', { name, show_column_headings, version })
+function universe_system_jumps(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_system_jumps', { show_column_headings, version })
 }
 
 /**
  * Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last-Modified header, excluding wormhole space. Only systems with kills will be listed
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_system_kills(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('universe_system_kills', { name, show_column_headings, version })
+function universe_system_kills(show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+  return invoke_('universe_system_kills', { show_column_headings, version })
 }
 
 /**
  * Get a list of solar systems
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_systems(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_systems', { name, show_column_headings, version })
+function universe_systems(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_systems', { show_column_headings, version })
 }
 
 /**
@@ -2250,26 +2175,24 @@ function universe_systems(name?: string, show_column_headings: boolean = true, v
  *
  * @param {number} system_id - system_id integer
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_systems_system(system_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function universe_systems_system(system_id: number, language?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!system_id) throw new Error(`system_id is required`);
-  return invoke_('universe_systems_system', { system_id, language, name, show_column_headings, version })
+  return invoke_('universe_systems_system', { system_id, language, show_column_headings, version })
 }
 
 /**
  * Get a list of type ids
  *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_types(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_types', { name, show_column_headings, version })
+function universe_types(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('universe_types', { show_column_headings, version })
 }
 
 /**
@@ -2277,53 +2200,49 @@ function universe_types(name?: string, show_column_headings: boolean = true, ver
  *
  * @param {number} type_id - An Eve item type ID
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function universe_types_type(type_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function universe_types_type(type_id: number, language?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
-  return invoke_('universe_types_type', { type_id, language, name, show_column_headings, version })
+  return invoke_('universe_types_type', { type_id, language, show_column_headings, version })
 }
 
 /**
  * Return a list of wars
  *
  * @param {number} max_war_id - Only return wars with ID smaller than this
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function wars(max_war_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('wars', { max_war_id, name, show_column_headings, version })
+function wars(max_war_id?: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+  return invoke_('wars', { max_war_id, show_column_headings, version })
 }
 
 /**
  * Return details about a war
  *
  * @param {number} war_id - ID for a war
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function wars_war(war_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function wars_war(war_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!war_id) throw new Error(`war_id is required`);
-  return invoke_('wars_war', { war_id, name, show_column_headings, version })
+  return invoke_('wars_war', { war_id, show_column_headings, version })
 }
 
 /**
  * Return a list of kills related to a war
  *
  * @param {number} war_id - A valid war ID
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
  * @param {boolean} show_column_headings - If column headings should be shown.
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function wars_war_killmails(war_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function wars_war_killmails(war_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!war_id) throw new Error(`war_id is required`);
-  return invoke_('wars_war_killmails', { war_id, name, show_column_headings, version })
+  return invoke_('wars_war_killmails', { war_id, show_column_headings, version })
 }

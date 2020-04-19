@@ -130,8 +130,10 @@ module EveSwagger
     def to_function(io : IO)
       parameters = @parameters.dup
 
+      # Add in name parameter if this endpoint is authed
+      parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string" if @scope
+
       # Add in common params
-      parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string"
       parameters << Parameter.new "If column headings should be shown.", "parameters", "show_column_headings", "boolean", required: nil, default_value: "true"
       parameters << Parameter.new "Which ESI version to use for the request.", "parameters", "version", "string", required: nil, default_value: @version.dump
 
