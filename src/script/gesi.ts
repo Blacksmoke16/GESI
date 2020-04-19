@@ -301,6 +301,8 @@ class ESIRequest {
       );
     } else if (data instanceof Object) {
       result.push(this.endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
+    } else if (isFinite(data)) {
+      result.push([data]);
     }
 
     return result;
