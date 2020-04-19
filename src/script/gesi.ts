@@ -20,7 +20,7 @@ function getScriptProperties_(): Properties {
 }
 
 function getDocumentProperties_(): Properties {
-  return PropertiesService.getUserProperties();
+  return PropertiesService.getDocumentProperties();
 }
 
 function getDocumentCache_(): GoogleAppsScript.Cache.Cache  {
