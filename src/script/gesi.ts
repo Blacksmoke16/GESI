@@ -11,12 +11,27 @@ import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
+import Properties = GoogleAppsScript.Properties.Properties;
 
 type ParameterType = 'path' | 'parameters' | 'body' | 'query';
 
-const SCRIPT_PROPERTIES = PropertiesService.getScriptProperties();
-const USER_PROPERTIES = PropertiesService.getUserProperties();
-const USER_CACHE = CacheService.getUserCache()!;
+function getScriptProperties_(): Properties {
+  return PropertiesService.getScriptProperties();
+}
+
+function getDocumentProperties_(): Properties {
+  return PropertiesService.getUserProperties();
+}
+
+function getDocumentCache_(): GoogleAppsScript.Cache.Cache  {
+  const cache = CacheService.getDocumentCache();
+
+  if (!cache) {
+    throw new Error('BUG: Null cache');
+  }
+
+  return cache;
+}
 
 function onInstall(): void {
   onOpen();
@@ -86,7 +101,7 @@ interface IFunctionParam {
 }
 
 interface ICharacterData {
-  readonly alliance_id?: number;
+  readonly alliance_id: number | null;
   readonly character_id: number;
   readonly corporation_id: number;
 }
@@ -135,7 +150,7 @@ function parseArray(endpoint_name: string, column_name: string, data: string, op
  * @customfunction
  */
 function getMainCharacter(): string | null {
-  return USER_PROPERTIES.getProperty('MAIN_CHARACTER');
+  return getDocumentProperties_().getProperty('MAIN_CHARACTER');
 }
 
 /**
@@ -143,7 +158,7 @@ function getMainCharacter(): string | null {
  * @customfunction
  */
 function setMainCharacter(characterName: string): void {
-  USER_PROPERTIES.setProperty('MAIN_CHARACTER', characterName);
+  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
 }
 
 /**
@@ -160,7 +175,7 @@ function getAccessToken(characterName: string): string {
  * @customfunction
  */
 function getAuthenticatedCharacters(): ICharacterMap {
-  return JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
 }
 
 /**
@@ -177,7 +192,7 @@ function getAuthenticatedCharacterNames(): string[] {
  * @customfunction
  */
 function getCharacterData(characterName: string | null): IAuthenticatedCharacter {
-  const characters: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  const characters: ICharacterMap = JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
   if (!characterName) throw new Error('No characters have been authenticated.  Visit Add-ons => GEST => Authorize Character to do so.');
   if (!characters.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
   return characters[characterName];
@@ -235,8 +250,9 @@ function invokeRaw(endpointName: string, params: IFunctionParam = {} as IFunctio
 }
 
 function prepareRequest_(endpointName: string, params: IFunctionParam) {
-  const oauthService = getOAuthService_(characterNameToId_(params.name || getMainCharacter()));
-  return new ESIRequest(endpointName, oauthService);
+  const characterData = getCharacterData(params.name || getMainCharacter());
+  const oauthService = getOAuthService_(characterData.id);
+  return new ESIRequest(endpointName, oauthService, characterData);
 }
 
 class ESIRequest {
@@ -247,7 +263,7 @@ class ESIRequest {
   public static parseToken(access_token: string): IToken {
     const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
     if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
-    if (jwtToken.azp !== SCRIPT_PROPERTIES.getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
+    if (jwtToken.azp !== getScriptProperties_().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
   }
 
@@ -257,18 +273,14 @@ class ESIRequest {
     return path;
   }
 
-  constructor(endpointName: string, oauthClient: OAuth2Service) {
+  constructor(endpointName: string, oauthClient: OAuth2Service, characterData: ICharacterData) {
     if (!ENDPOINTS.hasOwnProperty(endpointName)) {
       throw new Error(`Unknown endpoint: '${endpointName}'`);
     }
 
     this.endpoint = ENDPOINTS[endpointName];
     this.oauthClient = oauthClient;
-    this.characterData = {
-      alliance_id: this.getStorage().getValue('alliance_id'),
-      character_id: this.getStorage().getValue('character_id'),
-      corporation_id: this.getStorage().getValue('corporation_id'),
-    };
+    this.characterData = characterData;
   }
 
   public call(params: IFunctionParam, payload: any = null): SheetsArray {
@@ -363,7 +375,7 @@ class ESIRequest {
 
     const request: URLFetchRequest = {
       method: this.endpoint.method,
-      url: `${SCRIPT_PROPERTIES.getProperty('BASE_URL')}${path.replace('{version}', params.version || this.endpoint.version)}`,
+      url: `${getScriptProperties_().getProperty('BASE_URL')}${path.replace('{version}', params.version || this.endpoint.version)}`,
       headers: {
         'user-agent': `GESI User ${this.characterData.character_id}`,
       },
@@ -375,11 +387,6 @@ class ESIRequest {
     if (this.endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
 
     return request;
-  }
-
-  private getStorage(): IStorage {
-    // @ts-ignore
-    return this.oauthClient.getStorage();
   }
 }
 
@@ -441,14 +448,9 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   // Fetch additional data about this character
   const affiliationData = getCharacterAffiliation_(characterId, oauthService);
 
-  // Save data about this character with its oauth service
-  storage.setValue('alliance_id', affiliationData.alliance_id);
-  storage.setValue('corporation_id', affiliationData.corporation_id);
-  storage.setValue('character_id', affiliationData.character_id);
-
   // If this character was previously authorized
   // update the ID of this character and reset the old service
-  const characterMap: ICharacterMap = JSON.parse(USER_PROPERTIES.getProperty('characters') || '{}');
+  const characterMap: ICharacterMap = JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
 
   // If this character is already in the map,
   // Reset/clear out data related to previous oauthService
@@ -458,13 +460,13 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 
   // Update the user object
   characterMap[jwtToken.name] = {
-    alliance_id: affiliationData.alliance_id,
+    alliance_id: affiliationData.alliance_id || null,
     character_id: affiliationData.character_id,
     corporation_id: affiliationData.corporation_id,
     id,
     name: jwtToken.name,
   };
-  USER_PROPERTIES.setProperty('characters', JSON.stringify(characterMap));
+  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
 
   // Set the main character if there is not one already
   if (!getMainCharacter()) setMainCharacter(jwtToken.name);
@@ -473,7 +475,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIRequest('characters_affiliation', oauthClient)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
+  return (new ESIRequest('characters_affiliation', oauthClient, {} as ICharacterData)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
 }
 
 function characterNameToId_(characterName: string | null): string {
@@ -482,13 +484,13 @@ function characterNameToId_(characterName: string | null): string {
 
 function getOAuthService_(id: string): OAuth2Service {
   return OAuth2.createService(id)
-    .setAuthorizationBaseUrl(SCRIPT_PROPERTIES.getProperty('AUTHORIZE_URL')!)
-    .setTokenUrl(SCRIPT_PROPERTIES.getProperty('TOKEN_URL')!)
-    .setClientId(SCRIPT_PROPERTIES.getProperty('CLIENT_ID')!)
-    .setClientSecret(SCRIPT_PROPERTIES.getProperty('CLIENT_SECRET')!)
+    .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
+    .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
+    .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
+    .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
     .setCallbackFunction('authCallback')
-    .setPropertyStore(USER_PROPERTIES)
-    .setCache(USER_CACHE)
+    .setPropertyStore(getDocumentProperties_())
+    .setCache(getDocumentCache_())
     .setScope(SCOPES)
     .setParam('access_type', 'offline')
     .setParam('prompt', 'consent');
