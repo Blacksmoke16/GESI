@@ -23,7 +23,7 @@ function getDocumentProperties_(): Properties {
   return PropertiesService.getDocumentProperties();
 }
 
-function getDocumentCache_(): GoogleAppsScript.Cache.Cache  {
+function getDocumentCache_(): GoogleAppsScript.Cache.Cache {
   const cache = CacheService.getDocumentCache();
 
   if (!cache) {
@@ -361,6 +361,14 @@ class ESIRequest {
         path = path.replace(`{${param.name}}`, paramValue);
       } else if (param.in === 'query' && paramValue) {
         path = ESIRequest.addQueryParam(path, param.name, paramValue);
+      } else if (param.in === 'body' && paramValue) {
+        if (param.type.includes('[]')) {
+          payload = !Array.isArray(paramValue) ?
+            [paramValue] :
+            paramValue.filter((item: any) => item[0]).map((item: any) => item[0]);
+        } else {
+          throw param.type + ' is an unexpected body type.';
+        }
       }
     });
 
