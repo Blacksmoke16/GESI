@@ -33,6 +33,14 @@ function getDocumentCache_(): GoogleAppsScript.Cache.Cache {
   return cache;
 }
 
+function setCharacters_(characterMap: ICharacterMap): void {
+  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
+}
+
+function setMainCharacter_(characterName: string): void {
+  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
+}
+
 function onInstall(): void {
   onOpen();
 }
@@ -42,80 +50,50 @@ function onOpen(): void {
     .getUi()
     .createAddonMenu()
     .addItem('Authorize Character', 'showSSOModal')
+    .addItem('Deauthorize Character', 'deauthorizeCharacter')
+    .addItem('Set Main Character', 'setMainCharacter')
     .addToUi();
 }
 
-interface IHeader {
-  readonly name: string;
-  readonly sub_headers?: string[];
+function showSSOModal(): void {
+  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img onclick="google.script.host.close();" alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
+  template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
+  SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
 
-interface IParameter {
-  readonly description: string;
-  readonly in: ParameterType;
-  readonly name: string;
-  readonly type: string;
-  readonly required: boolean;
+function deauthorizeCharacter(): void {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('Deauthorize Character', 'Enter the name of the character you wish to deauthorize.', ui.ButtonSet.OK_CANCEL);
+
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+
+  const character = getCharacterData(response.getResponseText());
+  const characterMap = getAuthenticatedCharacters();
+
+  // Delete their oauth lib
+  const oauthClient = getOAuthService_(character.id);
+  oauthClient.reset();
+
+  // Remove the character from the characters hash
+  delete characterMap[character.name];
+
+  setCharacters_(characterMap);
+
+  ui.alert(`Successfully deauthorized ${character.name}.`);
 }
 
-interface IEndpoint {
-  /** @description Long description of the endpoint */
-  readonly description: string;
+function setMainCharacter() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('Set Main Character', 'Enter the name of the character you wish to use as your main.', ui.ButtonSet.OK_CANCEL);
 
-  /** @description The column headers that endpoint returns.  Are ordered alphabetically */
-  readonly headers: IHeader[];
+  if (response.getSelectedButton() !== ui.Button.OK) return;
 
-  /** @description The HTTP method this endpoint uses */
-  readonly method: string;
+  const character = getCharacterData(response.getResponseText());
 
-  /** @description Whether this endpoint is paginated */
-  readonly paginated: boolean;
+  setMainCharacter_(character.name);
 
-  /** @description The parameters this endpoint accepts */
-  readonly parameters: IParameter[];
-
-  /** @description The path, including parameters, of this endpoint */
-  readonly path: string;
-
-  /** @description An optional required scope if this endpoint is authenticated */
-  readonly scope?: string;
-
-  /** @description Short description of the endpoint */
-  readonly summary: string;
-
-  /** @description The default version of this endpoint */
-  readonly version: string;
+  ui.alert(`${character.name} is now your main character.`)
 }
-
-interface IEndpointList {
-  [key: string]: IEndpoint;
-}
-
-interface IFunctionParam {
-  show_column_headings: boolean;
-  version?: string;
-  name?: string;
-  page?: number;
-
-  [param: string]: any;
-}
-
-interface ICharacterData {
-  readonly alliance_id: number | null;
-  readonly character_id: number;
-  readonly corporation_id: number;
-}
-
-interface IAuthenticatedCharacter extends ICharacterData {
-  readonly id: string;
-  readonly name: string;
-}
-
-interface ICharacterMap {
-  [characterName: string]: IAuthenticatedCharacter;
-}
-
-type SheetsArray = any[][]
 
 /**
  * Parses array data into more readable format
@@ -154,17 +132,8 @@ function getMainCharacter(): string | null {
 }
 
 /**
- * @param {string} characterName The name of the new main character
- * @customfunction
- */
-function setMainCharacter(characterName: string): void {
-  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
-}
-
-/**
  * @param {string} characterName The name of the character to get the token for
  * @return {string} The access token for the provided characterName
- * @customfunction
  */
 function getAccessToken(characterName: string): string {
   return getOAuthService_(characterNameToId_(characterName)).getAccessToken();
@@ -172,18 +141,18 @@ function getAccessToken(characterName: string): string {
 
 /**
  * @return {ICharacterMap} An object representing the characters that have been authenticated
- * @customfunction
  */
 function getAuthenticatedCharacters(): ICharacterMap {
   return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
 }
 
 /**
- * @return {string[]} An array of character names that have authenticated
+ * @return {string[] | null} An array of character names that have authenticated, or null if none have been.
  * @customfunction
  */
-function getAuthenticatedCharacterNames(): string[] {
-  return Object.keys(getAuthenticatedCharacters());
+function getAuthenticatedCharacterNames(): string[] | null {
+  const characters = Object.keys(getAuthenticatedCharacters());
+  return characters.length === 0 ? null : characters;
 }
 
 /**
@@ -192,10 +161,10 @@ function getAuthenticatedCharacterNames(): string[] {
  * @customfunction
  */
 function getCharacterData(characterName: string | null): IAuthenticatedCharacter {
-  const characters: ICharacterMap = JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
+  const characterMap = getAuthenticatedCharacters();
   if (!characterName) throw new Error('No characters have been authenticated.  Visit Add-ons => GEST => Authorize Character to do so.');
-  if (!characters.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
-  return characters[characterName];
+  if (!characterMap.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
+  return characterMap[characterName];
 }
 
 function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
@@ -400,7 +369,146 @@ class ESIRequest {
   }
 }
 
-// SSO Methods
+function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
+  const id: string = request.parameter.serviceName;
+
+  // Fetch the oauthService used for this flow
+  const oauthService = getOAuthService_(id);
+
+  // Complete the OAuth flow
+  oauthService.handleCallback(request);
+
+  // Parse the JWT access token for some basic information about this character
+  const jwtToken = ESIRequest.parseToken(oauthService.getAccessToken());
+  const characterId = parseInt(jwtToken.sub.split(':')[2]);
+
+  // @ts-ignore
+  // TODO: Make a PR to update @types/google-apps-script-oauth2
+  const storage: IStorage = oauthService.getStorage();
+
+  // Fetch additional data about this character
+  const affiliationData = getCharacterAffiliation_(characterId, oauthService);
+
+  // If this character was previously authorized
+  // update the ID of this character and reset the old service
+  const characterMap = getAuthenticatedCharacters();
+
+  // If this character is already in the map,
+  // Reset/clear out data related to previous oauthService
+  if (characterMap.hasOwnProperty(jwtToken.name)) {
+    getOAuthService_(characterMap[jwtToken.name].id).reset();
+  }
+
+  // Update the user object
+  characterMap[jwtToken.name] = {
+    alliance_id: affiliationData.alliance_id || null,
+    character_id: affiliationData.character_id,
+    corporation_id: affiliationData.corporation_id,
+    id,
+    name: jwtToken.name,
+  };
+  setCharacters_(characterMap);
+
+  // Set the main character if there is not one already
+  if (!getMainCharacter()) setMainCharacter_(jwtToken.name);
+
+  return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
+}
+
+function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
+  return (new ESIRequest('characters_affiliation', oauthClient, {} as ICharacterData)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
+}
+
+function characterNameToId_(characterName: string | null): string {
+  return getCharacterData(characterName).id;
+}
+
+function getOAuthService_(id: string): OAuth2Service {
+  return OAuth2.createService(id)
+    .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
+    .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
+    .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
+    .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
+    .setCallbackFunction('authCallback')
+    .setPropertyStore(getDocumentProperties_())
+    .setCache(getDocumentCache_())
+    .setScope(SCOPES)
+    .setParam('access_type', 'offline')
+    .setParam('prompt', 'consent');
+}
+
+interface IHeader {
+  readonly name: string;
+  readonly sub_headers?: string[];
+}
+
+interface IParameter {
+  readonly description: string;
+  readonly in: ParameterType;
+  readonly name: string;
+  readonly type: string;
+  readonly required: boolean;
+}
+
+interface IEndpoint {
+  /** @description Long description of the endpoint */
+  readonly description: string;
+
+  /** @description The column headers that endpoint returns.  Are ordered alphabetically */
+  readonly headers: IHeader[];
+
+  /** @description The HTTP method this endpoint uses */
+  readonly method: string;
+
+  /** @description Whether this endpoint is paginated */
+  readonly paginated: boolean;
+
+  /** @description The parameters this endpoint accepts */
+  readonly parameters: IParameter[];
+
+  /** @description The path, including parameters, of this endpoint */
+  readonly path: string;
+
+  /** @description An optional required scope if this endpoint is authenticated */
+  readonly scope?: string;
+
+  /** @description Short description of the endpoint */
+  readonly summary: string;
+
+  /** @description The default version of this endpoint */
+  readonly version: string;
+}
+
+interface IEndpointList {
+  [key: string]: IEndpoint;
+}
+
+interface IFunctionParam {
+  show_column_headings: boolean;
+  version?: string;
+  name?: string;
+  page?: number;
+
+  [param: string]: any;
+}
+
+interface ICharacterData {
+  readonly alliance_id: number | null;
+  readonly character_id: number;
+  readonly corporation_id: number;
+}
+
+interface IAuthenticatedCharacter extends ICharacterData {
+  readonly id: string;
+  readonly name: string;
+}
+
+interface ICharacterMap {
+  [characterName: string]: IAuthenticatedCharacter;
+}
+
+type SheetsArray = any[][]
+
 interface IESIToken {
   readonly access_token: string;
   readonly expires_in: number;
@@ -431,78 +539,3 @@ interface IStorage {
 
   removeValue(key: string): void;
 }
-
-function showSSOModal(): void {
-  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img onclick="google.script.host.close();" alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
-  template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
-  SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
-}
-
-function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
-  const id: string = request.parameter.serviceName;
-
-  // Fetch the oauthService used for this flow
-  const oauthService = getOAuthService_(id);
-
-  // Complete the OAuth flow
-  oauthService.handleCallback(request);
-
-  // Parse the JWT access token for some basic information about this character
-  const jwtToken = ESIRequest.parseToken(oauthService.getAccessToken());
-  const characterId = parseInt(jwtToken.sub.split(':')[2]);
-
-  // @ts-ignore
-  // TODO: Make a PR to update @types/google-apps-script-oauth2
-  const storage: IStorage = oauthService.getStorage();
-
-  // Fetch additional data about this character
-  const affiliationData = getCharacterAffiliation_(characterId, oauthService);
-
-  // If this character was previously authorized
-  // update the ID of this character and reset the old service
-  const characterMap: ICharacterMap = JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
-
-  // If this character is already in the map,
-  // Reset/clear out data related to previous oauthService
-  if (characterMap.hasOwnProperty(jwtToken.name)) {
-    getOAuthService_(characterMap[jwtToken.name].id).reset();
-  }
-
-  // Update the user object
-  characterMap[jwtToken.name] = {
-    alliance_id: affiliationData.alliance_id || null,
-    character_id: affiliationData.character_id,
-    corporation_id: affiliationData.corporation_id,
-    id,
-    name: jwtToken.name,
-  };
-  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
-
-  // Set the main character if there is not one already
-  if (!getMainCharacter()) setMainCharacter(jwtToken.name);
-
-  return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
-}
-
-function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIRequest('characters_affiliation', oauthClient, {} as ICharacterData)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
-}
-
-function characterNameToId_(characterName: string | null): string {
-  return getCharacterData(characterName).id;
-}
-
-function getOAuthService_(id: string): OAuth2Service {
-  return OAuth2.createService(id)
-    .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
-    .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
-    .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
-    .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
-    .setCallbackFunction('authCallback')
-    .setPropertyStore(getDocumentProperties_())
-    .setCache(getDocumentCache_())
-    .setScope(SCOPES)
-    .setParam('access_type', 'offline')
-    .setParam('prompt', 'consent');
-}
-
