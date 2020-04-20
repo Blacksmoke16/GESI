@@ -56,7 +56,7 @@ function onOpen(): void {
 }
 
 function showSSOModal(): void {
-  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img onclick="google.script.host.close();" alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
+  const template = HtmlService.createTemplateFromFile('authorize');
   template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
@@ -92,7 +92,7 @@ function setMainCharacter() {
 
   setMainCharacter_(character.name);
 
-  ui.alert(`${character.name} is now your main character.`)
+  ui.alert(`${character.name} is now your main character.`);
 }
 
 /**
@@ -132,11 +132,11 @@ function getMainCharacter(): string | null {
 }
 
 /**
- * @param {string} characterName The name of the character to get the token for
+ * @param {string} characterName The name of the character to get the token for.  Defaults the the main character.
  * @return {string} The access token for the provided characterName
  */
-function getAccessToken(characterName: string): string {
-  return getOAuthService_(characterNameToId_(characterName)).getAccessToken();
+function getAccessToken(characterName?: string): string {
+  return getOAuthService_(characterNameToId_(characterName || getMainCharacter())).getAccessToken();
 }
 
 /**
@@ -180,8 +180,15 @@ function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
  * @return
  * @customfunction
  */
-function invokeMultiple(endpointName: string, characterNames: string | string[], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
-  const normalizedNames = Array.isArray(characterNames) ? characterNames.map((row: any) => row[0]) : characterNames.split(',');
+function invokeMultiple(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
+  let normalizedNames: string[];
+
+  if (Array.isArray(characterNames)) {
+    // @ts-ignore
+    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
+  } else {
+    normalizedNames = characterNames.split(',');
+  }
 
   const firstCharacter = normalizedNames.shift();
 
@@ -191,7 +198,7 @@ function invokeMultiple(endpointName: string, characterNames: string | string[],
   headers.push('character_name');
 
   result.forEach((item: any, idx: number) => {
-    if (idx > 0) result.push(firstCharacter);
+    if (idx > 0) item.push(firstCharacter);
   });
 
   normalizedNames.forEach((name: string) => {

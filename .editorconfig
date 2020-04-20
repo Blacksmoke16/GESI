@@ -8,5 +8,5 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 
-[*.json]
+[*.{json,html}]
 indent_size = 4
