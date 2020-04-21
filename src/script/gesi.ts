@@ -192,7 +192,7 @@ function invokeMultiple(endpointName: string, characterNames: string | string[] 
 
   const firstCharacter = normalizedNames.shift();
 
-  let result = invoke_(endpointName, { ...params, name: firstCharacter });
+  const result = invoke_(endpointName, { ...params, name: firstCharacter });
 
   const headers = result[0];
   headers.push('character_name');

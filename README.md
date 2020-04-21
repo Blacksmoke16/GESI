@@ -15,7 +15,7 @@ Google Sheets add-on for interacting with EVE ESI API.  GESI providers an EVE On
 
 By default, one does not have access to GESI functions for use in custom functions in the script editor.  In order to gain access to these functions for custom logic, add GESI as a library to your script:
 
-1. Install the add-on, following the instructions above.
+1. Install the add-on, follow the [setup instructions](./README.md#setup).
 1. Within the script editor, click `Resources => Lbraries...`
 1. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
 1. Select the latest version from the dropdown, and click `Save`.
@@ -34,11 +34,11 @@ GESI will automatically update when a new version is released.  To see what chan
 
 ### How do I know what functions are available?
 
-Check out [functions.ts](https://github.com/Blacksmoke16/GESI/blob/master/src/script/functions.ts).  This file lists all the available functions, as well as a description of what they return and the avaliable parameters.
+Check out [functions.ts](https://github.com/Blacksmoke16/GESI/blob/master/src/script/functions.ts).  This file lists all the available functions, as well as a description of what they return and the available parameters.
 
 ### What if I want to use a specific ESI route version?
 
-By default GESI uses the version currently on the `latest` label.  If you wish to use a different version, use the `version` parameter.  `=characters_character_wallet_journal("Blacksmoke16", 1, true, "v5")`.  The version can either be a specific version like `"v4"` or a label: `dev`, `legacy`, or `latest`.
+By default GESI uses the version currently on the `latest` label.  If you wish to use a different version, use the `version` parameter.  `=characters_character_wallet_journal("Blacksmoke16", true, "v5")`.  The version can either be a specific version like `"v4"` or a label: `"dev"`, `"legacy"`, or `"latest"`.
 
 ### The `Authorize Characters` option in the add-on menu is missing?
 
@@ -51,14 +51,11 @@ This happens when `GESI` is not authorized to run in the current document.  This
 
 ### How do I get data from a specific character?
 
-Each authed endpoint that has a `name` property that can be used to specify which character's token should be used in that request.
+Each authenticated endpoint that has a `name` property that can be used to specify which character's token should be used in that request.
 
-The first character that you auth gets set as your `MAIN_CHARACTER` which will be used if you do not provide a value for the `name` param for an authed endpoint.
+The first character that you authenticate gets set as your `MAIN_CHARACTER` which will be used if you do not provide a value for the `name` argument for an authenticated endpoint.
 
-For example `=characters_character_assets()` would get the assets for the first character that you authed, i.e. your `MAIN_CHARACTER`.  `=characters_character_assets("My Other Character")` would get assets for `My Other Character`.
-
-- `=getMainCharacter()` will return your current `MAIN_CHARACTER`.
-- `=setMainCharacter("Blacksmoke16")` would update your `MAIN_CHARACTER` to be `Blacksmoke16`.
+For example `=characters_character_assets()` would get the assets for the first character that you authenticated, i.e. your `MAIN_CHARACTER`.  `=characters_character_assets("My Other Character")` would get assets for `My Other Character`.  The `getMainCharacter()` function can be used to get the name of the current main character.  The main character can be updated via `Add-Ons` => `GESI` => `Set Main Character`.
 
 ### Why is my data not updating?
 
@@ -96,23 +93,18 @@ There is not built-in way to do this currently, however it is possible.
 
 ### Using functions with multiple characters
 
-A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  This can be achieved by using the `invokeMultiple` method within a custom function.
+A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  This can be achieved by using the `invokeMultiple` method.  `=invokeMultiple("characters_character_industry_jobs", characterNames)`.  `characterNames` can either be a comma separated string like `"Character1,Character2"`, a vertical range like `A1:A10`, or the result of `getAuthenticatedCharacterNames()`, or some other array of strings.
 
-> GESI must be included as a library for this to work.  See [Script Editor](./README.md#script-editor) for how to set that up.
-```JavaScript
-/**
- * Returns the combined industry jobs belonging to the given characters
- *
- * @param {string[]} characterNames A single, comma separated, or vertical range of character names
- * @return Combined industry job.
- * @customfunction
-*/
-function getJobs(characterNames) {
-  return GESI.invokeMultiple("characters_character_industry_jobs", characterNames);
-}
-```
+### Working with the raw ESI data
 
-Which would for three characters would be used like `=getJobs("Blacksmoke16, Character2, Character3")` or `=getJobs(A1:A3)` where that range consists of each character.
+Google Sheets uses 2D arrays to represent data within a sheet.  When working on custom functions or scripts, this format is less than ideal to work with.  the `invokeRaw(endpointName, params)` function can be used to return the raw ESI JSON data for a given endpoint.  The function accepts a name of a function, and an optional object that includes any arguments that should be used.  Examples:
+
+* `invokeRaw("universe_types")`
+* `invokeRaw("universe_types_type", { type_id: 34 })`
+
+### Your Login session has expired
+
+See [this issue](https://github.com/esi/esi-issues/issues/519#issuecomment-323892188).
 
 ### How do I know my EVE data isn't being misused?
 
