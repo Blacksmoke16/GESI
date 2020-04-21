@@ -93,7 +93,15 @@ There is not built-in way to do this currently, however it is possible.
 
 ### Using functions with multiple characters
 
-A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  This can be achieved by using the `invokeMultiple` method.  `=invokeMultiple("characters_character_industry_jobs", characterNames)`.  `characterNames` can either be a comma separated string like `"Character1,Character2"`, a vertical range like `A1:A10`, or the result of `getAuthenticatedCharacterNames()`, or some other array of strings.
+A common use case is wanting to get the same data from multiple characters.  For example, getting the industry jobs of multiple characters into a nice, easy to manage format.  This can be achieved by using the `invokeMultiple` method.  `=invokeMultiple("characters_character_assets", characterNames)`.  `characterNames` can either be a comma separated string like `"Character1,Character2"`, a vertical range like `A1:A10`, or the result of `getAuthenticatedCharacterNames()`, or some other array of strings.
+
+This method can be used directly in the sheet.  However, if it requires arguments, then it should be wrapped in a custom function:
+
+```js
+function getJobs(characterNames) {
+  return GESI.invokeMultiple("characters_character_industry_jobs", characterNames, { include_completed: true })
+}
+```
 
 ### Working with the raw ESI data
 
@@ -101,6 +109,8 @@ Google Sheets uses 2D arrays to represent data within a sheet.  When working on 
 
 * `invokeRaw("universe_types")`
 * `invokeRaw("universe_types_type", { type_id: 34 })`
+
+This method is meant to be used within custom functions and scripts.
 
 ### Your Login session has expired
 
