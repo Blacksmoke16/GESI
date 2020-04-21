@@ -5,46 +5,117 @@
  * @Blacksmoke16#0016 @ Discord
  * https://discord.gg/eEAH2et
  */
+import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
+import CacheService = GoogleAppsScript.Cache.CacheService;
+import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
-import User = GoogleAppsScript.Base.User;
+import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
+import Properties = GoogleAppsScript.Properties.Properties;
 
-const HEADERS: Object = { 'User-Agent': 'GESI V2', 'Content-Type': 'application/json' };
+type ParameterType = 'path' | 'parameters' | 'body' | 'query';
+
+function getScriptProperties_(): Properties {
+  return PropertiesService.getScriptProperties();
+}
+
+function getDocumentProperties_(): Properties {
+  return PropertiesService.getDocumentProperties();
+}
+
+function getDocumentCache_(): GoogleAppsScript.Cache.Cache {
+  const cache = CacheService.getDocumentCache();
+
+  if (!cache) {
+    throw new Error('BUG: Null cache');
+  }
+
+  return cache;
+}
+
+function setCharacters_(characterMap: ICharacterMap): void {
+  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
+}
+
+function setMainCharacter_(characterName: string): void {
+  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
+}
 
 function onInstall(): void {
   onOpen();
 }
 
 function onOpen(): void {
-  SpreadsheetApp.getUi()
+  SpreadsheetApp
+    .getUi()
     .createAddonMenu()
-    .addItem('Authorize Characters', 'showSSOModal')
+    .addItem('Authorize Character', 'showSSOModal')
+    .addItem('Deauthorize Character', 'deauthorizeCharacter')
+    .addItem('Set Main Character', 'setMainCharacter')
     .addToUi();
+}
+
+function showSSOModal(): void {
+  const template = HtmlService.createTemplateFromFile('authorize');
+  template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
+  SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
+}
+
+function deauthorizeCharacter(): void {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('Deauthorize Character', 'Enter the name of the character you wish to deauthorize.', ui.ButtonSet.OK_CANCEL);
+
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+
+  const character = getCharacterData(response.getResponseText());
+  const characterMap = getAuthenticatedCharacters();
+
+  // Delete their oauth lib
+  const oauthClient = getOAuthService_(character.id);
+  oauthClient.reset();
+
+  // Remove the character from the characters hash
+  delete characterMap[character.name];
+
+  setCharacters_(characterMap);
+
+  ui.alert(`Successfully deauthorized ${character.name}.`);
+}
+
+function setMainCharacter() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.prompt('Set Main Character', 'Enter the name of the character you wish to use as your main.', ui.ButtonSet.OK_CANCEL);
+
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+
+  const character = getCharacterData(response.getResponseText());
+
+  setMainCharacter_(character.name);
+
+  ui.alert(`${character.name} is now your main character.`);
 }
 
 /**
  * Parses array data into more readable format
  * @param {string} endpoint_name (Required) Name of the endpoint data to be parsed is from.
  * @param {string} column_name (Required) Name of the column to be parsed.
- * @param {array} array (Required) Cell that holds the array data to be parsed.
+ * @param {string} data (Required) Cell that holds the data to be parsed.
  * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
  * @return Parsed array data.
  * @customfunction
  */
-function parseArray(endpoint_name: string, column_name: string, array: string, opt_headers: boolean): any[][] {
+function parseArray(endpoint_name: string, column_name: string, data: string, opt_headers: boolean): any[][] {
   let result: any[][] = [];
-  const endpoint_header: IEndpointHeader = ENDPOINTS[endpoint_name].headers.find((eh: IEndpointHeader) => eh.name === column_name);
-  if (opt_headers || undefined === opt_headers) result.push(endpoint_header ? endpoint_header.sub_headers : [column_name.slice(0, -1) + '_id']);
+  const endpoint_header: IHeader = ENDPOINTS[endpoint_name].headers.find((eh: IHeader) => eh.name === column_name)!;
+  if (opt_headers || undefined === opt_headers) result.push(endpoint_header ? endpoint_header.sub_headers! : [column_name.slice(0, -1) + '_id']);
 
   // Kinda a hack but it works for now :shrug:
   if (!endpoint_header || !endpoint_header.hasOwnProperty('sub_headers')) {
-    JSON.parse(array).forEach(function (o) {
-      result.push([o]);
-    });
+    JSON.parse(data).forEach((o: any) => result.push([o]));
   } else {
-    JSON.parse(array).forEach((o: object) => {
+    JSON.parse(data).forEach((o: any) => {
       let temp: any[] = [];
-      endpoint_header.sub_headers.forEach((k: string) => temp.push(Array.isArray(o[k]) ? JSON.stringify(o[k]) : o[k]));
+      endpoint_header.sub_headers!.forEach((k: string) => temp.push(Array.isArray(o[k]) ? JSON.stringify(o[k]) : o[k]));
       result.push(temp);
     });
   }
@@ -53,332 +124,374 @@ function parseArray(endpoint_name: string, column_name: string, array: string, o
 }
 
 /**
- * Returns a character's access_token if not expired
- * @param {string} character_name (Required) Who's access_token to fetch.
- * @return Access token
+ * @return The character that will be used by default for authenticated endpoints.
  * @customfunction
  */
-function getAccessToken(character_name: string): string {
-  return CacheService.getDocumentCache().get(`${character_name}_access_token`) || 'Expired';
+function getMainCharacter(): string | null {
+  return getDocumentProperties_().getProperty('MAIN_CHARACTER');
 }
 
 /**
- * Returns the sheets' current MAIN_CHARACTERS
- * @return Name of the MAIN_CHARACTER
- * @customfunction
+ * @param {string} characterName The name of the character to get the token for.  Defaults the the main character.
+ * @return {string} The access token for the provided characterName
  */
-function getMainCharacter(): string {
-  return PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER');
+function getAccessToken(characterName?: string): string {
+  return getOAuthService_(characterNameToId_(characterName || getMainCharacter())).getAccessToken();
 }
 
 /**
- * Sets the sheets' MAIN_CHARACTER to the given character
- * @param {string} character_name (Required) Name of the character to use as the new MAIN_CHARACTER.
- * @return If it was successful.  Should be deleted if it was.
- * @customfunction
+ * @return {ICharacterMap} An object representing the characters that have been authenticated
  */
-function setMainCharacter(character_name: string): string {
-  PropertiesService.getDocumentProperties().setProperty('MAIN_CHARACTER', character_name);
-  return 'Done! Delete me.';
+function getAuthenticatedCharacters(): ICharacterMap {
+  return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
 }
 
 /**
- * Refreshes the access token for a given character and returns a new access token
- * @param {string} character_name (Required) Name of the character to refresh the token.
- * @return A new access token for the character
+ * @return {string[] | null} An array of character names that have authenticated, or null if none have been.
  * @customfunction
  */
-function refreshToken(character_name: string): string {
-  return refreshToken_(getCharacterRowData_(character_name));
+function getAuthenticatedCharacterNames(): string[] | null {
+  const characters = Object.keys(getAuthenticatedCharacters());
+  return characters.length === 0 ? null : characters;
 }
 
-function showSSOModal(): void {
-  const redirectUrl = `https://script.google.com/macros/d/${ScriptApp.getScriptId()}/usercallback`;
-  const stateToken = ScriptApp.newStateToken().withMethod('authCallback').withTimeout(1200).createToken();
-  const authorizationUrl = `https://login.eveonline.com/v2/oauth/authorize/?response_type=code&redirect_uri=${redirectUrl}&client_id=${PropertiesService.getScriptProperties().getProperty('CLIENT_ID')}&scope=${SCOPES.join('+')}&state=${stateToken}`;
-  const template = HtmlService.createTemplate(`Click the link below to auth a character for use in GESI<br><br><a href="<?= authorizationUrl ?>" target="_blank"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png" /></a>`);
-  template.authorizationUrl = authorizationUrl;
-  SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
+/**
+ * @param {string} characterName The name of the character
+ * @return {IAuthenticatedCharacter} A metadata object for this character
+ * @customfunction
+ */
+function getCharacterData(characterName: string | null): IAuthenticatedCharacter {
+  const characterMap = getAuthenticatedCharacters();
+  if (!characterName) throw new Error('No characters have been authenticated.  Visit Add-ons => GEST => Authorize Character to do so.');
+  if (!characterMap.hasOwnProperty(characterName)) throw new Error(`${characterName} is not authed, or is misspelled.`);
+  return characterMap[characterName];
 }
 
-function authCallback(request): HtmlOutput {
-  const tokenData = getAccessToken_(request.parameter.code);
-  const characterData = parseJWT_(tokenData.access_token);
-  const affiliationData = getCharacterAffiliation_(characterData.character_id);
-  const userData = Object.assign(tokenData, characterData, affiliationData);
-  saveCharacter_([userData.character_name, userData.character_id, userData.corporation_id, userData.alliance_id, userData.refresh_token], userData.access_token);
-  return HtmlService.createHtmlOutput(`Thank you for using GESI ${userData.character_name}.  You can close this tab.`);
+function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
+  return prepareRequest_(endpointName, params).call(params);
 }
 
-function buildRequest_(endpoint: IEndpoint, character: ICharacterRowData | null, params: IFunctionParam, token: string, data: any = null): IRequest {
-  let path = endpoint.path;
+/**
+ * Returns the data from the provided endpointName for each character as one list
+ *
+ * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return
+ * @customfunction
+ */
+function invokeMultiple(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
+  let normalizedNames: string[];
 
-  endpoint.parameters.forEach((param: IParameter) => {
-    if (param.in === 'path' && params[param.name]) {
-      path = path.replace('{' + param.name + '}', params[param.name]);
-    } else if (param.in === 'query' && params[param.name]) {
-      path += path.indexOf('?') !== -1 ? '&' : '?';
-      path += param.name + '=' + (Array.isArray(params[param.name]) ? params[param.name].join(',') : params[param.name]);
-    } else if (param.in === 'body' && params[param.name]) {
-      if (param.type.indexOf('[]') !== -1) {
-        data = Array.isArray(params[param.name]) ? params[param.name].filter(function (id) {
-          return id[0];
-        }).map(function (id) {
-          return id[0];
-        }) : [params[param.name]];
-      } else {
-        throw param.type + ' is an unexpected body type.';
-      }
-    }
+  if (Array.isArray(characterNames)) {
+    // @ts-ignore
+    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
+  } else {
+    normalizedNames = characterNames.split(',');
+  }
+
+  const firstCharacter = normalizedNames.shift();
+
+  const result = invoke_(endpointName, { ...params, name: firstCharacter });
+
+  const headers = result[0];
+  headers.push('character_name');
+
+  result.forEach((item: any, idx: number) => {
+    if (idx > 0) item.push(firstCharacter);
   });
 
-  if (path.indexOf('{character_id}') !== -1) path = path.replace('{character_id}', character.character_id.toString());
-  if (path.indexOf('{alliance_id}') !== -1) path = path.replace('{alliance_id}', character.alliance_id.toString());
-  if (path.indexOf('{corporation_id}') !== -1) path = path.replace('{corporation_id}', character.corporation_id.toString());
+  normalizedNames.forEach((name: string) => {
+    const subResults = invoke_(endpointName, { ...params, name, show_column_headings: false });
 
-  const request = {
-    method: endpoint.method,
-    url: `${PropertiesService.getScriptProperties().getProperty('BASE_URL')}${path}`,
-    headers: HEADERS,
-    muteHttpExceptions: true,
-  } as IRequest;
-
-  if (data) request['payload'] = JSON.stringify(data);
-  if (endpoint.scope) request.headers['authorization'] = `Bearer ${token}`;
-  return request;
-}
-
-function parseData_(endpoint_name: string, params: IFunctionParam): any[][] {
-  const endpoint: IEndpoint = ENDPOINTS[endpoint_name];
-  const character_name = (params.name || PropertiesService.getDocumentProperties().getProperty('MAIN_CHARACTER'));
-  const character: ICharacterRowData = getCharacterRowData_(character_name);
-  if (!character && endpoint.scope) throw `${character_name} is not authed, or is misspelled.`;
-  let result: any[][] = [];
-  let data: any = [];
-
-  // Add the header row if its not set or set to true
-  if (params.opt_headers || undefined === params.opt_headers) result.push(endpoint.headers.map((h: IEndpointHeader) => h.name));
-
-  // Set the token.  Refresh it if it's expired.
-  let token = CacheService.getDocumentCache().get(`${character_name}_access_token`);
-  if (!token && endpoint.scope) token = refreshToken_(character);
-  if (!params.version) params.version = endpoint.version;
-
-  if (params.page === -1) {
-    params.page = 1;
-    const response = doRequests_([buildRequest_(endpoint, character, params, token)]);
-    data = data.concat(response.data);
-    const requests: IRequest[] = [];
-    const pages = response.headers['x-pages'];
-
-    for (let p = 2; p <= pages; p++) {
-      params.page = p;
-      requests.push(buildRequest_(endpoint, character, params, token));
-    }
-    data = data.concat(doRequests_(requests).data);
-  } else {
-    data = doRequests_([buildRequest_(endpoint, character, params, token)]).data;
-  }
-
-  if (Array.isArray(data) && typeof (data[0]) === 'number') {
-    result = result.concat(data);
-  } else if (Array.isArray(data) && typeof (data[0]) === 'object') {
-    result = result.concat(
-      data.map((obj) => {
-        return endpoint.headers.map((header: IEndpointHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
-      }),
-    );
-  } else if (typeof (data) === 'object') {
-    result.push(endpoint.headers.map((header: IEndpointHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
-  } else if (typeof (data) === 'number') {
-    result = [data];
-  } else {
-    throw typeof (data) + ' is an unexpected type.';
-  }
+    subResults.forEach((item: any) => {
+      item.push(name);
+      result.push(item);
+    });
+  });
 
   return result;
 }
 
-function getAccessToken_(code: string): IAccessToken {
-  const headers = HEADERS;
-  headers['authorization'] = 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
-  const request: IRequest = {
-    url: 'https://login.eveonline.com/v2/oauth/token',
-    method: 'POST',
-    headers: headers,
-    payload: JSON.stringify({ grant_type: 'authorization_code', code }),
-    muteHttpExceptions: true,
-  };
-
-  return doRequests_([request]).data[0] as IAccessToken;
+/**
+ * Return the raw JSON data related to an ESI call
+ *
+ * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return The raw JSON response from the provided endpointName
+ * @customfunction
+ */
+function invokeRaw(endpointName: string, params: IFunctionParam = {} as IFunctionParam): any {
+  return prepareRequest_(endpointName, params).callRaw(params);
 }
 
-function getCharacterAffiliation_(character_id: number): ICharacterAffiliation {
-  const request: IRequest = {
-    url: `${PropertiesService.getScriptProperties().getProperty('BASE_URL')}/v1/characters/affiliation/`,
-    method: 'POST',
-    headers: HEADERS,
-    payload: JSON.stringify([character_id]),
-    muteHttpExceptions: true,
-
-  };
-  return doRequests_([request]).data[0] as ICharacterAffiliation;
+function prepareRequest_(endpointName: string, params: IFunctionParam) {
+  const characterData = getCharacterData(params.name || getMainCharacter());
+  const oauthService = getOAuthService_(characterData.id);
+  return new ESIRequest(endpointName, oauthService, characterData);
 }
 
-function parseJWT_(access_token: string): ICharacterData {
-  const jwt = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
-  if (jwt.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
-  if (jwt.azp !== PropertiesService.getScriptProperties().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
-  return { character_name: jwt.name, character_id: jwt.sub.split(':')[2] };
-}
+class ESIRequest {
+  private endpoint: IEndpoint;
+  private oauthClient: OAuth2Service;
+  private characterData: ICharacterData;
 
-function refreshToken_(character: ICharacterRowData | null): string {
-  if (!character) throw buildError_({ body: 'Can\'t refresh token of character that isn\'t authed.' });
-  const headers = HEADERS;
-  headers['authorization'] = 'Basic ' + Utilities.base64EncodeWebSafe(PropertiesService.getScriptProperties().getProperty('CLIENT_ID') + ':' + PropertiesService.getScriptProperties().getProperty('CLIENT_SECRET'));
-  const request: IRequest = {
-    url: 'https://login.eveonline.com/v2/oauth/token',
-    method: 'POST',
-    headers: headers,
-    payload: JSON.stringify({ grant_type: 'refresh_token', refresh_token: character.refresh_token }),
-    muteHttpExceptions: true,
-  };
-  const response = doRequests_([request]).data[0] as IAccessToken;
-  CacheService.getDocumentCache().put(character.character_name + '_access_token', response.access_token, 1080);
-  return response.access_token;
-}
-
-function saveCharacter_(character_data: any[], access_token: string): void {
-  if (!character_data[0] || !character_data[1] || !character_data[4] || !access_token) throw 'Required data is missing: ' + JSON.stringify(character_data.slice(1, -1));
-
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let authSheet = ss.getSheetByName('Auth Data');
-  if (null === authSheet) {
-    authSheet = ss.insertSheet('Auth Data').hideSheet();
-    authSheet.deleteRows(1, authSheet.getMaxRows() - 1);
-    authSheet.deleteColumns(6, authSheet.getMaxColumns() - 5);
-    const protectedData = authSheet.protect().setDescription('Only sheet owner can view auth data');
-    protectedData.removeEditors(protectedData.getEditors().map((u: User) => u.getEmail()));
-    protectedData.addEditor(ss.getOwner().getEmail());
+  public static parseToken(access_token: string): IToken {
+    const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
+    if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
+    if (jwtToken.azp !== getScriptProperties_().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
+    return jwtToken;
   }
 
-  const character_row = getCharacterRow_(character_data[0]);
-  character_row ? character_row.setValues([character_data]) : authSheet.appendRow(character_data);
-  authSheet.autoResizeColumns(1, 5);
-  if (!getMainCharacter()) setMainCharacter(character_data[0]);
-  CacheService.getDocumentCache().put(character_data[0] + '_access_token', access_token, 1080);
-}
+  private static addQueryParam(path: string, paramName: string, paramValue: any): string {
+    path += path.includes('?') ? '&' : '?';
+    path += paramName + '=' + (Array.isArray(paramValue) ? paramValue.join(',') : paramValue);
+    return path;
+  }
 
-function getCharacterRowData_(character_name: string): ICharacterRowData | null {
-  const character_range = getCharacterRow_(character_name);
-  if (!character_range) return null;
-  return {
-    character_id: character_range.getCell(1, CharacterRowData.character_id + 1).getValue() as number,
-    character_name: character_range.getCell(1, CharacterRowData.character_name + 1).getValue() as string,
-    corporation_id: character_range.getCell(1, CharacterRowData.corporation_id + 1).getValue() as number,
-    alliance_id: character_range.getCell(1, CharacterRowData.alliance_id + 1).getValue() as number,
-    refresh_token: character_range.getCell(1, CharacterRowData.refresh_token + 1).getValue() as string,
-  };
-}
-
-function getCharacterRow_(character_name: string): GoogleAppsScript.Spreadsheet.Range {
-  const auth_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Auth Data');
-  if (null === auth_sheet) return null;
-  const row_index = auth_sheet.getDataRange().getValues().map(function (r) {
-    return r[CharacterRowData.character_name];
-  }).indexOf(character_name);
-  if (-1 === row_index) return null;
-  return auth_sheet.getRange(row_index + 1, 1, 1, 5);
-}
-
-function doRequests_(requests: IRequest[]): any | any[] {
-  let data = [];
-  const responses = UrlFetchApp.fetchAll(requests);
-
-  responses.forEach((response: HTTPResponse, idx: number) => {
-    if (response.getResponseCode() !== 200) {
-      throw buildError_({
-        body: response.getContentText(),
-        code: response.getResponseCode(),
-        path: requests[idx].url,
-      });
+  constructor(endpointName: string, oauthClient: OAuth2Service, characterData: ICharacterData) {
+    if (!ENDPOINTS.hasOwnProperty(endpointName)) {
+      throw new Error(`Unknown endpoint: '${endpointName}'`);
     }
 
-    data = data.concat(JSON.parse(response.getContentText()));
-  });
+    this.endpoint = ENDPOINTS[endpointName];
+    this.oauthClient = oauthClient;
+    this.characterData = characterData;
+  }
 
-  return {
-    headers: responses[0] === undefined ? null : responses[0].getAllHeaders(),
-    data,
+  public call(params: IFunctionParam, payload: any = null): SheetsArray {
+    const data: any = this.doRequest(params, payload);
+
+    let result: SheetsArray = [];
+
+    // Add the header row if its not set, or set to true
+    if (params.show_column_headings) this.appendHeaders(result);
+
+    if (Array.isArray(data) && isFinite(data[0])) {
+      result = result.concat(data);
+    } else if (Array.isArray(data) && data instanceof Object) {
+      result = result.concat(
+        data.map((obj) => {
+          return this.endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
+        }),
+      );
+    } else if (data instanceof Object) {
+      result.push(this.endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
+    } else if (isFinite(data)) {
+      result.push([data]);
+    }
+
+    return result;
+  }
+
+  public callRaw<T>(params: IFunctionParam, payload: any = null): T | T[] {
+    return this.doRequest<T>(params, payload);
+  }
+
+  private appendHeaders(result: SheetsArray): void {
+    result.push(this.endpoint.headers.map((header: IHeader) => header.name));
+  }
+
+  private doRequest<T>(params: IFunctionParam, payload: any = null): T | T[] {
+    const request = this.buildRequest(params, payload);
+
+    const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
+    const headers = response.getHeaders();
+
+    // If the request was not successful, raise an error
+    if (response.getResponseCode() !== 200) {
+      throw new Error(response.getContentText());
+    }
+
+    // Log a warning if a route returns a warning
+    if (headers.hasOwnProperty('Warning')) console.warn(headers['Warning']);
+
+    // If the route is not paginated, just return the first response
+    if (!this.endpoint.paginated) return JSON.parse(response.getContentText());
+
+    // If the route is paginated but only has one page, just return it
+    if (headers.hasOwnProperty('x-pages') && parseInt(headers['x-pages']) === 1) return JSON.parse(response.getContentText());
+
+    // Otherwise, if there are more than 1 page, issue additional requests to fetch all the pages
+    const result = JSON.parse(response.getContentText());
+
+    const totalPages = parseInt(headers['x-pages']);
+    const requests = [];
+
+    for (let p = 2; p <= totalPages; p++) {
+      params.page = p;
+      requests.push(this.buildRequest(params, payload));
+    }
+
+    return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
+  }
+
+  private buildRequest(params: IFunctionParam, payload: any = null): URLFetchRequest {
+    let path = this.endpoint.path;
+
+    // Process this endpoint's parameters
+    this.endpoint.parameters.forEach((param: IParameter) => {
+      const paramValue = params[param.name];
+
+      if (param.in === 'path' && paramValue) {
+        path = path.replace(`{${param.name}}`, paramValue);
+      } else if (param.in === 'query' && paramValue) {
+        path = ESIRequest.addQueryParam(path, param.name, paramValue);
+      } else if (param.in === 'body' && paramValue) {
+        if (param.type.includes('[]')) {
+          payload = !Array.isArray(paramValue) ?
+            [paramValue] :
+            paramValue.filter((item: any) => item[0]).map((item: any) => item[0]);
+        } else {
+          throw param.type + ' is an unexpected body type.';
+        }
+      }
+    });
+
+    // Add the page param if set
+    if (params.page) {
+      path = ESIRequest.addQueryParam(path, 'page', params.page);
+    }
+
+    if (this.endpoint.scope) {
+      if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id.toString());
+      if (path.includes('{character_id}')) path = path.replace('{character_id}', this.characterData.character_id.toString());
+      if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.characterData.corporation_id.toString());
+    }
+
+    const request: URLFetchRequest = {
+      method: this.endpoint.method,
+      url: `${getScriptProperties_().getProperty('BASE_URL')}${path.replace('{version}', params.version || this.endpoint.version)}`,
+      headers: {
+        'user-agent': `GESI User ${this.characterData.character_id}`,
+      },
+      contentType: 'application/json',
+      muteHttpExceptions: true,
+    };
+
+    if (payload) request.payload = JSON.stringify(payload);
+    if (this.endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
+
+    return request;
+  }
+}
+
+function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
+  const id: string = request.parameter.serviceName;
+
+  // Fetch the oauthService used for this flow
+  const oauthService = getOAuthService_(id);
+
+  // Complete the OAuth flow
+  oauthService.handleCallback(request);
+
+  // Parse the JWT access token for some basic information about this character
+  const jwtToken = ESIRequest.parseToken(oauthService.getAccessToken());
+  const characterId = parseInt(jwtToken.sub.split(':')[2]);
+
+  // @ts-ignore
+  // TODO: Make a PR to update @types/google-apps-script-oauth2
+  const storage: IStorage = oauthService.getStorage();
+
+  // Fetch additional data about this character
+  const affiliationData = getCharacterAffiliation_(characterId, oauthService);
+
+  // If this character was previously authorized
+  // update the ID of this character and reset the old service
+  const characterMap = getAuthenticatedCharacters();
+
+  // If this character is already in the map,
+  // Reset/clear out data related to previous oauthService
+  if (characterMap.hasOwnProperty(jwtToken.name)) {
+    getOAuthService_(characterMap[jwtToken.name].id).reset();
+  }
+
+  // Update the user object
+  characterMap[jwtToken.name] = {
+    alliance_id: affiliationData.alliance_id || null,
+    character_id: affiliationData.character_id,
+    corporation_id: affiliationData.corporation_id,
+    id,
+    name: jwtToken.name,
   };
+  setCharacters_(characterMap);
+
+  // Set the main character if there is not one already
+  if (!getMainCharacter()) setMainCharacter_(jwtToken.name);
+
+  return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
 }
 
-function buildError_(error: Partial<IError>): string {
-  error.sheet_id = SpreadsheetApp.getActiveSpreadsheet().getId();
-  error.character = getMainCharacter();
-  return JSON.stringify(error);
+function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
+  return (new ESIRequest('characters_affiliation', oauthClient, {} as ICharacterData)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
 }
 
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//                                                                                                  Metadata
-// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-enum CharacterRowData { character_name, character_id, corporation_id, alliance_id, refresh_token }
-
-interface IError {
-  body: string;
-  code: number;
-  character: string;
-  sheet_id: string;
-  path?: string;
-  method?: string;
+function characterNameToId_(characterName: string | null): string {
+  return getCharacterData(characterName).id;
 }
 
-interface IEndpoint {
-  description: string;
-  headers: IEndpointHeader[];
-  method: string;
-  path: string;
-  parameters: IParameter[];
-  scope?: string;
-  summary: string;
-  version: string;
+function getOAuthService_(id: string): OAuth2Service {
+  return OAuth2.createService(id)
+    .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
+    .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
+    .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
+    .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
+    .setCallbackFunction('authCallback')
+    .setPropertyStore(getDocumentProperties_())
+    .setCache(getDocumentCache_())
+    .setScope(SCOPES)
+    .setParam('access_type', 'offline')
+    .setParam('prompt', 'consent');
+}
+
+interface IHeader {
+  readonly name: string;
+  readonly sub_headers?: string[];
 }
 
 interface IParameter {
-  description: string;
-  in: string;
-  name: string;
-  type: string
-  required: boolean;
+  readonly description: string;
+  readonly in: ParameterType;
+  readonly name: string;
+  readonly type: string;
+  readonly required: boolean;
 }
 
-interface IEndpointHeader {
-  name: string;
-  sub_headers?: string[];
+interface IEndpoint {
+  /** @description Long description of the endpoint */
+  readonly description: string;
+
+  /** @description The column headers that endpoint returns.  Are ordered alphabetically */
+  readonly headers: IHeader[];
+
+  /** @description The HTTP method this endpoint uses */
+  readonly method: string;
+
+  /** @description Whether this endpoint is paginated */
+  readonly paginated: boolean;
+
+  /** @description The parameters this endpoint accepts */
+  readonly parameters: IParameter[];
+
+  /** @description The path, including parameters, of this endpoint */
+  readonly path: string;
+
+  /** @description An optional required scope if this endpoint is authenticated */
+  readonly scope?: string;
+
+  /** @description Short description of the endpoint */
+  readonly summary: string;
+
+  /** @description The default version of this endpoint */
+  readonly version: string;
 }
 
-interface IAccessToken {
-  access_token: string;
-  token_type: string;
-  expires_in: number;
-  refresh_token: string;
-}
-
-interface ICharacterData {
-  character_id: number;
-  character_name: number;
-}
-
-interface ICharacterAffiliation {
-  alliance_id: number;
-  corporation_id: number;
-  character_id: number;
-  faction_id?: number;
+interface IEndpointList {
+  [key: string]: IEndpoint;
 }
 
 interface IFunctionParam {
-  opt_headers: boolean;
+  show_column_headings: boolean;
   version?: string;
   name?: string;
   page?: number;
@@ -386,18 +499,50 @@ interface IFunctionParam {
   [param: string]: any;
 }
 
-interface ICharacterRowData {
-  character_id: number;
-  character_name: string;
-  corporation_id: number;
-  alliance_id: number;
-  refresh_token: string;
+interface ICharacterData {
+  readonly alliance_id: number | null;
+  readonly character_id: number;
+  readonly corporation_id: number;
 }
 
-interface IRequest {
-  url: string;
-  method: string;
-  payload?: string;
-  headers: Object;
-  muteHttpExceptions: boolean;
+interface IAuthenticatedCharacter extends ICharacterData {
+  readonly id: string;
+  readonly name: string;
+}
+
+interface ICharacterMap {
+  [characterName: string]: IAuthenticatedCharacter;
+}
+
+type SheetsArray = any[][]
+
+interface IESIToken {
+  readonly access_token: string;
+  readonly expires_in: number;
+  readonly refresh_token: string;
+  readonly token_type: string;
+}
+
+interface IToken {
+  readonly azp: string;
+  readonly exp: number;
+  readonly iss: string;
+  readonly name: string;
+  readonly owner: string;
+  readonly sub: string;
+}
+
+interface ICharacterAffiliation {
+  readonly alliance_id?: number;
+  readonly character_id: number;
+  readonly corporation_id: number;
+  readonly faction_id?: number;
+}
+
+interface IStorage {
+  getValue(key: string, optSkipMemoryCheck?: boolean): any;
+
+  setValue(key: string, value: any): void;
+
+  removeValue(key: string): void;
 }

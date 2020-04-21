@@ -1,0 +1,22 @@
+name: GESI
+
+version: 8.0.0
+
+crystal: 0.34.0
+
+license: MIT
+
+description: |
+  Google Sheets ESI Add-on
+
+authors:
+  - George Dietrich <george@dietrich.app>
+
+targets:
+  gesi:
+    main: ./GESI.cr
+
+development_dependencies:
+  ameba:
+    github: crystal-ameba/ameba
+    version: ~> 0.12.0

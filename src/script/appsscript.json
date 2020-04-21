@@ -1,14 +1,14 @@
 {
-  "timeZone": "UTC",
-  "urlFetchWhitelist": [
-    "https://login.eveonline.com/",
-    "https://esi.evetech.net/"
-  ],
-  "exceptionLogging": "STACKDRIVER",
-  "oauthScopes": [
-    "https://www.googleapis.com/auth/script.container.ui",
-    "https://www.googleapis.com/auth/script.external_request",
-    "https://www.googleapis.com/auth/script.scriptapp",
-    "https://www.googleapis.com/auth/spreadsheets.currentonly"
-  ]
+    "timeZone": "Etc/GMT",
+    "dependencies": {
+        "libraries": [{
+            "userSymbol": "OAuth2",
+            "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+            "version": "38"
+        }]
+    },
+    "exceptionLogging": "NONE",
+    "oauthScopes": ["https://www.googleapis.com/auth/script.container.ui", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/script.scriptapp", "https://www.googleapis.com/auth/spreadsheets.currentonly"],
+    "urlFetchWhitelist": ["https://login.eveonline.com/", "https://esi.evetech.net/"],
+    "runtimeVersion": "DEPRECATED_ES5"
 }

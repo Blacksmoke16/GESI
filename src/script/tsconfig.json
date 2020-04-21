@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "sourceMap": false,
+        "strict": true
+    },
+    "include": [
+        "endpoints.ts",
+        "functions.ts",
+        "gesi.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

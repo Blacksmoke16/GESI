@@ -1,0 +1,28 @@
+{
+    "name": "gesi",
+    "version": "8.0.0",
+    "description": "Google Sheets ESI Add-on",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Blacksmoke16/GESI.git"
+    },
+    "keywords": [
+        "eve",
+        "eve-online",
+        "esi",
+        "crystal",
+        "typescript"
+    ],
+    "author": "George Dietrich",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Blacksmoke16/GESI/issues"
+    },
+    "homepage": "https://github.com/Blacksmoke16/GESI#readme",
+    "devDependencies": {
+        "@types/google-apps-script": "^1.0.11",
+        "@types/google-apps-script-oauth2": "^24.0.2",
+        "typescript": "^3.8.3"
+    }
+}

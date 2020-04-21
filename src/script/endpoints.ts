@@ -5,6 +5,7 @@ const SCOPES = [
   "esi-bookmarks.read_character_bookmarks.v1",
   "esi-bookmarks.read_corporation_bookmarks.v1",
   "esi-calendar.read_calendar_events.v1",
+  "esi-calendar.respond_calendar_events.v1",
   "esi-characters.read_agents_research.v1",
   "esi-characters.read_blueprints.v1",
   "esi-characters.read_contacts.v1",
@@ -17,6 +18,7 @@ const SCOPES = [
   "esi-characters.read_opportunities.v1",
   "esi-characters.read_standings.v1",
   "esi-characters.read_titles.v1",
+  "esi-characters.write_contacts.v1",
   "esi-characterstats.read.v1",
   "esi-clones.read_clones.v1",
   "esi-clones.read_implants.v1",
@@ -36,7 +38,9 @@ const SCOPES = [
   "esi-corporations.read_titles.v1",
   "esi-corporations.track_members.v1",
   "esi-fittings.read_fittings.v1",
+  "esi-fittings.write_fittings.v1",
   "esi-fleets.read_fleet.v1",
+  "esi-fleets.write_fleet.v1",
   "esi-industry.read_character_jobs.v1",
   "esi-industry.read_character_mining.v1",
   "esi-industry.read_corporation_jobs.v1",
@@ -46,7 +50,9 @@ const SCOPES = [
   "esi-location.read_location.v1",
   "esi-location.read_online.v1",
   "esi-location.read_ship_type.v1",
+  "esi-mail.organize_mail.v1",
   "esi-mail.read_mail.v1",
+  "esi-mail.send_mail.v1",
   "esi-markets.read_character_orders.v1",
   "esi-markets.read_corporation_orders.v1",
   "esi-markets.structure_markets.v1",
@@ -55,12 +61,14 @@ const SCOPES = [
   "esi-search.search_structures.v1",
   "esi-skills.read_skillqueue.v1",
   "esi-skills.read_skills.v1",
+  "esi-ui.open_window.v1",
+  "esi-ui.write_waypoint.v1",
   "esi-universe.read_structures.v1",
   "esi-wallet.read_character_wallet.v1",
   "esi-wallet.read_corporation_wallets.v1"
 ];
 
-const ENDPOINTS = {
+const ENDPOINTS: IEndpointList = {
   "alliances": {
     "description": "List all active player alliances",
     "headers": [
@@ -68,26 +76,79 @@ const ENDPOINTS = {
         "name": "alliance_ids"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/alliances/",
-    "parameters": [
+    "summary": "List all alliances",
+    "version": "v1"
+  },
+  "alliances_alliance": {
+    "description": "Public information about an alliance",
+    "headers": [
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "creator_corporation_id"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "creator_id"
+      },
+      {
+        "name": "date_founded"
+      },
+      {
+        "name": "executor_corporation_id"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ticker"
       }
     ],
-    "summary": "List of Alliance IDs",
-    "version": "v1"
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An EVE alliance ID",
+        "in": "path",
+        "name": "alliance_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/alliances/{alliance_id}/",
+    "summary": "Get alliance information",
+    "version": "v3"
+  },
+  "alliances_alliance_contacts": {
+    "description": "Return contacts of an alliance",
+    "headers": [
+      {
+        "name": "contact_id"
+      },
+      {
+        "name": "contact_type"
+      },
+      {
+        "name": "label_ids",
+        "sub_headers": [
+          "label_ids"
+        ]
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/alliances/{alliance_id}/contacts/",
+    "scope": "esi-alliances.read_contacts.v1",
+    "summary": "Get alliance contacts",
+    "version": "v2"
   },
   "alliances_alliance_contacts_labels": {
     "description": "Return custom labels for an alliance's contacts",
@@ -99,33 +160,12 @@ const ENDPOINTS = {
         "name": "label_name"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/alliances/{alliance_id}/contacts/labels/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-alliances.read_contacts.v1",
-    "summary": "A list of alliance contact labels",
+    "summary": "Get alliance contact labels",
     "version": "v1"
   },
   "alliances_alliance_corporations": {
@@ -135,8 +175,8 @@ const ENDPOINTS = {
         "name": "corporation_ids"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/alliances/{alliance_id}/corporations/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE alliance ID",
@@ -144,23 +184,10 @@ const ENDPOINTS = {
         "name": "alliance_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "List of corporation IDs",
+    "path": "/{version}/alliances/{alliance_id}/corporations/",
+    "summary": "List alliance's corporations",
     "version": "v1"
   },
   "alliances_alliance_icons": {
@@ -173,8 +200,8 @@ const ENDPOINTS = {
         "name": "px64x64"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/alliances/{alliance_id}/icons/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE alliance ID",
@@ -182,23 +209,10 @@ const ENDPOINTS = {
         "name": "alliance_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Icon URLs for the given alliance id and server",
+    "path": "/{version}/alliances/{alliance_id}/icons/",
+    "summary": "Get alliance icon",
     "version": "v1"
   },
   "characters_affiliation": {
@@ -217,8 +231,8 @@ const ENDPOINTS = {
         "name": "faction_id"
       }
     ],
-    "method": "POST",
-    "path": "/{version}/characters/affiliation/",
+    "method": "post",
+    "paginated": false,
     "parameters": [
       {
         "description": "The character IDs to fetch affiliations for. All characters must exist, or none will be returned",
@@ -226,27 +240,69 @@ const ENDPOINTS = {
         "name": "characters",
         "type": "number[]",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Character corporation, alliance and faction IDs",
+    "path": "/{version}/characters/affiliation/",
+    "summary": "Character affiliation",
     "version": "v1"
   },
+  "characters_character": {
+    "description": "Public information about a character",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "ancestry_id"
+      },
+      {
+        "name": "birthday"
+      },
+      {
+        "name": "bloodline_id"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "gender"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "race_id"
+      },
+      {
+        "name": "security_status"
+      },
+      {
+        "name": "title"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An EVE character ID",
+        "in": "path",
+        "name": "character_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/characters/{character_id}/",
+    "summary": "Get character's public information",
+    "version": "v4"
+  },
   "characters_character_agents_research": {
-    "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime ",
+    "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime - researchStartDate)",
     "headers": [
       {
         "name": "agent_id"
@@ -264,34 +320,80 @@ const ENDPOINTS = {
         "name": "started_at"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/agents_research/",
-    "parameters": [
+    "scope": "esi-characters.read_agents_research.v1",
+    "summary": "Get agents research",
+    "version": "v1"
+  },
+  "characters_character_assets": {
+    "description": "Return a list of the characters assets",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "is_blueprint_copy"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "is_singleton"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
       }
     ],
-    "scope": "esi-characters.read_agents_research.v1",
-    "summary": "A list of agents research information",
-    "version": "v1"
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/assets/",
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "Get character assets",
+    "version": "v5"
+  },
+  "characters_character_assets_locations": {
+    "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      }
+    ],
+    "method": "post",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "number[]",
+        "required": true
+      }
+    ],
+    "path": "/{version}/characters/{character_id}/assets/locations/",
+    "scope": "esi-assets.read_assets.v1",
+    "summary": "Get character asset locations",
+    "version": "v2"
   },
   "characters_character_assets_names": {
     "description": "Return names for a set of item ids, which you can get from character assets endpoint. Typically used for items that can customize names, like containers or ships.",
@@ -303,8 +405,8 @@ const ENDPOINTS = {
         "name": "name"
       }
     ],
-    "method": "POST",
-    "path": "/{version}/characters/{character_id}/assets/names/",
+    "method": "post",
+    "paginated": false,
     "parameters": [
       {
         "description": "A list of item ids",
@@ -312,31 +414,11 @@ const ENDPOINTS = {
         "name": "item_ids",
         "type": "number[]",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/assets/names/",
     "scope": "esi-assets.read_assets.v1",
-    "summary": "List of asset names",
+    "summary": "Get character asset names",
     "version": "v1"
   },
   "characters_character_attributes": {
@@ -367,34 +449,115 @@ const ENDPOINTS = {
         "name": "willpower"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/attributes/",
-    "parameters": [
+    "scope": "esi-skills.read_skills.v1",
+    "summary": "Get character attributes",
+    "version": "v1"
+  },
+  "characters_character_blueprints": {
+    "description": "Return a list of blueprints the character owns",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "item_id"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "location_flag"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "location_id"
+      },
+      {
+        "name": "material_efficiency"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "time_efficiency"
+      },
+      {
+        "name": "type_id"
       }
     ],
-    "scope": "esi-skills.read_skills.v1",
-    "summary": "Attributes of a character",
-    "version": "v1"
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/blueprints/",
+    "scope": "esi-characters.read_blueprints.v1",
+    "summary": "Get blueprints",
+    "version": "v2"
+  },
+  "characters_character_bookmarks": {
+    "description": "A list of your character's personal bookmarks",
+    "headers": [
+      {
+        "name": "bookmark_id"
+      },
+      {
+        "name": "coordinates",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "created"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "item",
+        "sub_headers": [
+          "item_id",
+          "type_id"
+        ]
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "notes"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/bookmarks/",
+    "scope": "esi-bookmarks.read_character_bookmarks.v1",
+    "summary": "List bookmarks",
+    "version": "v2"
+  },
+  "characters_character_bookmarks_folders": {
+    "description": "A list of your character's personal bookmark folders",
+    "headers": [
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/bookmarks/folders/",
+    "scope": "esi-bookmarks.read_character_bookmarks.v1",
+    "summary": "List bookmark folders",
+    "version": "v2"
   },
   "characters_character_calendar": {
     "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event",
@@ -415,8 +578,8 @@ const ENDPOINTS = {
         "name": "title"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/calendar/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "The event ID to retrieve events from",
@@ -424,32 +587,62 @@ const ENDPOINTS = {
         "name": "from_event",
         "type": "number",
         "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/calendar/",
     "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "A collection of event summaries",
+    "summary": "List calendar event summaries",
     "version": "v1"
+  },
+  "characters_character_calendar_event": {
+    "description": "Get all the information for a specific event",
+    "headers": [
+      {
+        "name": "date"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "event_id"
+      },
+      {
+        "name": "importance"
+      },
+      {
+        "name": "owner_id"
+      },
+      {
+        "name": "owner_name"
+      },
+      {
+        "name": "owner_type"
+      },
+      {
+        "name": "response"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "title"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "The id of the event requested",
+        "in": "path",
+        "name": "event_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/characters/{character_id}/calendar/{event_id}/",
+    "scope": "esi-calendar.read_calendar_events.v1",
+    "summary": "Get an event",
+    "version": "v3"
   },
   "characters_character_calendar_event_attendees": {
     "description": "Get all invited attendees for a given event",
@@ -461,8 +654,8 @@ const ENDPOINTS = {
         "name": "event_response"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/calendar/{event_id}/attendees/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "The id of the event requested",
@@ -470,32 +663,80 @@ const ENDPOINTS = {
         "name": "event_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/calendar/{event_id}/attendees/",
     "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "List of attendees",
+    "summary": "Get attendees",
     "version": "v1"
+  },
+  "characters_character_clones": {
+    "description": "A list of the character's clones",
+    "headers": [
+      {
+        "name": "home_location",
+        "sub_headers": [
+          "location_id",
+          "location_type"
+        ]
+      },
+      {
+        "name": "jump_clones",
+        "sub_headers": [
+          "implants",
+          "jump_clone_id",
+          "location_id",
+          "location_type",
+          "name"
+        ]
+      },
+      {
+        "name": "last_clone_jump_date"
+      },
+      {
+        "name": "last_station_change_date"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/clones/",
+    "scope": "esi-clones.read_clones.v1",
+    "summary": "Get clones",
+    "version": "v3"
+  },
+  "characters_character_contacts": {
+    "description": "Return contacts of a character",
+    "headers": [
+      {
+        "name": "contact_id"
+      },
+      {
+        "name": "contact_type"
+      },
+      {
+        "name": "is_blocked"
+      },
+      {
+        "name": "is_watched"
+      },
+      {
+        "name": "label_ids",
+        "sub_headers": [
+          "label_ids"
+        ]
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/contacts/",
+    "scope": "esi-characters.read_contacts.v1",
+    "summary": "Get contacts",
+    "version": "v2"
   },
   "characters_character_contacts_labels": {
     "description": "Return custom labels for a character's contacts",
@@ -507,33 +748,12 @@ const ENDPOINTS = {
         "name": "label_name"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/contacts/labels/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-characters.read_contacts.v1",
-    "summary": "A list of contact labels",
+    "summary": "Get contact labels",
     "version": "v1"
   },
   "characters_character_contracts": {
@@ -606,40 +826,12 @@ const ENDPOINTS = {
         "name": "volume"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/contracts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of contracts",
+    "summary": "Get contracts",
     "version": "v1"
   },
   "characters_character_contracts_contract_bids": {
@@ -658,8 +850,8 @@ const ENDPOINTS = {
         "name": "date_bid"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/bids/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "ID of a contract",
@@ -667,31 +859,11 @@ const ENDPOINTS = {
         "name": "contract_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/bids/",
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of bids",
+    "summary": "Get contract bids",
     "version": "v1"
   },
   "characters_character_contracts_contract_items": {
@@ -716,8 +888,8 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/items/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "ID of a contract",
@@ -725,31 +897,11 @@ const ENDPOINTS = {
         "name": "contract_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/contracts/{contract_id}/items/",
     "scope": "esi-contracts.read_character_contracts.v1",
-    "summary": "A list of items in this contract",
+    "summary": "Get contract items",
     "version": "v1"
   },
   "characters_character_corporationhistory": {
@@ -768,8 +920,8 @@ const ENDPOINTS = {
         "name": "start_date"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/corporationhistory/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE character ID",
@@ -777,23 +929,10 @@ const ENDPOINTS = {
         "name": "character_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Corporation history for the given character",
+    "path": "/{version}/characters/{character_id}/corporationhistory/",
+    "summary": "Get corporation history",
     "version": "v1"
   },
   "characters_character_fatigue": {
@@ -809,34 +948,45 @@ const ENDPOINTS = {
         "name": "last_update_date"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/fatigue/",
-    "parameters": [
+    "scope": "esi-characters.read_fatigue.v1",
+    "summary": "Get jump fatigue",
+    "version": "v1"
+  },
+  "characters_character_fittings": {
+    "description": "Return fittings of a character",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "description"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "fitting_id"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "items",
+        "sub_headers": [
+          "flag",
+          "quantity",
+          "type_id"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "ship_type_id"
       }
     ],
-    "scope": "esi-characters.read_fatigue.v1",
-    "summary": "Jump activation and fatigue information",
-    "version": "v1"
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/fittings/",
+    "scope": "esi-fittings.read_fittings.v1",
+    "summary": "Get fittings",
+    "version": "v2"
   },
   "characters_character_fleet": {
     "description": "Return the fleet ID the character is in, if any.",
@@ -854,33 +1004,12 @@ const ENDPOINTS = {
         "name": "wing_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/fleet/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-fleets.read_fleet.v1",
-    "summary": "Details about the character's fleet",
+    "summary": "Get character fleet info",
     "version": "v1"
   },
   "characters_character_fw_stats": {
@@ -915,33 +1044,12 @@ const ENDPOINTS = {
         ]
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/fw/stats/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-characters.read_fw_stats.v1",
-    "summary": "Faction warfare statistics for a given character",
+    "summary": "Overview of a character involved in faction warfare",
     "version": "v1"
   },
   "characters_character_implants": {
@@ -951,33 +1059,12 @@ const ENDPOINTS = {
         "name": "implant_ids"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/implants/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-clones.read_implants.v1",
-    "summary": "A list of implant type ids",
+    "summary": "Get active implants",
     "version": "v1"
   },
   "characters_character_industry_jobs": {
@@ -1050,8 +1137,8 @@ const ENDPOINTS = {
         "name": "successful_runs"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/industry/jobs/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "Whether to retrieve completed character industry jobs. Only includes jobs from the past 90 days",
@@ -1059,31 +1146,11 @@ const ENDPOINTS = {
         "name": "include_completed",
         "type": "boolean",
         "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/industry/jobs/",
     "scope": "esi-industry.read_character_jobs.v1",
-    "summary": "Industry jobs placed by a character",
+    "summary": "List character industry jobs",
     "version": "v1"
   },
   "characters_character_killmails_recent": {
@@ -1096,40 +1163,12 @@ const ENDPOINTS = {
         "name": "killmail_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/killmails/recent/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-killmails.read_killmails.v1",
-    "summary": "A list of killmail IDs and hashes",
+    "summary": "Get a character's recent kills and losses",
     "version": "v1"
   },
   "characters_character_location": {
@@ -1145,33 +1184,12 @@ const ENDPOINTS = {
         "name": "structure_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/location/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-location.read_location.v1",
-    "summary": "Information about the characters current location. Returns the current solar system id, and also the current station or structure ID if applicable",
+    "summary": "Get character location",
     "version": "v1"
   },
   "characters_character_loyalty_points": {
@@ -1184,33 +1202,12 @@ const ENDPOINTS = {
         "name": "loyalty_points"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/loyalty/points/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-characters.read_loyalty.v1",
-    "summary": "A list of loyalty points",
+    "summary": "Get loyalty points",
     "version": "v1"
   },
   "characters_character_mail": {
@@ -1245,8 +1242,8 @@ const ENDPOINTS = {
         "name": "timestamp"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/mail/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "Fetch only mails that match one or more of the given labels",
@@ -1261,32 +1258,36 @@ const ENDPOINTS = {
         "name": "last_mail_id",
         "type": "number",
         "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/mail/",
     "scope": "esi-mail.read_mail.v1",
-    "summary": "The requested mail",
+    "summary": "Return mail headers",
     "version": "v1"
+  },
+  "characters_character_mail_labels": {
+    "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
+    "headers": [
+      {
+        "name": "labels",
+        "sub_headers": [
+          "color",
+          "label_id",
+          "name",
+          "unread_count"
+        ]
+      },
+      {
+        "name": "total_unread_count"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/mail/labels/",
+    "scope": "esi-mail.read_mail.v1",
+    "summary": "Get mail labels and unread counts",
+    "version": "v3"
   },
   "characters_character_mail_lists": {
     "description": "Return all mailing lists that the character is subscribed to",
@@ -1298,33 +1299,12 @@ const ENDPOINTS = {
         "name": "name"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/mail/lists/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-mail.read_mail.v1",
-    "summary": "Mailing lists",
+    "summary": "Return mailing list subscriptions",
     "version": "v1"
   },
   "characters_character_mail_mail": {
@@ -1359,8 +1339,8 @@ const ENDPOINTS = {
         "name": "timestamp"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/mail/{mail_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE mail ID",
@@ -1368,31 +1348,11 @@ const ENDPOINTS = {
         "name": "mail_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/characters/{character_id}/mail/{mail_id}/",
     "scope": "esi-mail.read_mail.v1",
-    "summary": "Contents of a mail",
+    "summary": "Return a mail",
     "version": "v1"
   },
   "characters_character_medals": {
@@ -1432,33 +1392,12 @@ const ENDPOINTS = {
         "name": "title"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/medals/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-characters.read_medals.v1",
-    "summary": "A list of medals",
+    "summary": "Get medals",
     "version": "v1"
   },
   "characters_character_mining": {
@@ -1477,41 +1416,46 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/mining/",
-    "parameters": [
+    "scope": "esi-industry.read_character_mining.v1",
+    "summary": "Character mining ledger",
+    "version": "v1"
+  },
+  "characters_character_notifications": {
+    "description": "Return character notifications",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "is_read"
       },
       {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
+        "name": "notification_id"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "sender_id"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "sender_type"
+      },
+      {
+        "name": "text"
+      },
+      {
+        "name": "timestamp"
+      },
+      {
+        "name": "type"
       }
     ],
-    "scope": "esi-industry.read_character_mining.v1",
-    "summary": "Mining ledger of a character",
-    "version": "v1"
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/notifications/",
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Get character notifications",
+    "version": "v5"
   },
   "characters_character_notifications_contacts": {
     "description": "Return notifications about having been added to someone's contact list",
@@ -1532,34 +1476,37 @@ const ENDPOINTS = {
         "name": "standing_level"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/notifications/contacts/",
-    "parameters": [
+    "scope": "esi-characters.read_notifications.v1",
+    "summary": "Get new contact notifications",
+    "version": "v1"
+  },
+  "characters_character_online": {
+    "description": "Checks if the character is currently online",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "last_login"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "last_logout"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "logins"
+      },
+      {
+        "name": "online"
       }
     ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "A list of contact notifications",
-    "version": "v1"
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/online/",
+    "scope": "esi-location.read_online.v1",
+    "summary": "Get character online",
+    "version": "v2"
   },
   "characters_character_opportunities": {
     "description": "Return a list of tasks finished by a character",
@@ -1571,34 +1518,67 @@ const ENDPOINTS = {
         "name": "task_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/opportunities/",
-    "parameters": [
+    "scope": "esi-characters.read_opportunities.v1",
+    "summary": "Get a character's completed tasks",
+    "version": "v1"
+  },
+  "characters_character_orders": {
+    "description": "List open market orders placed by a character",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "duration"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "escrow"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "is_buy_order"
+      },
+      {
+        "name": "is_corporation"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
       }
     ],
-    "scope": "esi-characters.read_opportunities.v1",
-    "summary": "A list of opportunities task ids",
-    "version": "v1"
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/orders/",
+    "scope": "esi-markets.read_character_orders.v1",
+    "summary": "List open orders from a character",
+    "version": "v2"
   },
   "characters_character_orders_history": {
     "description": "List cancelled and expired market orders placed by a character up to 90 days in the past.",
@@ -1649,40 +1629,12 @@ const ENDPOINTS = {
         "name": "volume_total"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/orders/history/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-markets.read_character_orders.v1",
-    "summary": "Expired and cancelled market orders placed by a character",
+    "summary": "List historical orders by a character",
     "version": "v1"
   },
   "characters_character_planets": {
@@ -1710,5855 +1662,68 @@ const ENDPOINTS = {
         "name": "upgrade_level"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/planets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
     "scope": "esi-planets.manage_planets.v1",
-    "summary": "List of colonies",
+    "summary": "Get colonies",
     "version": "v1"
   },
-  "characters_character_ship": {
-    "description": "Get the current ship type, name and id",
+  "characters_character_planets_planet": {
+    "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
     "headers": [
       {
-        "name": "ship_item_id"
-      },
-      {
-        "name": "ship_name"
-      },
-      {
-        "name": "ship_type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/ship/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-location.read_ship_type.v1",
-    "summary": "Get the current ship type, name and id",
-    "version": "v1"
-  },
-  "characters_character_standings": {
-    "description": "Return character standings from agents, NPC corporations, and factions",
-    "headers": [
-      {
-        "name": "from_id"
-      },
-      {
-        "name": "from_type"
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/standings/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_standings.v1",
-    "summary": "A list of standings",
-    "version": "v1"
-  },
-  "characters_character_titles": {
-    "description": "Returns a character's titles",
-    "headers": [
-      {
-        "name": "name"
-      },
-      {
-        "name": "title_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/titles/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_titles.v1",
-    "summary": "A list of titles",
-    "version": "v1"
-  },
-  "characters_character_wallet": {
-    "description": "Returns a character's wallet balance",
-    "headers": [
-      {
-        "name": "wallet_balance"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/wallet/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Wallet balance",
-    "version": "v1"
-  },
-  "characters_character_wallet_transactions": {
-    "description": "Get wallet transactions of a character",
-    "headers": [
-      {
-        "name": "client_id"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "is_buy"
-      },
-      {
-        "name": "is_personal"
-      },
-      {
-        "name": "journal_ref_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "transaction_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unit_price"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/wallet/transactions/",
-    "parameters": [
-      {
-        "description": "Only show transactions happened before the one referenced by this id",
-        "in": "query",
-        "name": "from_id",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Wallet transactions",
-    "version": "v1"
-  },
-  "contracts_public_bids_contract": {
-    "description": "Lists bids on a public auction contract",
-    "headers": [
-      {
-        "name": "amount"
-      },
-      {
-        "name": "bid_id"
-      },
-      {
-        "name": "date_bid"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/contracts/public/bids/{contract_id}/",
-    "parameters": [
-      {
-        "description": "ID of a contract",
-        "in": "path",
-        "name": "contract_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of bids",
-    "version": "v1"
-  },
-  "contracts_public_items_contract": {
-    "description": "Lists items of a public contract",
-    "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
-      {
-        "name": "is_included"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "record_id"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "time_efficiency"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/contracts/public/items/{contract_id}/",
-    "parameters": [
-      {
-        "description": "ID of a contract",
-        "in": "path",
-        "name": "contract_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of items in this contract",
-    "version": "v1"
-  },
-  "contracts_public_region": {
-    "description": "Returns a paginated list of all public contracts in the given region",
-    "headers": [
-      {
-        "name": "buyout"
-      },
-      {
-        "name": "collateral"
-      },
-      {
-        "name": "contract_id"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "date_issued"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
-        "name": "issuer_corporation_id"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "reward"
-      },
-      {
-        "name": "start_location_id"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "type"
-      },
-      {
-        "name": "volume"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/contracts/public/{region_id}/",
-    "parameters": [
-      {
-        "description": "An EVE region id",
-        "in": "path",
-        "name": "region_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of contracts",
-    "version": "v1"
-  },
-  "corporation_corporation_mining_extractions": {
-    "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
-    "headers": [
-      {
-        "name": "chunk_arrival_time"
-      },
-      {
-        "name": "extraction_start_time"
-      },
-      {
-        "name": "moon_id"
-      },
-      {
-        "name": "natural_decay_time"
-      },
-      {
-        "name": "structure_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporation/{corporation_id}/mining/extractions/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "A list of chunk timers",
-    "version": "v1"
-  },
-  "corporation_corporation_mining_observers": {
-    "description": "Paginated list of all entities capable of observing and recording mining for a corporation",
-    "headers": [
-      {
-        "name": "last_updated"
-      },
-      {
-        "name": "observer_id"
-      },
-      {
-        "name": "observer_type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporation/{corporation_id}/mining/observers/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "Observer list of a corporation",
-    "version": "v1"
-  },
-  "corporation_corporation_mining_observers_observer": {
-    "description": "Paginated record of all mining seen by an observer",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "last_updated"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "recorded_corporation_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporation/{corporation_id}/mining/observers/{observer_id}/",
-    "parameters": [
-      {
-        "description": "A mining observer id",
-        "in": "path",
-        "name": "observer_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-industry.read_corporation_mining.v1",
-    "summary": "Mining ledger of an observer",
-    "version": "v1"
-  },
-  "corporations_npccorps": {
-    "description": "Get a list of npc corporations",
-    "headers": [
-      {
-        "name": "npccorp_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/npccorps/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of npc corporation ids",
-    "version": "v1"
-  },
-  "corporations_corporation_assets_names": {
-    "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "POST",
-    "path": "/{version}/corporations/{corporation_id}/assets/names/",
-    "parameters": [
-      {
-        "description": "A list of item ids",
-        "in": "body",
-        "name": "item_ids",
-        "type": "number[]",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "List of asset names",
-    "version": "v1"
-  },
-  "corporations_corporation_bookmarks": {
-    "description": "A list of your corporation's bookmarks",
-    "headers": [
-      {
-        "name": "bookmark_id"
-      },
-      {
-        "name": "coordinates",
+        "name": "links",
         "sub_headers": [
-          "x",
-          "y",
-          "z"
+          "destination_pin_id",
+          "link_level",
+          "source_pin_id"
         ]
       },
       {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "item",
+        "name": "pins",
         "sub_headers": [
-          "item_id",
+          "contents",
+          "expiry_time",
+          "extractor_details",
+          "factory_details",
+          "install_time",
+          "last_cycle_start",
+          "latitude",
+          "longitude",
+          "pin_id",
+          "schematic_id",
           "type_id"
         ]
       },
       {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/bookmarks/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List of corporation owned bookmarks",
-    "version": "v1"
-  },
-  "corporations_corporation_bookmarks_folders": {
-    "description": "A list of your corporation's bookmark folders",
-    "headers": [
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/bookmarks/folders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List of corporation owned bookmark folders",
-    "version": "v1"
-  },
-  "corporations_corporation_contacts_labels": {
-    "description": "Return custom labels for a corporation's contacts",
-    "headers": [
-      {
-        "name": "label_id"
-      },
-      {
-        "name": "label_name"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/contacts/labels/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_contacts.v1",
-    "summary": "A list of corporation contact labels",
-    "version": "v1"
-  },
-  "corporations_corporation_contracts": {
-    "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
-    "headers": [
-      {
-        "name": "acceptor_id"
-      },
-      {
-        "name": "assignee_id"
-      },
-      {
-        "name": "availability"
-      },
-      {
-        "name": "buyout"
-      },
-      {
-        "name": "collateral"
-      },
-      {
-        "name": "contract_id"
-      },
-      {
-        "name": "date_accepted"
-      },
-      {
-        "name": "date_completed"
-      },
-      {
-        "name": "date_expired"
-      },
-      {
-        "name": "date_issued"
-      },
-      {
-        "name": "days_to_complete"
-      },
-      {
-        "name": "end_location_id"
-      },
-      {
-        "name": "for_corporation"
-      },
-      {
-        "name": "issuer_corporation_id"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "reward"
-      },
-      {
-        "name": "start_location_id"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "title"
-      },
-      {
-        "name": "type"
-      },
-      {
-        "name": "volume"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/contracts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of contracts",
-    "version": "v1"
-  },
-  "corporations_corporation_contracts_contract_bids": {
-    "description": "Lists bids on a particular auction contract",
-    "headers": [
-      {
-        "name": "amount"
-      },
-      {
-        "name": "bid_id"
-      },
-      {
-        "name": "bidder_id"
-      },
-      {
-        "name": "date_bid"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/bids/",
-    "parameters": [
-      {
-        "description": "ID of a contract",
-        "in": "path",
-        "name": "contract_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of bids",
-    "version": "v1"
-  },
-  "corporations_corporation_contracts_contract_items": {
-    "description": "Lists items of a particular contract",
-    "headers": [
-      {
-        "name": "is_included"
-      },
-      {
-        "name": "is_singleton"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "raw_quantity"
-      },
-      {
-        "name": "record_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/items/",
-    "parameters": [
-      {
-        "description": "ID of a contract",
-        "in": "path",
-        "name": "contract_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-contracts.read_corporation_contracts.v1",
-    "summary": "A list of items in this contract",
-    "version": "v1"
-  },
-  "corporations_corporation_customs_offices": {
-    "description": "List customs offices owned by a corporation",
-    "headers": [
-      {
-        "name": "alliance_tax_rate"
-      },
-      {
-        "name": "allow_access_with_standings"
-      },
-      {
-        "name": "allow_alliance_access"
-      },
-      {
-        "name": "bad_standing_tax_rate"
-      },
-      {
-        "name": "corporation_tax_rate"
-      },
-      {
-        "name": "excellent_standing_tax_rate"
-      },
-      {
-        "name": "good_standing_tax_rate"
-      },
-      {
-        "name": "neutral_standing_tax_rate"
-      },
-      {
-        "name": "office_id"
-      },
-      {
-        "name": "reinforce_exit_end"
-      },
-      {
-        "name": "reinforce_exit_start"
-      },
-      {
-        "name": "standing_level"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "terrible_standing_tax_rate"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/customs_offices/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-planets.read_customs_offices.v1",
-    "summary": "A list of customs offices and their settings",
-    "version": "v1"
-  },
-  "corporations_corporation_divisions": {
-    "description": "Return corporation hangar and wallet division names, only show if a division is not using the default name",
-    "headers": [
-      {
-        "name": "hangar",
+        "name": "routes",
         "sub_headers": [
-          "division",
-          "name"
-        ]
-      },
-      {
-        "name": "wallet",
-        "sub_headers": [
-          "division",
-          "name"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/divisions/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_divisions.v1",
-    "summary": "List of corporation division names",
-    "version": "v1"
-  },
-  "corporations_corporation_facilities": {
-    "description": "Return a corporation's facilities",
-    "headers": [
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/facilities/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_facilities.v1",
-    "summary": "List of corporation facilities",
-    "version": "v1"
-  },
-  "corporations_corporation_fw_stats": {
-    "description": "Statistics about a corporation involved in faction warfare",
-    "headers": [
-      {
-        "name": "enlisted_on"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "kills",
-        "sub_headers": [
-          "last_week",
-          "total",
-          "yesterday"
-        ]
-      },
-      {
-        "name": "pilots"
-      },
-      {
-        "name": "victory_points",
-        "sub_headers": [
-          "last_week",
-          "total",
-          "yesterday"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/fw/stats/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_fw_stats.v1",
-    "summary": "Faction warfare statistics for a given corporation",
-    "version": "v1"
-  },
-  "corporations_corporation_icons": {
-    "description": "Get the icon urls for a corporation",
-    "headers": [
-      {
-        "name": "px128x128"
-      },
-      {
-        "name": "px256x256"
-      },
-      {
-        "name": "px64x64"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/icons/",
-    "parameters": [
-      {
-        "description": "An EVE corporation ID",
-        "in": "path",
-        "name": "corporation_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Urls for icons for the given corporation id and server",
-    "version": "v1"
-  },
-  "corporations_corporation_industry_jobs": {
-    "description": "List industry jobs run by a corporation",
-    "headers": [
-      {
-        "name": "activity_id"
-      },
-      {
-        "name": "blueprint_id"
-      },
-      {
-        "name": "blueprint_location_id"
-      },
-      {
-        "name": "blueprint_type_id"
-      },
-      {
-        "name": "completed_character_id"
-      },
-      {
-        "name": "completed_date"
-      },
-      {
-        "name": "cost"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "end_date"
-      },
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "installer_id"
-      },
-      {
-        "name": "job_id"
-      },
-      {
-        "name": "licensed_runs"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "output_location_id"
-      },
-      {
-        "name": "pause_date"
-      },
-      {
-        "name": "probability"
-      },
-      {
-        "name": "product_type_id"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "start_date"
-      },
-      {
-        "name": "status"
-      },
-      {
-        "name": "successful_runs"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/industry/jobs/",
-    "parameters": [
-      {
-        "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days",
-        "in": "query",
-        "name": "include_completed",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-industry.read_corporation_jobs.v1",
-    "summary": "A list of corporation industry jobs",
-    "version": "v1"
-  },
-  "corporations_corporation_killmails_recent": {
-    "description": "Get a list of a corporation's kills and losses going back 90 days",
-    "headers": [
-      {
-        "name": "killmail_hash"
-      },
-      {
-        "name": "killmail_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/killmails/recent/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-killmails.read_corporation_killmails.v1",
-    "summary": "A list of killmail IDs and hashes",
-    "version": "v1"
-  },
-  "corporations_corporation_medals": {
-    "description": "Returns a corporation's medals",
-    "headers": [
-      {
-        "name": "created_at"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "medal_id"
-      },
-      {
-        "name": "title"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/medals/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_medals.v1",
-    "summary": "A list of medals",
-    "version": "v1"
-  },
-  "corporations_corporation_medals_issued": {
-    "description": "Returns medals issued by a corporation",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "issued_at"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "medal_id"
-      },
-      {
-        "name": "reason"
-      },
-      {
-        "name": "status"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/medals/issued/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_medals.v1",
-    "summary": "A list of issued medals",
-    "version": "v1"
-  },
-  "corporations_corporation_members_limit": {
-    "description": "Return a corporation's member limit, not including CEO himself",
-    "headers": [
-      {
-        "name": "member_limit"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/members/limit/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.track_members.v1",
-    "summary": "The corporation's member limit",
-    "version": "v1"
-  },
-  "corporations_corporation_members_titles": {
-    "description": "Returns a corporation's members' titles",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "titles",
-        "sub_headers": [
-          "titles_titles"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/members/titles/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_titles.v1",
-    "summary": "A list of members and theirs titles",
-    "version": "v1"
-  },
-  "corporations_corporation_membertracking": {
-    "description": "Returns additional information about a corporation's members which helps tracking their activities",
-    "headers": [
-      {
-        "name": "base_id"
-      },
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "logoff_date"
-      },
-      {
-        "name": "logon_date"
-      },
-      {
-        "name": "ship_type_id"
-      },
-      {
-        "name": "start_date"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/membertracking/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.track_members.v1",
-    "summary": "List of member character IDs",
-    "version": "v1"
-  },
-  "corporations_corporation_roles": {
-    "description": "Return the roles of all members if the character has the personnel manager role or any grantable role.",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "grantable_roles",
-        "sub_headers": [
-          "grantable_roles"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_base",
-        "sub_headers": [
-          "at_bases"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_hq",
-        "sub_headers": [
-          "at_hqs"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_other",
-        "sub_headers": [
-          "at_others"
-        ]
-      },
-      {
-        "name": "roles",
-        "sub_headers": [
-          "roles_roles"
-        ]
-      },
-      {
-        "name": "roles_at_base",
-        "sub_headers": [
-          "at_bases"
-        ]
-      },
-      {
-        "name": "roles_at_hq",
-        "sub_headers": [
-          "at_hqs"
-        ]
-      },
-      {
-        "name": "roles_at_other",
-        "sub_headers": [
-          "at_others"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/roles/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of member character ID's and roles",
-    "version": "v1"
-  },
-  "corporations_corporation_roles_history": {
-    "description": "Return how roles have changed for a coporation's members, up to a month",
-    "headers": [
-      {
-        "name": "changed_at"
-      },
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "issuer_id"
-      },
-      {
-        "name": "new_roles",
-        "sub_headers": [
-          "new_roles"
-        ]
-      },
-      {
-        "name": "old_roles",
-        "sub_headers": [
-          "old_roles"
-        ]
-      },
-      {
-        "name": "role_type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/roles/history/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of role changes",
-    "version": "v1"
-  },
-  "corporations_corporation_shareholders": {
-    "description": "Return the current shareholders of a corporation.",
-    "headers": [
-      {
-        "name": "share_count"
-      },
-      {
-        "name": "shareholder_id"
-      },
-      {
-        "name": "shareholder_type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/shareholders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "List of shareholders",
-    "version": "v1"
-  },
-  "corporations_corporation_standings": {
-    "description": "Return corporation standings from agents, NPC corporations, and factions",
-    "headers": [
-      {
-        "name": "from_id"
-      },
-      {
-        "name": "from_type"
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/standings/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_standings.v1",
-    "summary": "A list of standings",
-    "version": "v1"
-  },
-  "corporations_corporation_starbases": {
-    "description": "Returns list of corporation starbases (POSes)",
-    "headers": [
-      {
-        "name": "moon_id"
-      },
-      {
-        "name": "onlined_since"
-      },
-      {
-        "name": "reinforced_until"
-      },
-      {
-        "name": "starbase_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unanchor_at"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/starbases/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_starbases.v1",
-    "summary": "List of starbases (POSes)",
-    "version": "v1"
-  },
-  "corporations_corporation_starbases_starbase": {
-    "description": "Returns various settings and fuels of a starbase (POS)",
-    "headers": [
-      {
-        "name": "allow_alliance_members"
-      },
-      {
-        "name": "allow_corporation_members"
-      },
-      {
-        "name": "anchor"
-      },
-      {
-        "name": "attack_if_at_war"
-      },
-      {
-        "name": "attack_if_other_security_status_dropping"
-      },
-      {
-        "name": "attack_security_status_threshold"
-      },
-      {
-        "name": "attack_standing_threshold"
-      },
-      {
-        "name": "fuel_bay_take"
-      },
-      {
-        "name": "fuel_bay_view"
-      },
-      {
-        "name": "fuels",
-        "sub_headers": [
+          "content_type_id",
+          "destination_pin_id",
           "quantity",
-          "type_id"
-        ]
-      },
-      {
-        "name": "offline"
-      },
-      {
-        "name": "online"
-      },
-      {
-        "name": "unanchor"
-      },
-      {
-        "name": "use_alliance_standings"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/starbases/{starbase_id}/",
-    "parameters": [
-      {
-        "description": "An EVE starbase (POS) ID",
-        "in": "path",
-        "name": "starbase_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "The solar system this starbase (POS) is located in,",
-        "in": "query",
-        "name": "system_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_starbases.v1",
-    "summary": "List of starbases (POSes)",
-    "version": "v1"
-  },
-  "corporations_corporation_titles": {
-    "description": "Returns a corporation's titles",
-    "headers": [
-      {
-        "name": "grantable_roles",
-        "sub_headers": [
-          "grantable_roles"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_base",
-        "sub_headers": [
-          "at_bases"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_hq",
-        "sub_headers": [
-          "at_hqs"
-        ]
-      },
-      {
-        "name": "grantable_roles_at_other",
-        "sub_headers": [
-          "at_others"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "roles",
-        "sub_headers": [
-          "titles_roles"
-        ]
-      },
-      {
-        "name": "roles_at_base",
-        "sub_headers": [
-          "at_bases"
-        ]
-      },
-      {
-        "name": "roles_at_hq",
-        "sub_headers": [
-          "at_hqs"
-        ]
-      },
-      {
-        "name": "roles_at_other",
-        "sub_headers": [
-          "at_others"
-        ]
-      },
-      {
-        "name": "title_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/titles/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_titles.v1",
-    "summary": "A list of titles",
-    "version": "v1"
-  },
-  "corporations_corporation_wallets": {
-    "description": "Get a corporation's wallets",
-    "headers": [
-      {
-        "name": "balance"
-      },
-      {
-        "name": "division"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/wallets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "List of corporation wallets",
-    "version": "v1"
-  },
-  "corporations_corporation_wallets_division_transactions": {
-    "description": "Get wallet transactions of a corporation",
-    "headers": [
-      {
-        "name": "client_id"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "is_buy"
-      },
-      {
-        "name": "journal_ref_id"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "transaction_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unit_price"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/transactions/",
-    "parameters": [
-      {
-        "description": "Wallet key of the division to fetch journals from",
-        "in": "path",
-        "name": "division",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Only show journal entries happened before the transaction referenced by this id",
-        "in": "query",
-        "name": "from_id",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "Wallet transactions",
-    "version": "v1"
-  },
-  "dogma_attributes": {
-    "description": "Get a list of dogma attribute ids",
-    "headers": [
-      {
-        "name": "attribute_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/dogma/attributes/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of dogma attribute ids",
-    "version": "v1"
-  },
-  "dogma_attributes_attribute": {
-    "description": "Get information on a dogma attribute",
-    "headers": [
-      {
-        "name": "attribute_id"
-      },
-      {
-        "name": "default_value"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "display_name"
-      },
-      {
-        "name": "high_is_good"
-      },
-      {
-        "name": "icon_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "published"
-      },
-      {
-        "name": "stackable"
-      },
-      {
-        "name": "unit_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/dogma/attributes/{attribute_id}/",
-    "parameters": [
-      {
-        "description": "A dogma attribute ID",
-        "in": "path",
-        "name": "attribute_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a dogma attribute",
-    "version": "v1"
-  },
-  "dogma_dynamic_items_type_item": {
-    "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
-    "headers": [
-      {
-        "name": "created_by"
-      },
-      {
-        "name": "dogma_attributes",
-        "sub_headers": [
-          "attribute_id",
-          "value"
-        ]
-      },
-      {
-        "name": "dogma_effects",
-        "sub_headers": [
-          "effect_id",
-          "is_default"
-        ]
-      },
-      {
-        "name": "mutator_type_id"
-      },
-      {
-        "name": "source_type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/dogma/dynamic/items/{type_id}/{item_id}/",
-    "parameters": [
-      {
-        "description": "item_id integer",
-        "in": "path",
-        "name": "item_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "type_id integer",
-        "in": "path",
-        "name": "type_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Details about a dynamic item",
-    "version": "v1"
-  },
-  "dogma_effects": {
-    "description": "Get a list of dogma effect ids",
-    "headers": [
-      {
-        "name": "effect_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/dogma/effects/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of dogma effect ids",
-    "version": "v1"
-  },
-  "fleets_fleet": {
-    "description": "Return details about a fleet",
-    "headers": [
-      {
-        "name": "is_free_move"
-      },
-      {
-        "name": "is_registered"
-      },
-      {
-        "name": "is_voice_enabled"
-      },
-      {
-        "name": "motd"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fleets/{fleet_id}/",
-    "parameters": [
-      {
-        "description": "ID for a fleet",
-        "in": "path",
-        "name": "fleet_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-fleets.read_fleet.v1",
-    "summary": "Details about a fleet",
-    "version": "v1"
-  },
-  "fleets_fleet_members": {
-    "description": "Return information about fleet members",
-    "headers": [
-      {
-        "name": "character_id"
-      },
-      {
-        "name": "join_time"
-      },
-      {
-        "name": "role"
-      },
-      {
-        "name": "role_name"
-      },
-      {
-        "name": "ship_type_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "squad_id"
-      },
-      {
-        "name": "station_id"
-      },
-      {
-        "name": "takes_fleet_warp"
-      },
-      {
-        "name": "wing_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fleets/{fleet_id}/members/",
-    "parameters": [
-      {
-        "description": "ID for a fleet",
-        "in": "path",
-        "name": "fleet_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-fleets.read_fleet.v1",
-    "summary": "A list of fleet members",
-    "version": "v1"
-  },
-  "fleets_fleet_wings": {
-    "description": "Return information about wings in a fleet",
-    "headers": [
-      {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "squads",
-        "sub_headers": [
-          "id",
-          "name"
+          "route_id",
+          "source_pin_id",
+          "waypoints"
         ]
       }
     ],
-    "method": "GET",
-    "path": "/{version}/fleets/{fleet_id}/wings/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "ID for a fleet",
-        "in": "path",
-        "name": "fleet_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-fleets.read_fleet.v1",
-    "summary": "A list of fleet wings",
-    "version": "v1"
-  },
-  "fw_leaderboards": {
-    "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday",
-    "headers": [
-      {
-        "name": "kills",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      },
-      {
-        "name": "victory_points",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/leaderboards/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare",
-    "version": "v1"
-  },
-  "fw_leaderboards_characters": {
-    "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday",
-    "headers": [
-      {
-        "name": "kills",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      },
-      {
-        "name": "victory_points",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/leaderboards/characters/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Character leaderboard of kills and victory points within faction warfare",
-    "version": "v1"
-  },
-  "fw_leaderboards_corporations": {
-    "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday",
-    "headers": [
-      {
-        "name": "kills",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      },
-      {
-        "name": "victory_points",
-        "sub_headers": [
-          "active_total",
-          "last_week",
-          "yesterday"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/leaderboards/corporations/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Corporation leaderboard of kills and victory points within faction warfare",
-    "version": "v1"
-  },
-  "fw_stats": {
-    "description": "Statistical overviews of factions involved in faction warfare",
-    "headers": [
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "kills",
-        "sub_headers": [
-          "last_week",
-          "total",
-          "yesterday"
-        ]
-      },
-      {
-        "name": "pilots"
-      },
-      {
-        "name": "systems_controlled"
-      },
-      {
-        "name": "victory_points",
-        "sub_headers": [
-          "last_week",
-          "total",
-          "yesterday"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/stats/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Per faction breakdown of faction warfare statistics",
-    "version": "v1"
-  },
-  "fw_wars": {
-    "description": "Data about which NPC factions are at war",
-    "headers": [
-      {
-        "name": "against_id"
-      },
-      {
-        "name": "faction_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/wars/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of NPC factions at war",
-    "version": "v1"
-  },
-  "incursions": {
-    "description": "Return a list of current incursions",
-    "headers": [
-      {
-        "name": "constellation_id"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "has_boss"
-      },
-      {
-        "name": "infested_solar_systems",
-        "sub_headers": [
-          "solar_systems"
-        ]
-      },
-      {
-        "name": "influence"
-      },
-      {
-        "name": "staging_solar_system_id"
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/incursions/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of incursions",
-    "version": "v1"
-  },
-  "industry_facilities": {
-    "description": "Return a list of industry facilities",
-    "headers": [
-      {
-        "name": "facility_id"
-      },
-      {
-        "name": "owner_id"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "tax"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/industry/facilities/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of facilities",
-    "version": "v1"
-  },
-  "industry_systems": {
-    "description": "Return cost indices for solar systems",
-    "headers": [
-      {
-        "name": "cost_indices",
-        "sub_headers": [
-          "activity",
-          "cost_index"
-        ]
-      },
-      {
-        "name": "solar_system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/industry/systems/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of cost indicies",
-    "version": "v1"
-  },
-  "insurance_prices": {
-    "description": "Return available insurance levels for all ship types",
-    "headers": [
-      {
-        "name": "levels",
-        "sub_headers": [
-          "cost",
-          "name",
-          "payout"
-        ]
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/insurance/prices/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of insurance levels for all ship types",
-    "version": "v1"
-  },
-  "killmails_killmail_killmail_hash": {
-    "description": "Return a single killmail from its ID and hash",
-    "headers": [
-      {
-        "name": "attackers",
-        "sub_headers": [
-          "alliance_id",
-          "character_id",
-          "corporation_id",
-          "damage_done",
-          "faction_id",
-          "final_blow",
-          "security_status",
-          "ship_type_id",
-          "weapon_type_id"
-        ]
-      },
-      {
-        "name": "killmail_id"
-      },
-      {
-        "name": "killmail_time"
-      },
-      {
-        "name": "moon_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "victim",
-        "sub_headers": [
-          "alliance_id",
-          "character_id",
-          "corporation_id",
-          "damage_taken",
-          "faction_id",
-          "items",
-          "position",
-          "ship_type_id"
-        ]
-      },
-      {
-        "name": "war_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/killmails/{killmail_id}/{killmail_hash}/",
-    "parameters": [
-      {
-        "description": "The killmail hash for verification",
-        "in": "path",
-        "name": "killmail_hash",
-        "type": "string",
-        "required": true
-      },
-      {
-        "description": "The killmail ID to be queried",
-        "in": "path",
-        "name": "killmail_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A killmail",
-    "version": "v1"
-  },
-  "loyalty_stores_corporation_offers": {
-    "description": "Return a list of offers from a specific corporation's loyalty store",
-    "headers": [
-      {
-        "name": "ak_cost"
-      },
-      {
-        "name": "isk_cost"
-      },
-      {
-        "name": "lp_cost"
-      },
-      {
-        "name": "offer_id"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "required_items",
-        "sub_headers": [
-          "quantity",
-          "type_id"
-        ]
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/loyalty/stores/{corporation_id}/offers/",
-    "parameters": [
-      {
-        "description": "An EVE corporation ID",
-        "in": "path",
-        "name": "corporation_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of offers",
-    "version": "v1"
-  },
-  "markets_groups": {
-    "description": "Get a list of item groups",
-    "headers": [
-      {
-        "name": "group_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/groups/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of item group ids",
-    "version": "v1"
-  },
-  "markets_groups_market_group": {
-    "description": "Get information on an item group",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "market_group_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "parent_group_id"
-      },
-      {
-        "name": "types",
-        "sub_headers": [
-          "id_types"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/groups/{market_group_id}/",
-    "parameters": [
-      {
-        "description": "An Eve item group ID",
-        "in": "path",
-        "name": "market_group_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about an item group",
-    "version": "v1"
-  },
-  "markets_prices": {
-    "description": "Return a list of prices",
-    "headers": [
-      {
-        "name": "adjusted_price"
-      },
-      {
-        "name": "average_price"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/prices/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of prices",
-    "version": "v1"
-  },
-  "markets_structures_structure": {
-    "description": "Return all orders in a structure",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/structures/{structure_id}/",
-    "parameters": [
-      {
-        "description": "Return orders in this structure",
-        "in": "path",
-        "name": "structure_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.structure_markets.v1",
-    "summary": "A list of orders",
-    "version": "v1"
-  },
-  "markets_region_history": {
-    "description": "Return a list of historical market statistics for the specified type in a region",
-    "headers": [
-      {
-        "name": "average"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "highest"
-      },
-      {
-        "name": "lowest"
-      },
-      {
-        "name": "order_count"
-      },
-      {
-        "name": "volume"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/{region_id}/history/",
-    "parameters": [
-      {
-        "description": "Return statistics in this region",
-        "in": "path",
-        "name": "region_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Return statistics for this type",
-        "in": "query",
-        "name": "type_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of historical market statistics",
-    "version": "v1"
-  },
-  "markets_region_orders": {
-    "description": "Return a list of orders in a region",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/{region_id}/orders/",
-    "parameters": [
-      {
-        "description": "Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders",
-        "in": "query",
-        "name": "order_type",
-        "type": "string",
-        "required": true
-      },
-      {
-        "description": "Return orders in this region",
-        "in": "path",
-        "name": "region_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Return orders only for this type",
-        "in": "query",
-        "name": "type_id",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of orders",
-    "version": "v1"
-  },
-  "markets_region_types": {
-    "description": "Return a list of type IDs that have active orders in the region, for efficient market indexing.",
-    "headers": [
-      {
-        "name": "type_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/markets/{region_id}/types/",
-    "parameters": [
-      {
-        "description": "Return statistics in this region",
-        "in": "path",
-        "name": "region_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of type IDs",
-    "version": "v1"
-  },
-  "opportunities_groups": {
-    "description": "Return a list of opportunities groups",
-    "headers": [
-      {
-        "name": "group_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/opportunities/groups/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of opportunities group ids",
-    "version": "v1"
-  },
-  "opportunities_groups_group": {
-    "description": "Return information of an opportunities group",
-    "headers": [
-      {
-        "name": "connected_groups",
-        "sub_headers": [
-          "connected_groups"
-        ]
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "group_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "notification"
-      },
-      {
-        "name": "required_tasks",
-        "sub_headers": [
-          "required_tasks"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/opportunities/groups/{group_id}/",
-    "parameters": [
-      {
-        "description": "ID of an opportunities group",
-        "in": "path",
-        "name": "group_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Details of an opportunities group",
-    "version": "v1"
-  },
-  "opportunities_tasks": {
-    "description": "Return a list of opportunities tasks",
-    "headers": [
-      {
-        "name": "task_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/opportunities/tasks/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of opportunities task ids",
-    "version": "v1"
-  },
-  "opportunities_tasks_task": {
-    "description": "Return information of an opportunities task",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "notification"
-      },
-      {
-        "name": "task_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/opportunities/tasks/{task_id}/",
-    "parameters": [
-      {
-        "description": "ID of an opportunities task",
-        "in": "path",
-        "name": "task_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Details of an opportunities task",
-    "version": "v1"
-  },
-  "route_origin_destination": {
-    "description": "Get the systems between origin and destination",
-    "headers": [
-      {
-        "name": "Solar system IDs"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/route/{origin}/{destination}/",
-    "parameters": [
-      {
-        "description": "destination solar system ID",
-        "in": "path",
-        "name": "destination",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "origin solar system ID",
-        "in": "path",
-        "name": "origin",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "avoid solar system ID(s)",
-        "in": "query",
-        "name": "avoid",
-        "type": "number[]",
-        "required": false
-      },
-      {
-        "description": "connected solar system pairs",
-        "in": "query",
-        "name": "connections",
-        "type": "number[]",
-        "required": false
-      },
-      {
-        "description": "route security preference",
-        "in": "query",
-        "name": "flag",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Solar systems in route from origin to destination",
-    "version": "v1"
-  },
-  "sovereignty_campaigns": {
-    "description": "Shows sovereignty data for campaigns.",
-    "headers": [
-      {
-        "name": "attackers_score"
-      },
-      {
-        "name": "campaign_id"
-      },
-      {
-        "name": "constellation_id"
-      },
-      {
-        "name": "defender_id"
-      },
-      {
-        "name": "defender_score"
-      },
-      {
-        "name": "event_type"
-      },
-      {
-        "name": "participants",
-        "sub_headers": [
-          "alliance_id",
-          "score"
-        ]
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "start_time"
-      },
-      {
-        "name": "structure_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/sovereignty/campaigns/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of sovereignty campaigns",
-    "version": "v1"
-  },
-  "sovereignty_map": {
-    "description": "Shows sovereignty information for solar systems",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/sovereignty/map/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of sovereignty information for solar systems in New Eden",
-    "version": "v1"
-  },
-  "sovereignty_structures": {
-    "description": "Shows sovereignty data for structures.",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "structure_id"
-      },
-      {
-        "name": "structure_type_id"
-      },
-      {
-        "name": "vulnerability_occupancy_level"
-      },
-      {
-        "name": "vulnerable_end_time"
-      },
-      {
-        "name": "vulnerable_start_time"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/sovereignty/structures/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of sovereignty structures",
-    "version": "v1"
-  },
-  "status": {
-    "description": "EVE Server status",
-    "headers": [
-      {
-        "name": "players"
-      },
-      {
-        "name": "server_version"
-      },
-      {
-        "name": "start_time"
-      },
-      {
-        "name": "vip"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/status/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Server status",
-    "version": "v1"
-  },
-  "universe_ancestries": {
-    "description": "Get all character ancestries",
-    "headers": [
-      {
-        "name": "bloodline_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "icon_id"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "short_description"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/ancestries/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of ancestries",
-    "version": "v1"
-  },
-  "universe_asteroid_belts_asteroid_belt": {
-    "description": "Get information on an asteroid belt",
-    "headers": [
-      {
-        "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/asteroid_belts/{asteroid_belt_id}/",
-    "parameters": [
-      {
-        "description": "asteroid_belt_id integer",
-        "in": "path",
-        "name": "asteroid_belt_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about an asteroid belt",
-    "version": "v1"
-  },
-  "universe_bloodlines": {
-    "description": "Get a list of bloodlines",
-    "headers": [
-      {
-        "name": "bloodline_id"
-      },
-      {
-        "name": "charisma"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "intelligence"
-      },
-      {
-        "name": "memory"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "perception"
-      },
-      {
-        "name": "race_id"
-      },
-      {
-        "name": "ship_type_id"
-      },
-      {
-        "name": "willpower"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/bloodlines/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of bloodlines",
-    "version": "v1"
-  },
-  "universe_categories": {
-    "description": "Get a list of item categories",
-    "headers": [
-      {
-        "name": "categorie_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/categories/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of item category ids",
-    "version": "v1"
-  },
-  "universe_categories_category": {
-    "description": "Get information of an item category",
-    "headers": [
-      {
-        "name": "category_id"
-      },
-      {
-        "name": "groups",
-        "sub_headers": [
-          "id_groups"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "published"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/categories/{category_id}/",
-    "parameters": [
-      {
-        "description": "An Eve item category ID",
-        "in": "path",
-        "name": "category_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about an item category",
-    "version": "v1"
-  },
-  "universe_constellations": {
-    "description": "Get a list of constellations",
-    "headers": [
-      {
-        "name": "constellation_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/constellations/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of constellation ids",
-    "version": "v1"
-  },
-  "universe_constellations_constellation": {
-    "description": "Get information on a constellation",
-    "headers": [
-      {
-        "name": "constellation_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "systems",
-        "sub_headers": [
-          "id_systems"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/constellations/{constellation_id}/",
-    "parameters": [
-      {
-        "description": "constellation_id integer",
-        "in": "path",
-        "name": "constellation_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a constellation",
-    "version": "v1"
-  },
-  "universe_graphics": {
-    "description": "Get a list of graphics",
-    "headers": [
-      {
-        "name": "graphic_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/graphics/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of graphic ids",
-    "version": "v1"
-  },
-  "universe_graphics_graphic": {
-    "description": "Get information on a graphic",
-    "headers": [
-      {
-        "name": "collision_file"
-      },
-      {
-        "name": "graphic_file"
-      },
-      {
-        "name": "graphic_id"
-      },
-      {
-        "name": "icon_folder"
-      },
-      {
-        "name": "sof_dna"
-      },
-      {
-        "name": "sof_fation_name"
-      },
-      {
-        "name": "sof_hull_name"
-      },
-      {
-        "name": "sof_race_name"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/graphics/{graphic_id}/",
-    "parameters": [
-      {
-        "description": "graphic_id integer",
-        "in": "path",
-        "name": "graphic_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a graphic",
-    "version": "v1"
-  },
-  "universe_groups": {
-    "description": "Get a list of item groups",
-    "headers": [
-      {
-        "name": "group_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/groups/",
-    "parameters": [
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of item group ids",
-    "version": "v1"
-  },
-  "universe_groups_group": {
-    "description": "Get information on an item group",
-    "headers": [
-      {
-        "name": "category_id"
-      },
-      {
-        "name": "group_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "published"
-      },
-      {
-        "name": "types",
-        "sub_headers": [
-          "id_types"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/groups/{group_id}/",
-    "parameters": [
-      {
-        "description": "An Eve item group ID",
-        "in": "path",
-        "name": "group_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about an item group",
-    "version": "v1"
-  },
-  "universe_ids": {
-    "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours",
-    "headers": [
-      {
-        "name": "agents",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "alliances",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "characters",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "constellations",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "corporations",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "factions",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "inventory_types",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "regions",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "stations",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      },
-      {
-        "name": "systems",
-        "sub_headers": [
-          "id",
-          "name"
-        ]
-      }
-    ],
-    "method": "POST",
-    "path": "/{version}/universe/ids/",
-    "parameters": [
-      {
-        "description": "The names to resolve",
-        "in": "body",
-        "name": "names",
-        "type": "string[]",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations for a set of names divided by category. Any name passed in that did not have a match will be ommitted",
-    "version": "v1"
-  },
-  "universe_moons_moon": {
-    "description": "Get information on a moon",
-    "headers": [
-      {
-        "name": "moon_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/moons/{moon_id}/",
-    "parameters": [
-      {
-        "description": "moon_id integer",
-        "in": "path",
-        "name": "moon_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a moon",
-    "version": "v1"
-  },
-  "universe_planets_planet": {
-    "description": "Get information on a planet",
-    "headers": [
-      {
-        "name": "name"
-      },
-      {
-        "name": "planet_id"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/planets/{planet_id}/",
-    "parameters": [
-      {
-        "description": "planet_id integer",
+        "description": "Planet id of the target planet",
         "in": "path",
         "name": "planet_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Information about a planet",
-    "version": "v1"
-  },
-  "universe_races": {
-    "description": "Get a list of character races",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "race_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/races/",
-    "parameters": [
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of character races",
-    "version": "v1"
-  },
-  "universe_regions": {
-    "description": "Get a list of regions",
-    "headers": [
-      {
-        "name": "region_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/regions/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of region ids",
-    "version": "v1"
-  },
-  "universe_regions_region": {
-    "description": "Get information on a region",
-    "headers": [
-      {
-        "name": "constellations",
-        "sub_headers": [
-          "id_constellations"
-        ]
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "region_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/regions/{region_id}/",
-    "parameters": [
-      {
-        "description": "region_id integer",
-        "in": "path",
-        "name": "region_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a region",
-    "version": "v1"
-  },
-  "universe_schematics_schematic": {
-    "description": "Get information on a planetary factory schematic",
-    "headers": [
-      {
-        "name": "cycle_time"
-      },
-      {
-        "name": "schematic_name"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/schematics/{schematic_id}/",
-    "parameters": [
-      {
-        "description": "A PI schematic ID",
-        "in": "path",
-        "name": "schematic_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data about a schematic",
-    "version": "v1"
-  },
-  "universe_stargates_stargate": {
-    "description": "Get information on a stargate",
-    "headers": [
-      {
-        "name": "destination",
-        "sub_headers": [
-          "stargate_id",
-          "system_id"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "stargate_id"
-      },
-      {
-        "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/stargates/{stargate_id}/",
-    "parameters": [
-      {
-        "description": "stargate_id integer",
-        "in": "path",
-        "name": "stargate_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a stargate",
-    "version": "v1"
-  },
-  "universe_stars_star": {
-    "description": "Get information on a star",
-    "headers": [
-      {
-        "name": "age"
-      },
-      {
-        "name": "luminosity"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "radius"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "spectral_class"
-      },
-      {
-        "name": "temperature"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/stars/{star_id}/",
-    "parameters": [
-      {
-        "description": "star_id integer",
-        "in": "path",
-        "name": "star_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Information about a star",
-    "version": "v1"
-  },
-  "universe_structures": {
-    "description": "List all public structures",
-    "headers": [
-      {
-        "name": "structure_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/structures/",
-    "parameters": [
-      {
-        "description": "Only list public structures that have this service online",
-        "in": "query",
-        "name": "filter",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of public structure IDs",
-    "version": "v1"
-  },
-  "universe_system_jumps": {
-    "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last",
-    "headers": [
-      {
-        "name": "ship_jumps"
-      },
-      {
-        "name": "system_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/system_jumps/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of systems and number of jumps",
-    "version": "v1"
-  },
-  "universe_systems": {
-    "description": "Get a list of solar systems",
-    "headers": [
-      {
-        "name": "system_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/systems/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of solar system ids",
-    "version": "v1"
-  },
-  "universe_types": {
-    "description": "Get a list of type ids",
-    "headers": [
-      {
-        "name": "type_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/universe/types/",
-    "parameters": [
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of type ids",
-    "version": "v1"
-  },
-  "wars": {
-    "description": "Return a list of wars",
-    "headers": [
-      {
-        "name": "war_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/wars/",
-    "parameters": [
-      {
-        "description": "Only return wars with ID smaller than this",
-        "in": "query",
-        "name": "max_war_id",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of war IDs, in descending order by war_id",
-    "version": "v1"
-  },
-  "wars_war": {
-    "description": "Return details about a war",
-    "headers": [
-      {
-        "name": "aggressor",
-        "sub_headers": [
-          "alliance_id",
-          "corporation_id",
-          "isk_destroyed",
-          "ships_killed"
-        ]
-      },
-      {
-        "name": "allies",
-        "sub_headers": [
-          "alliance_id",
-          "corporation_id"
-        ]
-      },
-      {
-        "name": "declared"
-      },
-      {
-        "name": "defender",
-        "sub_headers": [
-          "alliance_id",
-          "corporation_id",
-          "isk_destroyed",
-          "ships_killed"
-        ]
-      },
-      {
-        "name": "finished"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "mutual"
-      },
-      {
-        "name": "open_for_allies"
-      },
-      {
-        "name": "retracted"
-      },
-      {
-        "name": "started"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/wars/{war_id}/",
-    "parameters": [
-      {
-        "description": "ID for a war",
-        "in": "path",
-        "name": "war_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Details about a war",
-    "version": "v1"
-  },
-  "wars_war_killmails": {
-    "description": "Return a list of kills related to a war",
-    "headers": [
-      {
-        "name": "killmail_hash"
-      },
-      {
-        "name": "killmail_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/wars/{war_id}/killmails/",
-    "parameters": [
-      {
-        "description": "A valid war ID",
-        "in": "path",
-        "name": "war_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of killmail IDs and hashes",
-    "version": "v1"
-  },
-  "alliances_alliance_contacts": {
-    "description": "Return contacts of an alliance",
-    "headers": [
-      {
-        "name": "contact_id"
-      },
-      {
-        "name": "contact_type"
-      },
-      {
-        "name": "label_ids",
-        "sub_headers": [
-          "label_ids"
-        ]
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/alliances/{alliance_id}/contacts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-alliances.read_contacts.v1",
-    "summary": "A list of contacts",
-    "version": "v2"
-  },
-  "characters_character_assets_locations": {
-    "description": "Return locations for a set of item ids, which you can get from character assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      }
-    ],
-    "method": "POST",
-    "path": "/{version}/characters/{character_id}/assets/locations/",
-    "parameters": [
-      {
-        "description": "A list of item ids",
-        "in": "body",
-        "name": "item_ids",
-        "type": "number[]",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_assets.v1",
-    "summary": "List of asset locations",
-    "version": "v2"
-  },
-  "characters_character_blueprints": {
-    "description": "Return a list of blueprints the character owns",
-    "headers": [
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "material_efficiency"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "runs"
-      },
-      {
-        "name": "time_efficiency"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/blueprints/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_blueprints.v1",
-    "summary": "A list of blueprints",
-    "version": "v2"
-  },
-  "characters_character_bookmarks": {
-    "description": "A list of your character's personal bookmarks",
-    "headers": [
-      {
-        "name": "bookmark_id"
-      },
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "item",
-        "sub_headers": [
-          "item_id",
-          "type_id"
-        ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/bookmarks/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "A list of bookmarks",
-    "version": "v2"
-  },
-  "characters_character_bookmarks_folders": {
-    "description": "A list of your character's personal bookmark folders",
-    "headers": [
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/bookmarks/folders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "List of bookmark folders",
-    "version": "v2"
-  },
-  "characters_character_contacts": {
-    "description": "Return contacts of a character",
-    "headers": [
-      {
-        "name": "contact_id"
-      },
-      {
-        "name": "contact_type"
-      },
-      {
-        "name": "is_blocked"
-      },
-      {
-        "name": "is_watched"
-      },
-      {
-        "name": "label_ids",
-        "sub_headers": [
-          "label_ids"
-        ]
-      },
-      {
-        "name": "standing"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/contacts/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_contacts.v1",
-    "summary": "A list of contacts",
-    "version": "v2"
-  },
-  "characters_character_fittings": {
-    "description": "Return fittings of a character",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "fitting_id"
-      },
-      {
-        "name": "items",
-        "sub_headers": [
-          "flag",
-          "quantity",
-          "type_id"
-        ]
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "ship_type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/fittings/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-fittings.read_fittings.v1",
-    "summary": "A list of fittings",
-    "version": "v2"
-  },
-  "characters_character_online": {
-    "description": "Checks if the character is currently online",
-    "headers": [
-      {
-        "name": "last_login"
-      },
-      {
-        "name": "last_logout"
-      },
-      {
-        "name": "logins"
-      },
-      {
-        "name": "online"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/online/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-location.read_online.v1",
-    "summary": "Object describing the character's online status",
-    "version": "v2"
-  },
-  "characters_character_orders": {
-    "description": "List open market orders placed by a character",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "escrow"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "is_corporation"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/orders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.read_character_orders.v1",
-    "summary": "Open market orders placed by a character",
-    "version": "v2"
+    "path": "/{version}/characters/{character_id}/planets/{planet_id}/",
+    "scope": "esi-planets.manage_planets.v1",
+    "summary": "Get colony layout",
+    "version": "v3"
   },
   "characters_character_portrait": {
     "description": "Get portrait urls for a character",
@@ -7576,8 +1741,8 @@ const ENDPOINTS = {
         "name": "px64x64"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/portrait/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE character ID",
@@ -7585,23 +1750,10 @@ const ENDPOINTS = {
         "name": "character_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Public data for the given character",
+    "path": "/{version}/characters/{character_id}/portrait/",
+    "summary": "Get character portraits",
     "version": "v2"
   },
   "characters_character_roles": {
@@ -7632,34 +1784,141 @@ const ENDPOINTS = {
         ]
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/roles/",
+    "scope": "esi-characters.read_corporation_roles.v1",
+    "summary": "Get character corporation roles",
+    "version": "v2"
+  },
+  "characters_character_search": {
+    "description": "Search for entities that match a given sub-string.",
+    "headers": [
+      {
+        "name": "agent",
+        "sub_headers": [
+          "agent_agents"
+        ]
+      },
+      {
+        "name": "alliance",
+        "sub_headers": [
+          "alliance_alliances"
+        ]
+      },
+      {
+        "name": "character",
+        "sub_headers": [
+          "character_characters"
+        ]
+      },
+      {
+        "name": "constellation",
+        "sub_headers": [
+          "constellation_constellations"
+        ]
+      },
+      {
+        "name": "corporation",
+        "sub_headers": [
+          "corporation_corporations"
+        ]
+      },
+      {
+        "name": "faction",
+        "sub_headers": [
+          "faction_factions"
+        ]
+      },
+      {
+        "name": "inventory_type",
+        "sub_headers": [
+          "inventory_types"
+        ]
+      },
+      {
+        "name": "region",
+        "sub_headers": [
+          "region_regions"
+        ]
+      },
+      {
+        "name": "solar_system",
+        "sub_headers": [
+          "solar_systems"
+        ]
+      },
+      {
+        "name": "station",
+        "sub_headers": [
+          "station_stations"
+        ]
+      },
+      {
+        "name": "structure",
+        "sub_headers": [
+          "structure_structures"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
+        "description": "The string to search on",
+        "in": "query",
+        "name": "search",
+        "type": "string",
+        "required": true
+      },
+      {
+        "description": "Type of entities to search for",
+        "in": "query",
+        "name": "categories",
+        "type": "string[]",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
         "type": "string",
         "required": false
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
+        "description": "Whether the search should be a strict match",
+        "in": "query",
+        "name": "strict",
         "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
         "required": false
       }
     ],
-    "scope": "esi-characters.read_corporation_roles.v1",
-    "summary": "The character's roles in thier corporation",
-    "version": "v2"
+    "path": "/{version}/characters/{character_id}/search/",
+    "scope": "esi-search.search_structures.v1",
+    "summary": "Search on a string",
+    "version": "v3"
+  },
+  "characters_character_ship": {
+    "description": "Get the current ship type, name and id",
+    "headers": [
+      {
+        "name": "ship_item_id"
+      },
+      {
+        "name": "ship_name"
+      },
+      {
+        "name": "ship_type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/ship/",
+    "scope": "esi-location.read_ship_type.v1",
+    "summary": "Get current ship",
+    "version": "v1"
   },
   "characters_character_skillqueue": {
     "description": "List the configured skill queue for the given character",
@@ -7689,34 +1948,61 @@ const ENDPOINTS = {
         "name": "training_start_sp"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/skillqueue/",
-    "parameters": [
+    "scope": "esi-skills.read_skillqueue.v1",
+    "summary": "Get character's skill queue",
+    "version": "v2"
+  },
+  "characters_character_skills": {
+    "description": "List all trained skills for the given character",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "skills",
+        "sub_headers": [
+          "active_skill_level",
+          "skill_id",
+          "skillpoints_in_skill",
+          "trained_skill_level"
+        ]
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "total_sp"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "unallocated_sp"
       }
     ],
-    "scope": "esi-skills.read_skillqueue.v1",
-    "summary": "The current skill queue, sorted ascending by finishing time",
-    "version": "v2"
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/skills/",
+    "scope": "esi-skills.read_skills.v1",
+    "summary": "Get character skills",
+    "version": "v4"
+  },
+  "characters_character_standings": {
+    "description": "Return character standings from agents, NPC corporations, and factions",
+    "headers": [
+      {
+        "name": "from_id"
+      },
+      {
+        "name": "from_type"
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/standings/",
+    "scope": "esi-characters.read_standings.v1",
+    "summary": "Get standings",
+    "version": "v1"
   },
   "characters_character_stats": {
     "description": "Returns aggregate yearly stats for a character",
@@ -8076,34 +2362,432 @@ const ENDPOINTS = {
         "name": "year"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/characters/{character_id}/stats/",
+    "scope": "esi-characterstats.read.v1",
+    "summary": "Yearly aggregate stats",
+    "version": "v2"
+  },
+  "characters_character_titles": {
+    "description": "Returns a character's titles",
+    "headers": [
+      {
+        "name": "name"
+      },
+      {
+        "name": "title_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/titles/",
+    "scope": "esi-characters.read_titles.v1",
+    "summary": "Get character corporation titles",
+    "version": "v1"
+  },
+  "characters_character_wallet": {
+    "description": "Returns a character's wallet balance",
+    "headers": [
+      {
+        "name": "wallet_balance"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/wallet/",
+    "scope": "esi-wallet.read_character_wallet.v1",
+    "summary": "Get a character's wallet balance",
+    "version": "v1"
+  },
+  "characters_character_wallet_journal": {
+    "description": "Retrieve the given character's wallet journal going 30 days back",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "balance"
+      },
+      {
+        "name": "context_id"
+      },
+      {
+        "name": "context_id_type"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "first_party_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "second_party_id"
+      },
+      {
+        "name": "tax"
+      },
+      {
+        "name": "tax_receiver_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/characters/{character_id}/wallet/journal/",
+    "scope": "esi-wallet.read_character_wallet.v1",
+    "summary": "Get character wallet journal",
+    "version": "v6"
+  },
+  "characters_character_wallet_transactions": {
+    "description": "Get wallet transactions of a character",
+    "headers": [
+      {
+        "name": "client_id"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "is_buy"
+      },
+      {
+        "name": "is_personal"
+      },
+      {
+        "name": "journal_ref_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "transaction_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unit_price"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
+        "description": "Only show transactions happened before the one referenced by this id",
+        "in": "query",
+        "name": "from_id",
+        "type": "number",
         "required": false
       }
     ],
-    "scope": "esi-characterstats.read.v1",
-    "summary": "Character stats",
-    "version": "v2"
+    "path": "/{version}/characters/{character_id}/wallet/transactions/",
+    "scope": "esi-wallet.read_character_wallet.v1",
+    "summary": "Get wallet transactions",
+    "version": "v1"
+  },
+  "contracts_public_bids_contract": {
+    "description": "Lists bids on a public auction contract",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "bid_id"
+      },
+      {
+        "name": "date_bid"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "ID of a contract",
+        "in": "path",
+        "name": "contract_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/contracts/public/bids/{contract_id}/",
+    "summary": "Get public contract bids",
+    "version": "v1"
+  },
+  "contracts_public_items_contract": {
+    "description": "Lists items of a public contract",
+    "headers": [
+      {
+        "name": "is_blueprint_copy"
+      },
+      {
+        "name": "is_included"
+      },
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "material_efficiency"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "time_efficiency"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "ID of a contract",
+        "in": "path",
+        "name": "contract_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/contracts/public/items/{contract_id}/",
+    "summary": "Get public contract items",
+    "version": "v1"
+  },
+  "contracts_public_region": {
+    "description": "Returns a paginated list of all public contracts in the given region",
+    "headers": [
+      {
+        "name": "buyout"
+      },
+      {
+        "name": "collateral"
+      },
+      {
+        "name": "contract_id"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "for_corporation"
+      },
+      {
+        "name": "issuer_corporation_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "start_location_id"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "type"
+      },
+      {
+        "name": "volume"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "An EVE region id",
+        "in": "path",
+        "name": "region_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/contracts/public/{region_id}/",
+    "summary": "Get public contracts",
+    "version": "v1"
+  },
+  "corporation_corporation_mining_extractions": {
+    "description": "Extraction timers for all moon chunks being extracted by refineries belonging to a corporation.",
+    "headers": [
+      {
+        "name": "chunk_arrival_time"
+      },
+      {
+        "name": "extraction_start_time"
+      },
+      {
+        "name": "moon_id"
+      },
+      {
+        "name": "natural_decay_time"
+      },
+      {
+        "name": "structure_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporation/{corporation_id}/mining/extractions/",
+    "scope": "esi-industry.read_corporation_mining.v1",
+    "summary": "Moon extraction timers",
+    "version": "v1"
+  },
+  "corporation_corporation_mining_observers": {
+    "description": "Paginated list of all entities capable of observing and recording mining for a corporation",
+    "headers": [
+      {
+        "name": "last_updated"
+      },
+      {
+        "name": "observer_id"
+      },
+      {
+        "name": "observer_type"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporation/{corporation_id}/mining/observers/",
+    "scope": "esi-industry.read_corporation_mining.v1",
+    "summary": "Corporation mining observers",
+    "version": "v1"
+  },
+  "corporation_corporation_mining_observers_observer": {
+    "description": "Paginated record of all mining seen by an observer",
+    "headers": [
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "last_updated"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "recorded_corporation_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "A mining observer id",
+        "in": "path",
+        "name": "observer_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporation/{corporation_id}/mining/observers/{observer_id}/",
+    "scope": "esi-industry.read_corporation_mining.v1",
+    "summary": "Observed corporation mining",
+    "version": "v1"
+  },
+  "corporations_corporation": {
+    "description": "Public information about a corporation",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "ceo_id"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "date_founded"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "home_station_id"
+      },
+      {
+        "name": "member_count"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "shares"
+      },
+      {
+        "name": "tax_rate"
+      },
+      {
+        "name": "ticker"
+      },
+      {
+        "name": "url"
+      },
+      {
+        "name": "war_eligible"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/",
+    "summary": "Get corporation information",
+    "version": "v4"
   },
   "corporations_corporation_alliancehistory": {
     "description": "Get a list of all the alliances a corporation has been a member of",
@@ -8121,8 +2805,8 @@ const ENDPOINTS = {
         "name": "start_date"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/alliancehistory/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An EVE corporation ID",
@@ -8130,24 +2814,47 @@ const ENDPOINTS = {
         "name": "corporation_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Alliance history for the given corporation",
+    "path": "/{version}/corporations/{corporation_id}/alliancehistory/",
+    "summary": "Get alliance history",
     "version": "v2"
+  },
+  "corporations_corporation_assets": {
+    "description": "Return a list of the corporation assets",
+    "headers": [
+      {
+        "name": "is_blueprint_copy"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "location_flag"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "location_type"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/assets/",
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "Get corporation assets",
+    "version": "v5"
   },
   "corporations_corporation_assets_locations": {
     "description": "Return locations for a set of item ids, which you can get from corporation assets endpoint. Coordinates for items in hangars or stations are set to (0,0,0)",
@@ -8164,8 +2871,8 @@ const ENDPOINTS = {
         ]
       }
     ],
-    "method": "POST",
-    "path": "/{version}/corporations/{corporation_id}/assets/locations/",
+    "method": "post",
+    "paginated": false,
     "parameters": [
       {
         "description": "A list of item ids",
@@ -8173,32 +2880,38 @@ const ENDPOINTS = {
         "name": "item_ids",
         "type": "number[]",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/corporations/{corporation_id}/assets/locations/",
     "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "List of asset locations",
+    "summary": "Get corporation asset locations",
     "version": "v2"
+  },
+  "corporations_corporation_assets_names": {
+    "description": "Return names for a set of item ids, which you can get from corporation assets endpoint. Only valid for items that can customize names, like containers or ships",
+    "headers": [
+      {
+        "name": "item_id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "post",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "A list of item ids",
+        "in": "body",
+        "name": "item_ids",
+        "type": "number[]",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/assets/names/",
+    "scope": "esi-assets.read_corporation_assets.v1",
+    "summary": "Get corporation asset names",
+    "version": "v1"
   },
   "corporations_corporation_blueprints": {
     "description": "Returns a list of blueprints the corporation owns",
@@ -8228,41 +2941,82 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/corporations/{corporation_id}/blueprints/",
-    "parameters": [
+    "scope": "esi-corporations.read_blueprints.v1",
+    "summary": "Get corporation blueprints",
+    "version": "v2"
+  },
+  "corporations_corporation_bookmarks": {
+    "description": "A list of your corporation's bookmarks",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "bookmark_id"
       },
       {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
+        "name": "coordinates",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "created"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "creator_id"
+      },
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "item",
+        "sub_headers": [
+          "item_id",
+          "type_id"
+        ]
+      },
+      {
+        "name": "label"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "notes"
       }
     ],
-    "scope": "esi-corporations.read_blueprints.v1",
-    "summary": "List of corporation blueprints",
-    "version": "v2"
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/bookmarks/",
+    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
+    "summary": "List corporation bookmarks",
+    "version": "v1"
+  },
+  "corporations_corporation_bookmarks_folders": {
+    "description": "A list of your corporation's bookmark folders",
+    "headers": [
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "folder_id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/bookmarks/folders/",
+    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
+    "summary": "List corporation bookmark folders",
+    "version": "v1"
   },
   "corporations_corporation_contacts": {
     "description": "Return contacts of a corporation",
@@ -8286,41 +3040,31 @@ const ENDPOINTS = {
         "name": "standing"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/corporations/{corporation_id}/contacts/",
-    "parameters": [
+    "scope": "esi-corporations.read_contacts.v1",
+    "summary": "Get corporation contacts",
+    "version": "v2"
+  },
+  "corporations_corporation_contacts_labels": {
+    "description": "Return custom labels for a corporation's contacts",
+    "headers": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "label_id"
       },
       {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
+        "name": "label_name"
       }
     ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/contacts/labels/",
     "scope": "esi-corporations.read_contacts.v1",
-    "summary": "A list of contacts",
-    "version": "v2"
+    "summary": "Get corporation contact labels",
+    "version": "v1"
   },
   "corporations_corporation_containers_logs": {
     "description": "Returns logs recorded in the past seven days from all audit log secure containers (ALSC) owned by a given corporation",
@@ -8362,41 +3106,629 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/corporations/{corporation_id}/containers/logs/",
+    "scope": "esi-corporations.read_container_logs.v1",
+    "summary": "Get all corporation ALSC logs",
+    "version": "v2"
+  },
+  "corporations_corporation_contracts": {
+    "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
+    "headers": [
+      {
+        "name": "acceptor_id"
+      },
+      {
+        "name": "assignee_id"
+      },
+      {
+        "name": "availability"
+      },
+      {
+        "name": "buyout"
+      },
+      {
+        "name": "collateral"
+      },
+      {
+        "name": "contract_id"
+      },
+      {
+        "name": "date_accepted"
+      },
+      {
+        "name": "date_completed"
+      },
+      {
+        "name": "date_expired"
+      },
+      {
+        "name": "date_issued"
+      },
+      {
+        "name": "days_to_complete"
+      },
+      {
+        "name": "end_location_id"
+      },
+      {
+        "name": "for_corporation"
+      },
+      {
+        "name": "issuer_corporation_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "reward"
+      },
+      {
+        "name": "start_location_id"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "title"
+      },
+      {
+        "name": "type"
+      },
+      {
+        "name": "volume"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/contracts/",
+    "scope": "esi-contracts.read_corporation_contracts.v1",
+    "summary": "Get corporation contracts",
+    "version": "v1"
+  },
+  "corporations_corporation_contracts_contract_bids": {
+    "description": "Lists bids on a particular auction contract",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "bid_id"
+      },
+      {
+        "name": "bidder_id"
+      },
+      {
+        "name": "date_bid"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "description": "ID of a contract",
         "in": "path",
-        "name": "version",
-        "type": "string",
+        "name": "contract_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/bids/",
+    "scope": "esi-contracts.read_corporation_contracts.v1",
+    "summary": "Get corporation contract bids",
+    "version": "v1"
+  },
+  "corporations_corporation_contracts_contract_items": {
+    "description": "Lists items of a particular contract",
+    "headers": [
+      {
+        "name": "is_included"
+      },
+      {
+        "name": "is_singleton"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "raw_quantity"
+      },
+      {
+        "name": "record_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID of a contract",
+        "in": "path",
+        "name": "contract_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/contracts/{contract_id}/items/",
+    "scope": "esi-contracts.read_corporation_contracts.v1",
+    "summary": "Get corporation contract items",
+    "version": "v1"
+  },
+  "corporations_corporation_customs_offices": {
+    "description": "List customs offices owned by a corporation",
+    "headers": [
+      {
+        "name": "alliance_tax_rate"
+      },
+      {
+        "name": "allow_access_with_standings"
+      },
+      {
+        "name": "allow_alliance_access"
+      },
+      {
+        "name": "bad_standing_tax_rate"
+      },
+      {
+        "name": "corporation_tax_rate"
+      },
+      {
+        "name": "excellent_standing_tax_rate"
+      },
+      {
+        "name": "good_standing_tax_rate"
+      },
+      {
+        "name": "neutral_standing_tax_rate"
+      },
+      {
+        "name": "office_id"
+      },
+      {
+        "name": "reinforce_exit_end"
+      },
+      {
+        "name": "reinforce_exit_start"
+      },
+      {
+        "name": "standing_level"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "terrible_standing_tax_rate"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/customs_offices/",
+    "scope": "esi-planets.read_customs_offices.v1",
+    "summary": "List corporation customs offices",
+    "version": "v1"
+  },
+  "corporations_corporation_divisions": {
+    "description": "Return corporation hangar and wallet division names, only show if a division is not using the default name",
+    "headers": [
+      {
+        "name": "hangar",
+        "sub_headers": [
+          "division",
+          "name"
+        ]
+      },
+      {
+        "name": "wallet",
+        "sub_headers": [
+          "division",
+          "name"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/divisions/",
+    "scope": "esi-corporations.read_divisions.v1",
+    "summary": "Get corporation divisions",
+    "version": "v1"
+  },
+  "corporations_corporation_facilities": {
+    "description": "Return a corporation's facilities",
+    "headers": [
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/facilities/",
+    "scope": "esi-corporations.read_facilities.v1",
+    "summary": "Get corporation facilities",
+    "version": "v1"
+  },
+  "corporations_corporation_fw_stats": {
+    "description": "Statistics about a corporation involved in faction warfare",
+    "headers": [
+      {
+        "name": "enlisted_on"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "kills",
+        "sub_headers": [
+          "last_week",
+          "total",
+          "yesterday"
+        ]
+      },
+      {
+        "name": "pilots"
+      },
+      {
+        "name": "victory_points",
+        "sub_headers": [
+          "last_week",
+          "total",
+          "yesterday"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/fw/stats/",
+    "scope": "esi-corporations.read_fw_stats.v1",
+    "summary": "Overview of a corporation involved in faction warfare",
+    "version": "v1"
+  },
+  "corporations_corporation_icons": {
+    "description": "Get the icon urls for a corporation",
+    "headers": [
+      {
+        "name": "px128x128"
+      },
+      {
+        "name": "px256x256"
+      },
+      {
+        "name": "px64x64"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/icons/",
+    "summary": "Get corporation icon",
+    "version": "v1"
+  },
+  "corporations_corporation_industry_jobs": {
+    "description": "List industry jobs run by a corporation",
+    "headers": [
+      {
+        "name": "activity_id"
+      },
+      {
+        "name": "blueprint_id"
+      },
+      {
+        "name": "blueprint_location_id"
+      },
+      {
+        "name": "blueprint_type_id"
+      },
+      {
+        "name": "completed_character_id"
+      },
+      {
+        "name": "completed_date"
+      },
+      {
+        "name": "cost"
+      },
+      {
+        "name": "duration"
+      },
+      {
+        "name": "end_date"
+      },
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "installer_id"
+      },
+      {
+        "name": "job_id"
+      },
+      {
+        "name": "licensed_runs"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "output_location_id"
+      },
+      {
+        "name": "pause_date"
+      },
+      {
+        "name": "probability"
+      },
+      {
+        "name": "product_type_id"
+      },
+      {
+        "name": "runs"
+      },
+      {
+        "name": "start_date"
+      },
+      {
+        "name": "status"
+      },
+      {
+        "name": "successful_runs"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Whether to retrieve completed corporation industry jobs. Only includes jobs from the past 90 days",
+        "in": "query",
+        "name": "include_completed",
+        "type": "boolean",
         "required": false
       }
     ],
-    "scope": "esi-corporations.read_container_logs.v1",
-    "summary": "List of corporation ALSC logs",
-    "version": "v2"
+    "path": "/{version}/corporations/{corporation_id}/industry/jobs/",
+    "scope": "esi-industry.read_corporation_jobs.v1",
+    "summary": "List corporation industry jobs",
+    "version": "v1"
+  },
+  "corporations_corporation_killmails_recent": {
+    "description": "Get a list of a corporation's kills and losses going back 90 days",
+    "headers": [
+      {
+        "name": "killmail_hash"
+      },
+      {
+        "name": "killmail_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/killmails/recent/",
+    "scope": "esi-killmails.read_corporation_killmails.v1",
+    "summary": "Get a corporation's recent kills and losses",
+    "version": "v1"
+  },
+  "corporations_corporation_medals": {
+    "description": "Returns a corporation's medals",
+    "headers": [
+      {
+        "name": "created_at"
+      },
+      {
+        "name": "creator_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "medal_id"
+      },
+      {
+        "name": "title"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/medals/",
+    "scope": "esi-corporations.read_medals.v1",
+    "summary": "Get corporation medals",
+    "version": "v1"
+  },
+  "corporations_corporation_medals_issued": {
+    "description": "Returns medals issued by a corporation",
+    "headers": [
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "issued_at"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "medal_id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "status"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/medals/issued/",
+    "scope": "esi-corporations.read_medals.v1",
+    "summary": "Get corporation issued medals",
+    "version": "v1"
+  },
+  "corporations_corporation_members": {
+    "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
+    "headers": [
+      {
+        "name": "member_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/members/",
+    "scope": "esi-corporations.read_corporation_membership.v1",
+    "summary": "Get corporation members",
+    "version": "v3"
+  },
+  "corporations_corporation_members_limit": {
+    "description": "Return a corporation's member limit, not including CEO himself",
+    "headers": [
+      {
+        "name": "member_limit"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/members/limit/",
+    "scope": "esi-corporations.track_members.v1",
+    "summary": "Get corporation member limit",
+    "version": "v1"
+  },
+  "corporations_corporation_members_titles": {
+    "description": "Returns a corporation's members' titles",
+    "headers": [
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "titles",
+        "sub_headers": [
+          "titles_titles"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/members/titles/",
+    "scope": "esi-corporations.read_titles.v1",
+    "summary": "Get corporation's members' titles",
+    "version": "v1"
+  },
+  "corporations_corporation_membertracking": {
+    "description": "Returns additional information about a corporation's members which helps tracking their activities",
+    "headers": [
+      {
+        "name": "base_id"
+      },
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "logoff_date"
+      },
+      {
+        "name": "logon_date"
+      },
+      {
+        "name": "ship_type_id"
+      },
+      {
+        "name": "start_date"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/membertracking/",
+    "scope": "esi-corporations.track_members.v1",
+    "summary": "Track corporation members",
+    "version": "v1"
+  },
+  "corporations_corporation_orders": {
+    "description": "List open market orders placed on behalf of a corporation",
+    "headers": [
+      {
+        "name": "duration"
+      },
+      {
+        "name": "escrow"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "issued_by"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      },
+      {
+        "name": "wallet_division"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/orders/",
+    "scope": "esi-markets.read_corporation_orders.v1",
+    "summary": "List open orders from a corporation",
+    "version": "v3"
   },
   "corporations_corporation_orders_history": {
     "description": "List cancelled and expired market orders placed on behalf of a corporation up to 90 days in the past.",
@@ -8450,41 +3782,672 @@ const ENDPOINTS = {
         "name": "wallet_division"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
     "path": "/{version}/corporations/{corporation_id}/orders/history/",
+    "scope": "esi-markets.read_corporation_orders.v1",
+    "summary": "List historical orders from a corporation",
+    "version": "v2"
+  },
+  "corporations_corporation_roles": {
+    "description": "Return the roles of all members if the character has the personnel manager role or any grantable role.",
+    "headers": [
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "grantable_roles",
+        "sub_headers": [
+          "grantable_roles"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_base",
+        "sub_headers": [
+          "at_bases"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_hq",
+        "sub_headers": [
+          "at_hqs"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_other",
+        "sub_headers": [
+          "at_others"
+        ]
+      },
+      {
+        "name": "roles",
+        "sub_headers": [
+          "roles_roles"
+        ]
+      },
+      {
+        "name": "roles_at_base",
+        "sub_headers": [
+          "at_bases"
+        ]
+      },
+      {
+        "name": "roles_at_hq",
+        "sub_headers": [
+          "at_hqs"
+        ]
+      },
+      {
+        "name": "roles_at_other",
+        "sub_headers": [
+          "at_others"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/roles/",
+    "scope": "esi-corporations.read_corporation_membership.v1",
+    "summary": "Get corporation member roles",
+    "version": "v1"
+  },
+  "corporations_corporation_roles_history": {
+    "description": "Return how roles have changed for a coporation's members, up to a month",
+    "headers": [
+      {
+        "name": "changed_at"
+      },
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "issuer_id"
+      },
+      {
+        "name": "new_roles",
+        "sub_headers": [
+          "new_roles"
+        ]
+      },
+      {
+        "name": "old_roles",
+        "sub_headers": [
+          "old_roles"
+        ]
+      },
+      {
+        "name": "role_type"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/roles/history/",
+    "scope": "esi-corporations.read_corporation_membership.v1",
+    "summary": "Get corporation member roles history",
+    "version": "v1"
+  },
+  "corporations_corporation_shareholders": {
+    "description": "Return the current shareholders of a corporation.",
+    "headers": [
+      {
+        "name": "share_count"
+      },
+      {
+        "name": "shareholder_id"
+      },
+      {
+        "name": "shareholder_type"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/shareholders/",
+    "scope": "esi-wallet.read_corporation_wallets.v1",
+    "summary": "Get corporation shareholders",
+    "version": "v1"
+  },
+  "corporations_corporation_standings": {
+    "description": "Return corporation standings from agents, NPC corporations, and factions",
+    "headers": [
+      {
+        "name": "from_id"
+      },
+      {
+        "name": "from_type"
+      },
+      {
+        "name": "standing"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/standings/",
+    "scope": "esi-corporations.read_standings.v1",
+    "summary": "Get corporation standings",
+    "version": "v1"
+  },
+  "corporations_corporation_starbases": {
+    "description": "Returns list of corporation starbases (POSes)",
+    "headers": [
+      {
+        "name": "moon_id"
+      },
+      {
+        "name": "onlined_since"
+      },
+      {
+        "name": "reinforced_until"
+      },
+      {
+        "name": "starbase_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unanchor_at"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/starbases/",
+    "scope": "esi-corporations.read_starbases.v1",
+    "summary": "Get corporation starbases (POSes)",
+    "version": "v1"
+  },
+  "corporations_corporation_starbases_starbase": {
+    "description": "Returns various settings and fuels of a starbase (POS)",
+    "headers": [
+      {
+        "name": "allow_alliance_members"
+      },
+      {
+        "name": "allow_corporation_members"
+      },
+      {
+        "name": "anchor"
+      },
+      {
+        "name": "attack_if_at_war"
+      },
+      {
+        "name": "attack_if_other_security_status_dropping"
+      },
+      {
+        "name": "attack_security_status_threshold"
+      },
+      {
+        "name": "attack_standing_threshold"
+      },
+      {
+        "name": "fuel_bay_take"
+      },
+      {
+        "name": "fuel_bay_view"
+      },
+      {
+        "name": "fuels",
+        "sub_headers": [
+          "quantity",
+          "type_id"
+        ]
+      },
+      {
+        "name": "offline"
+      },
+      {
+        "name": "online"
+      },
+      {
+        "name": "unanchor"
+      },
+      {
+        "name": "use_alliance_standings"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
+        "description": "The solar system this starbase (POS) is located in,",
         "in": "query",
-        "name": "page",
+        "name": "system_id",
         "type": "number",
-        "required": false
+        "required": true
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "description": "An EVE starbase (POS) ID",
         "in": "path",
-        "name": "version",
+        "name": "starbase_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/starbases/{starbase_id}/",
+    "scope": "esi-corporations.read_starbases.v1",
+    "summary": "Get starbase (POS) detail",
+    "version": "v1"
+  },
+  "corporations_corporation_structures": {
+    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell-2.0-structures-changes-coming-on-february-13th",
+    "headers": [
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "fuel_expires"
+      },
+      {
+        "name": "next_reinforce_apply"
+      },
+      {
+        "name": "next_reinforce_hour"
+      },
+      {
+        "name": "next_reinforce_weekday"
+      },
+      {
+        "name": "profile_id"
+      },
+      {
+        "name": "reinforce_hour"
+      },
+      {
+        "name": "reinforce_weekday"
+      },
+      {
+        "name": "services",
+        "sub_headers": [
+          "name",
+          "state"
+        ]
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "state_timer_end"
+      },
+      {
+        "name": "state_timer_start"
+      },
+      {
+        "name": "structure_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unanchors_at"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
         "type": "string",
         "required": false
       }
     ],
-    "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "Expired and cancelled market orders placed on behalf of a corporation",
-    "version": "v2"
+    "path": "/{version}/corporations/{corporation_id}/structures/",
+    "scope": "esi-corporations.read_structures.v1",
+    "summary": "Get corporation structures",
+    "version": "v3"
+  },
+  "corporations_corporation_titles": {
+    "description": "Returns a corporation's titles",
+    "headers": [
+      {
+        "name": "grantable_roles",
+        "sub_headers": [
+          "grantable_roles"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_base",
+        "sub_headers": [
+          "at_bases"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_hq",
+        "sub_headers": [
+          "at_hqs"
+        ]
+      },
+      {
+        "name": "grantable_roles_at_other",
+        "sub_headers": [
+          "at_others"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "roles",
+        "sub_headers": [
+          "titles_roles"
+        ]
+      },
+      {
+        "name": "roles_at_base",
+        "sub_headers": [
+          "at_bases"
+        ]
+      },
+      {
+        "name": "roles_at_hq",
+        "sub_headers": [
+          "at_hqs"
+        ]
+      },
+      {
+        "name": "roles_at_other",
+        "sub_headers": [
+          "at_others"
+        ]
+      },
+      {
+        "name": "title_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/titles/",
+    "scope": "esi-corporations.read_titles.v1",
+    "summary": "Get corporation titles",
+    "version": "v1"
+  },
+  "corporations_corporation_wallets": {
+    "description": "Get a corporation's wallets",
+    "headers": [
+      {
+        "name": "balance"
+      },
+      {
+        "name": "division"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/{corporation_id}/wallets/",
+    "scope": "esi-wallet.read_corporation_wallets.v1",
+    "summary": "Returns a corporation's wallet balance",
+    "version": "v1"
+  },
+  "corporations_corporation_wallets_division_journal": {
+    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
+    "headers": [
+      {
+        "name": "amount"
+      },
+      {
+        "name": "balance"
+      },
+      {
+        "name": "context_id"
+      },
+      {
+        "name": "context_id_type"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "first_party_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "reason"
+      },
+      {
+        "name": "ref_type"
+      },
+      {
+        "name": "second_party_id"
+      },
+      {
+        "name": "tax"
+      },
+      {
+        "name": "tax_receiver_id"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Wallet key of the division to fetch journals from",
+        "in": "path",
+        "name": "division",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/journal/",
+    "scope": "esi-wallet.read_corporation_wallets.v1",
+    "summary": "Get corporation wallet journal",
+    "version": "v4"
+  },
+  "corporations_corporation_wallets_division_transactions": {
+    "description": "Get wallet transactions of a corporation",
+    "headers": [
+      {
+        "name": "client_id"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "is_buy"
+      },
+      {
+        "name": "journal_ref_id"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "transaction_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "unit_price"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Wallet key of the division to fetch journals from",
+        "in": "path",
+        "name": "division",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Only show journal entries happened before the transaction referenced by this id",
+        "in": "query",
+        "name": "from_id",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/transactions/",
+    "scope": "esi-wallet.read_corporation_wallets.v1",
+    "summary": "Get corporation wallet transactions",
+    "version": "v1"
+  },
+  "corporations_npccorps": {
+    "description": "Get a list of npc corporations",
+    "headers": [
+      {
+        "name": "npccorp_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/corporations/npccorps/",
+    "summary": "Get npc corporations",
+    "version": "v1"
+  },
+  "dogma_attributes": {
+    "description": "Get a list of dogma attribute ids",
+    "headers": [
+      {
+        "name": "attribute_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/dogma/attributes/",
+    "summary": "Get attributes",
+    "version": "v1"
+  },
+  "dogma_attributes_attribute": {
+    "description": "Get information on a dogma attribute",
+    "headers": [
+      {
+        "name": "attribute_id"
+      },
+      {
+        "name": "default_value"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "display_name"
+      },
+      {
+        "name": "high_is_good"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "stackable"
+      },
+      {
+        "name": "unit_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "A dogma attribute ID",
+        "in": "path",
+        "name": "attribute_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/dogma/attributes/{attribute_id}/",
+    "summary": "Get attribute information",
+    "version": "v1"
+  },
+  "dogma_dynamic_items_type_item": {
+    "description": "Returns info about a dynamic item resulting from mutation with a mutaplasmid.",
+    "headers": [
+      {
+        "name": "created_by"
+      },
+      {
+        "name": "dogma_attributes",
+        "sub_headers": [
+          "attribute_id",
+          "value"
+        ]
+      },
+      {
+        "name": "dogma_effects",
+        "sub_headers": [
+          "effect_id",
+          "is_default"
+        ]
+      },
+      {
+        "name": "mutator_type_id"
+      },
+      {
+        "name": "source_type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "type_id integer",
+        "in": "path",
+        "name": "type_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "item_id integer",
+        "in": "path",
+        "name": "item_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/dogma/dynamic/items/{type_id}/{item_id}/",
+    "summary": "Get dynamic item information",
+    "version": "v1"
+  },
+  "dogma_effects": {
+    "description": "Get a list of dogma effect ids",
+    "headers": [
+      {
+        "name": "effect_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/dogma/effects/",
+    "summary": "Get effects",
+    "version": "v1"
   },
   "dogma_effects_effect": {
     "description": "Get information on a dogma effect",
@@ -8561,8 +4524,8 @@ const ENDPOINTS = {
         "name": "tracking_speed_attribute_id"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/dogma/effects/{effect_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "A dogma effect ID",
@@ -8570,70 +4533,14 @@ const ENDPOINTS = {
         "name": "effect_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Information about a dogma effect",
-    "version": "v2"
-  },
-  "fw_systems": {
-    "description": "An overview of the current ownership of faction warfare solar systems",
-    "headers": [
-      {
-        "name": "contested"
-      },
-      {
-        "name": "occupier_faction_id"
-      },
-      {
-        "name": "owner_faction_id"
-      },
-      {
-        "name": "solar_system_id"
-      },
-      {
-        "name": "victory_points"
-      },
-      {
-        "name": "victory_points_threshold"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/fw/systems/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "All faction warfare solar systems",
+    "path": "/{version}/dogma/effects/{effect_id}/",
+    "summary": "Get effect information",
     "version": "v2"
   },
   "eve_search": {
-    "description": "Search for entities that match a given sub",
+    "description": "Search for entities that match a given sub-string.",
     "headers": [
       {
         "name": "agent",
@@ -8696,21 +4603,21 @@ const ENDPOINTS = {
         ]
       }
     ],
-    "method": "GET",
-    "path": "/{version}/search/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
-      {
-        "description": "Type of entities to search for",
-        "in": "query",
-        "name": "categories",
-        "type": "string[]",
-        "required": true
-      },
       {
         "description": "The string to search on",
         "in": "query",
         "name": "search",
         "type": "string",
+        "required": true
+      },
+      {
+        "description": "Type of entities to search for",
+        "in": "query",
+        "name": "categories",
+        "type": "string[]",
         "required": true
       },
       {
@@ -8726,24 +4633,1321 @@ const ENDPOINTS = {
         "name": "strict",
         "type": "boolean",
         "required": false
+      }
+    ],
+    "path": "/{version}/search/",
+    "summary": "Search on a string",
+    "version": "v2"
+  },
+  "eve_status": {
+    "description": "EVE Server status",
+    "headers": [
+      {
+        "name": "players"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "server_version"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "name": "start_time"
+      },
+      {
+        "name": "vip"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/status/",
+    "summary": "Retrieve the uptime and player counts",
+    "version": "v1"
+  },
+  "fleets_fleet": {
+    "description": "Return details about a fleet",
+    "headers": [
+      {
+        "name": "is_free_move"
+      },
+      {
+        "name": "is_registered"
+      },
+      {
+        "name": "is_voice_enabled"
+      },
+      {
+        "name": "motd"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID for a fleet",
         "in": "path",
-        "name": "version",
+        "name": "fleet_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/fleets/{fleet_id}/",
+    "scope": "esi-fleets.read_fleet.v1",
+    "summary": "Get fleet information",
+    "version": "v1"
+  },
+  "fleets_fleet_members": {
+    "description": "Return information about fleet members",
+    "headers": [
+      {
+        "name": "character_id"
+      },
+      {
+        "name": "join_time"
+      },
+      {
+        "name": "role"
+      },
+      {
+        "name": "role_name"
+      },
+      {
+        "name": "ship_type_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "squad_id"
+      },
+      {
+        "name": "station_id"
+      },
+      {
+        "name": "takes_fleet_warp"
+      },
+      {
+        "name": "wing_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID for a fleet",
+        "in": "path",
+        "name": "fleet_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
         "type": "string",
         "required": false
       }
     ],
-    "summary": "A list of search results",
+    "path": "/{version}/fleets/{fleet_id}/members/",
+    "scope": "esi-fleets.read_fleet.v1",
+    "summary": "Get fleet members",
+    "version": "v1"
+  },
+  "fleets_fleet_wings": {
+    "description": "Return information about wings in a fleet",
+    "headers": [
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "squads",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID for a fleet",
+        "in": "path",
+        "name": "fleet_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/fleets/{fleet_id}/wings/",
+    "scope": "esi-fleets.read_fleet.v1",
+    "summary": "Get fleet wings",
+    "version": "v1"
+  },
+  "fw_leaderboards": {
+    "description": "Top 4 leaderboard of factions for kills and victory points separated by total, last week and yesterday",
+    "headers": [
+      {
+        "name": "kills",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      },
+      {
+        "name": "victory_points",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/leaderboards/",
+    "summary": "List of the top factions in faction warfare",
+    "version": "v1"
+  },
+  "fw_leaderboards_characters": {
+    "description": "Top 100 leaderboard of pilots for kills and victory points separated by total, last week and yesterday",
+    "headers": [
+      {
+        "name": "kills",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      },
+      {
+        "name": "victory_points",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/leaderboards/characters/",
+    "summary": "List of the top pilots in faction warfare",
+    "version": "v1"
+  },
+  "fw_leaderboards_corporations": {
+    "description": "Top 10 leaderboard of corporations for kills and victory points separated by total, last week and yesterday",
+    "headers": [
+      {
+        "name": "kills",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      },
+      {
+        "name": "victory_points",
+        "sub_headers": [
+          "active_total",
+          "last_week",
+          "yesterday"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/leaderboards/corporations/",
+    "summary": "List of the top corporations in faction warfare",
+    "version": "v1"
+  },
+  "fw_stats": {
+    "description": "Statistical overviews of factions involved in faction warfare",
+    "headers": [
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "kills",
+        "sub_headers": [
+          "last_week",
+          "total",
+          "yesterday"
+        ]
+      },
+      {
+        "name": "pilots"
+      },
+      {
+        "name": "systems_controlled"
+      },
+      {
+        "name": "victory_points",
+        "sub_headers": [
+          "last_week",
+          "total",
+          "yesterday"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/stats/",
+    "summary": "An overview of statistics about factions involved in faction warfare",
+    "version": "v1"
+  },
+  "fw_systems": {
+    "description": "An overview of the current ownership of faction warfare solar systems",
+    "headers": [
+      {
+        "name": "contested"
+      },
+      {
+        "name": "occupier_faction_id"
+      },
+      {
+        "name": "owner_faction_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "victory_points"
+      },
+      {
+        "name": "victory_points_threshold"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/systems/",
+    "summary": "Ownership of faction warfare systems",
     "version": "v2"
+  },
+  "fw_wars": {
+    "description": "Data about which NPC factions are at war",
+    "headers": [
+      {
+        "name": "against_id"
+      },
+      {
+        "name": "faction_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/fw/wars/",
+    "summary": "Data about which NPC factions are at war",
+    "version": "v1"
+  },
+  "incursions": {
+    "description": "Return a list of current incursions",
+    "headers": [
+      {
+        "name": "constellation_id"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "has_boss"
+      },
+      {
+        "name": "infested_solar_systems",
+        "sub_headers": [
+          "solar_systems"
+        ]
+      },
+      {
+        "name": "influence"
+      },
+      {
+        "name": "staging_solar_system_id"
+      },
+      {
+        "name": "state"
+      },
+      {
+        "name": "type"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/incursions/",
+    "summary": "List incursions",
+    "version": "v1"
+  },
+  "industry_facilities": {
+    "description": "Return a list of industry facilities",
+    "headers": [
+      {
+        "name": "facility_id"
+      },
+      {
+        "name": "owner_id"
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "tax"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/industry/facilities/",
+    "summary": "List industry facilities",
+    "version": "v1"
+  },
+  "industry_systems": {
+    "description": "Return cost indices for solar systems",
+    "headers": [
+      {
+        "name": "cost_indices",
+        "sub_headers": [
+          "activity",
+          "cost_index"
+        ]
+      },
+      {
+        "name": "solar_system_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/industry/systems/",
+    "summary": "List solar system cost indices",
+    "version": "v1"
+  },
+  "insurance_prices": {
+    "description": "Return available insurance levels for all ship types",
+    "headers": [
+      {
+        "name": "levels",
+        "sub_headers": [
+          "cost",
+          "name",
+          "payout"
+        ]
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/insurance/prices/",
+    "summary": "List insurance levels",
+    "version": "v1"
+  },
+  "killmails_killmail_killmail_hash": {
+    "description": "Return a single killmail from its ID and hash",
+    "headers": [
+      {
+        "name": "attackers",
+        "sub_headers": [
+          "alliance_id",
+          "character_id",
+          "corporation_id",
+          "damage_done",
+          "faction_id",
+          "final_blow",
+          "security_status",
+          "ship_type_id",
+          "weapon_type_id"
+        ]
+      },
+      {
+        "name": "killmail_id"
+      },
+      {
+        "name": "killmail_time"
+      },
+      {
+        "name": "moon_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "victim",
+        "sub_headers": [
+          "alliance_id",
+          "character_id",
+          "corporation_id",
+          "damage_taken",
+          "faction_id",
+          "items",
+          "position",
+          "ship_type_id"
+        ]
+      },
+      {
+        "name": "war_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "The killmail ID to be queried",
+        "in": "path",
+        "name": "killmail_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "The killmail hash for verification",
+        "in": "path",
+        "name": "killmail_hash",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "path": "/{version}/killmails/{killmail_id}/{killmail_hash}/",
+    "summary": "Get a single killmail",
+    "version": "v1"
+  },
+  "loyalty_stores_corporation_offers": {
+    "description": "Return a list of offers from a specific corporation's loyalty store",
+    "headers": [
+      {
+        "name": "ak_cost"
+      },
+      {
+        "name": "isk_cost"
+      },
+      {
+        "name": "lp_cost"
+      },
+      {
+        "name": "offer_id"
+      },
+      {
+        "name": "quantity"
+      },
+      {
+        "name": "required_items",
+        "sub_headers": [
+          "quantity",
+          "type_id"
+        ]
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An EVE corporation ID",
+        "in": "path",
+        "name": "corporation_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/loyalty/stores/{corporation_id}/offers/",
+    "summary": "List loyalty store offers",
+    "version": "v1"
+  },
+  "markets_groups": {
+    "description": "Get a list of item groups",
+    "headers": [
+      {
+        "name": "group_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/markets/groups/",
+    "summary": "Get item groups",
+    "version": "v1"
+  },
+  "markets_groups_market_group": {
+    "description": "Get information on an item group",
+    "headers": [
+      {
+        "name": "description"
+      },
+      {
+        "name": "market_group_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "parent_group_id"
+      },
+      {
+        "name": "types",
+        "sub_headers": [
+          "id_types"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An Eve item group ID",
+        "in": "path",
+        "name": "market_group_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/markets/groups/{market_group_id}/",
+    "summary": "Get item group information",
+    "version": "v1"
+  },
+  "markets_prices": {
+    "description": "Return a list of prices",
+    "headers": [
+      {
+        "name": "adjusted_price"
+      },
+      {
+        "name": "average_price"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/markets/prices/",
+    "summary": "List market prices",
+    "version": "v1"
+  },
+  "markets_region_history": {
+    "description": "Return a list of historical market statistics for the specified type in a region",
+    "headers": [
+      {
+        "name": "average"
+      },
+      {
+        "name": "date"
+      },
+      {
+        "name": "highest"
+      },
+      {
+        "name": "lowest"
+      },
+      {
+        "name": "order_count"
+      },
+      {
+        "name": "volume"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Return statistics for this type",
+        "in": "query",
+        "name": "type_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Return statistics in this region",
+        "in": "path",
+        "name": "region_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/markets/{region_id}/history/",
+    "summary": "List historical market statistics in a region",
+    "version": "v1"
+  },
+  "markets_region_orders": {
+    "description": "Return a list of orders in a region",
+    "headers": [
+      {
+        "name": "duration"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Return orders in this region",
+        "in": "path",
+        "name": "region_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Filter buy/sell orders, return all orders by default. If you query without type_id, we always return both buy and sell orders",
+        "in": "query",
+        "name": "order_type",
+        "type": "string",
+        "required": true
+      },
+      {
+        "description": "Return orders only for this type",
+        "in": "query",
+        "name": "type_id",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "path": "/{version}/markets/{region_id}/orders/",
+    "summary": "List orders in a region",
+    "version": "v1"
+  },
+  "markets_region_types": {
+    "description": "Return a list of type IDs that have active orders in the region, for efficient market indexing.",
+    "headers": [
+      {
+        "name": "type_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Return statistics in this region",
+        "in": "path",
+        "name": "region_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/markets/{region_id}/types/",
+    "summary": "List type IDs relevant to a market",
+    "version": "v1"
+  },
+  "markets_structures_structure": {
+    "description": "Return all orders in a structure",
+    "headers": [
+      {
+        "name": "duration"
+      },
+      {
+        "name": "is_buy_order"
+      },
+      {
+        "name": "issued"
+      },
+      {
+        "name": "location_id"
+      },
+      {
+        "name": "min_volume"
+      },
+      {
+        "name": "order_id"
+      },
+      {
+        "name": "price"
+      },
+      {
+        "name": "range"
+      },
+      {
+        "name": "type_id"
+      },
+      {
+        "name": "volume_remain"
+      },
+      {
+        "name": "volume_total"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [
+      {
+        "description": "Return orders in this structure",
+        "in": "path",
+        "name": "structure_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/markets/structures/{structure_id}/",
+    "scope": "esi-markets.structure_markets.v1",
+    "summary": "List orders in a structure",
+    "version": "v1"
+  },
+  "opportunities_groups": {
+    "description": "Return a list of opportunities groups",
+    "headers": [
+      {
+        "name": "group_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/opportunities/groups/",
+    "summary": "Get opportunities groups",
+    "version": "v1"
+  },
+  "opportunities_groups_group": {
+    "description": "Return information of an opportunities group",
+    "headers": [
+      {
+        "name": "connected_groups",
+        "sub_headers": [
+          "connected_groups"
+        ]
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "group_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "notification"
+      },
+      {
+        "name": "required_tasks",
+        "sub_headers": [
+          "required_tasks"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID of an opportunities group",
+        "in": "path",
+        "name": "group_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/opportunities/groups/{group_id}/",
+    "summary": "Get opportunities group",
+    "version": "v1"
+  },
+  "opportunities_tasks": {
+    "description": "Return a list of opportunities tasks",
+    "headers": [
+      {
+        "name": "task_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/opportunities/tasks/",
+    "summary": "Get opportunities tasks",
+    "version": "v1"
+  },
+  "opportunities_tasks_task": {
+    "description": "Return information of an opportunities task",
+    "headers": [
+      {
+        "name": "description"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "notification"
+      },
+      {
+        "name": "task_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "ID of an opportunities task",
+        "in": "path",
+        "name": "task_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/opportunities/tasks/{task_id}/",
+    "summary": "Get opportunities task",
+    "version": "v1"
+  },
+  "route_origin_destination": {
+    "description": "Get the systems between origin and destination",
+    "headers": [
+      {
+        "name": "Solar system IDs"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "origin solar system ID",
+        "in": "path",
+        "name": "origin",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "destination solar system ID",
+        "in": "path",
+        "name": "destination",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "avoid solar system ID(s)",
+        "in": "query",
+        "name": "avoid",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "description": "connected solar system pairs",
+        "in": "query",
+        "name": "connections",
+        "type": "number[]",
+        "required": false
+      },
+      {
+        "description": "route security preference",
+        "in": "query",
+        "name": "flag",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/route/{origin}/{destination}/",
+    "summary": "Get route",
+    "version": "v1"
+  },
+  "sovereignty_campaigns": {
+    "description": "Shows sovereignty data for campaigns.",
+    "headers": [
+      {
+        "name": "attackers_score"
+      },
+      {
+        "name": "campaign_id"
+      },
+      {
+        "name": "constellation_id"
+      },
+      {
+        "name": "defender_id"
+      },
+      {
+        "name": "defender_score"
+      },
+      {
+        "name": "event_type"
+      },
+      {
+        "name": "participants",
+        "sub_headers": [
+          "alliance_id",
+          "score"
+        ]
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "start_time"
+      },
+      {
+        "name": "structure_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/sovereignty/campaigns/",
+    "summary": "List sovereignty campaigns",
+    "version": "v1"
+  },
+  "sovereignty_map": {
+    "description": "Shows sovereignty information for solar systems",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "faction_id"
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/sovereignty/map/",
+    "summary": "List sovereignty of systems",
+    "version": "v1"
+  },
+  "sovereignty_structures": {
+    "description": "Shows sovereignty data for structures.",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "structure_id"
+      },
+      {
+        "name": "structure_type_id"
+      },
+      {
+        "name": "vulnerability_occupancy_level"
+      },
+      {
+        "name": "vulnerable_end_time"
+      },
+      {
+        "name": "vulnerable_start_time"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/sovereignty/structures/",
+    "summary": "List sovereignty structures",
+    "version": "v1"
+  },
+  "universe_ancestries": {
+    "description": "Get all character ancestries",
+    "headers": [
+      {
+        "name": "bloodline_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "icon_id"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "short_description"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/ancestries/",
+    "summary": "Get ancestries",
+    "version": "v1"
+  },
+  "universe_asteroid_belts_asteroid_belt": {
+    "description": "Get information on an asteroid belt",
+    "headers": [
+      {
+        "name": "name"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "asteroid_belt_id integer",
+        "in": "path",
+        "name": "asteroid_belt_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/asteroid_belts/{asteroid_belt_id}/",
+    "summary": "Get asteroid belt information",
+    "version": "v1"
+  },
+  "universe_bloodlines": {
+    "description": "Get a list of bloodlines",
+    "headers": [
+      {
+        "name": "bloodline_id"
+      },
+      {
+        "name": "charisma"
+      },
+      {
+        "name": "corporation_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "intelligence"
+      },
+      {
+        "name": "memory"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "perception"
+      },
+      {
+        "name": "race_id"
+      },
+      {
+        "name": "ship_type_id"
+      },
+      {
+        "name": "willpower"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/bloodlines/",
+    "summary": "Get bloodlines",
+    "version": "v1"
+  },
+  "universe_categories": {
+    "description": "Get a list of item categories",
+    "headers": [
+      {
+        "name": "categorie_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/categories/",
+    "summary": "Get item categories",
+    "version": "v1"
+  },
+  "universe_categories_category": {
+    "description": "Get information of an item category",
+    "headers": [
+      {
+        "name": "category_id"
+      },
+      {
+        "name": "groups",
+        "sub_headers": [
+          "id_groups"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "published"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An Eve item category ID",
+        "in": "path",
+        "name": "category_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/categories/{category_id}/",
+    "summary": "Get item category information",
+    "version": "v1"
+  },
+  "universe_constellations": {
+    "description": "Get a list of constellations",
+    "headers": [
+      {
+        "name": "constellation_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/constellations/",
+    "summary": "Get constellations",
+    "version": "v1"
+  },
+  "universe_constellations_constellation": {
+    "description": "Get information on a constellation",
+    "headers": [
+      {
+        "name": "constellation_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "region_id"
+      },
+      {
+        "name": "systems",
+        "sub_headers": [
+          "id_systems"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "constellation_id integer",
+        "in": "path",
+        "name": "constellation_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/constellations/{constellation_id}/",
+    "summary": "Get constellation information",
+    "version": "v1"
   },
   "universe_factions": {
     "description": "Get a list of factions",
@@ -8779,8 +5983,8 @@ const ENDPOINTS = {
         "name": "station_system_count"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/universe/factions/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
@@ -8788,24 +5992,525 @@ const ENDPOINTS = {
         "name": "language",
         "type": "string",
         "required": false
+      }
+    ],
+    "path": "/{version}/universe/factions/",
+    "summary": "Get factions",
+    "version": "v2"
+  },
+  "universe_graphics": {
+    "description": "Get a list of graphics",
+    "headers": [
+      {
+        "name": "graphic_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/graphics/",
+    "summary": "Get graphics",
+    "version": "v1"
+  },
+  "universe_graphics_graphic": {
+    "description": "Get information on a graphic",
+    "headers": [
+      {
+        "name": "collision_file"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "graphic_file"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
+        "name": "graphic_id"
+      },
+      {
+        "name": "icon_folder"
+      },
+      {
+        "name": "sof_dna"
+      },
+      {
+        "name": "sof_fation_name"
+      },
+      {
+        "name": "sof_hull_name"
+      },
+      {
+        "name": "sof_race_name"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "graphic_id integer",
         "in": "path",
-        "name": "version",
+        "name": "graphic_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/graphics/{graphic_id}/",
+    "summary": "Get graphic information",
+    "version": "v1"
+  },
+  "universe_groups": {
+    "description": "Get a list of item groups",
+    "headers": [
+      {
+        "name": "group_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/universe/groups/",
+    "summary": "Get item groups",
+    "version": "v1"
+  },
+  "universe_groups_group": {
+    "description": "Get information on an item group",
+    "headers": [
+      {
+        "name": "category_id"
+      },
+      {
+        "name": "group_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "published"
+      },
+      {
+        "name": "types",
+        "sub_headers": [
+          "id_types"
+        ]
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "An Eve item group ID",
+        "in": "path",
+        "name": "group_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
         "type": "string",
         "required": false
       }
     ],
-    "summary": "A list of factions",
-    "version": "v2"
+    "path": "/{version}/universe/groups/{group_id}/",
+    "summary": "Get item group information",
+    "version": "v1"
+  },
+  "universe_ids": {
+    "description": "Resolve a set of names to IDs in the following categories: agents, alliances, characters, constellations, corporations factions, inventory_types, regions, stations, and systems. Only exact matches will be returned. All names searched for are cached for 12 hours",
+    "headers": [
+      {
+        "name": "agents",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "alliances",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "characters",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "constellations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "corporations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "factions",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "inventory_types",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "regions",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "stations",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "name": "systems",
+        "sub_headers": [
+          "id",
+          "name"
+        ]
+      }
+    ],
+    "method": "post",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "The names to resolve",
+        "in": "body",
+        "name": "names",
+        "type": "string[]",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/ids/",
+    "summary": "Bulk names to IDs",
+    "version": "v1"
+  },
+  "universe_moons_moon": {
+    "description": "Get information on a moon",
+    "headers": [
+      {
+        "name": "moon_id"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "moon_id integer",
+        "in": "path",
+        "name": "moon_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/moons/{moon_id}/",
+    "summary": "Get moon information",
+    "version": "v1"
+  },
+  "universe_names": {
+    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types, Factions",
+    "headers": [
+      {
+        "name": "category"
+      },
+      {
+        "name": "id"
+      },
+      {
+        "name": "name"
+      }
+    ],
+    "method": "post",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "The ids to resolve",
+        "in": "body",
+        "name": "ids",
+        "type": "number[]",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/names/",
+    "summary": "Get names and categories for a set of IDs",
+    "version": "v3"
+  },
+  "universe_planets_planet": {
+    "description": "Get information on a planet",
+    "headers": [
+      {
+        "name": "name"
+      },
+      {
+        "name": "planet_id"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "planet_id integer",
+        "in": "path",
+        "name": "planet_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/planets/{planet_id}/",
+    "summary": "Get planet information",
+    "version": "v1"
+  },
+  "universe_races": {
+    "description": "Get a list of character races",
+    "headers": [
+      {
+        "name": "alliance_id"
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "race_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/races/",
+    "summary": "Get character races",
+    "version": "v1"
+  },
+  "universe_regions": {
+    "description": "Get a list of regions",
+    "headers": [
+      {
+        "name": "region_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/regions/",
+    "summary": "Get regions",
+    "version": "v1"
+  },
+  "universe_regions_region": {
+    "description": "Get information on a region",
+    "headers": [
+      {
+        "name": "constellations",
+        "sub_headers": [
+          "id_constellations"
+        ]
+      },
+      {
+        "name": "description"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "region_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "region_id integer",
+        "in": "path",
+        "name": "region_id",
+        "type": "number",
+        "required": true
+      },
+      {
+        "description": "Language to use in the response, takes precedence over Accept-Language",
+        "in": "query",
+        "name": "language",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "path": "/{version}/universe/regions/{region_id}/",
+    "summary": "Get region information",
+    "version": "v1"
+  },
+  "universe_schematics_schematic": {
+    "description": "Get information on a planetary factory schematic",
+    "headers": [
+      {
+        "name": "cycle_time"
+      },
+      {
+        "name": "schematic_name"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "A PI schematic ID",
+        "in": "path",
+        "name": "schematic_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/schematics/{schematic_id}/",
+    "summary": "Get schematic information",
+    "version": "v1"
+  },
+  "universe_stargates_stargate": {
+    "description": "Get information on a stargate",
+    "headers": [
+      {
+        "name": "destination",
+        "sub_headers": [
+          "stargate_id",
+          "system_id"
+        ]
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "position",
+        "sub_headers": [
+          "x",
+          "y",
+          "z"
+        ]
+      },
+      {
+        "name": "stargate_id"
+      },
+      {
+        "name": "system_id"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "stargate_id integer",
+        "in": "path",
+        "name": "stargate_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/stargates/{stargate_id}/",
+    "summary": "Get stargate information",
+    "version": "v1"
+  },
+  "universe_stars_star": {
+    "description": "Get information on a star",
+    "headers": [
+      {
+        "name": "age"
+      },
+      {
+        "name": "luminosity"
+      },
+      {
+        "name": "name"
+      },
+      {
+        "name": "radius"
+      },
+      {
+        "name": "solar_system_id"
+      },
+      {
+        "name": "spectral_class"
+      },
+      {
+        "name": "temperature"
+      },
+      {
+        "name": "type_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
+      {
+        "description": "star_id integer",
+        "in": "path",
+        "name": "star_id",
+        "type": "number",
+        "required": true
+      }
+    ],
+    "path": "/{version}/universe/stars/{star_id}/",
+    "summary": "Get star information",
+    "version": "v1"
   },
   "universe_stations_station": {
     "description": "Get information on a station",
@@ -8855,8 +6560,8 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/universe/stations/{station_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "station_id integer",
@@ -8864,24 +6569,33 @@ const ENDPOINTS = {
         "name": "station_id",
         "type": "number",
         "required": true
-      },
+      }
+    ],
+    "path": "/{version}/universe/stations/{station_id}/",
+    "summary": "Get station information",
+    "version": "v2"
+  },
+  "universe_structures": {
+    "description": "List all public structures",
+    "headers": [
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
+        "name": "structure_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
+        "description": "Only list public structures that have this service online",
+        "in": "query",
+        "name": "filter",
         "type": "string",
         "required": false
       }
     ],
-    "summary": "Information about a station",
-    "version": "v2"
+    "path": "/{version}/universe/structures/",
+    "summary": "List all public structures",
+    "version": "v1"
   },
   "universe_structures_structure": {
     "description": "Returns information on requested structure if you are on the ACL. Otherwise, returns \"Forbidden\" for all inputs.",
@@ -8907,8 +6621,8 @@ const ENDPOINTS = {
         "name": "type_id"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/universe/structures/{structure_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An Eve structure ID",
@@ -8916,35 +6630,32 @@ const ENDPOINTS = {
         "name": "structure_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
+    "path": "/{version}/universe/structures/{structure_id}/",
     "scope": "esi-universe.read_structures.v1",
-    "summary": "Data about a structure",
+    "summary": "Get structure information",
     "version": "v2"
   },
+  "universe_system_jumps": {
+    "description": "Get the number of jumps in solar systems within the last hour ending at the timestamp of the Last-Modified header, excluding wormhole space. Only systems with jumps will be listed",
+    "headers": [
+      {
+        "name": "ship_jumps"
+      },
+      {
+        "name": "system_id"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/system_jumps/",
+    "summary": "Get system jumps",
+    "version": "v1"
+  },
   "universe_system_kills": {
-    "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last",
+    "description": "Get the number of ship, pod and NPC kills per solar system within the last hour ending at the timestamp of the Last-Modified header, excluding wormhole space. Only systems with kills will be listed",
     "headers": [
       {
         "name": "npc_kills"
@@ -8959,713 +6670,112 @@ const ENDPOINTS = {
         "name": "system_id"
       }
     ],
-    "method": "GET",
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
     "path": "/{version}/universe/system_kills/",
-    "parameters": [
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "A list of systems and number of ship, pod and NPC kills",
+    "summary": "Get system kills",
     "version": "v2"
   },
-  "alliances_alliance": {
-    "description": "Public information about an alliance",
+  "universe_systems": {
+    "description": "Get a list of solar systems",
     "headers": [
       {
-        "name": "creator_corporation_id"
-      },
+        "name": "system_ids"
+      }
+    ],
+    "method": "get",
+    "paginated": false,
+    "parameters": [],
+    "path": "/{version}/universe/systems/",
+    "summary": "Get solar systems",
+    "version": "v1"
+  },
+  "universe_systems_system": {
+    "description": "Get information on a solar system.",
+    "headers": [
       {
-        "name": "creator_id"
-      },
-      {
-        "name": "date_founded"
-      },
-      {
-        "name": "executor_corporation_id"
-      },
-      {
-        "name": "faction_id"
+        "name": "constellation_id"
       },
       {
         "name": "name"
       },
       {
-        "name": "ticker"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/alliances/{alliance_id}/",
-    "parameters": [
-      {
-        "description": "An EVE alliance ID",
-        "in": "path",
-        "name": "alliance_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data about an alliance",
-    "version": "v3"
-  },
-  "characters_character_calendar_event": {
-    "description": "Get all the information for a specific event",
-    "headers": [
-      {
-        "name": "date"
-      },
-      {
-        "name": "duration"
-      },
-      {
-        "name": "event_id"
-      },
-      {
-        "name": "importance"
-      },
-      {
-        "name": "owner_id"
-      },
-      {
-        "name": "owner_name"
-      },
-      {
-        "name": "owner_type"
-      },
-      {
-        "name": "response"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "title"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/calendar/{event_id}/",
-    "parameters": [
-      {
-        "description": "The id of the event requested",
-        "in": "path",
-        "name": "event_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-calendar.read_calendar_events.v1",
-    "summary": "Full details of a specific event",
-    "version": "v3"
-  },
-  "characters_character_clones": {
-    "description": "A list of the character's clones",
-    "headers": [
-      {
-        "name": "home_location",
+        "name": "planets",
         "sub_headers": [
-          "location_id",
-          "location_type"
+          "asteroid_belts",
+          "moons",
+          "planet_id"
         ]
       },
       {
-        "name": "jump_clones",
+        "name": "position",
         "sub_headers": [
-          "implants",
-          "jump_clone_id",
-          "location_id",
-          "location_type",
-          "name"
+          "x",
+          "y",
+          "z"
         ]
       },
       {
-        "name": "last_clone_jump_date"
+        "name": "security_class"
       },
       {
-        "name": "last_station_change_date"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/clones/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "security_status"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "star_id"
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-clones.read_clones.v1",
-    "summary": "Clone information for the given character",
-    "version": "v3"
-  },
-  "characters_character_mail_labels": {
-    "description": "Return a list of the users mail labels, unread counts for each label and a total unread count.",
-    "headers": [
-      {
-        "name": "labels",
+        "name": "stargates",
         "sub_headers": [
-          "color",
-          "label_id",
-          "name",
-          "unread_count"
+          "id_stargates"
         ]
       },
       {
-        "name": "total_unread_count"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/mail/labels/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-mail.read_mail.v1",
-    "summary": "A list of mail labels and unread counts",
-    "version": "v3"
-  },
-  "characters_character_planets_planet": {
-    "description": "Returns full details on the layout of a single planetary colony, including links, pins and routes. Note: Planetary information is only recalculated when the colony is viewed through the client. Information will not update until this criteria is met.",
-    "headers": [
-      {
-        "name": "links",
+        "name": "stations",
         "sub_headers": [
-          "destination_pin_id",
-          "link_level",
-          "source_pin_id"
+          "id_stations"
         ]
-      },
-      {
-        "name": "pins",
-        "sub_headers": [
-          "contents",
-          "expiry_time",
-          "extractor_details",
-          "factory_details",
-          "install_time",
-          "last_cycle_start",
-          "latitude",
-          "longitude",
-          "pin_id",
-          "schematic_id",
-          "type_id"
-        ]
-      },
-      {
-        "name": "routes",
-        "sub_headers": [
-          "content_type_id",
-          "destination_pin_id",
-          "quantity",
-          "route_id",
-          "source_pin_id",
-          "waypoints"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/planets/{planet_id}/",
-    "parameters": [
-      {
-        "description": "Planet id of the target planet",
-        "in": "path",
-        "name": "planet_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-planets.manage_planets.v1",
-    "summary": "Colony layout",
-    "version": "v3"
-  },
-  "characters_character_search": {
-    "description": "Search for entities that match a given sub",
-    "headers": [
-      {
-        "name": "agent",
-        "sub_headers": [
-          "agent_agents"
-        ]
-      },
-      {
-        "name": "alliance",
-        "sub_headers": [
-          "alliance_alliances"
-        ]
-      },
-      {
-        "name": "character",
-        "sub_headers": [
-          "character_characters"
-        ]
-      },
-      {
-        "name": "constellation",
-        "sub_headers": [
-          "constellation_constellations"
-        ]
-      },
-      {
-        "name": "corporation",
-        "sub_headers": [
-          "corporation_corporations"
-        ]
-      },
-      {
-        "name": "faction",
-        "sub_headers": [
-          "faction_factions"
-        ]
-      },
-      {
-        "name": "inventory_type",
-        "sub_headers": [
-          "inventory_types"
-        ]
-      },
-      {
-        "name": "region",
-        "sub_headers": [
-          "region_regions"
-        ]
-      },
-      {
-        "name": "solar_system",
-        "sub_headers": [
-          "solar_systems"
-        ]
-      },
-      {
-        "name": "station",
-        "sub_headers": [
-          "station_stations"
-        ]
-      },
-      {
-        "name": "structure",
-        "sub_headers": [
-          "structure_structures"
-        ]
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/search/",
-    "parameters": [
-      {
-        "description": "Type of entities to search for",
-        "in": "query",
-        "name": "categories",
-        "type": "string[]",
-        "required": true
-      },
-      {
-        "description": "The string to search on",
-        "in": "query",
-        "name": "search",
-        "type": "string",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Whether the search should be a strict match",
-        "in": "query",
-        "name": "strict",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-search.search_structures.v1",
-    "summary": "A list of search results",
-    "version": "v3"
-  },
-  "corporations_corporation_members": {
-    "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
-    "headers": [
-      {
-        "name": "member_ids"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/members/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-corporations.read_corporation_membership.v1",
-    "summary": "List of member character IDs",
-    "version": "v3"
-  },
-  "corporations_corporation_orders": {
-    "description": "List open market orders placed on behalf of a corporation",
-    "headers": [
-      {
-        "name": "duration"
-      },
-      {
-        "name": "escrow"
-      },
-      {
-        "name": "is_buy_order"
-      },
-      {
-        "name": "issued"
-      },
-      {
-        "name": "issued_by"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "min_volume"
-      },
-      {
-        "name": "order_id"
-      },
-      {
-        "name": "price"
-      },
-      {
-        "name": "range"
-      },
-      {
-        "name": "region_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "volume_remain"
-      },
-      {
-        "name": "volume_total"
-      },
-      {
-        "name": "wallet_division"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/orders/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-markets.read_corporation_orders.v1",
-    "summary": "A list of open market orders",
-    "version": "v3"
-  },
-  "corporations_corporation_structures": {
-    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell",
-    "headers": [
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "fuel_expires"
-      },
-      {
-        "name": "next_reinforce_apply"
-      },
-      {
-        "name": "next_reinforce_hour"
-      },
-      {
-        "name": "next_reinforce_weekday"
-      },
-      {
-        "name": "profile_id"
-      },
-      {
-        "name": "reinforce_hour"
-      },
-      {
-        "name": "reinforce_weekday"
-      },
-      {
-        "name": "services",
-        "sub_headers": [
-          "name",
-          "state"
-        ]
-      },
-      {
-        "name": "state"
-      },
-      {
-        "name": "state_timer_end"
-      },
-      {
-        "name": "state_timer_start"
-      },
-      {
-        "name": "structure_id"
       },
       {
         "name": "system_id"
-      },
-      {
-        "name": "type_id"
-      },
-      {
-        "name": "unanchors_at"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/structures/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
+      {
+        "description": "system_id integer",
+        "in": "path",
+        "name": "system_id",
+        "type": "number",
+        "required": true
+      },
       {
         "description": "Language to use in the response, takes precedence over Accept-Language",
         "in": "query",
         "name": "language",
         "type": "string",
         "required": false
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "scope": "esi-corporations.read_structures.v1",
-    "summary": "List of corporation structures' information",
-    "version": "v3"
+    "path": "/{version}/universe/systems/{system_id}/",
+    "summary": "Get solar system information",
+    "version": "v4"
   },
-  "universe_names": {
-    "description": "Resolve a set of IDs to names and categories. Supported ID's for resolving are: Characters, Corporations, Alliances, Stations, Solar Systems, Constellations, Regions, Types, Factions",
+  "universe_types": {
+    "description": "Get a list of type ids",
     "headers": [
       {
-        "name": "category"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "name"
+        "name": "type_ids"
       }
     ],
-    "method": "POST",
-    "path": "/{version}/universe/names/",
-    "parameters": [
-      {
-        "description": "The ids to resolve",
-        "in": "body",
-        "name": "ids",
-        "type": "number[]",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "List of id/name associations for a set of IDs. All IDs must resolve to a name, or nothing will be returned",
-    "version": "v3"
+    "method": "get",
+    "paginated": true,
+    "parameters": [],
+    "path": "/{version}/universe/types/",
+    "summary": "Get types",
+    "version": "v1"
   },
   "universe_types_type": {
     "description": "Get information on a type",
@@ -9727,8 +6837,8 @@ const ENDPOINTS = {
         "name": "volume"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/universe/types/{type_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
         "description": "An Eve item type ID",
@@ -9743,645 +6853,122 @@ const ENDPOINTS = {
         "name": "language",
         "type": "string",
         "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Information about a type",
+    "path": "/{version}/universe/types/{type_id}/",
+    "summary": "Get type information",
     "version": "v3"
   },
-  "characters_character": {
-    "description": "Public information about a character",
+  "wars": {
+    "description": "Return a list of wars",
     "headers": [
       {
-        "name": "alliance_id"
-      },
-      {
-        "name": "ancestry_id"
-      },
-      {
-        "name": "birthday"
-      },
-      {
-        "name": "bloodline_id"
-      },
-      {
-        "name": "corporation_id"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "gender"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "race_id"
-      },
-      {
-        "name": "security_status"
-      },
-      {
-        "name": "title"
+        "name": "war_ids"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "An EVE character ID",
-        "in": "path",
-        "name": "character_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public data for the given character",
-    "version": "v4"
-  },
-  "characters_character_assets": {
-    "description": "Return a list of the characters assets",
-    "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
-      {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/assets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
+        "description": "Only return wars with ID smaller than this",
         "in": "query",
-        "name": "page",
+        "name": "max_war_id",
         "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
         "required": false
       }
     ],
-    "scope": "esi-assets.read_assets.v1",
-    "summary": "A flat list of the users assets",
-    "version": "v4"
+    "path": "/{version}/wars/",
+    "summary": "List wars",
+    "version": "v1"
   },
-  "characters_character_skills": {
-    "description": "List all trained skills for the given character",
+  "wars_war": {
+    "description": "Return details about a war",
     "headers": [
       {
-        "name": "skills",
+        "name": "aggressor",
         "sub_headers": [
-          "active_skill_level",
-          "skill_id",
-          "skillpoints_in_skill",
-          "trained_skill_level"
+          "alliance_id",
+          "corporation_id",
+          "isk_destroyed",
+          "ships_killed"
         ]
       },
       {
-        "name": "total_sp"
+        "name": "allies",
+        "sub_headers": [
+          "alliance_id",
+          "corporation_id"
+        ]
       },
       {
-        "name": "unallocated_sp"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/skills/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
+        "name": "declared"
       },
       {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
+        "name": "defender",
+        "sub_headers": [
+          "alliance_id",
+          "corporation_id",
+          "isk_destroyed",
+          "ships_killed"
+        ]
       },
       {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-skills.read_skills.v1",
-    "summary": "Known skills for the character",
-    "version": "v4"
-  },
-  "corporations_corporation": {
-    "description": "Public information about a corporation",
-    "headers": [
-      {
-        "name": "alliance_id"
-      },
-      {
-        "name": "ceo_id"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "date_founded"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "faction_id"
-      },
-      {
-        "name": "home_station_id"
-      },
-      {
-        "name": "member_count"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "shares"
-      },
-      {
-        "name": "tax_rate"
-      },
-      {
-        "name": "ticker"
-      },
-      {
-        "name": "url"
-      },
-      {
-        "name": "war_eligible"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/",
-    "parameters": [
-      {
-        "description": "An EVE corporation ID",
-        "in": "path",
-        "name": "corporation_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "summary": "Public information about a corporation",
-    "version": "v4"
-  },
-  "corporations_corporation_assets": {
-    "description": "Return a list of the corporation assets",
-    "headers": [
-      {
-        "name": "is_blueprint_copy"
-      },
-      {
-        "name": "is_singleton"
-      },
-      {
-        "name": "item_id"
-      },
-      {
-        "name": "location_flag"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "location_type"
-      },
-      {
-        "name": "quantity"
-      },
-      {
-        "name": "type_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/assets/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-assets.read_corporation_assets.v1",
-    "summary": "A list of assets",
-    "version": "v4"
-  },
-  "corporations_corporation_wallets_division_journal": {
-    "description": "Retrieve the given corporation's wallet journal for the given division going 30 days back",
-    "headers": [
-      {
-        "name": "amount"
-      },
-      {
-        "name": "balance"
-      },
-      {
-        "name": "context_id"
-      },
-      {
-        "name": "context_id_type"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "first_party_id"
+        "name": "finished"
       },
       {
         "name": "id"
       },
       {
-        "name": "reason"
+        "name": "mutual"
       },
       {
-        "name": "ref_type"
+        "name": "open_for_allies"
       },
       {
-        "name": "second_party_id"
+        "name": "retracted"
       },
       {
-        "name": "tax"
-      },
-      {
-        "name": "tax_receiver_id"
+        "name": "started"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/corporations/{corporation_id}/wallets/{division}/journal/",
+    "method": "get",
+    "paginated": false,
     "parameters": [
       {
-        "description": "Wallet key of the division to fetch journals from",
+        "description": "ID for a war",
         "in": "path",
-        "name": "division",
+        "name": "war_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "scope": "esi-wallet.read_corporation_wallets.v1",
-    "summary": "Journal entries",
-    "version": "v4"
+    "path": "/{version}/wars/{war_id}/",
+    "summary": "Get war information",
+    "version": "v1"
   },
-  "universe_systems_system": {
-    "description": "Get information on a solar system.",
+  "wars_war_killmails": {
+    "description": "Return a list of kills related to a war",
     "headers": [
       {
-        "name": "constellation_id"
+        "name": "killmail_hash"
       },
       {
-        "name": "name"
-      },
-      {
-        "name": "planets",
-        "sub_headers": [
-          "asteroid_belts",
-          "moons",
-          "planet_id"
-        ]
-      },
-      {
-        "name": "position",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "security_class"
-      },
-      {
-        "name": "security_status"
-      },
-      {
-        "name": "star_id"
-      },
-      {
-        "name": "stargates",
-        "sub_headers": [
-          "id_stargates"
-        ]
-      },
-      {
-        "name": "stations",
-        "sub_headers": [
-          "id_stations"
-        ]
-      },
-      {
-        "name": "system_id"
+        "name": "killmail_id"
       }
     ],
-    "method": "GET",
-    "path": "/{version}/universe/systems/{system_id}/",
+    "method": "get",
+    "paginated": true,
     "parameters": [
       {
-        "description": "system_id integer",
+        "description": "A valid war ID",
         "in": "path",
-        "name": "system_id",
+        "name": "war_id",
         "type": "number",
         "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
       }
     ],
-    "summary": "Information about a solar system",
-    "version": "v4"
-  },
-  "characters_character_notifications": {
-    "description": "Return character notifications",
-    "headers": [
-      {
-        "name": "is_read"
-      },
-      {
-        "name": "notification_id"
-      },
-      {
-        "name": "sender_id"
-      },
-      {
-        "name": "sender_type"
-      },
-      {
-        "name": "text"
-      },
-      {
-        "name": "timestamp"
-      },
-      {
-        "name": "type"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/notifications/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-characters.read_notifications.v1",
-    "summary": "Returns your recent notifications",
-    "version": "v5"
-  },
-  "characters_character_wallet_journal": {
-    "description": "Retrieve the given character's wallet journal going 30 days back",
-    "headers": [
-      {
-        "name": "amount"
-      },
-      {
-        "name": "balance"
-      },
-      {
-        "name": "context_id"
-      },
-      {
-        "name": "context_id_type"
-      },
-      {
-        "name": "date"
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "first_party_id"
-      },
-      {
-        "name": "id"
-      },
-      {
-        "name": "reason"
-      },
-      {
-        "name": "ref_type"
-      },
-      {
-        "name": "second_party_id"
-      },
-      {
-        "name": "tax"
-      },
-      {
-        "name": "tax_receiver_id"
-      }
-    ],
-    "method": "GET",
-    "path": "/{version}/characters/{character_id}/wallet/journal/",
-    "parameters": [
-      {
-        "description": "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER.",
-        "in": "parameters",
-        "name": "name",
-        "type": "string",
-        "required": false
-      },
-      {
-        "description": "Which page of results to return",
-        "in": "query",
-        "name": "page",
-        "type": "number",
-        "required": false
-      },
-      {
-        "description": "Boolean if column headings should be listed or not. Default: true",
-        "in": "parameters",
-        "name": "opt_headers",
-        "type": "boolean",
-        "required": false
-      },
-      {
-        "description": "Which ESI version to use for the request. Default: Current ESI latest stable version.",
-        "in": "path",
-        "name": "version",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "scope": "esi-wallet.read_character_wallet.v1",
-    "summary": "Journal entries",
-    "version": "v6"
+    "path": "/{version}/wars/{war_id}/killmails/",
+    "summary": "List kills for a war",
+    "version": "v1"
   }
 };

@@ -1,299 +1,224 @@
 require "json"
 require "http/client"
-require "./converters"
+require "json"
 
 module EveSwagger
+  DIST_DIR = "../script"
   # Base url for the swagger spec
-  ESI_HOST = "https://esi.evetech.net"
-  # Array of allowed swagger versions
-  ALLOWED_VERSIONS = %w(legacy latest dev)
+  ESI_HOST      = "https://esi.evetech.net"
+  IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
 
-  alias PathObj = Hash(String, Hash(String, PathObjBody))
-  alias PathObjBody = String | Int32 | Array(Parameter)
+  class_getter! parameters : Hash(String, Parameter)
 
-  # Default swagger version
-  class_setter version = "latest"
-  # Output directory for generated files
-  class_property out_dir = "src/script/"
-
-  # Default parameters that will not be included in a function's argument list
-  # either because they are not useful or they get handled automatically
-  @@rejected_params : Array(String) = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
-  @@swagger_root : JSON::Any | Nil
-
-  # Returns the swagger spec for the desired version
-  def self.load
-    @@swagger_root = JSON.parse(HTTP::Client.get("#{ESI_HOST}/_#{@@version}/swagger.json").body)
-    @@swagger_root.to_json
+  def self.load : Base
+    json = HTTP::Client.get("#{ESI_HOST}/_latest/swagger.json").body
+    @@parameters = Hash(String, Parameter).from_json json, root: "parameters"
+    Base.from_json json
   end
 
-  # Getter for swagger_root
-  def self.swagger_root
-    @@swagger_root
-  end
+  module RefConverter
+    def self.from_json(pull : JSON::PullParser) : Array(Parameter)
+      arr = [] of Parameter
+      pull.read_array do
+        param = JSON.parse(pull.read_raw).as_h
 
-  # Getter for rejected_params
-  def self.rejected_params
-    @@rejected_params
-  end
+        if param.has_key? "$ref"
+          param_name = param["$ref"].as_s.split('/').last
+          next if EveSwagger::IGNORE_PARAMS.includes? param_name
 
-  # Ignore a given param so that it won't show up in a function's parameter list
-  def self.ignore_param(param : String)
-    @@rejected_params << param unless @@rejected_params.includes? param
-  end
-
-  # Allow a given param to show up in a function's parameter list
-  def self.allow_param(param : String)
-    @@rejected_params.delete param if @@rejected_params.includes? param
-  end
-
-  class Base
-    @endpoints = {} of String => EndpointObj
-    getter scopes = [] of String
-
-    JSON.mapping(
-      consumes: {type: Array(String), setter: false},
-      definitions: {type: Definitions, setter: false},
-      host: {type: String, setter: false},
-      info: {type: Info, setter: false},
-      parameters: {type: Hash(String, Parameter), setter: false},
-      paths: {type: Hash(String, Method), setter: false},
-      produces: {type: Array(String), setter: false},
-      schemes: {type: Array(String), setter: false},
-      securityDefinitions: {type: SecurityDefinitions, setter: false},
-      swagger: {type: String, setter: false},
-    )
-
-    # Parses the Swagger spec object into GESI endpoints.gs
-    # format to build functions.gs off of
-    def parse
-      @paths.each do |(path_url, responses)|
-        # Skip non-get endpoints for now still
-        path = responses.get
-        path = responses.post if path.nil?
-        next if path.nil?
-
-        if success = path.responses.success
-          if scope = path.scope
-            @scopes << scope unless @scopes.includes? scope
-          end
-
-          endpoint_name = path.operationId.gsub(/^post_|^get_|_id/, "")
-
-          # Rename search endpoint to not conflict with Sheets' `Search` function
-          # Rename universes to universe_ids due to regex matching `_ids`
-          endpoint_name = "eve_search" if endpoint_name == "search"
-          endpoint_name = "universe_ids" if endpoint_name == "universes"
-
-          # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
-          version = path_url.match(/\/(v\d)\//).not_nil![1]
-          path_url = path_url.sub(/v\d/, "{version}")
-
-          @endpoints[endpoint_name] = EndpointObj.new(
-            responses.get.nil? ? "POST" : "GET",
-            path.description,
-            success.schema,
-            path.parameters,
-            path_url,
-            path.scope,
-            success.description,
-            endpoint_name,
-            version,
-          )
-        end
-      end
-
-      @endpoints
-    end
-
-    # Saves the endpoint hash + scopes array to `EveSwagger.out_dir` + endpoints.gs`
-    # Saves the functions list to `EveSwagger.out_dir` + functions.gs
-    def save
-      save_endpoints
-      save_functions
-    end
-
-    private def save_functions
-      functions = String.build do |str|
-        @endpoints.each do |endpoint_name, endpoint_data|
-          str << "/**\n"
-          str << " * #{endpoint_data.description}\n"
-          endpoint_data.parameters.each { |p| str << " * @param {#{p.type}} #{p.name} #{p.required ? "(Required)" : ""} #{p.description}\n" }
-          str << " * @return #{endpoint_data.summary}\n"
-          str << " * @customfunction\n"
-          str << " */\n"
-          str << "function #{endpoint_name}(#{endpoint_data.parameters.map { |p| "#{p.name}: #{p.type}" }.join(", ")}): any[][] {\n"
-          endpoint_data.parameters.each { |p| str << "  if(!#{p.name}) throw buildError_({body: '#{p.name} is required', code: 400, method: '#{endpoint_name}'});\n" if p.required }
-          str << "  return parseData_('#{endpoint_name}',{#{endpoint_data.parameters.map { |p| "#{p.name}:#{p.name}" }.join(',')}})\n"
-          str << "}\n\n"
-        end
-      end
-
-      File.open(EveSwagger.out_dir + "functions.ts", mode: "w") do |file|
-        file.print(functions)
-      end
-    end
-
-    private def save_endpoints
-      File.open(EveSwagger.out_dir + "endpoints.ts", mode: "w") do |file|
-        file.print("const SCOPES = ")
-        file.print(@scopes.sort!.to_pretty_json)
-        file.print(";\n\n")
-        file.print("const ENDPOINTS = ")
-        file.print(@endpoints.to_pretty_json)
-        file.print(";\n")
-      end
-    end
-  end
-
-  class Definitions
-    JSON.mapping(
-      bad_request: {type: Definition, setter: false},
-      error_limited: {type: Definition, setter: false},
-      forbidden: {type: Definition, setter: false},
-      gateway_timeout: {type: Definition, setter: false},
-      internal_server_error: {type: Definition, setter: false},
-      service_unavailable: {type: Definition, setter: false},
-      unauthorized: {type: Definition, setter: false},
-    )
-  end
-
-  class Definition
-    JSON.mapping(
-      description: {type: String, setter: false},
-      properties: {type: DefinitionProperties, setter: false},
-      required: {type: Array(String), setter: false},
-      title: {type: String, setter: false},
-      type: {type: String, setter: false},
-    )
-  end
-
-  class DefinitionProperties
-    JSON.mapping(
-      error: {type: DefinitionProperty, setter: false},
-      sso_status: {type: DefinitionProperty, nilable: true, setter: false},
-    )
-  end
-
-  class DefinitionProperty
-    JSON.mapping(
-      description: {type: String, setter: false},
-      type: {type: String, setter: false},
-    )
-  end
-
-  class Info
-    JSON.mapping(
-      description: {type: String, setter: false},
-      title: {type: String, setter: false},
-      version: {type: String, setter: false},
-    )
-  end
-
-  class Parameter
-    JSON.mapping(
-      description: {type: String, setter: false},
-      in: {type: String, setter: false},
-      items: {type: Item, nilable: true, setter: true},
-      name: {type: String, setter: false},
-      type: {type: String, nilable: true, setter: true},
-      required: {type: Bool, nilable: false, default: false, setter: false},
-      schema: {type: Schema, nilable: true, setter: true},
-    )
-  end
-
-  class Path
-    JSON.mapping(
-      description: {type: String, setter: false},
-      operationId: {type: String, setter: false},
-      parameters: {type: Array(Parameter), converter: Converters::HandleRefs(Parameter), setter: false},
-      responses: {type: ResponseCode, setter: false},
-      scope: {type: String, key: "security", converter: Converters::PathScope, nilable: true, setter: false},
-      summary: {type: String, setter: false},
-      tags: {type: Array(String), setter: false},
-      x_alternate_versions: {type: Array(String), key: "x-alternate-versions", setter: false},
-      x_cached_secions: {type: Int32, key: "x-cached-seconds", nilable: true, setter: false},
-    )
-  end
-
-  class Header
-    JSON.mapping(
-      name: {type: String, setter: false},
-      sub_headers: {type: Array(String), nilable: true, setter: false},
-    )
-
-    def initialize(@name : String, @sub_headers : Array(String) | Nil = nil); end
-  end
-
-  class EndpointObj
-    JSON.mapping(
-      description: {type: String, setter: false},
-      headers: {type: Array(Header), setter: false},
-      method: {type: String, setter: false},
-      path: {type: String, setter: false},
-      parameters: {type: Array(Parameter), setter: false},
-      scope: {type: String | Nil, setter: false},
-      summary: {type: String, setter: false},
-      version: {type: String, setter: false},
-    )
-
-    def initialize(@method : String, @description : String, schema : Schema?, @parameters : Array(Parameter), @path : String, @scope : String?, @summary : String, endpoint_name : String, @version : String)
-      @description = @description.match(/([\w ]+)[^\n\-\-\-]+/).not_nil![0]
-      @headers = get_headers(schema)
-
-      # Set type of the parameter if there is a schema and remove schema
-      # Set/convert param types to TS types
-      @parameters.each do |param|
-        if schema = param.schema
-          type = schema.type
-          if items = schema.items
-            type = type == "array" ? items.type + "[]" : items.type
-          end
-          param.type = type.includes?("integer") ? type.sub("integer", "number") : type
-          param.schema = nil
-        end
-        if item = param.items
-          type = item.type
-          if sub_items = item.items
-            type = sub_items.type
-          end
-          param.type = (type == "integer" ? "number" : type) + "[]"
-          param.items = nil
-        end
-        param.type = "number" if param.type == "integer"
-      end
-
-      @parameters.sort_by! { |p| p.required ? 0 : 1 }
-
-      # Remove character/corporation/alliance_id param if they are an authed endpoint
-      # They will be auto filled in based on the authing character
-      if scope
-        @parameters.delete @parameters.find { |p| p.name == "character_id" }
-        @parameters.delete @parameters.find { |p| p.name == "corporation_id" }
-        @parameters.delete @parameters.find { |p| p.name == "alliance_id" }
-      end
-
-      # Add name parameter if function requires auth
-      name = Parameter.from_json({name: "name", in: "parameters", type: "string", description: "Name of the character used for auth. If none is given, defaults to MAIN_CHARACTER."}.to_json)
-
-      # Make `name` param come before `page` param because reasons
-      if @scope && !EveSwagger.rejected_params.includes? "name"
-        if page = @parameters.find { |p| p.name == "page" }
-          @parameters.delete page
-          @parameters << name
-          @parameters << page
+          arr << EveSwagger.parameters[param_name]
         else
-          @parameters << name
+          arr << Parameter.from_json param.to_json
+        end
+      end
+      arr
+    end
+  end
+
+  module ScopeConverter
+    def self.from_json(pull : JSON::PullParser) : String?
+      scope = nil
+
+      pull.read_array do
+        pull.read_object do
+          pull.read_array do
+            if scope.nil?
+              scope = pull.read_string
+            else
+              raise "BUG: Path scope is already set"
+            end
+          end
         end
       end
 
-      # Add opt_headers parameter
-      @parameters << Parameter.from_json({name: "opt_headers", in: "parameters", type: "boolean", description: "Boolean if column headings should be listed or not. Default: true"}.to_json) unless EveSwagger.rejected_params.includes? "opt_headers"
+      scope
+    end
+  end
 
-      # Add version parameter
-      @parameters << Parameter.from_json({name: "version", in: "path", type: "string", description: "Which ESI version to use for the request. Default: Current ESI latest stable version."}.to_json) unless EveSwagger.rejected_params.includes? "version"
+  record Header, name : String, sub_headers : Array(String)? = nil do
+    include JSON::Serializable
+    include Comparable(Header)
+
+    def <=>(other : self) : Int32?
+      @name <=> other.name
+    end
+  end
+
+  struct Endpoint
+    include JSON::Serializable
+    include Comparable(Endpoint)
+
+    getter description : String
+    getter headers : Array(Header)
+    getter method : String
+
+    @[JSON::Field(ignore: true)]
+    getter name : String
+    getter paginated : Bool
+    getter parameters : Array(Parameter)
+    getter path : String
+    getter scope : String?
+    getter summary : String
+    getter version : String
+
+    # ameba:disable Metrics/CyclomaticComplexity
+    def initialize(
+      @name : String,
+      @method : String,
+      @description : String,
+      @summary : String,
+      parameters : Array(Parameter),
+      @scope : String?,
+      @headers : Array(Header),
+      @paginated : Bool,
+      path_url : String
+    )
+      # Extract the endpoint version and replace with placeholder to allow user to define what version they wish to use
+      @version = path_url.match(/\/(v\d)\//).not_nil![1]
+      @path = path_url.sub(/v\d/, "{version}")
+
+      # Prepare the passed parameters, converting types to TS type
+      # and removing items/schema so it doesn't get serialized
+      @parameters = parameters.compact_map do |param|
+        # Remove character/corporation/alliance_id param if they are an authed endpoint
+        # They will be auto filled in based on the authing character
+        next if @scope && param.name.in? "character_id", "corporation_id", "alliance_id"
+
+        param_type = if schema = param.schema
+                       type = schema.type
+                       if items = schema.items
+                         type = type == "array" ? items.type + "[]" : items.type
+                       end
+                       type = type.includes?("integer") ? type.sub("integer", "number") : type
+                     elsif item = param.items
+                       type = item.type
+                       if sub_items = item.items
+                         type = sub_items.type
+                       end
+                       (type == "integer" ? "number" : type) + "[]"
+                     else
+                       param.type
+                     end
+
+        param.copy_with(type: param_type == "integer" ? "number" : param_type, schema: nil, items: nil)
+      end
+
+      # Sort the prams so the required ones are first
+      @parameters.sort!
     end
 
+    def to_function(io : IO)
+      parameters = @parameters.dup
+
+      # Add in name parameter if this endpoint is authed
+      parameters << Parameter.new "Name of the character used for auth. Defaults to the first authenticated character.", "parameters", "name", "string" if @scope
+
+      # Add in common params
+      parameters << Parameter.new "If column headings should be shown.", "parameters", "show_column_headings", "boolean", required: nil, default_value: "true"
+      parameters << Parameter.new "Which ESI version to use for the request.", "parameters", "version", "string", required: nil, default_value: @version.dump
+
+      io.puts "/**"
+      io.puts " * #{@description}"
+      io.puts " *"
+      parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
+      io.puts " * @customfunction"
+      io.puts " */"
+      io << "function #{@name}("
+      parameters.join(", ", io) { |param, join_io| param.to_s join_io }
+      io.puts "): SheetsArray {"
+      parameters.select(&.required).each { |param| io.puts "  if (!#{param.name}) throw new Error(`#{param.name} is required`);" }
+      io << "  return invoke_('#{@name}', { "
+
+      parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
+
+      io << " })"
+
+      io.puts "\n}"
+    end
+
+    def <=>(other : self) : Int32?
+      @name <=> other.name
+    end
+  end
+
+  struct Base
+    include JSON::Serializable
+
+    getter paths : Hash(String, Method)
+
+    @[JSON::Field(ignore: true)]
+    getter endpoints : Array(Endpoint) = Array(Endpoint).new
+
+    @[JSON::Field(key: "securityDefinitions")]
+    @security_definitions : SecurityDefinitions
+
+    @parameters : Hash(String, Parameter)
+
+    def scopes : Array(String)
+      @security_definitions.evesso.scopes.keys.sort!
+    end
+
+    def parse : Nil
+      @paths.each do |path_url, responses|
+        route = responses.route
+
+        # A non GET/POST route
+        next if route.nil?
+
+        # A non 200 status route
+        next unless (success = route.responses.success)
+
+        endpoint_name = route.operation_id.gsub(/^post_|^get_|_id/, "")
+
+        # Rename search endpoint to not conflict with Sheets' `Search` function
+        endpoint_name = "eve_search" if endpoint_name == "search"
+
+        # Rename universes to universe_ids due to regex matching `_ids`
+        endpoint_name = "universe_ids" if endpoint_name == "universes"
+
+        # Rename status endpoint to not conflict with lib dom function
+        endpoint_name = "eve_status" if endpoint_name == "status"
+
+        @endpoints << Endpoint.new(
+          endpoint_name,
+          responses.method,
+          route.description,
+          route.summary,
+          route.parameters,
+          route.scope,
+          self.get_headers(success.schema),
+          route.paginated?,
+          path_url
+        )
+      end
+    end
+
+    def after_initialize
+      self.parse
+      @endpoints.sort!
+    end
+
+    # ameba:disable Metrics/CyclomaticComplexity
     private def get_headers(schema : Schema?)
       headers = [] of Header
 
@@ -334,7 +259,7 @@ module EveSwagger
         end
         headers << Header.new(title)
       end
-      headers.sort_by! { |h| h.name }
+      headers.sort!
     end
 
     private def parse_items(item : Item)
@@ -342,74 +267,126 @@ module EveSwagger
     end
   end
 
-  class Method
-    JSON.mapping(
-      get: {type: Path, nilable: true, setter: false},
-      post: {type: Path, nilable: true, setter: false},
-    )
+  struct Path
+    include JSON::Serializable
+
+    @description : String
+
+    @[JSON::Field(converter: EveSwagger::ScopeConverter, key: "security")]
+    getter scope : String?
+
+    @[JSON::Field(converter: EveSwagger::RefConverter)]
+    getter parameters : Array(Parameter)
+
+    @[JSON::Field(key: "operationId")]
+    getter operation_id : String
+
+    getter summary : String
+
+    getter responses : ResponseCode
+
+    getter? paginated : Bool = false
+
+    def description : String
+      @description.each_line.first
+    end
+
+    def after_initialize
+      @paginated = @parameters.any? &.name.==("page")
+
+      # If the path is paginated, remove the page parameter
+      @parameters.reject! &.name.==("page") if @paginated
+    end
   end
 
-  class ResponseCode
-    JSON.mapping(
-      success: {type: Response, key: "200", nilable: true, setter: false},
-    )
+  struct ResponseCode
+    include JSON::Serializable
+
+    @[JSON::Field(key: "200")]
+    getter success : Response?
   end
 
-  class Response
-    JSON.mapping(
-      description: {type: String, setter: false},
-      schema: {type: Schema, nilable: true, setter: false},
-    )
+  record Response, description : String, schema : Schema? do
+    include JSON::Serializable
   end
 
-  class Schema
-    JSON.mapping(
-      description: {type: String, setter: false},
-      maxItems: {type: Int32, nilable: true, setter: false},
-      items: {type: Item, nilable: true, setter: false},
-      properties: {type: Hash(String, Item), nilable: true, setter: false},
-      required: {type: Array(String), nilable: true, setter: false},
-      title: {type: String, setter: false},
-      type: {type: String, setter: false},
-    )
+  record Method, get : Path?, post : Path? do
+    include JSON::Serializable
+
+    def route : Path?
+      @get || @post
+    end
+
+    def method : String
+      @get ? "get" : "post"
+    end
+  end
+
+  record Parameter, description : String, in : String, name : String, type : String?, items : Item? = nil, schema : Schema? = nil, required : Bool? = false, default_value : String? = nil do
+    include JSON::Serializable
+    include Comparable(Parameter)
+
+    @[JSON::Field(ignore: true)]
+    @default_value : String?
+
+    setter type : String?
+    setter schema : Schema?
+    setter items : Item?
+
+    def to_s(io : IO) : Nil
+      io << @name
+
+      @required.try do |required|
+        io << '?' unless required
+      end
+
+      io << ": #{self.type}"
+
+      @default_value.try do |default|
+        io << ' ' << '=' << ' '
+
+        default.to_s io
+      end
+    end
+
+    def to_doc_s(io : IO) : Nil
+      io << " * @param {#{self.type}} #{@name} - "
+
+      io.puts @description
+    end
+
+    def <=>(other : self) : Int32?
+      @required.try do |required|
+        return -1 if required
+        return 1 unless required
+      end
+
+      0
+    end
+
+    def after_initialize : Nil
+      @required = !!@required
+    end
+  end
+
+  record Schema, type : String, items : Item?, properties : Hash(String, Item)?, description : String, title : String do
+    include JSON::Serializable
   end
 
   class Item
-    JSON.mapping(
-      description: {type: String, nilable: true, setter: false},
-      format: {type: String, nilable: true, setter: false},
-      minimum: {type: Int32, nilable: true, setter: false},
-      items: {type: Item, nilable: true, setter: false},
-      properties: {type: Hash(String, Item), nilable: true, setter: false},
-      required: {type: Array(String), nilable: true, setter: false},
-      title: {type: String, nilable: true, setter: false},
-      type: {type: String, nilable: false, setter: false},
-      uniqueItems: {type: Bool, nilable: true, setter: false},
-    )
+    include JSON::Serializable
+
+    getter type : String
+    getter items : Item? = nil
+    getter properties : Hash(String, Item)?
+    getter title : String?
   end
 
-  class Property
-    JSON.mapping(
-      description: {type: String, setter: false},
-      format: {type: String, nilable: true, setter: false},
-      minimum: {type: Int32, nilable: true, setter: false},
-      title: {type: String, nilable: true, setter: false},
-      type: {type: String, setter: false},
-    )
+  record EVESSO, scopes : Hash(String, String) do
+    include JSON::Serializable
   end
 
-  class SecurityDefinitions
-    JSON.mapping(
-      evesso: {type: EveSso, setter: false},
-    )
-  end
-
-  class EveSso
-    JSON.mapping(
-      authorizationUrl: {type: String, setter: false},
-      flow: {type: String, setter: false},
-      type: {type: String, setter: false},
-      scopes: {type: Hash(String, String), setter: false},
-    )
+  record SecurityDefinitions, evesso : EVESSO do
+    include JSON::Serializable
   end
 end
