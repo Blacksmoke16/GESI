@@ -123,7 +123,9 @@ In order to provide GESI, developers have to agree to the [EVE Developer License
 ## Contact Info
 
 In-game:  Blacksmoke16
+
 Discord:  Blacksmoke16#0016
+
 Discord Server: https://discordapp.com/invite/eEAH2et
 
 ## Copyright
