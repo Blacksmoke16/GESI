@@ -172,7 +172,7 @@ function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
 }
 
 /**
- * Returns the data from the provided endpointName for each character as one list
+ * Returns the data from the provided endpointName for each character as one list for use within a sheet.
  *
  * @param {string} endpointName The name of the endpoint that should be invoked
  * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
@@ -181,24 +181,18 @@ function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
  * @customfunction
  */
 function invokeMultiple(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
-  let normalizedNames: string[];
-
-  if (Array.isArray(characterNames)) {
-    // @ts-ignore
-    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
-  } else {
-    normalizedNames = characterNames.split(',');
-  }
-
+  const normalizedNames = normalizeNames_(characterNames);
   const firstCharacter = normalizedNames.shift();
 
   const result = invoke_(endpointName, { ...params, name: firstCharacter });
 
-  const headers = result[0];
-  headers.push('character_name');
+  if (params.show_column_headings) {
+    const headers = result[0];
+    headers.push('character_name');
+  }
 
   result.forEach((item: any, idx: number) => {
-    if (idx > 0) item.push(firstCharacter);
+    if (idx > 0 || !params.show_column_headings) item.push(firstCharacter);
   });
 
   normalizedNames.forEach((name: string) => {
@@ -211,6 +205,58 @@ function invokeMultiple(endpointName: string, characterNames: string | string[] 
   });
 
   return result;
+}
+
+/**
+ * Returns the data from the provided endpointName for each character as one list for use within custom functions/scripts.
+ *
+ * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return
+ * @customfunction
+ */
+function invokeMultipleRaw(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: false }): SheetsArray {
+  const normalizedNames = normalizeNames_(characterNames);
+  const firstCharacter = normalizedNames.shift();
+
+  const result = normalizeResult_(invokeRaw(endpointName, { ...params, name: firstCharacter }));
+
+  result.forEach((item: any) => {
+    item.character_name = firstCharacter;
+  });
+
+  normalizedNames.forEach((name: string) => {
+    const subResults = normalizeResult_(invokeRaw(endpointName, { ...params, name: name }));
+
+    subResults.forEach((item: any) => {
+      item.character_name = name;
+      result.push(item);
+    });
+  });
+
+  return result;
+}
+
+function normalizeResult_(result: any): any[] {
+  return Array.isArray(result) ? result : [result];
+}
+
+function normalizeNames_(characterNames: string | string[] | string[][]): string[] {
+  let normalizedNames: string[];
+
+  if (Array.isArray(characterNames)) {
+    // @ts-ignore
+    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
+  } else {
+    normalizedNames = characterNames.split(',');
+  }
+
+  if (!normalizedNames || normalizedNames.length === 0) {
+    throw new Error('characterNames must not be empty.');
+  }
+
+  return normalizedNames.map(name => name.trim());
 }
 
 /**
