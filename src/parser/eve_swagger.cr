@@ -147,7 +147,7 @@ module EveSwagger
       parameters.join(", ", io) { |param, join_io| param.to_s join_io }
       io.puts "): SheetsArray {"
       parameters.select(&.required).each { |param| io.puts "  if (!#{param.name}) throw new Error(`#{param.name} is required`);" }
-      io << "  return invoke_('#{@name}', { "
+      io << "  return invoke('#{@name}', { "
 
       parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
 
