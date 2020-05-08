@@ -76,7 +76,7 @@ In addition to the ESI related functions, GESI also provides some methods intend
 
 Internally, each function call results in the creation of an `ESIClient` for a specific character.  The client is used to build and execute the request, parse the response, and format the data to return to the sheet.  The creation of a client has some overhead (~0.3s) when created.  While this normally does not have any noticeable impact when invoking a single request for a single character; it can become a problem when wanting to do a series of requests based for the same character/endpoint.  An example of this could be fetching price history data for a list of `type_ids`.
 
-Normally one would call `markets_region_history(type_id, region_id)` in a loop, adding results to some other array for processing later.  The problem with this is that each invocation of `markets_region_history` would result in the creation of a new `ESIClient`.  Fetching 100 ids would take a minimum of 30 seconds (0.3 * 100), when in the total time of making those requests is less than 1 second.
+Normally one would call `markets_region_history(type_id, region_id)` in a loop, adding results to some other array for processing later.  The problem with this is that each invocation of `markets_region_history` would result in the creation of a new `ESIClient`.  Fetching 100 ids would take a minimum of 30 seconds (0.3 * 100), when the total time of making those requests is less than 1 second.
 
 The `ESIClient` can be used by advanced users who are developing advanced/complex sheets in order to increase performance.  It can also be used by those who are building on top of GESI, using GESI more as a way to handle authentication while implementing the ESI interactions on their own.
 
