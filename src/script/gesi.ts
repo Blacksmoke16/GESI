@@ -157,27 +157,27 @@ function getCharacterData(characterName: string | null): IAuthenticatedCharacter
 }
 
 /**
- * Return the sheets formatted data related for the given endpointName.
+ * Return the sheets formatted data related for the given functionName.
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {object} params Any extra parameters that should be included in the ESI call
- * @return The data from the provided endpointName
+ * @return The data from the provided functionName
  * @customfunction
  */
-function invoke(endpointName: string, params: IFunctionParams = { show_column_headings: true }): SheetsArray {
-  return getClient(params.name).setEndpoint(endpointName).execute(params);
+function invoke(functionName: string, params: IFunctionParams = { show_column_headings: true }): SheetsArray {
+  return getClient(params.name).setFunction(functionName).execute(params);
 }
 
 /**
  * Return the raw JSON data related to an ESI call
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {object} params Any extra parameters that should be included in the ESI call
- * @return The raw JSON response from the provided endpointName
+ * @return The raw JSON response from the provided functionName
  * @customfunction
  */
-function invokeRaw<T>(endpointName: string, params: IFunctionParams = { show_column_headings: false } as IFunctionParams): any {
-  return getClient(params.name).setEndpoint(endpointName).executeRaw<T>(params);
+function invokeRaw<T>(functionName: string, params: IFunctionParams = { show_column_headings: false } as IFunctionParams): any {
+  return getClient(params.name).setFunction(functionName).executeRaw<T>(params);
 }
 
 /**
@@ -222,16 +222,16 @@ class ESIClient {
   /**
    * Sets the endpoint to use for future methods calls.
    *
-   * @param {string} endpointName The name of the endpoint that should be invoked
+   * @param {string} functionName The name of the endpoint that should be invoked
    * @return {ESIClient} For chaining
    * @customfunction
    */
-  public setEndpoint(endpointName: string): ESIClient {
-    if (!ENDPOINTS.hasOwnProperty(endpointName)) {
-      throw new Error(`Unknown endpoint: '${endpointName}'`);
+  public setFunction(functionName: string): ESIClient {
+    if (!ENDPOINTS.hasOwnProperty(functionName)) {
+      throw new Error(`Unknown endpoint: '${functionName}'`);
     }
 
-    this.endpoint = ENDPOINTS[endpointName];
+    this.endpoint = ENDPOINTS[functionName];
 
     return this;
   }
@@ -370,19 +370,19 @@ class ESIClient {
 }
 
 /**
- * Returns the data from the provided endpointName for each character as one list for use within a sheet.
+ * Returns the data from the provided functionName for each character as one list for use within a sheet.
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
  * @param {object} params Any extra parameters that should be included in the ESI call
  * @return
  * @customfunction
  */
-function invokeMultiple(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: true }): SheetsArray {
+function invokeMultiple(functionName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: true }): SheetsArray {
   const normalizedNames = normalizeNames_(characterNames);
   const firstCharacter = normalizedNames.shift();
 
-  const result = invoke(endpointName, { ...params, name: firstCharacter });
+  const result = invoke(functionName, { ...params, name: firstCharacter });
 
   if (params.show_column_headings) {
     const headers = result[0];
@@ -394,7 +394,7 @@ function invokeMultiple(endpointName: string, characterNames: string | string[] 
   });
 
   normalizedNames.forEach((name: string) => {
-    const subResults = invoke(endpointName, { ...params, name, show_column_headings: false });
+    const subResults = invoke(functionName, { ...params, name, show_column_headings: false });
 
     subResults.forEach((item: any) => {
       item.push(name);
@@ -406,26 +406,26 @@ function invokeMultiple(endpointName: string, characterNames: string | string[] 
 }
 
 /**
- * Returns the data from the provided endpointName for each character as one list for use within custom functions/scripts.
+ * Returns the data from the provided functionName for each character as one list for use within custom functions/scripts.
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
  * @param {object} params Any extra parameters that should be included in the ESI call
  * @return
  * @customfunction
  */
-function invokeMultipleRaw(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: false }): SheetsArray {
+function invokeMultipleRaw(functionName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: false }): SheetsArray {
   const normalizedNames = normalizeNames_(characterNames);
   const firstCharacter = normalizedNames.shift();
 
-  const result = normalizeResult_(invokeRaw(endpointName, { ...params, name: firstCharacter }));
+  const result = normalizeResult_(invokeRaw(functionName, { ...params, name: firstCharacter }));
 
   result.forEach((item: any) => {
     item.character_name = firstCharacter;
   });
 
   normalizedNames.forEach((name: string) => {
-    const subResults = normalizeResult_(invokeRaw(endpointName, { ...params, name: name }));
+    const subResults = normalizeResult_(invokeRaw(functionName, { ...params, name: name }));
 
     subResults.forEach((item: any) => {
       item.character_name = name;
@@ -481,7 +481,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIClient(oauthClient, {} as ICharacterData)).setEndpoint('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
+  return (new ESIClient(oauthClient, {} as ICharacterData)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
 function getOAuthService_(id: string): OAuth2Service {
