@@ -157,7 +157,7 @@ function getCharacterData(characterName: string | null): IAuthenticatedCharacter
 }
 
 /**
- * Return the sheets formatted data related for the given *endpointName*.
+ * Return the sheets formatted data related for the given endpointName.
  *
  * @param {string} endpointName The name of the endpoint that should be invoked
  * @param {object} params Any extra parameters that should be included in the ESI call
@@ -181,7 +181,7 @@ function invokeRaw<T>(endpointName: string, params: IFunctionParams = { show_col
 }
 
 /**
- * Returns an ESIClient for the given *characterName*.
+ * Returns an ESIClient for the given characterName.
  * Can be used by advanced users for custom functions/scripts.
  *
  * @param characterName
@@ -237,7 +237,7 @@ class ESIClient {
   }
 
   /**
-   * Executes an ESI request with the given *params*.
+   * Executes an ESI request with the given params.
    * Returns a SheetsArray with the results.
    */
   public execute(params: IFunctionParams): SheetsArray {
@@ -267,16 +267,16 @@ class ESIClient {
   }
 
   /**
-   * Executes an ESI request with the given *params*.
+   * Executes an ESI request with the given params.
    * Returns the raw JSON data.
    */
-  public executeRaw<T>(params: IFunctionParams): T | T[] {
+  public executeRaw<T>(params: IFunctionParams): T {
     this.checkEndpoint();
     return this.doRequest<T>(params);
   }
 
   /**
-   * Builds a URLFetchRequest object with the given *params*.
+   * Builds a URLFetchRequest object with the given params.
    */
   public buildRequest(params: IFunctionParams): URLFetchRequest {
     const endpoint = this.checkEndpoint();
@@ -330,7 +330,7 @@ class ESIClient {
     return request;
   }
 
-  private doRequest<T>(params: IFunctionParams): T | T[] {
+  private doRequest<T>(params: IFunctionParams): T {
     const request = this.buildRequest(params);
     const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
     const headers = response.getHeaders();
@@ -481,7 +481,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return invokeRaw<ICharacterAffiliation>('characters_affiliation', { characters: [characterId], show_column_headings: false })[0];
+  return (new ESIClient(oauthClient, {} as ICharacterData)).setEndpoint('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
 function getOAuthService_(id: string): OAuth2Service {
