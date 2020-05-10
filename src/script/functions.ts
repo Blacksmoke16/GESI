@@ -6,7 +6,7 @@
  * @customfunction
  */
 function alliances(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('alliances', { show_column_headings, version })
+  return invoke('alliances', { show_column_headings, version })
 }
 
 /**
@@ -19,7 +19,7 @@ function alliances(show_column_headings: boolean = true, version: string = "v1")
  */
 function alliances_alliance(alliance_id: number, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance', { alliance_id, show_column_headings, version })
+  return invoke('alliances_alliance', { alliance_id, show_column_headings, version })
 }
 
 /**
@@ -31,7 +31,7 @@ function alliances_alliance(alliance_id: number, show_column_headings: boolean =
  * @customfunction
  */
 function alliances_alliance_contacts(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('alliances_alliance_contacts', { name, show_column_headings, version })
+  return invoke('alliances_alliance_contacts', { name, show_column_headings, version })
 }
 
 /**
@@ -43,7 +43,7 @@ function alliances_alliance_contacts(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function alliances_alliance_contacts_labels(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('alliances_alliance_contacts_labels', { name, show_column_headings, version })
+  return invoke('alliances_alliance_contacts_labels', { name, show_column_headings, version })
 }
 
 /**
@@ -56,7 +56,7 @@ function alliances_alliance_contacts_labels(name?: string, show_column_headings:
  */
 function alliances_alliance_corporations(alliance_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance_corporations', { alliance_id, show_column_headings, version })
+  return invoke('alliances_alliance_corporations', { alliance_id, show_column_headings, version })
 }
 
 /**
@@ -69,7 +69,7 @@ function alliances_alliance_corporations(alliance_id: number, show_column_headin
  */
 function alliances_alliance_icons(alliance_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!alliance_id) throw new Error(`alliance_id is required`);
-  return invoke_('alliances_alliance_icons', { alliance_id, show_column_headings, version })
+  return invoke('alliances_alliance_icons', { alliance_id, show_column_headings, version })
 }
 
 /**
@@ -82,7 +82,7 @@ function alliances_alliance_icons(alliance_id: number, show_column_headings: boo
  */
 function characters_affiliation(characters: number[], show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!characters) throw new Error(`characters is required`);
-  return invoke_('characters_affiliation', { characters, show_column_headings, version })
+  return invoke('characters_affiliation', { characters, show_column_headings, version })
 }
 
 /**
@@ -95,7 +95,7 @@ function characters_affiliation(characters: number[], show_column_headings: bool
  */
 function characters_character(character_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character', { character_id, show_column_headings, version })
+  return invoke('characters_character', { character_id, show_column_headings, version })
 }
 
 /**
@@ -107,7 +107,7 @@ function characters_character(character_id: number, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_agents_research(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_agents_research', { name, show_column_headings, version })
+  return invoke('characters_character_agents_research', { name, show_column_headings, version })
 }
 
 /**
@@ -119,7 +119,7 @@ function characters_character_agents_research(name?: string, show_column_heading
  * @customfunction
  */
 function characters_character_assets(name?: string, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
-  return invoke_('characters_character_assets', { name, show_column_headings, version })
+  return invoke('characters_character_assets', { name, show_column_headings, version })
 }
 
 /**
@@ -133,7 +133,7 @@ function characters_character_assets(name?: string, show_column_headings: boolea
  */
 function characters_character_assets_locations(item_ids: number[], name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!item_ids) throw new Error(`item_ids is required`);
-  return invoke_('characters_character_assets_locations', { item_ids, name, show_column_headings, version })
+  return invoke('characters_character_assets_locations', { item_ids, name, show_column_headings, version })
 }
 
 /**
@@ -147,7 +147,7 @@ function characters_character_assets_locations(item_ids: number[], name?: string
  */
 function characters_character_assets_names(item_ids: number[], name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!item_ids) throw new Error(`item_ids is required`);
-  return invoke_('characters_character_assets_names', { item_ids, name, show_column_headings, version })
+  return invoke('characters_character_assets_names', { item_ids, name, show_column_headings, version })
 }
 
 /**
@@ -159,7 +159,7 @@ function characters_character_assets_names(item_ids: number[], name?: string, sh
  * @customfunction
  */
 function characters_character_attributes(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_attributes', { name, show_column_headings, version })
+  return invoke('characters_character_attributes', { name, show_column_headings, version })
 }
 
 /**
@@ -171,7 +171,7 @@ function characters_character_attributes(name?: string, show_column_headings: bo
  * @customfunction
  */
 function characters_character_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_blueprints', { name, show_column_headings, version })
+  return invoke('characters_character_blueprints', { name, show_column_headings, version })
 }
 
 /**
@@ -183,7 +183,7 @@ function characters_character_blueprints(name?: string, show_column_headings: bo
  * @customfunction
  */
 function characters_character_bookmarks(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_bookmarks', { name, show_column_headings, version })
+  return invoke('characters_character_bookmarks', { name, show_column_headings, version })
 }
 
 /**
@@ -195,7 +195,7 @@ function characters_character_bookmarks(name?: string, show_column_headings: boo
  * @customfunction
  */
 function characters_character_bookmarks_folders(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_bookmarks_folders', { name, show_column_headings, version })
+  return invoke('characters_character_bookmarks_folders', { name, show_column_headings, version })
 }
 
 /**
@@ -208,7 +208,7 @@ function characters_character_bookmarks_folders(name?: string, show_column_headi
  * @customfunction
  */
 function characters_character_calendar(from_event?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_calendar', { from_event, name, show_column_headings, version })
+  return invoke('characters_character_calendar', { from_event, name, show_column_headings, version })
 }
 
 /**
@@ -222,7 +222,7 @@ function characters_character_calendar(from_event?: number, name?: string, show_
  */
 function characters_character_calendar_event(event_id: number, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!event_id) throw new Error(`event_id is required`);
-  return invoke_('characters_character_calendar_event', { event_id, name, show_column_headings, version })
+  return invoke('characters_character_calendar_event', { event_id, name, show_column_headings, version })
 }
 
 /**
@@ -236,7 +236,7 @@ function characters_character_calendar_event(event_id: number, name?: string, sh
  */
 function characters_character_calendar_event_attendees(event_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!event_id) throw new Error(`event_id is required`);
-  return invoke_('characters_character_calendar_event_attendees', { event_id, name, show_column_headings, version })
+  return invoke('characters_character_calendar_event_attendees', { event_id, name, show_column_headings, version })
 }
 
 /**
@@ -248,7 +248,7 @@ function characters_character_calendar_event_attendees(event_id: number, name?: 
  * @customfunction
  */
 function characters_character_clones(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
-  return invoke_('characters_character_clones', { name, show_column_headings, version })
+  return invoke('characters_character_clones', { name, show_column_headings, version })
 }
 
 /**
@@ -260,7 +260,7 @@ function characters_character_clones(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_contacts(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_contacts', { name, show_column_headings, version })
+  return invoke('characters_character_contacts', { name, show_column_headings, version })
 }
 
 /**
@@ -272,7 +272,7 @@ function characters_character_contacts(name?: string, show_column_headings: bool
  * @customfunction
  */
 function characters_character_contacts_labels(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_contacts_labels', { name, show_column_headings, version })
+  return invoke('characters_character_contacts_labels', { name, show_column_headings, version })
 }
 
 /**
@@ -284,7 +284,7 @@ function characters_character_contacts_labels(name?: string, show_column_heading
  * @customfunction
  */
 function characters_character_contracts(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_contracts', { name, show_column_headings, version })
+  return invoke('characters_character_contracts', { name, show_column_headings, version })
 }
 
 /**
@@ -298,7 +298,7 @@ function characters_character_contracts(name?: string, show_column_headings: boo
  */
 function characters_character_contracts_contract_bids(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('characters_character_contracts_contract_bids', { contract_id, name, show_column_headings, version })
+  return invoke('characters_character_contracts_contract_bids', { contract_id, name, show_column_headings, version })
 }
 
 /**
@@ -312,7 +312,7 @@ function characters_character_contracts_contract_bids(contract_id: number, name?
  */
 function characters_character_contracts_contract_items(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('characters_character_contracts_contract_items', { contract_id, name, show_column_headings, version })
+  return invoke('characters_character_contracts_contract_items', { contract_id, name, show_column_headings, version })
 }
 
 /**
@@ -325,7 +325,7 @@ function characters_character_contracts_contract_items(contract_id: number, name
  */
 function characters_character_corporationhistory(character_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character_corporationhistory', { character_id, show_column_headings, version })
+  return invoke('characters_character_corporationhistory', { character_id, show_column_headings, version })
 }
 
 /**
@@ -337,7 +337,7 @@ function characters_character_corporationhistory(character_id: number, show_colu
  * @customfunction
  */
 function characters_character_fatigue(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_fatigue', { name, show_column_headings, version })
+  return invoke('characters_character_fatigue', { name, show_column_headings, version })
 }
 
 /**
@@ -349,7 +349,7 @@ function characters_character_fatigue(name?: string, show_column_headings: boole
  * @customfunction
  */
 function characters_character_fittings(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_fittings', { name, show_column_headings, version })
+  return invoke('characters_character_fittings', { name, show_column_headings, version })
 }
 
 /**
@@ -361,7 +361,7 @@ function characters_character_fittings(name?: string, show_column_headings: bool
  * @customfunction
  */
 function characters_character_fleet(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_fleet', { name, show_column_headings, version })
+  return invoke('characters_character_fleet', { name, show_column_headings, version })
 }
 
 /**
@@ -373,7 +373,7 @@ function characters_character_fleet(name?: string, show_column_headings: boolean
  * @customfunction
  */
 function characters_character_fw_stats(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_fw_stats', { name, show_column_headings, version })
+  return invoke('characters_character_fw_stats', { name, show_column_headings, version })
 }
 
 /**
@@ -385,7 +385,7 @@ function characters_character_fw_stats(name?: string, show_column_headings: bool
  * @customfunction
  */
 function characters_character_implants(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_implants', { name, show_column_headings, version })
+  return invoke('characters_character_implants', { name, show_column_headings, version })
 }
 
 /**
@@ -398,7 +398,7 @@ function characters_character_implants(name?: string, show_column_headings: bool
  * @customfunction
  */
 function characters_character_industry_jobs(include_completed?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_industry_jobs', { include_completed, name, show_column_headings, version })
+  return invoke('characters_character_industry_jobs', { include_completed, name, show_column_headings, version })
 }
 
 /**
@@ -410,7 +410,7 @@ function characters_character_industry_jobs(include_completed?: boolean, name?: 
  * @customfunction
  */
 function characters_character_killmails_recent(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_killmails_recent', { name, show_column_headings, version })
+  return invoke('characters_character_killmails_recent', { name, show_column_headings, version })
 }
 
 /**
@@ -422,7 +422,7 @@ function characters_character_killmails_recent(name?: string, show_column_headin
  * @customfunction
  */
 function characters_character_location(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_location', { name, show_column_headings, version })
+  return invoke('characters_character_location', { name, show_column_headings, version })
 }
 
 /**
@@ -434,7 +434,7 @@ function characters_character_location(name?: string, show_column_headings: bool
  * @customfunction
  */
 function characters_character_loyalty_points(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_loyalty_points', { name, show_column_headings, version })
+  return invoke('characters_character_loyalty_points', { name, show_column_headings, version })
 }
 
 /**
@@ -448,7 +448,7 @@ function characters_character_loyalty_points(name?: string, show_column_headings
  * @customfunction
  */
 function characters_character_mail(labels?: number[], last_mail_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_mail', { labels, last_mail_id, name, show_column_headings, version })
+  return invoke('characters_character_mail', { labels, last_mail_id, name, show_column_headings, version })
 }
 
 /**
@@ -460,7 +460,7 @@ function characters_character_mail(labels?: number[], last_mail_id?: number, nam
  * @customfunction
  */
 function characters_character_mail_labels(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
-  return invoke_('characters_character_mail_labels', { name, show_column_headings, version })
+  return invoke('characters_character_mail_labels', { name, show_column_headings, version })
 }
 
 /**
@@ -472,7 +472,7 @@ function characters_character_mail_labels(name?: string, show_column_headings: b
  * @customfunction
  */
 function characters_character_mail_lists(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_mail_lists', { name, show_column_headings, version })
+  return invoke('characters_character_mail_lists', { name, show_column_headings, version })
 }
 
 /**
@@ -486,7 +486,7 @@ function characters_character_mail_lists(name?: string, show_column_headings: bo
  */
 function characters_character_mail_mail(mail_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!mail_id) throw new Error(`mail_id is required`);
-  return invoke_('characters_character_mail_mail', { mail_id, name, show_column_headings, version })
+  return invoke('characters_character_mail_mail', { mail_id, name, show_column_headings, version })
 }
 
 /**
@@ -498,7 +498,7 @@ function characters_character_mail_mail(mail_id: number, name?: string, show_col
  * @customfunction
  */
 function characters_character_medals(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_medals', { name, show_column_headings, version })
+  return invoke('characters_character_medals', { name, show_column_headings, version })
 }
 
 /**
@@ -510,7 +510,7 @@ function characters_character_medals(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_mining(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_mining', { name, show_column_headings, version })
+  return invoke('characters_character_mining', { name, show_column_headings, version })
 }
 
 /**
@@ -522,7 +522,7 @@ function characters_character_mining(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_notifications(name?: string, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
-  return invoke_('characters_character_notifications', { name, show_column_headings, version })
+  return invoke('characters_character_notifications', { name, show_column_headings, version })
 }
 
 /**
@@ -534,7 +534,7 @@ function characters_character_notifications(name?: string, show_column_headings:
  * @customfunction
  */
 function characters_character_notifications_contacts(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_notifications_contacts', { name, show_column_headings, version })
+  return invoke('characters_character_notifications_contacts', { name, show_column_headings, version })
 }
 
 /**
@@ -546,7 +546,7 @@ function characters_character_notifications_contacts(name?: string, show_column_
  * @customfunction
  */
 function characters_character_online(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_online', { name, show_column_headings, version })
+  return invoke('characters_character_online', { name, show_column_headings, version })
 }
 
 /**
@@ -558,7 +558,7 @@ function characters_character_online(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_opportunities(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_opportunities', { name, show_column_headings, version })
+  return invoke('characters_character_opportunities', { name, show_column_headings, version })
 }
 
 /**
@@ -570,7 +570,7 @@ function characters_character_opportunities(name?: string, show_column_headings:
  * @customfunction
  */
 function characters_character_orders(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_orders', { name, show_column_headings, version })
+  return invoke('characters_character_orders', { name, show_column_headings, version })
 }
 
 /**
@@ -582,7 +582,7 @@ function characters_character_orders(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_orders_history(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_orders_history', { name, show_column_headings, version })
+  return invoke('characters_character_orders_history', { name, show_column_headings, version })
 }
 
 /**
@@ -594,7 +594,7 @@ function characters_character_orders_history(name?: string, show_column_headings
  * @customfunction
  */
 function characters_character_planets(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_planets', { name, show_column_headings, version })
+  return invoke('characters_character_planets', { name, show_column_headings, version })
 }
 
 /**
@@ -608,7 +608,7 @@ function characters_character_planets(name?: string, show_column_headings: boole
  */
 function characters_character_planets_planet(planet_id: number, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!planet_id) throw new Error(`planet_id is required`);
-  return invoke_('characters_character_planets_planet', { planet_id, name, show_column_headings, version })
+  return invoke('characters_character_planets_planet', { planet_id, name, show_column_headings, version })
 }
 
 /**
@@ -621,7 +621,7 @@ function characters_character_planets_planet(planet_id: number, name?: string, s
  */
 function characters_character_portrait(character_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
-  return invoke_('characters_character_portrait', { character_id, show_column_headings, version })
+  return invoke('characters_character_portrait', { character_id, show_column_headings, version })
 }
 
 /**
@@ -633,7 +633,7 @@ function characters_character_portrait(character_id: number, show_column_heading
  * @customfunction
  */
 function characters_character_roles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_roles', { name, show_column_headings, version })
+  return invoke('characters_character_roles', { name, show_column_headings, version })
 }
 
 /**
@@ -651,7 +651,7 @@ function characters_character_roles(name?: string, show_column_headings: boolean
 function characters_character_search(search: string, categories: string[], language?: string, strict?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!search) throw new Error(`search is required`);
   if (!categories) throw new Error(`categories is required`);
-  return invoke_('characters_character_search', { search, categories, language, strict, name, show_column_headings, version })
+  return invoke('characters_character_search', { search, categories, language, strict, name, show_column_headings, version })
 }
 
 /**
@@ -663,7 +663,7 @@ function characters_character_search(search: string, categories: string[], langu
  * @customfunction
  */
 function characters_character_ship(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_ship', { name, show_column_headings, version })
+  return invoke('characters_character_ship', { name, show_column_headings, version })
 }
 
 /**
@@ -675,7 +675,7 @@ function characters_character_ship(name?: string, show_column_headings: boolean 
  * @customfunction
  */
 function characters_character_skillqueue(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_skillqueue', { name, show_column_headings, version })
+  return invoke('characters_character_skillqueue', { name, show_column_headings, version })
 }
 
 /**
@@ -687,7 +687,7 @@ function characters_character_skillqueue(name?: string, show_column_headings: bo
  * @customfunction
  */
 function characters_character_skills(name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
-  return invoke_('characters_character_skills', { name, show_column_headings, version })
+  return invoke('characters_character_skills', { name, show_column_headings, version })
 }
 
 /**
@@ -699,7 +699,7 @@ function characters_character_skills(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_standings(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_standings', { name, show_column_headings, version })
+  return invoke('characters_character_standings', { name, show_column_headings, version })
 }
 
 /**
@@ -711,7 +711,7 @@ function characters_character_standings(name?: string, show_column_headings: boo
  * @customfunction
  */
 function characters_character_stats(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('characters_character_stats', { name, show_column_headings, version })
+  return invoke('characters_character_stats', { name, show_column_headings, version })
 }
 
 /**
@@ -723,7 +723,7 @@ function characters_character_stats(name?: string, show_column_headings: boolean
  * @customfunction
  */
 function characters_character_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_titles', { name, show_column_headings, version })
+  return invoke('characters_character_titles', { name, show_column_headings, version })
 }
 
 /**
@@ -735,7 +735,7 @@ function characters_character_titles(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_wallet(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_wallet', { name, show_column_headings, version })
+  return invoke('characters_character_wallet', { name, show_column_headings, version })
 }
 
 /**
@@ -747,7 +747,7 @@ function characters_character_wallet(name?: string, show_column_headings: boolea
  * @customfunction
  */
 function characters_character_wallet_journal(name?: string, show_column_headings: boolean = true, version: string = "v6"): SheetsArray {
-  return invoke_('characters_character_wallet_journal', { name, show_column_headings, version })
+  return invoke('characters_character_wallet_journal', { name, show_column_headings, version })
 }
 
 /**
@@ -760,7 +760,7 @@ function characters_character_wallet_journal(name?: string, show_column_headings
  * @customfunction
  */
 function characters_character_wallet_transactions(from_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('characters_character_wallet_transactions', { from_id, name, show_column_headings, version })
+  return invoke('characters_character_wallet_transactions', { from_id, name, show_column_headings, version })
 }
 
 /**
@@ -773,7 +773,7 @@ function characters_character_wallet_transactions(from_id?: number, name?: strin
  */
 function contracts_public_bids_contract(contract_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('contracts_public_bids_contract', { contract_id, show_column_headings, version })
+  return invoke('contracts_public_bids_contract', { contract_id, show_column_headings, version })
 }
 
 /**
@@ -786,7 +786,7 @@ function contracts_public_bids_contract(contract_id: number, show_column_heading
  */
 function contracts_public_items_contract(contract_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('contracts_public_items_contract', { contract_id, show_column_headings, version })
+  return invoke('contracts_public_items_contract', { contract_id, show_column_headings, version })
 }
 
 /**
@@ -799,7 +799,7 @@ function contracts_public_items_contract(contract_id: number, show_column_headin
  */
 function contracts_public_region(region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('contracts_public_region', { region_id, show_column_headings, version })
+  return invoke('contracts_public_region', { region_id, show_column_headings, version })
 }
 
 /**
@@ -811,7 +811,7 @@ function contracts_public_region(region_id: number, show_column_headings: boolea
  * @customfunction
  */
 function corporation_corporation_mining_extractions(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporation_corporation_mining_extractions', { name, show_column_headings, version })
+  return invoke('corporation_corporation_mining_extractions', { name, show_column_headings, version })
 }
 
 /**
@@ -823,7 +823,7 @@ function corporation_corporation_mining_extractions(name?: string, show_column_h
  * @customfunction
  */
 function corporation_corporation_mining_observers(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporation_corporation_mining_observers', { name, show_column_headings, version })
+  return invoke('corporation_corporation_mining_observers', { name, show_column_headings, version })
 }
 
 /**
@@ -837,7 +837,7 @@ function corporation_corporation_mining_observers(name?: string, show_column_hea
  */
 function corporation_corporation_mining_observers_observer(observer_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!observer_id) throw new Error(`observer_id is required`);
-  return invoke_('corporation_corporation_mining_observers_observer', { observer_id, name, show_column_headings, version })
+  return invoke('corporation_corporation_mining_observers_observer', { observer_id, name, show_column_headings, version })
 }
 
 /**
@@ -850,7 +850,7 @@ function corporation_corporation_mining_observers_observer(observer_id: number, 
  */
 function corporations_corporation(corporation_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation', { corporation_id, show_column_headings, version })
+  return invoke('corporations_corporation', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -863,7 +863,7 @@ function corporations_corporation(corporation_id: number, show_column_headings: 
  */
 function corporations_corporation_alliancehistory(corporation_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation_alliancehistory', { corporation_id, show_column_headings, version })
+  return invoke('corporations_corporation_alliancehistory', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -875,7 +875,7 @@ function corporations_corporation_alliancehistory(corporation_id: number, show_c
  * @customfunction
  */
 function corporations_corporation_assets(name?: string, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
-  return invoke_('corporations_corporation_assets', { name, show_column_headings, version })
+  return invoke('corporations_corporation_assets', { name, show_column_headings, version })
 }
 
 /**
@@ -889,7 +889,7 @@ function corporations_corporation_assets(name?: string, show_column_headings: bo
  */
 function corporations_corporation_assets_locations(item_ids: number[], name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!item_ids) throw new Error(`item_ids is required`);
-  return invoke_('corporations_corporation_assets_locations', { item_ids, name, show_column_headings, version })
+  return invoke('corporations_corporation_assets_locations', { item_ids, name, show_column_headings, version })
 }
 
 /**
@@ -903,7 +903,7 @@ function corporations_corporation_assets_locations(item_ids: number[], name?: st
  */
 function corporations_corporation_assets_names(item_ids: number[], name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!item_ids) throw new Error(`item_ids is required`);
-  return invoke_('corporations_corporation_assets_names', { item_ids, name, show_column_headings, version })
+  return invoke('corporations_corporation_assets_names', { item_ids, name, show_column_headings, version })
 }
 
 /**
@@ -915,7 +915,7 @@ function corporations_corporation_assets_names(item_ids: number[], name?: string
  * @customfunction
  */
 function corporations_corporation_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('corporations_corporation_blueprints', { name, show_column_headings, version })
+  return invoke('corporations_corporation_blueprints', { name, show_column_headings, version })
 }
 
 /**
@@ -927,7 +927,7 @@ function corporations_corporation_blueprints(name?: string, show_column_headings
  * @customfunction
  */
 function corporations_corporation_bookmarks(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_bookmarks', { name, show_column_headings, version })
+  return invoke('corporations_corporation_bookmarks', { name, show_column_headings, version })
 }
 
 /**
@@ -939,7 +939,7 @@ function corporations_corporation_bookmarks(name?: string, show_column_headings:
  * @customfunction
  */
 function corporations_corporation_bookmarks_folders(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_bookmarks_folders', { name, show_column_headings, version })
+  return invoke('corporations_corporation_bookmarks_folders', { name, show_column_headings, version })
 }
 
 /**
@@ -951,7 +951,7 @@ function corporations_corporation_bookmarks_folders(name?: string, show_column_h
  * @customfunction
  */
 function corporations_corporation_contacts(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('corporations_corporation_contacts', { name, show_column_headings, version })
+  return invoke('corporations_corporation_contacts', { name, show_column_headings, version })
 }
 
 /**
@@ -963,7 +963,7 @@ function corporations_corporation_contacts(name?: string, show_column_headings: 
  * @customfunction
  */
 function corporations_corporation_contacts_labels(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_contacts_labels', { name, show_column_headings, version })
+  return invoke('corporations_corporation_contacts_labels', { name, show_column_headings, version })
 }
 
 /**
@@ -975,7 +975,7 @@ function corporations_corporation_contacts_labels(name?: string, show_column_hea
  * @customfunction
  */
 function corporations_corporation_containers_logs(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('corporations_corporation_containers_logs', { name, show_column_headings, version })
+  return invoke('corporations_corporation_containers_logs', { name, show_column_headings, version })
 }
 
 /**
@@ -987,7 +987,7 @@ function corporations_corporation_containers_logs(name?: string, show_column_hea
  * @customfunction
  */
 function corporations_corporation_contracts(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_contracts', { name, show_column_headings, version })
+  return invoke('corporations_corporation_contracts', { name, show_column_headings, version })
 }
 
 /**
@@ -1001,7 +1001,7 @@ function corporations_corporation_contracts(name?: string, show_column_headings:
  */
 function corporations_corporation_contracts_contract_bids(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('corporations_corporation_contracts_contract_bids', { contract_id, name, show_column_headings, version })
+  return invoke('corporations_corporation_contracts_contract_bids', { contract_id, name, show_column_headings, version })
 }
 
 /**
@@ -1015,7 +1015,7 @@ function corporations_corporation_contracts_contract_bids(contract_id: number, n
  */
 function corporations_corporation_contracts_contract_items(contract_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!contract_id) throw new Error(`contract_id is required`);
-  return invoke_('corporations_corporation_contracts_contract_items', { contract_id, name, show_column_headings, version })
+  return invoke('corporations_corporation_contracts_contract_items', { contract_id, name, show_column_headings, version })
 }
 
 /**
@@ -1027,7 +1027,7 @@ function corporations_corporation_contracts_contract_items(contract_id: number, 
  * @customfunction
  */
 function corporations_corporation_customs_offices(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_customs_offices', { name, show_column_headings, version })
+  return invoke('corporations_corporation_customs_offices', { name, show_column_headings, version })
 }
 
 /**
@@ -1039,7 +1039,7 @@ function corporations_corporation_customs_offices(name?: string, show_column_hea
  * @customfunction
  */
 function corporations_corporation_divisions(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_divisions', { name, show_column_headings, version })
+  return invoke('corporations_corporation_divisions', { name, show_column_headings, version })
 }
 
 /**
@@ -1051,7 +1051,7 @@ function corporations_corporation_divisions(name?: string, show_column_headings:
  * @customfunction
  */
 function corporations_corporation_facilities(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_facilities', { name, show_column_headings, version })
+  return invoke('corporations_corporation_facilities', { name, show_column_headings, version })
 }
 
 /**
@@ -1063,7 +1063,7 @@ function corporations_corporation_facilities(name?: string, show_column_headings
  * @customfunction
  */
 function corporations_corporation_fw_stats(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_fw_stats', { name, show_column_headings, version })
+  return invoke('corporations_corporation_fw_stats', { name, show_column_headings, version })
 }
 
 /**
@@ -1076,7 +1076,7 @@ function corporations_corporation_fw_stats(name?: string, show_column_headings: 
  */
 function corporations_corporation_icons(corporation_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('corporations_corporation_icons', { corporation_id, show_column_headings, version })
+  return invoke('corporations_corporation_icons', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -1089,7 +1089,7 @@ function corporations_corporation_icons(corporation_id: number, show_column_head
  * @customfunction
  */
 function corporations_corporation_industry_jobs(include_completed?: boolean, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_industry_jobs', { include_completed, name, show_column_headings, version })
+  return invoke('corporations_corporation_industry_jobs', { include_completed, name, show_column_headings, version })
 }
 
 /**
@@ -1101,7 +1101,7 @@ function corporations_corporation_industry_jobs(include_completed?: boolean, nam
  * @customfunction
  */
 function corporations_corporation_killmails_recent(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_killmails_recent', { name, show_column_headings, version })
+  return invoke('corporations_corporation_killmails_recent', { name, show_column_headings, version })
 }
 
 /**
@@ -1113,7 +1113,7 @@ function corporations_corporation_killmails_recent(name?: string, show_column_he
  * @customfunction
  */
 function corporations_corporation_medals(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_medals', { name, show_column_headings, version })
+  return invoke('corporations_corporation_medals', { name, show_column_headings, version })
 }
 
 /**
@@ -1125,7 +1125,7 @@ function corporations_corporation_medals(name?: string, show_column_headings: bo
  * @customfunction
  */
 function corporations_corporation_medals_issued(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_medals_issued', { name, show_column_headings, version })
+  return invoke('corporations_corporation_medals_issued', { name, show_column_headings, version })
 }
 
 /**
@@ -1137,7 +1137,7 @@ function corporations_corporation_medals_issued(name?: string, show_column_headi
  * @customfunction
  */
 function corporations_corporation_members(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
-  return invoke_('corporations_corporation_members', { name, show_column_headings, version })
+  return invoke('corporations_corporation_members', { name, show_column_headings, version })
 }
 
 /**
@@ -1149,7 +1149,7 @@ function corporations_corporation_members(name?: string, show_column_headings: b
  * @customfunction
  */
 function corporations_corporation_members_limit(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_members_limit', { name, show_column_headings, version })
+  return invoke('corporations_corporation_members_limit', { name, show_column_headings, version })
 }
 
 /**
@@ -1161,7 +1161,7 @@ function corporations_corporation_members_limit(name?: string, show_column_headi
  * @customfunction
  */
 function corporations_corporation_members_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_members_titles', { name, show_column_headings, version })
+  return invoke('corporations_corporation_members_titles', { name, show_column_headings, version })
 }
 
 /**
@@ -1173,7 +1173,7 @@ function corporations_corporation_members_titles(name?: string, show_column_head
  * @customfunction
  */
 function corporations_corporation_membertracking(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_membertracking', { name, show_column_headings, version })
+  return invoke('corporations_corporation_membertracking', { name, show_column_headings, version })
 }
 
 /**
@@ -1185,7 +1185,7 @@ function corporations_corporation_membertracking(name?: string, show_column_head
  * @customfunction
  */
 function corporations_corporation_orders(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
-  return invoke_('corporations_corporation_orders', { name, show_column_headings, version })
+  return invoke('corporations_corporation_orders', { name, show_column_headings, version })
 }
 
 /**
@@ -1197,7 +1197,7 @@ function corporations_corporation_orders(name?: string, show_column_headings: bo
  * @customfunction
  */
 function corporations_corporation_orders_history(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('corporations_corporation_orders_history', { name, show_column_headings, version })
+  return invoke('corporations_corporation_orders_history', { name, show_column_headings, version })
 }
 
 /**
@@ -1209,7 +1209,7 @@ function corporations_corporation_orders_history(name?: string, show_column_head
  * @customfunction
  */
 function corporations_corporation_roles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_roles', { name, show_column_headings, version })
+  return invoke('corporations_corporation_roles', { name, show_column_headings, version })
 }
 
 /**
@@ -1221,7 +1221,7 @@ function corporations_corporation_roles(name?: string, show_column_headings: boo
  * @customfunction
  */
 function corporations_corporation_roles_history(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_roles_history', { name, show_column_headings, version })
+  return invoke('corporations_corporation_roles_history', { name, show_column_headings, version })
 }
 
 /**
@@ -1233,7 +1233,7 @@ function corporations_corporation_roles_history(name?: string, show_column_headi
  * @customfunction
  */
 function corporations_corporation_shareholders(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_shareholders', { name, show_column_headings, version })
+  return invoke('corporations_corporation_shareholders', { name, show_column_headings, version })
 }
 
 /**
@@ -1245,7 +1245,7 @@ function corporations_corporation_shareholders(name?: string, show_column_headin
  * @customfunction
  */
 function corporations_corporation_standings(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_standings', { name, show_column_headings, version })
+  return invoke('corporations_corporation_standings', { name, show_column_headings, version })
 }
 
 /**
@@ -1257,7 +1257,7 @@ function corporations_corporation_standings(name?: string, show_column_headings:
  * @customfunction
  */
 function corporations_corporation_starbases(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_starbases', { name, show_column_headings, version })
+  return invoke('corporations_corporation_starbases', { name, show_column_headings, version })
 }
 
 /**
@@ -1273,7 +1273,7 @@ function corporations_corporation_starbases(name?: string, show_column_headings:
 function corporations_corporation_starbases_starbase(system_id: number, starbase_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!system_id) throw new Error(`system_id is required`);
   if (!starbase_id) throw new Error(`starbase_id is required`);
-  return invoke_('corporations_corporation_starbases_starbase', { system_id, starbase_id, name, show_column_headings, version })
+  return invoke('corporations_corporation_starbases_starbase', { system_id, starbase_id, name, show_column_headings, version })
 }
 
 /**
@@ -1286,7 +1286,7 @@ function corporations_corporation_starbases_starbase(system_id: number, starbase
  * @customfunction
  */
 function corporations_corporation_structures(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
-  return invoke_('corporations_corporation_structures', { language, name, show_column_headings, version })
+  return invoke('corporations_corporation_structures', { language, name, show_column_headings, version })
 }
 
 /**
@@ -1298,7 +1298,7 @@ function corporations_corporation_structures(language?: string, name?: string, s
  * @customfunction
  */
 function corporations_corporation_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_titles', { name, show_column_headings, version })
+  return invoke('corporations_corporation_titles', { name, show_column_headings, version })
 }
 
 /**
@@ -1310,7 +1310,7 @@ function corporations_corporation_titles(name?: string, show_column_headings: bo
  * @customfunction
  */
 function corporations_corporation_wallets(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_corporation_wallets', { name, show_column_headings, version })
+  return invoke('corporations_corporation_wallets', { name, show_column_headings, version })
 }
 
 /**
@@ -1324,7 +1324,7 @@ function corporations_corporation_wallets(name?: string, show_column_headings: b
  */
 function corporations_corporation_wallets_division_journal(division: number, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!division) throw new Error(`division is required`);
-  return invoke_('corporations_corporation_wallets_division_journal', { division, name, show_column_headings, version })
+  return invoke('corporations_corporation_wallets_division_journal', { division, name, show_column_headings, version })
 }
 
 /**
@@ -1339,7 +1339,7 @@ function corporations_corporation_wallets_division_journal(division: number, nam
  */
 function corporations_corporation_wallets_division_transactions(division: number, from_id?: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!division) throw new Error(`division is required`);
-  return invoke_('corporations_corporation_wallets_division_transactions', { division, from_id, name, show_column_headings, version })
+  return invoke('corporations_corporation_wallets_division_transactions', { division, from_id, name, show_column_headings, version })
 }
 
 /**
@@ -1350,7 +1350,7 @@ function corporations_corporation_wallets_division_transactions(division: number
  * @customfunction
  */
 function corporations_npccorps(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('corporations_npccorps', { show_column_headings, version })
+  return invoke('corporations_npccorps', { show_column_headings, version })
 }
 
 /**
@@ -1361,7 +1361,7 @@ function corporations_npccorps(show_column_headings: boolean = true, version: st
  * @customfunction
  */
 function dogma_attributes(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('dogma_attributes', { show_column_headings, version })
+  return invoke('dogma_attributes', { show_column_headings, version })
 }
 
 /**
@@ -1374,7 +1374,7 @@ function dogma_attributes(show_column_headings: boolean = true, version: string 
  */
 function dogma_attributes_attribute(attribute_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!attribute_id) throw new Error(`attribute_id is required`);
-  return invoke_('dogma_attributes_attribute', { attribute_id, show_column_headings, version })
+  return invoke('dogma_attributes_attribute', { attribute_id, show_column_headings, version })
 }
 
 /**
@@ -1389,7 +1389,7 @@ function dogma_attributes_attribute(attribute_id: number, show_column_headings: 
 function dogma_dynamic_items_type_item(type_id: number, item_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
   if (!item_id) throw new Error(`item_id is required`);
-  return invoke_('dogma_dynamic_items_type_item', { type_id, item_id, show_column_headings, version })
+  return invoke('dogma_dynamic_items_type_item', { type_id, item_id, show_column_headings, version })
 }
 
 /**
@@ -1400,7 +1400,7 @@ function dogma_dynamic_items_type_item(type_id: number, item_id: number, show_co
  * @customfunction
  */
 function dogma_effects(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('dogma_effects', { show_column_headings, version })
+  return invoke('dogma_effects', { show_column_headings, version })
 }
 
 /**
@@ -1413,7 +1413,7 @@ function dogma_effects(show_column_headings: boolean = true, version: string = "
  */
 function dogma_effects_effect(effect_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!effect_id) throw new Error(`effect_id is required`);
-  return invoke_('dogma_effects_effect', { effect_id, show_column_headings, version })
+  return invoke('dogma_effects_effect', { effect_id, show_column_headings, version })
 }
 
 /**
@@ -1430,7 +1430,7 @@ function dogma_effects_effect(effect_id: number, show_column_headings: boolean =
 function eve_search(search: string, categories: string[], language?: string, strict?: boolean, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!search) throw new Error(`search is required`);
   if (!categories) throw new Error(`categories is required`);
-  return invoke_('eve_search', { search, categories, language, strict, show_column_headings, version })
+  return invoke('eve_search', { search, categories, language, strict, show_column_headings, version })
 }
 
 /**
@@ -1441,7 +1441,7 @@ function eve_search(search: string, categories: string[], language?: string, str
  * @customfunction
  */
 function eve_status(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('eve_status', { show_column_headings, version })
+  return invoke('eve_status', { show_column_headings, version })
 }
 
 /**
@@ -1455,7 +1455,7 @@ function eve_status(show_column_headings: boolean = true, version: string = "v1"
  */
 function fleets_fleet(fleet_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!fleet_id) throw new Error(`fleet_id is required`);
-  return invoke_('fleets_fleet', { fleet_id, name, show_column_headings, version })
+  return invoke('fleets_fleet', { fleet_id, name, show_column_headings, version })
 }
 
 /**
@@ -1470,7 +1470,7 @@ function fleets_fleet(fleet_id: number, name?: string, show_column_headings: boo
  */
 function fleets_fleet_members(fleet_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!fleet_id) throw new Error(`fleet_id is required`);
-  return invoke_('fleets_fleet_members', { fleet_id, language, name, show_column_headings, version })
+  return invoke('fleets_fleet_members', { fleet_id, language, name, show_column_headings, version })
 }
 
 /**
@@ -1485,7 +1485,7 @@ function fleets_fleet_members(fleet_id: number, language?: string, name?: string
  */
 function fleets_fleet_wings(fleet_id: number, language?: string, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!fleet_id) throw new Error(`fleet_id is required`);
-  return invoke_('fleets_fleet_wings', { fleet_id, language, name, show_column_headings, version })
+  return invoke('fleets_fleet_wings', { fleet_id, language, name, show_column_headings, version })
 }
 
 /**
@@ -1496,7 +1496,7 @@ function fleets_fleet_wings(fleet_id: number, language?: string, name?: string, 
  * @customfunction
  */
 function fw_leaderboards(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards', { show_column_headings, version })
+  return invoke('fw_leaderboards', { show_column_headings, version })
 }
 
 /**
@@ -1507,7 +1507,7 @@ function fw_leaderboards(show_column_headings: boolean = true, version: string =
  * @customfunction
  */
 function fw_leaderboards_characters(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards_characters', { show_column_headings, version })
+  return invoke('fw_leaderboards_characters', { show_column_headings, version })
 }
 
 /**
@@ -1518,7 +1518,7 @@ function fw_leaderboards_characters(show_column_headings: boolean = true, versio
  * @customfunction
  */
 function fw_leaderboards_corporations(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_leaderboards_corporations', { show_column_headings, version })
+  return invoke('fw_leaderboards_corporations', { show_column_headings, version })
 }
 
 /**
@@ -1529,7 +1529,7 @@ function fw_leaderboards_corporations(show_column_headings: boolean = true, vers
  * @customfunction
  */
 function fw_stats(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_stats', { show_column_headings, version })
+  return invoke('fw_stats', { show_column_headings, version })
 }
 
 /**
@@ -1540,7 +1540,7 @@ function fw_stats(show_column_headings: boolean = true, version: string = "v1"):
  * @customfunction
  */
 function fw_systems(show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('fw_systems', { show_column_headings, version })
+  return invoke('fw_systems', { show_column_headings, version })
 }
 
 /**
@@ -1551,7 +1551,7 @@ function fw_systems(show_column_headings: boolean = true, version: string = "v2"
  * @customfunction
  */
 function fw_wars(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('fw_wars', { show_column_headings, version })
+  return invoke('fw_wars', { show_column_headings, version })
 }
 
 /**
@@ -1562,7 +1562,7 @@ function fw_wars(show_column_headings: boolean = true, version: string = "v1"): 
  * @customfunction
  */
 function incursions(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('incursions', { show_column_headings, version })
+  return invoke('incursions', { show_column_headings, version })
 }
 
 /**
@@ -1573,7 +1573,7 @@ function incursions(show_column_headings: boolean = true, version: string = "v1"
  * @customfunction
  */
 function industry_facilities(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('industry_facilities', { show_column_headings, version })
+  return invoke('industry_facilities', { show_column_headings, version })
 }
 
 /**
@@ -1584,7 +1584,7 @@ function industry_facilities(show_column_headings: boolean = true, version: stri
  * @customfunction
  */
 function industry_systems(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('industry_systems', { show_column_headings, version })
+  return invoke('industry_systems', { show_column_headings, version })
 }
 
 /**
@@ -1596,7 +1596,7 @@ function industry_systems(show_column_headings: boolean = true, version: string 
  * @customfunction
  */
 function insurance_prices(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('insurance_prices', { language, show_column_headings, version })
+  return invoke('insurance_prices', { language, show_column_headings, version })
 }
 
 /**
@@ -1611,7 +1611,7 @@ function insurance_prices(language?: string, show_column_headings: boolean = tru
 function killmails_killmail_killmail_hash(killmail_id: number, killmail_hash: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!killmail_id) throw new Error(`killmail_id is required`);
   if (!killmail_hash) throw new Error(`killmail_hash is required`);
-  return invoke_('killmails_killmail_killmail_hash', { killmail_id, killmail_hash, show_column_headings, version })
+  return invoke('killmails_killmail_killmail_hash', { killmail_id, killmail_hash, show_column_headings, version })
 }
 
 /**
@@ -1624,7 +1624,7 @@ function killmails_killmail_killmail_hash(killmail_id: number, killmail_hash: st
  */
 function loyalty_stores_corporation_offers(corporation_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
-  return invoke_('loyalty_stores_corporation_offers', { corporation_id, show_column_headings, version })
+  return invoke('loyalty_stores_corporation_offers', { corporation_id, show_column_headings, version })
 }
 
 /**
@@ -1635,7 +1635,7 @@ function loyalty_stores_corporation_offers(corporation_id: number, show_column_h
  * @customfunction
  */
 function markets_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('markets_groups', { show_column_headings, version })
+  return invoke('markets_groups', { show_column_headings, version })
 }
 
 /**
@@ -1649,7 +1649,7 @@ function markets_groups(show_column_headings: boolean = true, version: string = 
  */
 function markets_groups_market_group(market_group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!market_group_id) throw new Error(`market_group_id is required`);
-  return invoke_('markets_groups_market_group', { market_group_id, language, show_column_headings, version })
+  return invoke('markets_groups_market_group', { market_group_id, language, show_column_headings, version })
 }
 
 /**
@@ -1660,7 +1660,7 @@ function markets_groups_market_group(market_group_id: number, language?: string,
  * @customfunction
  */
 function markets_prices(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('markets_prices', { show_column_headings, version })
+  return invoke('markets_prices', { show_column_headings, version })
 }
 
 /**
@@ -1675,7 +1675,7 @@ function markets_prices(show_column_headings: boolean = true, version: string = 
 function markets_region_history(type_id: number, region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('markets_region_history', { type_id, region_id, show_column_headings, version })
+  return invoke('markets_region_history', { type_id, region_id, show_column_headings, version })
 }
 
 /**
@@ -1691,7 +1691,7 @@ function markets_region_history(type_id: number, region_id: number, show_column_
 function markets_region_orders(region_id: number, order_type: string, type_id?: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
   if (!order_type) throw new Error(`order_type is required`);
-  return invoke_('markets_region_orders', { region_id, order_type, type_id, show_column_headings, version })
+  return invoke('markets_region_orders', { region_id, order_type, type_id, show_column_headings, version })
 }
 
 /**
@@ -1704,7 +1704,7 @@ function markets_region_orders(region_id: number, order_type: string, type_id?: 
  */
 function markets_region_types(region_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('markets_region_types', { region_id, show_column_headings, version })
+  return invoke('markets_region_types', { region_id, show_column_headings, version })
 }
 
 /**
@@ -1718,7 +1718,7 @@ function markets_region_types(region_id: number, show_column_headings: boolean =
  */
 function markets_structures_structure(structure_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!structure_id) throw new Error(`structure_id is required`);
-  return invoke_('markets_structures_structure', { structure_id, name, show_column_headings, version })
+  return invoke('markets_structures_structure', { structure_id, name, show_column_headings, version })
 }
 
 /**
@@ -1729,7 +1729,7 @@ function markets_structures_structure(structure_id: number, name?: string, show_
  * @customfunction
  */
 function opportunities_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('opportunities_groups', { show_column_headings, version })
+  return invoke('opportunities_groups', { show_column_headings, version })
 }
 
 /**
@@ -1743,7 +1743,7 @@ function opportunities_groups(show_column_headings: boolean = true, version: str
  */
 function opportunities_groups_group(group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!group_id) throw new Error(`group_id is required`);
-  return invoke_('opportunities_groups_group', { group_id, language, show_column_headings, version })
+  return invoke('opportunities_groups_group', { group_id, language, show_column_headings, version })
 }
 
 /**
@@ -1754,7 +1754,7 @@ function opportunities_groups_group(group_id: number, language?: string, show_co
  * @customfunction
  */
 function opportunities_tasks(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('opportunities_tasks', { show_column_headings, version })
+  return invoke('opportunities_tasks', { show_column_headings, version })
 }
 
 /**
@@ -1767,7 +1767,7 @@ function opportunities_tasks(show_column_headings: boolean = true, version: stri
  */
 function opportunities_tasks_task(task_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!task_id) throw new Error(`task_id is required`);
-  return invoke_('opportunities_tasks_task', { task_id, show_column_headings, version })
+  return invoke('opportunities_tasks_task', { task_id, show_column_headings, version })
 }
 
 /**
@@ -1785,7 +1785,7 @@ function opportunities_tasks_task(task_id: number, show_column_headings: boolean
 function route_origin_destination(origin: number, destination: number, avoid?: number[], connections?: number[], flag?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!origin) throw new Error(`origin is required`);
   if (!destination) throw new Error(`destination is required`);
-  return invoke_('route_origin_destination', { origin, destination, avoid, connections, flag, show_column_headings, version })
+  return invoke('route_origin_destination', { origin, destination, avoid, connections, flag, show_column_headings, version })
 }
 
 /**
@@ -1796,7 +1796,7 @@ function route_origin_destination(origin: number, destination: number, avoid?: n
  * @customfunction
  */
 function sovereignty_campaigns(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_campaigns', { show_column_headings, version })
+  return invoke('sovereignty_campaigns', { show_column_headings, version })
 }
 
 /**
@@ -1807,7 +1807,7 @@ function sovereignty_campaigns(show_column_headings: boolean = true, version: st
  * @customfunction
  */
 function sovereignty_map(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_map', { show_column_headings, version })
+  return invoke('sovereignty_map', { show_column_headings, version })
 }
 
 /**
@@ -1818,7 +1818,7 @@ function sovereignty_map(show_column_headings: boolean = true, version: string =
  * @customfunction
  */
 function sovereignty_structures(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('sovereignty_structures', { show_column_headings, version })
+  return invoke('sovereignty_structures', { show_column_headings, version })
 }
 
 /**
@@ -1830,7 +1830,7 @@ function sovereignty_structures(show_column_headings: boolean = true, version: s
  * @customfunction
  */
 function universe_ancestries(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_ancestries', { language, show_column_headings, version })
+  return invoke('universe_ancestries', { language, show_column_headings, version })
 }
 
 /**
@@ -1843,7 +1843,7 @@ function universe_ancestries(language?: string, show_column_headings: boolean = 
  */
 function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!asteroid_belt_id) throw new Error(`asteroid_belt_id is required`);
-  return invoke_('universe_asteroid_belts_asteroid_belt', { asteroid_belt_id, show_column_headings, version })
+  return invoke('universe_asteroid_belts_asteroid_belt', { asteroid_belt_id, show_column_headings, version })
 }
 
 /**
@@ -1855,7 +1855,7 @@ function universe_asteroid_belts_asteroid_belt(asteroid_belt_id: number, show_co
  * @customfunction
  */
 function universe_bloodlines(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_bloodlines', { language, show_column_headings, version })
+  return invoke('universe_bloodlines', { language, show_column_headings, version })
 }
 
 /**
@@ -1866,7 +1866,7 @@ function universe_bloodlines(language?: string, show_column_headings: boolean = 
  * @customfunction
  */
 function universe_categories(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_categories', { show_column_headings, version })
+  return invoke('universe_categories', { show_column_headings, version })
 }
 
 /**
@@ -1880,7 +1880,7 @@ function universe_categories(show_column_headings: boolean = true, version: stri
  */
 function universe_categories_category(category_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!category_id) throw new Error(`category_id is required`);
-  return invoke_('universe_categories_category', { category_id, language, show_column_headings, version })
+  return invoke('universe_categories_category', { category_id, language, show_column_headings, version })
 }
 
 /**
@@ -1891,7 +1891,7 @@ function universe_categories_category(category_id: number, language?: string, sh
  * @customfunction
  */
 function universe_constellations(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_constellations', { show_column_headings, version })
+  return invoke('universe_constellations', { show_column_headings, version })
 }
 
 /**
@@ -1905,7 +1905,7 @@ function universe_constellations(show_column_headings: boolean = true, version: 
  */
 function universe_constellations_constellation(constellation_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!constellation_id) throw new Error(`constellation_id is required`);
-  return invoke_('universe_constellations_constellation', { constellation_id, language, show_column_headings, version })
+  return invoke('universe_constellations_constellation', { constellation_id, language, show_column_headings, version })
 }
 
 /**
@@ -1917,7 +1917,7 @@ function universe_constellations_constellation(constellation_id: number, languag
  * @customfunction
  */
 function universe_factions(language?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('universe_factions', { language, show_column_headings, version })
+  return invoke('universe_factions', { language, show_column_headings, version })
 }
 
 /**
@@ -1928,7 +1928,7 @@ function universe_factions(language?: string, show_column_headings: boolean = tr
  * @customfunction
  */
 function universe_graphics(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_graphics', { show_column_headings, version })
+  return invoke('universe_graphics', { show_column_headings, version })
 }
 
 /**
@@ -1941,7 +1941,7 @@ function universe_graphics(show_column_headings: boolean = true, version: string
  */
 function universe_graphics_graphic(graphic_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!graphic_id) throw new Error(`graphic_id is required`);
-  return invoke_('universe_graphics_graphic', { graphic_id, show_column_headings, version })
+  return invoke('universe_graphics_graphic', { graphic_id, show_column_headings, version })
 }
 
 /**
@@ -1952,7 +1952,7 @@ function universe_graphics_graphic(graphic_id: number, show_column_headings: boo
  * @customfunction
  */
 function universe_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_groups', { show_column_headings, version })
+  return invoke('universe_groups', { show_column_headings, version })
 }
 
 /**
@@ -1966,7 +1966,7 @@ function universe_groups(show_column_headings: boolean = true, version: string =
  */
 function universe_groups_group(group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!group_id) throw new Error(`group_id is required`);
-  return invoke_('universe_groups_group', { group_id, language, show_column_headings, version })
+  return invoke('universe_groups_group', { group_id, language, show_column_headings, version })
 }
 
 /**
@@ -1980,7 +1980,7 @@ function universe_groups_group(group_id: number, language?: string, show_column_
  */
 function universe_ids(names: string[], language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!names) throw new Error(`names is required`);
-  return invoke_('universe_ids', { names, language, show_column_headings, version })
+  return invoke('universe_ids', { names, language, show_column_headings, version })
 }
 
 /**
@@ -1993,7 +1993,7 @@ function universe_ids(names: string[], language?: string, show_column_headings: 
  */
 function universe_moons_moon(moon_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!moon_id) throw new Error(`moon_id is required`);
-  return invoke_('universe_moons_moon', { moon_id, show_column_headings, version })
+  return invoke('universe_moons_moon', { moon_id, show_column_headings, version })
 }
 
 /**
@@ -2006,7 +2006,7 @@ function universe_moons_moon(moon_id: number, show_column_headings: boolean = tr
  */
 function universe_names(ids: number[], show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!ids) throw new Error(`ids is required`);
-  return invoke_('universe_names', { ids, show_column_headings, version })
+  return invoke('universe_names', { ids, show_column_headings, version })
 }
 
 /**
@@ -2019,7 +2019,7 @@ function universe_names(ids: number[], show_column_headings: boolean = true, ver
  */
 function universe_planets_planet(planet_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!planet_id) throw new Error(`planet_id is required`);
-  return invoke_('universe_planets_planet', { planet_id, show_column_headings, version })
+  return invoke('universe_planets_planet', { planet_id, show_column_headings, version })
 }
 
 /**
@@ -2031,7 +2031,7 @@ function universe_planets_planet(planet_id: number, show_column_headings: boolea
  * @customfunction
  */
 function universe_races(language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_races', { language, show_column_headings, version })
+  return invoke('universe_races', { language, show_column_headings, version })
 }
 
 /**
@@ -2042,7 +2042,7 @@ function universe_races(language?: string, show_column_headings: boolean = true,
  * @customfunction
  */
 function universe_regions(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_regions', { show_column_headings, version })
+  return invoke('universe_regions', { show_column_headings, version })
 }
 
 /**
@@ -2056,7 +2056,7 @@ function universe_regions(show_column_headings: boolean = true, version: string 
  */
 function universe_regions_region(region_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!region_id) throw new Error(`region_id is required`);
-  return invoke_('universe_regions_region', { region_id, language, show_column_headings, version })
+  return invoke('universe_regions_region', { region_id, language, show_column_headings, version })
 }
 
 /**
@@ -2069,7 +2069,7 @@ function universe_regions_region(region_id: number, language?: string, show_colu
  */
 function universe_schematics_schematic(schematic_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!schematic_id) throw new Error(`schematic_id is required`);
-  return invoke_('universe_schematics_schematic', { schematic_id, show_column_headings, version })
+  return invoke('universe_schematics_schematic', { schematic_id, show_column_headings, version })
 }
 
 /**
@@ -2082,7 +2082,7 @@ function universe_schematics_schematic(schematic_id: number, show_column_heading
  */
 function universe_stargates_stargate(stargate_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!stargate_id) throw new Error(`stargate_id is required`);
-  return invoke_('universe_stargates_stargate', { stargate_id, show_column_headings, version })
+  return invoke('universe_stargates_stargate', { stargate_id, show_column_headings, version })
 }
 
 /**
@@ -2095,7 +2095,7 @@ function universe_stargates_stargate(stargate_id: number, show_column_headings: 
  */
 function universe_stars_star(star_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!star_id) throw new Error(`star_id is required`);
-  return invoke_('universe_stars_star', { star_id, show_column_headings, version })
+  return invoke('universe_stars_star', { star_id, show_column_headings, version })
 }
 
 /**
@@ -2108,7 +2108,7 @@ function universe_stars_star(star_id: number, show_column_headings: boolean = tr
  */
 function universe_stations_station(station_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!station_id) throw new Error(`station_id is required`);
-  return invoke_('universe_stations_station', { station_id, show_column_headings, version })
+  return invoke('universe_stations_station', { station_id, show_column_headings, version })
 }
 
 /**
@@ -2120,7 +2120,7 @@ function universe_stations_station(station_id: number, show_column_headings: boo
  * @customfunction
  */
 function universe_structures(filter?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_structures', { filter, show_column_headings, version })
+  return invoke('universe_structures', { filter, show_column_headings, version })
 }
 
 /**
@@ -2134,7 +2134,7 @@ function universe_structures(filter?: string, show_column_headings: boolean = tr
  */
 function universe_structures_structure(structure_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!structure_id) throw new Error(`structure_id is required`);
-  return invoke_('universe_structures_structure', { structure_id, name, show_column_headings, version })
+  return invoke('universe_structures_structure', { structure_id, name, show_column_headings, version })
 }
 
 /**
@@ -2145,7 +2145,7 @@ function universe_structures_structure(structure_id: number, name?: string, show
  * @customfunction
  */
 function universe_system_jumps(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_system_jumps', { show_column_headings, version })
+  return invoke('universe_system_jumps', { show_column_headings, version })
 }
 
 /**
@@ -2156,7 +2156,7 @@ function universe_system_jumps(show_column_headings: boolean = true, version: st
  * @customfunction
  */
 function universe_system_kills(show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke_('universe_system_kills', { show_column_headings, version })
+  return invoke('universe_system_kills', { show_column_headings, version })
 }
 
 /**
@@ -2167,7 +2167,7 @@ function universe_system_kills(show_column_headings: boolean = true, version: st
  * @customfunction
  */
 function universe_systems(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_systems', { show_column_headings, version })
+  return invoke('universe_systems', { show_column_headings, version })
 }
 
 /**
@@ -2181,7 +2181,7 @@ function universe_systems(show_column_headings: boolean = true, version: string 
  */
 function universe_systems_system(system_id: number, language?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   if (!system_id) throw new Error(`system_id is required`);
-  return invoke_('universe_systems_system', { system_id, language, show_column_headings, version })
+  return invoke('universe_systems_system', { system_id, language, show_column_headings, version })
 }
 
 /**
@@ -2192,7 +2192,7 @@ function universe_systems_system(system_id: number, language?: string, show_colu
  * @customfunction
  */
 function universe_types(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('universe_types', { show_column_headings, version })
+  return invoke('universe_types', { show_column_headings, version })
 }
 
 /**
@@ -2206,7 +2206,7 @@ function universe_types(show_column_headings: boolean = true, version: string = 
  */
 function universe_types_type(type_id: number, language?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!type_id) throw new Error(`type_id is required`);
-  return invoke_('universe_types_type', { type_id, language, show_column_headings, version })
+  return invoke('universe_types_type', { type_id, language, show_column_headings, version })
 }
 
 /**
@@ -2218,7 +2218,7 @@ function universe_types_type(type_id: number, language?: string, show_column_hea
  * @customfunction
  */
 function wars(max_war_id?: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke_('wars', { max_war_id, show_column_headings, version })
+  return invoke('wars', { max_war_id, show_column_headings, version })
 }
 
 /**
@@ -2231,7 +2231,7 @@ function wars(max_war_id?: number, show_column_headings: boolean = true, version
  */
 function wars_war(war_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!war_id) throw new Error(`war_id is required`);
-  return invoke_('wars_war', { war_id, show_column_headings, version })
+  return invoke('wars_war', { war_id, show_column_headings, version })
 }
 
 /**
@@ -2244,5 +2244,5 @@ function wars_war(war_id: number, show_column_headings: boolean = true, version:
  */
 function wars_war_killmails(war_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!war_id) throw new Error(`war_id is required`);
-  return invoke_('wars_war_killmails', { war_id, show_column_headings, version })
+  return invoke('wars_war_killmails', { war_id, show_column_headings, version })
 }

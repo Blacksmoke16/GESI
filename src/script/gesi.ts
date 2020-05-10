@@ -33,13 +33,7 @@ function getDocumentCache_(): GoogleAppsScript.Cache.Cache {
   return cache;
 }
 
-function setCharacters_(characterMap: ICharacterMap): void {
-  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
-}
-
-function setMainCharacter_(characterName: string): void {
-  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
-}
+// region UI
 
 function onInstall(): void {
   onOpen();
@@ -95,6 +89,8 @@ function setMainCharacter() {
   ui.alert(`${character.name} is now your main character.`);
 }
 
+// endregion
+
 /**
  * Parses array data into more readable format
  * @param {string} endpoint_name (Required) Name of the endpoint data to be parsed is from.
@@ -132,15 +128,8 @@ function getMainCharacter(): string | null {
 }
 
 /**
- * @param {string} characterName The name of the character to get the token for.  Defaults the the main character.
- * @return {string} The access token for the provided characterName
- */
-function getAccessToken(characterName?: string): string {
-  return getOAuthService_(characterNameToId_(characterName || getMainCharacter())).getAccessToken();
-}
-
-/**
  * @return {ICharacterMap} An object representing the characters that have been authenticated
+ * @customfunction
  */
 function getAuthenticatedCharacters(): ICharacterMap {
   return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
@@ -167,120 +156,55 @@ function getCharacterData(characterName: string | null): IAuthenticatedCharacter
   return characterMap[characterName];
 }
 
-function invoke_(endpointName: string, params: IFunctionParam): SheetsArray {
-  return prepareRequest_(endpointName, params).call(params);
-}
-
 /**
- * Returns the data from the provided endpointName for each character as one list for use within a sheet.
+ * Return the sheets formatted data related for the given functionName.
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
- * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {object} params Any extra parameters that should be included in the ESI call
- * @return
+ * @return The data from the provided functionName
  * @customfunction
  */
-function invokeMultiple(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: true }): SheetsArray {
-  const normalizedNames = normalizeNames_(characterNames);
-  const firstCharacter = normalizedNames.shift();
-
-  const result = invoke_(endpointName, { ...params, name: firstCharacter });
-
-  if (params.show_column_headings) {
-    const headers = result[0];
-    headers.push('character_name');
-  }
-
-  result.forEach((item: any, idx: number) => {
-    if (idx > 0 || !params.show_column_headings) item.push(firstCharacter);
-  });
-
-  normalizedNames.forEach((name: string) => {
-    const subResults = invoke_(endpointName, { ...params, name, show_column_headings: false });
-
-    subResults.forEach((item: any) => {
-      item.push(name);
-      result.push(item);
-    });
-  });
-
-  return result;
-}
-
-/**
- * Returns the data from the provided endpointName for each character as one list for use within custom functions/scripts.
- *
- * @param {string} endpointName The name of the endpoint that should be invoked
- * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
- * @param {object} params Any extra parameters that should be included in the ESI call
- * @return
- * @customfunction
- */
-function invokeMultipleRaw(endpointName: string, characterNames: string | string[] | string[][], params: IFunctionParam = { show_column_headings: false }): SheetsArray {
-  const normalizedNames = normalizeNames_(characterNames);
-  const firstCharacter = normalizedNames.shift();
-
-  const result = normalizeResult_(invokeRaw(endpointName, { ...params, name: firstCharacter }));
-
-  result.forEach((item: any) => {
-    item.character_name = firstCharacter;
-  });
-
-  normalizedNames.forEach((name: string) => {
-    const subResults = normalizeResult_(invokeRaw(endpointName, { ...params, name: name }));
-
-    subResults.forEach((item: any) => {
-      item.character_name = name;
-      result.push(item);
-    });
-  });
-
-  return result;
-}
-
-function normalizeResult_(result: any): any[] {
-  return Array.isArray(result) ? result : [result];
-}
-
-function normalizeNames_(characterNames: string | string[] | string[][]): string[] {
-  let normalizedNames: string[];
-
-  if (Array.isArray(characterNames)) {
-    // @ts-ignore
-    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
-  } else {
-    normalizedNames = characterNames.split(',');
-  }
-
-  if (!normalizedNames || normalizedNames.length === 0) {
-    throw new Error('characterNames must not be empty.');
-  }
-
-  return normalizedNames.map(name => name.trim());
+function invoke(functionName: string, params: IFunctionParams = { show_column_headings: true }): SheetsArray {
+  return getClient(params.name).setFunction(functionName).execute(params);
 }
 
 /**
  * Return the raw JSON data related to an ESI call
  *
- * @param {string} endpointName The name of the endpoint that should be invoked
+ * @param {string} functionName The name of the endpoint that should be invoked
  * @param {object} params Any extra parameters that should be included in the ESI call
- * @return The raw JSON response from the provided endpointName
+ * @return The raw JSON response from the provided functionName
  * @customfunction
  */
-function invokeRaw(endpointName: string, params: IFunctionParam = {} as IFunctionParam): any {
-  return prepareRequest_(endpointName, params).callRaw(params);
+function invokeRaw<T>(functionName: string, params: IFunctionParams = { show_column_headings: false } as IFunctionParams): any {
+  return getClient(params.name).setFunction(functionName).executeRaw<T>(params);
 }
 
-function prepareRequest_(endpointName: string, params: IFunctionParam) {
-  const characterData = getCharacterData(params.name || getMainCharacter());
+/**
+ * Returns an ESIClient for the given characterName.
+ * Can be used by advanced users for custom functions/scripts.
+ *
+ * @param characterName
+ * @return {ESIClient}
+ * @customfunction
+ */
+function getClient(characterName?: string): ESIClient {
+  const characterData = getCharacterData(characterName || getMainCharacter());
   const oauthService = getOAuthService_(characterData.id);
-  return new ESIRequest(endpointName, oauthService, characterData);
+  return new ESIClient(oauthService, characterData);
 }
 
-class ESIRequest {
-  private endpoint: IEndpoint;
+class ESIClient {
   private oauthClient: OAuth2Service;
   private characterData: ICharacterData;
+  private readonly baseUrl: string;
+  private endpoint?: IEndpoint;
+
+  private static addQueryParam(path: string, paramName: string, paramValue: any): string {
+    path += path.includes('?') ? '&' : '?';
+    path += paramName + '=' + (Array.isArray(paramValue) ? paramValue.join(',') : paramValue);
+    return path;
+  }
 
   public static parseToken(access_token: string): IToken {
     const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
@@ -289,40 +213,52 @@ class ESIRequest {
     return jwtToken;
   }
 
-  private static addQueryParam(path: string, paramName: string, paramValue: any): string {
-    path += path.includes('?') ? '&' : '?';
-    path += paramName + '=' + (Array.isArray(paramValue) ? paramValue.join(',') : paramValue);
-    return path;
-  }
-
-  constructor(endpointName: string, oauthClient: OAuth2Service, characterData: ICharacterData) {
-    if (!ENDPOINTS.hasOwnProperty(endpointName)) {
-      throw new Error(`Unknown endpoint: '${endpointName}'`);
-    }
-
-    this.endpoint = ENDPOINTS[endpointName];
+  constructor(oauthClient: OAuth2Service, characterData: ICharacterData) {
     this.oauthClient = oauthClient;
     this.characterData = characterData;
+    this.baseUrl = getScriptProperties_().getProperty('BASE_URL');
   }
 
-  public call(params: IFunctionParam, payload: any = null): SheetsArray {
-    const data: any = this.doRequest(params, payload);
+  /**
+   * Sets the endpoint to use for future methods calls.
+   *
+   * @param {string} functionName The name of the endpoint that should be invoked
+   * @return {ESIClient} For chaining
+   * @customfunction
+   */
+  public setFunction(functionName: string): ESIClient {
+    if (!ENDPOINTS.hasOwnProperty(functionName)) {
+      throw new Error(`Unknown endpoint: '${functionName}'`);
+    }
+
+    this.endpoint = ENDPOINTS[functionName];
+
+    return this;
+  }
+
+  /**
+   * Executes an ESI request with the given params.
+   * Returns a SheetsArray with the results.
+   */
+  public execute(params: IFunctionParams): SheetsArray {
+    const endpoint = this.checkEndpoint();
+    const data: any = this.doRequest(params);
 
     let result: SheetsArray = [];
 
     // Add the header row if its not set, or set to true
-    if (params.show_column_headings) this.appendHeaders(result);
+    if (params.show_column_headings) result.push(endpoint.headers.map((header: IHeader) => header.name));
 
     if (Array.isArray(data) && isFinite(data[0])) {
       result = result.concat(data);
     } else if (Array.isArray(data) && data instanceof Object) {
       result = result.concat(
         data.map((obj) => {
-          return this.endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
+          return endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
         }),
       );
     } else if (data instanceof Object) {
-      result.push(this.endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
+      result.push(endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
     } else if (isFinite(data)) {
       result.push([data]);
     }
@@ -330,59 +266,32 @@ class ESIRequest {
     return result;
   }
 
-  public callRaw<T>(params: IFunctionParam, payload: any = null): T | T[] {
-    return this.doRequest<T>(params, payload);
+  /**
+   * Executes an ESI request with the given params.
+   * Returns the raw JSON data.
+   */
+  public executeRaw<T>(params: IFunctionParams): T {
+    this.checkEndpoint();
+    return this.doRequest<T>(params);
   }
 
-  private appendHeaders(result: SheetsArray): void {
-    result.push(this.endpoint.headers.map((header: IHeader) => header.name));
-  }
+  /**
+   * Builds a URLFetchRequest object with the given params.
+   */
+  public buildRequest(params: IFunctionParams): URLFetchRequest {
+    const endpoint = this.checkEndpoint();
 
-  private doRequest<T>(params: IFunctionParam, payload: any = null): T | T[] {
-    const request = this.buildRequest(params, payload);
-
-    const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
-    const headers = response.getHeaders();
-
-    // If the request was not successful, raise an error
-    if (response.getResponseCode() !== 200) {
-      throw new Error(response.getContentText());
-    }
-
-    // Log a warning if a route returns a warning
-    if (headers.hasOwnProperty('Warning')) console.warn(headers['Warning']);
-
-    // If the route is not paginated, just return the first response
-    if (!this.endpoint.paginated) return JSON.parse(response.getContentText());
-
-    // If the route is paginated but only has one page, just return it
-    if (headers.hasOwnProperty('x-pages') && parseInt(headers['x-pages']) === 1) return JSON.parse(response.getContentText());
-
-    // Otherwise, if there are more than 1 page, issue additional requests to fetch all the pages
-    const result = JSON.parse(response.getContentText());
-
-    const totalPages = parseInt(headers['x-pages']);
-    const requests = [];
-
-    for (let p = 2; p <= totalPages; p++) {
-      params.page = p;
-      requests.push(this.buildRequest(params, payload));
-    }
-
-    return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
-  }
-
-  private buildRequest(params: IFunctionParam, payload: any = null): URLFetchRequest {
-    let path = this.endpoint.path;
+    let path = endpoint.path;
+    let payload: any = null;
 
     // Process this endpoint's parameters
-    this.endpoint.parameters.forEach((param: IParameter) => {
+    endpoint.parameters.forEach((param: IParameter) => {
       const paramValue = params[param.name];
 
       if (param.in === 'path' && paramValue) {
         path = path.replace(`{${param.name}}`, paramValue);
       } else if (param.in === 'query' && paramValue) {
-        path = ESIRequest.addQueryParam(path, param.name, paramValue);
+        path = ESIClient.addQueryParam(path, param.name, paramValue);
       } else if (param.in === 'body' && paramValue) {
         if (param.type.includes('[]')) {
           payload = !Array.isArray(paramValue) ?
@@ -396,18 +305,18 @@ class ESIRequest {
 
     // Add the page param if set
     if (params.page) {
-      path = ESIRequest.addQueryParam(path, 'page', params.page);
+      path = ESIClient.addQueryParam(path, 'page', params.page);
     }
 
-    if (this.endpoint.scope) {
+    if (endpoint.scope) {
       if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id.toString());
       if (path.includes('{character_id}')) path = path.replace('{character_id}', this.characterData.character_id.toString());
       if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.characterData.corporation_id.toString());
     }
 
     const request: URLFetchRequest = {
-      method: this.endpoint.method,
-      url: `${getScriptProperties_().getProperty('BASE_URL')}${path.replace('{version}', params.version || this.endpoint.version)}`,
+      method: endpoint.method,
+      url: `${this.baseUrl}${path.replace('{version}', params.version || endpoint.version)}`,
       headers: {
         'user-agent': `GESI User ${this.characterData.character_id}`,
       },
@@ -416,11 +325,118 @@ class ESIRequest {
     };
 
     if (payload) request.payload = JSON.stringify(payload);
-    if (this.endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
+    if (endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
 
     return request;
   }
+
+  private doRequest<T>(params: IFunctionParams): T {
+    const request = this.buildRequest(params);
+    const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
+    const headers = response.getHeaders();
+
+    // If the request was not successful, raise an error
+    if (response.getResponseCode() !== 200) {
+      throw new Error(response.getContentText());
+    }
+
+    // Log a warning if a route returns a warning
+    if (headers.hasOwnProperty('Warning')) console.warn(headers['Warning']);
+
+    // If the route is not paginated, or is paginated but only has one page, just return it
+    if (!headers.hasOwnProperty('x-pages') || (headers.hasOwnProperty('x-pages') && parseInt(headers['x-pages']) === 1)) return JSON.parse(response.getContentText());
+
+    // Otherwise, if there are more than 1 page, issue additional requests to fetch all the pages
+    const result = JSON.parse(response.getContentText());
+
+    const totalPages = parseInt(headers['x-pages']);
+    const requests = [];
+
+    for (let p = 2; p <= totalPages; p++) {
+      params.page = p;
+      requests.push(this.buildRequest(params));
+    }
+
+    return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
+  }
+
+  private checkEndpoint(): IEndpoint {
+    if (!this.endpoint) {
+      throw new Error('Endpoint name has not been set on client.');
+    }
+
+    return this.endpoint;
+  }
 }
+
+/**
+ * Returns the data from the provided functionName for each character as one list for use within a sheet.
+ *
+ * @param {string} functionName The name of the endpoint that should be invoked
+ * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return
+ * @customfunction
+ */
+function invokeMultiple(functionName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: true }): SheetsArray {
+  const normalizedNames = normalizeNames_(characterNames);
+  const firstCharacter = normalizedNames.shift();
+
+  const result = invoke(functionName, { ...params, name: firstCharacter });
+
+  if (params.show_column_headings) {
+    const headers = result[0];
+    headers.push('character_name');
+  }
+
+  result.forEach((item: any, idx: number) => {
+    if (idx > 0 || !params.show_column_headings) item.push(firstCharacter);
+  });
+
+  normalizedNames.forEach((name: string) => {
+    const subResults = invoke(functionName, { ...params, name, show_column_headings: false });
+
+    subResults.forEach((item: any) => {
+      item.push(name);
+      result.push(item);
+    });
+  });
+
+  return result;
+}
+
+/**
+ * Returns the data from the provided functionName for each character as one list for use within custom functions/scripts.
+ *
+ * @param {string} functionName The name of the endpoint that should be invoked
+ * @param {string | string[]} characterNames A single, comma separated, or vertical range of character names
+ * @param {object} params Any extra parameters that should be included in the ESI call
+ * @return
+ * @customfunction
+ */
+function invokeMultipleRaw(functionName: string, characterNames: string | string[] | string[][], params: IFunctionParams = { show_column_headings: false }): SheetsArray {
+  const normalizedNames = normalizeNames_(characterNames);
+  const firstCharacter = normalizedNames.shift();
+
+  const result = normalizeResult_(invokeRaw(functionName, { ...params, name: firstCharacter }));
+
+  result.forEach((item: any) => {
+    item.character_name = firstCharacter;
+  });
+
+  normalizedNames.forEach((name: string) => {
+    const subResults = normalizeResult_(invokeRaw(functionName, { ...params, name: name }));
+
+    subResults.forEach((item: any) => {
+      item.character_name = name;
+      result.push(item);
+    });
+  });
+
+  return result;
+}
+
+// region oauth
 
 function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   const id: string = request.parameter.serviceName;
@@ -432,12 +448,8 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   oauthService.handleCallback(request);
 
   // Parse the JWT access token for some basic information about this character
-  const jwtToken = ESIRequest.parseToken(oauthService.getAccessToken());
+  const jwtToken = ESIClient.parseToken(oauthService.getAccessToken());
   const characterId = parseInt(jwtToken.sub.split(':')[2]);
-
-  // @ts-ignore
-  // TODO: Make a PR to update @types/google-apps-script-oauth2
-  const storage: IStorage = oauthService.getStorage();
 
   // Fetch additional data about this character
   const affiliationData = getCharacterAffiliation_(characterId, oauthService);
@@ -469,11 +481,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIRequest('characters_affiliation', oauthClient, {} as ICharacterData)).callRaw<ICharacterAffiliation[]>({} as IFunctionParam, [characterId])[0] as ICharacterAffiliation;
-}
-
-function characterNameToId_(characterName: string | null): string {
-  return getCharacterData(characterName).id;
+  return (new ESIClient(oauthClient, {} as ICharacterData)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
 function getOAuthService_(id: string): OAuth2Service {
@@ -488,6 +496,37 @@ function getOAuthService_(id: string): OAuth2Service {
     .setScope(SCOPES)
     .setParam('access_type', 'offline')
     .setParam('prompt', 'consent');
+}
+
+// endregion
+
+function setCharacters_(characterMap: ICharacterMap): void {
+  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
+}
+
+function setMainCharacter_(characterName: string): void {
+  getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
+}
+
+function normalizeResult_(result: any): any[] {
+  return Array.isArray(result) ? result : [result];
+}
+
+function normalizeNames_(characterNames: string | string[] | string[][]): string[] {
+  let normalizedNames: string[];
+
+  if (Array.isArray(characterNames)) {
+    // @ts-ignore
+    normalizedNames = Array.isArray(characterNames[0]) ? characterNames.map((row: any) => row[0]) : characterNames;
+  } else {
+    normalizedNames = characterNames.split(',');
+  }
+
+  if (!normalizedNames || normalizedNames.length === 0) {
+    throw new Error('characterNames must not be empty.');
+  }
+
+  return normalizedNames.map(name => name.trim());
 }
 
 interface IHeader {
@@ -536,7 +575,7 @@ interface IEndpointList {
   [key: string]: IEndpoint;
 }
 
-interface IFunctionParam {
+interface IFunctionParams {
   show_column_headings: boolean;
   version?: string;
   name?: string;
@@ -562,13 +601,6 @@ interface ICharacterMap {
 
 type SheetsArray = any[][]
 
-interface IESIToken {
-  readonly access_token: string;
-  readonly expires_in: number;
-  readonly refresh_token: string;
-  readonly token_type: string;
-}
-
 interface IToken {
   readonly azp: string;
   readonly exp: number;
@@ -583,12 +615,4 @@ interface ICharacterAffiliation {
   readonly character_id: number;
   readonly corporation_id: number;
   readonly faction_id?: number;
-}
-
-interface IStorage {
-  getValue(key: string, optSkipMemoryCheck?: boolean): any;
-
-  setValue(key: string, value: any): void;
-
-  removeValue(key: string): void;
 }
