@@ -184,8 +184,8 @@ A common use case is wanting to get the same data from multiple characters.  For
 This method can be used directly in the sheet.  However, if it requires arguments, then it should be wrapped in a custom function:
 
 ```js
-function getJobs(characterNames) {
-  return GESI.invokeMultiple("characters_character_industry_jobs", characterNames, { include_completed: true })
+function getJobs() {
+  return GESI.invokeMultiple("characters_character_industry_jobs", GESI.getAuthenticatedCharacterNames(), { include_completed: true })
 }
 ```
 
