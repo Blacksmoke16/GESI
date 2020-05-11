@@ -12,6 +12,8 @@ import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 import Properties = GoogleAppsScript.Properties.Properties;
+import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
+import User = GoogleAppsScript.Base.User;
 
 type ParameterType = 'path' | 'parameters' | 'body' | 'query';
 
@@ -62,16 +64,10 @@ function deauthorizeCharacter(): void {
   if (response.getSelectedButton() !== ui.Button.OK) return;
 
   const character = getCharacterData(response.getResponseText());
-  const characterMap = getAuthenticatedCharacters();
 
   // Delete their oauth lib
-  const oauthClient = getOAuthService_(character.id);
-  oauthClient.reset();
-
-  // Remove the character from the characters hash
-  delete characterMap[character.name];
-
-  setCharacters_(characterMap);
+  getOAuthService_(character.id).reset();
+  getDocumentProperties_().deleteProperty(`character.${character.name}`);
 
   ui.alert(`Successfully deauthorized ${character.name}.`);
 }
@@ -132,7 +128,16 @@ function getMainCharacter(): string | null {
  * @customfunction
  */
 function getAuthenticatedCharacters(): ICharacterMap {
-  return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
+  const properties = getDocumentProperties_().getProperties();
+  const characterMap: ICharacterMap = {};
+
+  Object.keys(properties).forEach((key: string) => {
+    if (key.indexOf('character.') === 0) {
+      characterMap[key.replace('character.', '')] = JSON.parse(properties[key]);
+    }
+  });
+
+  return characterMap;
 }
 
 /**
@@ -206,8 +211,8 @@ class ESIClient {
     return path;
   }
 
-  public static parseToken(access_token: string): IToken {
-    const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
+  public static parseToken(access_token: string): IAccessTokenData {
+    const jwtToken: IAccessTokenData = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
     if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
     if (jwtToken.azp !== getScriptProperties_().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
@@ -237,8 +242,34 @@ class ESIClient {
   }
 
   /**
+   * @return {string} The access_token associated with this ESIClient.
+   * @customfunction
+   */
+  public getAccessToken(): string {
+    return this.oauthClient.getAccessToken();
+  }
+
+  /**
+   * @return {string} The refresh_token associated with this ESIClient.
+   * @customfunction
+   */
+  public getRefreshToken(): string {
+    return this.getToken().refresh_token;
+  }
+
+  /**
+   * @return {IToken} The full token object related to this ESIClient.
+   * @customfunction
+   */
+  public getToken(): IToken {
+    return this.oauthClient.getToken() as IToken;
+  }
+
+  /**
    * Executes an ESI request with the given params.
-   * Returns a SheetsArray with the results.
+   *
+   * @return {SheetsArray} The results.
+   * @customfunction
    */
   public execute(params: IFunctionParams): SheetsArray {
     const endpoint = this.checkEndpoint();
@@ -268,7 +299,9 @@ class ESIClient {
 
   /**
    * Executes an ESI request with the given params.
-   * Returns the raw JSON data.
+   *
+   * @return {object | object[]} The parsed raw JSON result.
+   * @customfunction
    */
   public executeRaw<T>(params: IFunctionParams): T {
     this.checkEndpoint();
@@ -277,6 +310,9 @@ class ESIClient {
 
   /**
    * Builds a URLFetchRequest object with the given params.
+   *
+   * @return {URLFetchRequest} The built request.
+   * @customfunction
    */
   public buildRequest(params: IFunctionParams): URLFetchRequest {
     const endpoint = this.checkEndpoint();
@@ -438,6 +474,109 @@ function invokeMultipleRaw(functionName: string, characterNames: string | string
 
 // region oauth
 
+enum CharacterSheetColumns {
+  Id,
+  AccessToken,
+  ExpiresIn,
+  RefreshToken,
+  GrantedTime,
+  TokenType
+}
+
+class SheetStorage {
+  private static readonly CHARACTER_SHEET = 'Authenticated Characters';
+  private static readonly COLUMN_COUNT = Object.keys(CharacterSheetColumns).length / 2;
+
+  private readonly spreadsheet: Spreadsheet;
+  private readonly id: string;
+
+  constructor(id: string) {
+    this.id = id;
+    this.spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  }
+
+  public setValue(key: string, value: any): void {
+    const authedCharactersSheet = this.getCharacterSheet();
+
+    authedCharactersSheet.appendRow(this.tokenToArray(value));
+
+    authedCharactersSheet.autoResizeColumns(1, SheetStorage.COLUMN_COUNT);
+  }
+
+  public getValue(key: string, optSkipMemoryCheck: boolean = false): any {
+    const characterRow = this.getCharacterRow();
+
+    if (!characterRow) {
+      return null;
+    }
+
+    return {
+      access_token: characterRow[CharacterSheetColumns.AccessToken],
+      refresh_token: characterRow[CharacterSheetColumns.RefreshToken],
+      expires_in: characterRow[CharacterSheetColumns.ExpiresIn],
+      granted_time: characterRow[CharacterSheetColumns.GrantedTime],
+      token_type: characterRow[CharacterSheetColumns.TokenType],
+    };
+  }
+
+  public reset(): void {
+    const characterSheet = this.getCharacterSheet();
+    const dataRange = characterSheet.getDataRange();
+
+    if (dataRange.getNumRows() === 1) {
+      return dataRange.clear();
+    }
+
+    let rowIndex = dataRange.getValues().findIndex((row: any[]) => {
+      return row[CharacterSheetColumns.Id] === this.id;
+    });
+
+    if (rowIndex !== -1) {
+      this.getCharacterSheet().deleteRow(rowIndex + 1);
+    }
+  }
+
+  private createCharacterSheet(): Spreadsheet {
+    const characterSheet = this.spreadsheet.insertSheet(SheetStorage.CHARACTER_SHEET).hideSheet();
+    characterSheet.deleteRows(1, characterSheet.getMaxRows() - 1);
+    characterSheet.deleteColumns(SheetStorage.COLUMN_COUNT, characterSheet.getMaxColumns() - SheetStorage.COLUMN_COUNT);
+    const protectedData = characterSheet.protect().setDescription('Only sheet owner can view auth data');
+    protectedData.removeEditors(protectedData.getEditors().map((u: User) => u.getEmail()));
+    protectedData.addEditor(this.spreadsheet.getOwner()!.getEmail());
+
+    return characterSheet;
+  }
+
+  private tokenToArray(token: IToken): any[] {
+    const dataArr = [];
+    dataArr[CharacterSheetColumns.Id] = this.id;
+    dataArr[CharacterSheetColumns.AccessToken] = token.access_token;
+    dataArr[CharacterSheetColumns.ExpiresIn] = token.expires_in;
+    dataArr[CharacterSheetColumns.RefreshToken] = token.refresh_token;
+    dataArr[CharacterSheetColumns.GrantedTime] = token.granted_time;
+    dataArr[CharacterSheetColumns.TokenType] = token.token_type;
+    return dataArr;
+  }
+
+  private getCharacterRow(): any[] | null {
+    const authedCharactersSheet = this.getCharacterSheet();
+
+    return authedCharactersSheet.getDataRange().getValues().find((row: any[]) => {
+      return row[CharacterSheetColumns.Id] === this.id;
+    });
+  }
+
+  private getCharacterSheet(): Spreadsheet {
+    const characterSheet: Spreadsheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SheetStorage.CHARACTER_SHEET);
+
+    if (null === characterSheet) {
+      return this.createCharacterSheet();
+    }
+
+    return characterSheet;
+  }
+}
+
 function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   const id: string = request.parameter.serviceName;
 
@@ -456,23 +595,21 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 
   // If this character was previously authorized
   // update the ID of this character and reset the old service
-  const characterMap = getAuthenticatedCharacters();
+  const characterData: string | null = getDocumentProperties_().getProperty(`character.${jwtToken.name}`);
 
   // If this character is already in the map,
-  // Reset/clear out data related to previous oauthService
-  if (characterMap.hasOwnProperty(jwtToken.name)) {
-    getOAuthService_(characterMap[jwtToken.name].id).reset();
+  // Reset previous oauthService and delete character data
+  if (characterData) {
+    getOAuthService_(JSON.parse(characterData).id).reset();
   }
 
-  // Update the user object
-  characterMap[jwtToken.name] = {
+  setCharacterData(jwtToken.name, {
+    id: id,
     alliance_id: affiliationData.alliance_id || null,
     character_id: affiliationData.character_id,
     corporation_id: affiliationData.corporation_id,
-    id,
     name: jwtToken.name,
-  };
-  setCharacters_(characterMap);
+  });
 
   // Set the main character if there is not one already
   if (!getMainCharacter()) setMainCharacter_(jwtToken.name);
@@ -485,7 +622,7 @@ function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Servic
 }
 
 function getOAuthService_(id: string): OAuth2Service {
-  return OAuth2.createService(id)
+  const service = OAuth2.createService(id)
     .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
     .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
     .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
@@ -496,12 +633,17 @@ function getOAuthService_(id: string): OAuth2Service {
     .setScope(SCOPES)
     .setParam('access_type', 'offline')
     .setParam('prompt', 'consent');
+
+  // @ts-ignore
+  service.storage_ = new SheetStorage(id);
+
+  return service;
 }
 
 // endregion
 
-function setCharacters_(characterMap: ICharacterMap): void {
-  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
+function setCharacterData(characterName: string, characterData: IAuthenticatedCharacter): void {
+  getDocumentProperties_().setProperty(`character.${characterName}`, JSON.stringify(characterData));
 }
 
 function setMainCharacter_(characterName: string): void {
@@ -602,6 +744,14 @@ interface ICharacterMap {
 type SheetsArray = any[][]
 
 interface IToken {
+  readonly token_type: string;
+  readonly refresh_token: string;
+  readonly granted_time: number;
+  readonly expires_in: number;
+  readonly access_token: string;
+}
+
+interface IAccessTokenData {
   readonly azp: string;
   readonly exp: number;
   readonly iss: string;
