@@ -1,13 +1,16 @@
 {
     "compilerOptions": {
         "module": "commonjs",
+        "target": "ES6",
         "sourceMap": false,
         "strict": true
     },
     "include": [
         "endpoints.ts",
         "functions.ts",
-        "gesi.ts"
+        "gesi.ts",
+        "sheet_storage.ts",
+        "esi_client.ts"
     ],
     "exclude": [
         "node_modules"

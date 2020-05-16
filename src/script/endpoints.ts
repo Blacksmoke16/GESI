@@ -1,4 +1,5 @@
-const SCOPES = [
+function getScopes(): string[] {
+  return [
   "esi-alliances.read_contacts.v1",
   "esi-assets.read_assets.v1",
   "esi-assets.read_corporation_assets.v1",
@@ -66,9 +67,11 @@ const SCOPES = [
   "esi-universe.read_structures.v1",
   "esi-wallet.read_character_wallet.v1",
   "esi-wallet.read_corporation_wallets.v1"
-];
+]
+}
 
-const ENDPOINTS: IEndpointList = {
+function getEndpoints(): IEndpointList {
+  return {
   "alliances": {
     "description": "List all active player alliances",
     "headers": [
@@ -6971,4 +6974,5 @@ const ENDPOINTS: IEndpointList = {
     "summary": "List kills for a war",
     "version": "v1"
   }
-};
+}
+}
