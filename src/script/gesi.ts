@@ -47,21 +47,6 @@ function onOpen(): void {
     .addToUi();
 }
 
-function reset() {
-  const ui = SpreadsheetApp.getUi();
-  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
-
-  if (response === ui.Button.NO) return;
-
-  const characters = getAuthenticatedCharacters();
-
-  Object.keys(characters).forEach((characterName: string) => {
-    getClient(characterName).reset();
-  });
-
-  getDocumentProperties_().deleteAllProperties();
-}
-
 function showSSOModal(): void {
   const template = HtmlService.createTemplateFromFile('authorize');
   template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
@@ -96,7 +81,7 @@ function setMainCharacter() {
 
 function setAuthStorage() {
   const ui = SpreadsheetApp.getUi();
-  const useSheetStorage: boolean = ui.alert('Use sheet based authenticated character storage?', ui.ButtonSet.YES_NO) === ui.Button.YES;
+  const useSheetStorage: boolean = ui.alert(`Use sheet based authenticated character storage?\n\nYou probably don't want to do this unless you know what you're doing.`, ui.ButtonSet.YES_NO) === ui.Button.YES;
 
   getDocumentProperties_().setProperty('SHEET_STORAGE', useSheetStorage ? 'true' : 'false');
 
@@ -105,6 +90,19 @@ function setAuthStorage() {
       'You are now using sheet based storage.' :
       'You are now using properties based storage.',
   );
+}
+
+function reset() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
+
+  if (response === ui.Button.NO) return;
+
+  Object.keys(getAuthenticatedCharacters()).forEach((characterName: string) => {
+    getClient(characterName).reset();
+  });
+
+  getDocumentProperties_().deleteAllProperties();
 }
 
 // endregion
@@ -165,7 +163,7 @@ function getAuthenticatedCharacters(): ICharacterMap {
     Object.keys(characters).forEach((characterName: string) => {
       const characterData = characters[characterName];
 
-      setCharacterData(characterName, characterData);
+      setCharacterData_(characterName, characterData);
       characterMap[characterName] = characterData;
     });
 
@@ -335,7 +333,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
     getOAuthService_(JSON.parse(characterData).id).reset();
   }
 
-  setCharacterData(jwtToken.name, {
+  setCharacterData_(jwtToken.name, {
     id,
     alliance_id: affiliationData.alliance_id || null,
     character_id: affiliationData.character_id,
@@ -350,7 +348,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIClient(oauthClient, {} as ICharacterData)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
+  return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
 function getOAuthService_(id: string): OAuth2Service {
@@ -360,15 +358,17 @@ function getOAuthService_(id: string): OAuth2Service {
     .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
     .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
     .setCallbackFunction('authCallback')
-    .setPropertyStore(getDocumentProperties_())
-    .setCache(getDocumentCache_())
-    .setScope(getScopes())
     .setParam('access_type', 'offline')
-    .setParam('prompt', 'consent');
+    .setParam('prompt', 'consent')
+    .setScope(getScopes());
 
   if (isUsingSheetStorage_()) {
     // @ts-ignore
-    service.storage_ = new SheetStorage(id);
+    service.storage_ = new SheetStorage(id, getDocumentCache_());
+  } else {
+    service
+      .setPropertyStore(getDocumentProperties_())
+      .setCache(getDocumentCache_());
   }
 
   return service;
@@ -380,7 +380,7 @@ function isUsingSheetStorage_(): boolean {
 
 // endregion
 
-function setCharacterData(characterName: string, characterData: IAuthenticatedCharacter): void {
+function setCharacterData_(characterName: string, characterData: IAuthenticatedCharacter): void {
   getDocumentProperties_().setProperty(`character.${characterName}`, JSON.stringify(characterData));
 }
 
@@ -488,7 +488,7 @@ interface IToken {
   readonly refresh_token: string;
   readonly granted_time: number;
   readonly expires_in: number;
-  readonly access_token: string;
+  readonly access_token: string | null;
 }
 
 interface IAccessTokenData {
