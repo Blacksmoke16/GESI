@@ -83,7 +83,7 @@ class ESIClient {
    * @return {SheetsArray} The results.
    * @customfunction
    */
-  public execute(params: IFunctionParams): SheetsArray {
+  public execute(params: IFunctionParams = {} as IFunctionParams): SheetsArray {
     const endpoint = this.checkEndpoint();
     const data: any = this.doRequest(params);
 
@@ -115,7 +115,7 @@ class ESIClient {
    * @return {object | object[]} The parsed raw JSON result.
    * @customfunction
    */
-  public executeRaw<T>(params: IFunctionParams): T {
+  public executeRaw<T>(params: IFunctionParams = {} as IFunctionParams): T {
     this.checkEndpoint();
     return this.doRequest<T>(params);
   }
@@ -126,7 +126,7 @@ class ESIClient {
    * @return {URLFetchRequest} The built request.
    * @customfunction
    */
-  public buildRequest(params: IFunctionParams): URLFetchRequest {
+  public buildRequest(params: IFunctionParams = {} as IFunctionParams): URLFetchRequest {
     const endpoint = this.checkEndpoint();
 
     let path = endpoint.path;
