@@ -14,10 +14,12 @@ class SheetStorage {
   private static readonly TOKEN_LIFESPAN = 1080;
   private static readonly TOKEN_TYPE = 'Bearer';
 
-  private readonly authedCharactersSheet: Spreadsheet;
-  private authedCharacterRow?: GoogleAppsScript.Spreadsheet.Range;
   private readonly id: string;
   private readonly cache: GoogleAppsScript.Cache.Cache;
+
+  private readonly authedCharactersSheet: Spreadsheet;
+  private authedCharacterRow?: GoogleAppsScript.Spreadsheet.Range;
+  private refreshToken?: string;
 
   constructor(id: string, cache: GoogleAppsScript.Cache.Cache) {
     this.id = id;
@@ -47,7 +49,7 @@ class SheetStorage {
       this.resolveCharacterRow();
     }
 
-    this.cache.put(this.id, value.access_token!, SheetStorage.TOKEN_LIFESPAN);
+    this.cache.put(this.id, `${value.granted_time}|${value.access_token!}`, SheetStorage.TOKEN_LIFESPAN);
   }
 
   public getValue(_key: string, _optSkipMemoryCheck: boolean = false): IToken | null {
@@ -55,11 +57,21 @@ class SheetStorage {
       return null;
     }
 
+    const token = this.cache.get(this.id);
+    let access_token = null;
+    let granted_time = 0;
+
+    if (token) {
+      const data = token.split('|');
+      granted_time = Number(data[0]);
+      access_token = data[1];
+    }
+
     return {
-      access_token: this.cache.get(this.id),
-      refresh_token: this.authedCharacterRow.getCell(1, CharacterSheetColumns.RefreshToken + 1).getValue(),
-      expires_in: 1200,
-      granted_time: 0,
+      access_token,
+      refresh_token: this.refreshToken!, // Should be resolved by this point
+      expires_in: SheetStorage.TOKEN_LIFESPAN,
+      granted_time,
       token_type: SheetStorage.TOKEN_TYPE,
     };
   }
@@ -90,6 +102,9 @@ class SheetStorage {
 
     if (authedCharacterRowIndex !== -1) {
       this.authedCharacterRow = this.authedCharactersSheet.getRange(authedCharacterRowIndex + 1, 1, 1, SheetStorage.COLUMN_COUNT);
+
+      // Cache the refresh token to avoid sheet lookups every time getValue is called
+      this.refreshToken = this.authedCharacterRow.getCell(1, CharacterSheetColumns.RefreshToken + 1).getValue();
     }
   }
 }
