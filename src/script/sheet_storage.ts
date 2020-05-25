@@ -1,11 +1,12 @@
 import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
 import User = GoogleAppsScript.Base.User;
 
-type CharacterRow = [string, string];
+type CharacterRow = [string, string, string];
 
 enum CharacterSheetColumns {
   Id,
   RefreshToken,
+  CharacterName
 }
 
 class SheetStorage {
@@ -18,10 +19,9 @@ class SheetStorage {
   private readonly cache: GoogleAppsScript.Cache.Cache;
 
   private readonly authedCharactersSheet: Spreadsheet;
-  private authedCharacterRow?: GoogleAppsScript.Spreadsheet.Range;
   private refreshToken?: string;
 
-  constructor(id: string, cache: GoogleAppsScript.Cache.Cache) {
+  constructor(id: string, cache: GoogleAppsScript.Cache.Cache, refreshToken?: string) {
     this.id = id;
     this.cache = cache;
 
@@ -40,20 +40,25 @@ class SheetStorage {
     }
 
     this.authedCharactersSheet = authedCharactersSheet;
-    this.resolveCharacterRow();
+
+    if (refreshToken) {
+      this.refreshToken = refreshToken;
+    } else {
+      this.refreshToken = this.resolveRefreshToken();
+    }
   }
 
   public setValue(_key: string, value: IToken): void {
-    if (!this.authedCharacterRow) {
+    if (!this.refreshToken) {
       this.authedCharactersSheet.appendRow(this.tokenToArray(value));
-      this.resolveCharacterRow();
+      this.refreshToken = this.resolveRefreshToken();
     }
 
     this.cache.put(this.id, `${value.granted_time}|${value.access_token!}`, SheetStorage.TOKEN_LIFESPAN);
   }
 
   public getValue(_key: string, _optSkipMemoryCheck: boolean = false): IToken | null {
-    if (!this.authedCharacterRow) {
+    if (!this.refreshToken) {
       return null;
     }
 
@@ -86,25 +91,28 @@ class SheetStorage {
     }
 
     // Otherwise, delete the row related to this character
-    this.authedCharactersSheet.deleteRow(this.authedCharacterRow!.getRow());
+    this.authedCharactersSheet.deleteRow(this.getRowIndex() + 1);
   }
 
   private tokenToArray(token: IToken): CharacterRow {
     return [
       this.id,
       token.refresh_token,
+      ESIClient.parseToken(token.access_token!).name,
     ];
   }
 
-  private resolveCharacterRow(): void {
+  private resolveRefreshToken(): string | undefined {
     // Resolve the row, if any, for the current character
-    const authedCharacterRowIndex = this.authedCharactersSheet.getDataRange().getValues().findIndex((row: CharacterRow) => row[CharacterSheetColumns.Id] === this.id);
+    const authedCharacterRowIndex = this.getRowIndex();
 
     if (authedCharacterRowIndex !== -1) {
-      this.authedCharacterRow = this.authedCharactersSheet.getRange(authedCharacterRowIndex + 1, 1, 1, SheetStorage.COLUMN_COUNT);
-
       // Cache the refresh token to avoid sheet lookups every time getValue is called
-      this.refreshToken = this.authedCharacterRow.getCell(1, CharacterSheetColumns.RefreshToken + 1).getValue();
+      return this.authedCharactersSheet.getRange(authedCharacterRowIndex + 1, 1, 1, SheetStorage.COLUMN_COUNT).getCell(1, CharacterSheetColumns.RefreshToken + 1).getValue();
     }
+  }
+
+  private getRowIndex(): number {
+    return this.authedCharactersSheet.getDataRange().getValues().findIndex((row: CharacterRow) => row[CharacterSheetColumns.Id] === this.id);
   }
 }

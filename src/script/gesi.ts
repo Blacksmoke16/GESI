@@ -239,6 +239,13 @@ function getClient(characterName?: string): ESIClient {
 }
 
 /**
+ * @internal
+ */
+function getClientInternal(id: string, refreshToken: string, characterData: IAuthenticatedCharacter): ESIClient {
+  return new ESIClient(getOAuthService_(id, refreshToken), characterData);
+}
+
+/**
  * Returns the data from the provided functionName for each character as one list for use within a sheet.
  *
  * @param {string} functionName The name of the endpoint that should be invoked
@@ -351,7 +358,7 @@ function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Servic
   return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
-function getOAuthService_(id: string): OAuth2Service {
+function getOAuthService_(id: string, refreshToken?: string): OAuth2Service {
   const service = OAuth2.createService(id)
     .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
     .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
@@ -364,7 +371,7 @@ function getOAuthService_(id: string): OAuth2Service {
 
   if (isUsingSheetStorage_()) {
     // @ts-ignore
-    service.storage_ = new SheetStorage(id, getDocumentCache_());
+    service.storage_ = new SheetStorage(id, getDocumentCache_(), refreshToken);
   } else {
     service
       .setPropertyStore(getDocumentProperties_())
