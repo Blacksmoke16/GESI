@@ -2,10 +2,7 @@ import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 
 class ESIClient {
-  #oauthClient: OAuth2Service;
-  private characterData: IAuthenticatedCharacter;
-  private readonly baseUrl: string;
-  private endpoint?: IEndpoint;
+  private static readonly BASE_URL = 'https://esi.evetech.net';
 
   private static addQueryParam(path: string, paramName: string, paramValue: any): string {
     path += path.includes('?') ? '&' : '?';
@@ -20,10 +17,13 @@ class ESIClient {
     return jwtToken;
   }
 
+  #oauthClient: OAuth2Service;
+  private characterData: IAuthenticatedCharacter;
+  private endpoint?: IEndpoint;
+
   constructor(oauthClient: OAuth2Service, characterData: IAuthenticatedCharacter) {
     this.#oauthClient = oauthClient;
     this.characterData = characterData;
-    this.baseUrl = getScriptProperties_().getProperty('BASE_URL');
   }
 
   /**
@@ -164,7 +164,7 @@ class ESIClient {
 
     const request: URLFetchRequest = {
       method: endpoint.method,
-      url: `${this.baseUrl}${path.replace('{version}', params.version || endpoint.version)}`,
+      url: `${ESIClient.BASE_URL}${path.replace('{version}', params.version || endpoint.version)}`,
       headers: {
         'user-agent': `GESI User ${this.characterData.character_id}`
       },

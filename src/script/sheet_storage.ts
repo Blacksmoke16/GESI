@@ -51,7 +51,7 @@ class SheetStorage {
   public setValue(_key: string, value: IToken): void {
     if (!this.refreshToken) {
       this.authedCharactersSheet.appendRow(this.tokenToArray(value));
-      this.refreshToken = this.resolveRefreshToken();
+      this.refreshToken = value.refresh_token;
     }
 
     this.cache.put(this.id, `${value.granted_time}|${value.access_token!}`, SheetStorage.TOKEN_LIFESPAN);
