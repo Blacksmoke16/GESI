@@ -10,5 +10,5 @@
     "exceptionLogging": "NONE",
     "oauthScopes": ["https://www.googleapis.com/auth/script.container.ui", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/script.scriptapp", "https://www.googleapis.com/auth/spreadsheets.currentonly"],
     "urlFetchWhitelist": ["https://login.eveonline.com/", "https://esi.evetech.net/"],
-    "runtimeVersion": "DEPRECATED_ES5"
+    "runtimeVersion": "V8"
 }

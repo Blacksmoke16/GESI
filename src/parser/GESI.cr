@@ -10,14 +10,22 @@ end
 
 # Save the endpoint list
 File.open("#{EveSwagger::DIST_DIR}/endpoints.ts", "w") do |file|
-  file << "const SCOPES = "
+  file.puts "function getScopes(): string[] {"
+  file << "  return "
+
   base.scopes.to_pretty_json file
 
-  file.print ";\n\n"
+  file.puts
+
+  file.print "}\n\n"
 
   keys = base.endpoints.map &.name
-  file << "const ENDPOINTS: IEndpointList = "
+  file.puts "function getEndpoints(): IEndpointList {"
+  file << "  return "
 
   Hash.zip(keys, base.endpoints).to_pretty_json file
-  file.puts ";"
+
+  file.puts
+
+  file.puts "}"
 end

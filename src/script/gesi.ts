@@ -7,13 +7,9 @@
  */
 import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
 import CacheService = GoogleAppsScript.Cache.CacheService;
-import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
-import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 import Properties = GoogleAppsScript.Properties.Properties;
-
-type ParameterType = 'path' | 'parameters' | 'body' | 'query';
 
 function getScriptProperties_(): Properties {
   return PropertiesService.getScriptProperties();
@@ -46,6 +42,8 @@ function onOpen(): void {
     .addItem('Authorize Character', 'showSSOModal')
     .addItem('Deauthorize Character', 'deauthorizeCharacter')
     .addItem('Set Main Character', 'setMainCharacter')
+    .addItem('Enable Sheet Auth Storage', 'setAuthStorage')
+    .addItem('Reset', 'reset')
     .addToUi();
 }
 
@@ -62,16 +60,8 @@ function deauthorizeCharacter(): void {
   if (response.getSelectedButton() !== ui.Button.OK) return;
 
   const character = getCharacterData(response.getResponseText());
-  const characterMap = getAuthenticatedCharacters();
 
-  // Delete their oauth lib
-  const oauthClient = getOAuthService_(character.id);
-  oauthClient.reset();
-
-  // Remove the character from the characters hash
-  delete characterMap[character.name];
-
-  setCharacters_(characterMap);
+  getClient(character.name).reset();
 
   ui.alert(`Successfully deauthorized ${character.name}.`);
 }
@@ -89,30 +79,59 @@ function setMainCharacter() {
   ui.alert(`${character.name} is now your main character.`);
 }
 
+function setAuthStorage() {
+  const ui = SpreadsheetApp.getUi();
+  const useSheetStorage: boolean = ui.alert(`Use sheet based authenticated character storage?\n\nYou probably don't want to do this unless you know what you're doing.`, ui.ButtonSet.YES_NO) === ui.Button.YES;
+
+  getDocumentProperties_().setProperty('SHEET_STORAGE', useSheetStorage ? 'true' : 'false');
+
+  ui.alert(
+    useSheetStorage ?
+      'You are now using sheet based storage.' :
+      'You are now using properties based storage.',
+  );
+}
+
+function reset() {
+  const ui = SpreadsheetApp.getUi();
+  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
+
+  if (response === ui.Button.NO) return;
+
+  Object.keys(getAuthenticatedCharacters()).forEach((characterName: string) => {
+    getClient(characterName).reset();
+  });
+
+  getDocumentProperties_().deleteAllProperties();
+}
+
 // endregion
 
 /**
  * Parses array data into more readable format
- * @param {string} endpoint_name (Required) Name of the endpoint data to be parsed is from.
- * @param {string} column_name (Required) Name of the column to be parsed.
+ *
+ * @param {string} endpointName (Required) Name of the endpoint data to be parsed is from.
+ * @param {string} columnName (Required) Name of the column to be parsed.
  * @param {string} data (Required) Cell that holds the data to be parsed.
- * @param {boolean} opt_headers Default: True, Boolean if column headings should be listed or not.
+ * @param {boolean} show_column_headers Default: True, Boolean if column headings should be listed or not.
  * @return Parsed array data.
  * @customfunction
  */
-function parseArray(endpoint_name: string, column_name: string, data: string, opt_headers: boolean): any[][] {
-  let result: any[][] = [];
-  const endpoint_header: IHeader = ENDPOINTS[endpoint_name].headers.find((eh: IHeader) => eh.name === column_name)!;
-  if (opt_headers || undefined === opt_headers) result.push(endpoint_header ? endpoint_header.sub_headers! : [column_name.slice(0, -1) + '_id']);
+function parseArray(endpointName: string, columnName: string, data: string, show_column_headers: boolean = true): SheetsArray {
+  let result: SheetsArray = [];
+  const endpoint_header: IHeader = getEndpoints()[endpointName].headers.find((eh: IHeader) => eh.name === columnName)!;
+  if (show_column_headers) result.push(endpoint_header ? endpoint_header.sub_headers! : [columnName.slice(0, -1) + '_id']);
 
   // Kinda a hack but it works for now :shrug:
   if (!endpoint_header || !endpoint_header.hasOwnProperty('sub_headers')) {
     JSON.parse(data).forEach((o: any) => result.push([o]));
   } else {
     JSON.parse(data).forEach((o: any) => {
-      let temp: any[] = [];
-      endpoint_header.sub_headers!.forEach((k: string) => temp.push(Array.isArray(o[k]) ? JSON.stringify(o[k]) : o[k]));
-      result.push(temp);
+      result.push(
+        endpoint_header.sub_headers!.map((k: string) => {
+          return Array.isArray(o[k]) ? JSON.stringify(o[k]) : o[k];
+        }),
+      );
     });
   }
 
@@ -132,7 +151,32 @@ function getMainCharacter(): string | null {
  * @customfunction
  */
 function getAuthenticatedCharacters(): ICharacterMap {
-  return JSON.parse(getDocumentProperties_().getProperty('characters') || '{}');
+  const properties = getDocumentProperties_().getProperties();
+  const characterMap: ICharacterMap = {};
+
+  // Migrate characters object to new metadata format
+  if (properties.hasOwnProperty('characters')) {
+    const characters = JSON.parse(properties['characters']);
+
+    console.log(`migrating ${Object.keys(characters).length} characters`);
+
+    Object.keys(characters).forEach((characterName: string) => {
+      const characterData = characters[characterName];
+
+      setCharacterData_(characterName, characterData);
+      characterMap[characterName] = characterData;
+    });
+
+    getDocumentProperties_().deleteProperty('characters');
+  } else {
+    Object.keys(properties).forEach((key: string) => {
+      if (key.startsWith('character.')) {
+        characterMap[key.replace('character.', '')] = JSON.parse(properties[key]);
+      }
+    });
+  }
+
+  return characterMap;
 }
 
 /**
@@ -194,179 +238,11 @@ function getClient(characterName?: string): ESIClient {
   return new ESIClient(oauthService, characterData);
 }
 
-class ESIClient {
-  private oauthClient: OAuth2Service;
-  private characterData: ICharacterData;
-  private readonly baseUrl: string;
-  private endpoint?: IEndpoint;
-
-  private static addQueryParam(path: string, paramName: string, paramValue: any): string {
-    path += path.includes('?') ? '&' : '?';
-    path += paramName + '=' + (Array.isArray(paramValue) ? paramValue.join(',') : paramValue);
-    return path;
-  }
-
-  public static parseToken(access_token: string): IToken {
-    const jwtToken: IToken = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
-    if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
-    if (jwtToken.azp !== getScriptProperties_().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
-    return jwtToken;
-  }
-
-  constructor(oauthClient: OAuth2Service, characterData: ICharacterData) {
-    this.oauthClient = oauthClient;
-    this.characterData = characterData;
-    this.baseUrl = getScriptProperties_().getProperty('BASE_URL');
-  }
-
-  /**
-   * Sets the endpoint to use for future methods calls.
-   *
-   * @param {string} functionName The name of the endpoint that should be invoked
-   * @return {ESIClient} For chaining
-   * @customfunction
-   */
-  public setFunction(functionName: string): ESIClient {
-    if (!ENDPOINTS.hasOwnProperty(functionName)) {
-      throw new Error(`Unknown endpoint: '${functionName}'`);
-    }
-
-    this.endpoint = ENDPOINTS[functionName];
-
-    return this;
-  }
-
-  /**
-   * Executes an ESI request with the given params.
-   * Returns a SheetsArray with the results.
-   */
-  public execute(params: IFunctionParams): SheetsArray {
-    const endpoint = this.checkEndpoint();
-    const data: any = this.doRequest(params);
-
-    let result: SheetsArray = [];
-
-    // Add the header row if its not set, or set to true
-    if (params.show_column_headings) result.push(endpoint.headers.map((header: IHeader) => header.name));
-
-    if (Array.isArray(data) && isFinite(data[0])) {
-      result = result.concat(data);
-    } else if (Array.isArray(data) && data instanceof Object) {
-      result = result.concat(
-        data.map((obj) => {
-          return endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
-        }),
-      );
-    } else if (data instanceof Object) {
-      result.push(endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
-    } else if (isFinite(data)) {
-      result.push([data]);
-    }
-
-    return result;
-  }
-
-  /**
-   * Executes an ESI request with the given params.
-   * Returns the raw JSON data.
-   */
-  public executeRaw<T>(params: IFunctionParams): T {
-    this.checkEndpoint();
-    return this.doRequest<T>(params);
-  }
-
-  /**
-   * Builds a URLFetchRequest object with the given params.
-   */
-  public buildRequest(params: IFunctionParams): URLFetchRequest {
-    const endpoint = this.checkEndpoint();
-
-    let path = endpoint.path;
-    let payload: any = null;
-
-    // Process this endpoint's parameters
-    endpoint.parameters.forEach((param: IParameter) => {
-      const paramValue = params[param.name];
-
-      if (param.in === 'path' && paramValue) {
-        path = path.replace(`{${param.name}}`, paramValue);
-      } else if (param.in === 'query' && paramValue) {
-        path = ESIClient.addQueryParam(path, param.name, paramValue);
-      } else if (param.in === 'body' && paramValue) {
-        if (param.type.includes('[]')) {
-          payload = !Array.isArray(paramValue) ?
-            [paramValue] :
-            paramValue.filter((item: any) => item[0]).map((item: any) => item[0]);
-        } else {
-          throw param.type + ' is an unexpected body type.';
-        }
-      }
-    });
-
-    // Add the page param if set
-    if (params.page) {
-      path = ESIClient.addQueryParam(path, 'page', params.page);
-    }
-
-    if (endpoint.scope) {
-      if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id.toString());
-      if (path.includes('{character_id}')) path = path.replace('{character_id}', this.characterData.character_id.toString());
-      if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.characterData.corporation_id.toString());
-    }
-
-    const request: URLFetchRequest = {
-      method: endpoint.method,
-      url: `${this.baseUrl}${path.replace('{version}', params.version || endpoint.version)}`,
-      headers: {
-        'user-agent': `GESI User ${this.characterData.character_id}`,
-      },
-      contentType: 'application/json',
-      muteHttpExceptions: true,
-    };
-
-    if (payload) request.payload = JSON.stringify(payload);
-    if (endpoint.scope) request.headers['authorization'] = `Bearer ${this.oauthClient.getAccessToken()}`;
-
-    return request;
-  }
-
-  private doRequest<T>(params: IFunctionParams): T {
-    const request = this.buildRequest(params);
-    const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
-    const headers = response.getHeaders();
-
-    // If the request was not successful, raise an error
-    if (response.getResponseCode() !== 200) {
-      throw new Error(response.getContentText());
-    }
-
-    // Log a warning if a route returns a warning
-    if (headers.hasOwnProperty('Warning')) console.warn(headers['Warning']);
-
-    // If the route is not paginated, or is paginated but only has one page, just return it
-    if (!headers.hasOwnProperty('x-pages') || (headers.hasOwnProperty('x-pages') && parseInt(headers['x-pages']) === 1)) return JSON.parse(response.getContentText());
-
-    // Otherwise, if there are more than 1 page, issue additional requests to fetch all the pages
-    const result = JSON.parse(response.getContentText());
-
-    const totalPages = parseInt(headers['x-pages']);
-    const requests = [];
-
-    for (let p = 2; p <= totalPages; p++) {
-      params.page = p;
-      requests.push(this.buildRequest(params));
-    }
-
-    return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
-  }
-
-  private checkEndpoint(): IEndpoint {
-    if (!this.endpoint) {
-      throw new Error('Endpoint name has not been set on client.');
-    }
-
-    return this.endpoint;
-  }
+/**
+ * @internal
+ */
+function getClientInternal(id: string, refreshToken: string, characterData: IAuthenticatedCharacter): ESIClient {
+  return new ESIClient(getOAuthService_(id, refreshToken), characterData);
 }
 
 /**
@@ -456,23 +332,21 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 
   // If this character was previously authorized
   // update the ID of this character and reset the old service
-  const characterMap = getAuthenticatedCharacters();
+  const characterData: string | null = getDocumentProperties_().getProperty(`character.${jwtToken.name}`);
 
   // If this character is already in the map,
-  // Reset/clear out data related to previous oauthService
-  if (characterMap.hasOwnProperty(jwtToken.name)) {
-    getOAuthService_(characterMap[jwtToken.name].id).reset();
+  // Reset previous oauthService and delete character data
+  if (characterData) {
+    getOAuthService_(JSON.parse(characterData).id).reset();
   }
 
-  // Update the user object
-  characterMap[jwtToken.name] = {
+  setCharacterData_(jwtToken.name, {
+    id,
     alliance_id: affiliationData.alliance_id || null,
     character_id: affiliationData.character_id,
     corporation_id: affiliationData.corporation_id,
-    id,
     name: jwtToken.name,
-  };
-  setCharacters_(characterMap);
+  });
 
   // Set the main character if there is not one already
   if (!getMainCharacter()) setMainCharacter_(jwtToken.name);
@@ -481,27 +355,40 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIClient(oauthClient, {} as ICharacterData)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
+  return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
-function getOAuthService_(id: string): OAuth2Service {
-  return OAuth2.createService(id)
+function getOAuthService_(id: string, refreshToken?: string): OAuth2Service {
+  const service = OAuth2.createService(id)
     .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
     .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
     .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
     .setClientSecret(getScriptProperties_().getProperty('CLIENT_SECRET')!)
     .setCallbackFunction('authCallback')
-    .setPropertyStore(getDocumentProperties_())
-    .setCache(getDocumentCache_())
-    .setScope(SCOPES)
     .setParam('access_type', 'offline')
-    .setParam('prompt', 'consent');
+    .setParam('prompt', 'consent')
+    .setScope(getScopes());
+
+  if (isUsingSheetStorage_()) {
+    // @ts-ignore
+    service.storage_ = new SheetStorage(id, getDocumentCache_(), refreshToken);
+  } else {
+    service
+      .setPropertyStore(getDocumentProperties_())
+      .setCache(getDocumentCache_());
+  }
+
+  return service;
+}
+
+function isUsingSheetStorage_(): boolean {
+  return getDocumentProperties_().getProperty('SHEET_STORAGE') === 'true';
 }
 
 // endregion
 
-function setCharacters_(characterMap: ICharacterMap): void {
-  getDocumentProperties_().setProperty('characters', JSON.stringify(characterMap));
+function setCharacterData_(characterName: string, characterData: IAuthenticatedCharacter): void {
+  getDocumentProperties_().setProperty(`character.${characterName}`, JSON.stringify(characterData));
 }
 
 function setMainCharacter_(characterName: string): void {
@@ -533,6 +420,8 @@ interface IHeader {
   readonly name: string;
   readonly sub_headers?: string[];
 }
+
+type ParameterType = 'path' | 'parameters' | 'body' | 'query';
 
 interface IParameter {
   readonly description: string;
@@ -602,6 +491,14 @@ interface ICharacterMap {
 type SheetsArray = any[][]
 
 interface IToken {
+  readonly token_type: string;
+  readonly refresh_token: string;
+  readonly granted_time: number;
+  readonly expires_in: number;
+  readonly access_token: string | null;
+}
+
+interface IAccessTokenData {
   readonly azp: string;
   readonly exp: number;
   readonly iss: string;
