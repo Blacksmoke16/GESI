@@ -16,10 +16,9 @@ Google Sheets add-on for interacting with EVE ESI API.  GESI providers an EVE On
 By default, one does not have access to GESI functions for use in custom functions in the script editor.  In order to gain access to these functions for custom logic, add GESI as a library to your script:
 
 1. Install the add-on, follow the [setup instructions](#setup).
-1. Within the script editor, click the `+` icon next to the `Libraries` heading
+1. Within the script editor, click the `+` icon next to the `Libraries` heading.
 1. Paste in `1KjnRVVFr2KiHH55sqBfHcZ-yXweJ7iv89V99ubaLy4A7B_YH8rB5u0s3` into the `Script ID` box and click `Look up`.
-1. Select the most recent version that is _NOT_ `HEAD`.
-1. Select the latest version from the dropdown, and click `Add`.
+1. Select the most recent version that is _NOT_ `HEAD`, and click `Add`.
 
 In order to use this, functions must be perpended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
