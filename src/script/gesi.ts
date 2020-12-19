@@ -36,6 +36,8 @@ function onInstall(): void {
 }
 
 function onOpen(): void {
+  console.log('GESI Loaded');
+
   SpreadsheetApp
     .getUi()
     .createAddonMenu()
