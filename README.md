@@ -22,7 +22,7 @@ By default, one does not have access to GESI functions for use in custom functio
 
 In order to use this, functions must be perpended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
-**NOTE:** Libraries _do not_ update on their own.  When a new version of GESI is released, you will have to manually update the `version` dropdown in the Libraries modal.
+**NOTE:** Libraries _do not_ update on their own.  When a new version of GESI is released, click on `GESI` under the `Libraries` heading and select the most recent version that is _NOT_ `HEAD`.
 
 ## Usage
 
