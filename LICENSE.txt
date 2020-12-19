@@ -1,2 +1,3 @@
-GESI only requires access to spreadsheets it is enabled on in order to operate.  GESI uses the spreadsheet's ID for error logging.
+GESI only requires access to spreadsheets it is enabled on in order to operate.
+GESI uses the spreadsheet's ID for error logging, and the current user's temporary anonymous key for analytics.
 GESI does not store, use, share, or access any other data related to your Google account.

@@ -15,10 +15,11 @@ Google Sheets add-on for interacting with EVE ESI API.  GESI providers an EVE On
 
 By default, one does not have access to GESI functions for use in custom functions in the script editor.  In order to gain access to these functions for custom logic, add GESI as a library to your script:
 
-1. Install the add-on, follow the [setup instructions](./README.md#setup).
-1. Within the script editor, click `Resources => Lbraries...`
-1. At the bottom paste `MKpdmT9YX4m_dA5qB8ReTppeSVVadBdJf` into the `Add a library` box and click `Add`.
-1. Select the latest version from the dropdown, and click `Save`.
+1. Install the add-on, follow the [setup instructions](#setup).
+1. Within the script editor, click the `+` icon next to the `Libraries` heading
+1. Paste in `1KjnRVVFr2KiHH55sqBfHcZ-yXweJ7iv89V99ubaLy4A7B_YH8rB5u0s3` into the `Script ID` box and click `Look up`.
+1. Select the most recent version that is _NOT_ `HEAD`.
+1. Select the latest version from the dropdown, and click `Add`.
 
 In order to use this, functions must be perpended with `GESI`, which maps to the `Identifier` field in the Libraries modal.  For example, `GESI.universe_types();`
 
@@ -32,11 +33,11 @@ Arguments can also be passed to the functions, `=universe_types_type(34)`, would
 
 * `{string} name` - Name of the character used for authentication. Defaults to the first authenticated character
   * Only present on functions that map to authenticated endpoints
-  * See [this](./README.md#how-do-i-get-data-from-a-specific-character) for some additional information
+  * See [this](#how-do-i-get-data-from-a-specific-character) for some additional information
 * `{boolean} show_column_headings` - If column headings should be shown.  Defaults to `true`.
   * Mostly for use within the sheet.  Determines if the column headings are displayed, such as `location_id`, or `type_id`, etc.
 * `{string} version` - Which ESI version to use for the request.  Defaults to the latest stable version.
-  * See [this](./README.md#what-if-i-want-to-use-a-specific-esi-route-version) for some additional information
+  * See [this](#what-if-i-want-to-use-a-specific-esi-route-version) for some additional information
 
 The common arguments have defaults, you do not need to provide them if your values are the same as the defaults.  I.e. `=characters_character_assets("MyMainCharacter", true, "latest")` is the same as `=characters_character_assets()`.
 
@@ -50,7 +51,7 @@ Each specific function also has a tooltip window that provides a summary of a fu
 
 ![image-20200507125913620](https://i.imgur.com/9e5c6JW.png)
 
-The `EXAMPLE` section includes a sample function call, with the expected types included.  See [this](./README.md#what-do-the-function-parameter-types-mean) for a breakdown of what those types mean.
+The `EXAMPLE` section includes a sample function call, with the expected types included.  See [this](#what-do-the-function-parameter-types-mean) for a breakdown of what those types mean.
 
 > **NOTE:** If the tooltip window is missing, you may need to expand it by clicking the little arrow next to the `X`.
 
@@ -58,13 +59,13 @@ The `EXAMPLE` section includes a sample function call, with the expected types i
 
 The previous section goes over how to use GESI in its most basic form, getting data from ESI into a spreadsheet; much like `=importXML()` worked with the old XML API.  However, GESI can also be used within Google App Scripts to enable creation of more advanced/complex logic via JavaScript.
 
-> **NOTE:** Be sure to complete the [script editor](./README.md#script-editor) setup instructions.
+> **NOTE:** Be sure to complete the [script editor](#script-editor) setup instructions.
 
 ### Built-In Functions
 
 In addition to the ESI related functions, GESI also provides some methods intended to be used within the script editor.
 
-* `invokeMultiple()`/`invokeMultipleRaw()` - See [this section](./README.md#using-functions-with-multiple-characters) for details.
+* `invokeMultiple()`/`invokeMultipleRaw()` - See [this section](#using-functions-with-multiple-characters) for details.
 * `getAuthenticatedCharacters()` - Returns an object representing the characters that have been authenticated.  Keyed by character name, value being an object including their character, corporation, and alliance ids.
 * `getAuthenticatedCharacterNames()` - Returns an array of character names that have authenticated, or null if none have been.
 * `getCharacterData(characterName: string)` - Returns an object with data related to the given *characterName*.  Essentially is equivalent to ``getAuthenticatedCharacters()[characterName]`.
@@ -90,7 +91,7 @@ Any future calls to the client will be in the context of this function.
 
 #### execute / executeRaw
 
-These methods are essentially the same as `invoke` and `invokeRaw` mentioned within the [Built-In Functions](./README.md#built-in-functions) section.  However, the API is slightly different.  Since they are methods of the `ESIClient`, only the params need to be provided, since the function name is set directly on the client.
+These methods are essentially the same as `invoke` and `invokeRaw` mentioned within the [Built-In Functions](#built-in-functions) section.  However, the API is slightly different.  Since they are methods of the `ESIClient`, only the params need to be provided, since the function name is set directly on the client.
 
 ```js
 var client = GESI.getClient().setFunction('universe_types_type');
@@ -200,7 +201,7 @@ Google Sheets uses 2D arrays to represent data within a sheet.  When working on 
 
 This method is meant to be used within custom functions and scripts.
 
-See the [advanced usage](./README.md#advanced-usage) section for more details on working within the script editor.
+See the [advanced usage](#advanced-usage) section for more details on working within the script editor.
 
 ### Your Login session has expired
 
