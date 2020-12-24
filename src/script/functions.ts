@@ -703,18 +703,6 @@ function characters_character_standings(name?: string, show_column_headings: boo
 }
 
 /**
- * Returns aggregate yearly stats for a character
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function characters_character_stats(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke('characters_character_stats', { name, show_column_headings, version })
-}
-
-/**
  * Returns a character's titles
  *
  * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
