@@ -241,13 +241,6 @@ function getClient(characterName?: string): ESIClient {
 }
 
 /**
- * @internal
- */
-function getClientInternal(id: string, refreshToken: string, characterData: IAuthenticatedCharacter): ESIClient {
-  return new ESIClient(getOAuthService_(id, refreshToken), characterData);
-}
-
-/**
  * Returns the data from the provided functionName for each character as one list for use within a sheet.
  *
  * @param {string} functionName The name of the endpoint that should be invoked
@@ -377,7 +370,8 @@ function getOAuthService_(id: string, refreshToken?: string): OAuth2Service {
   } else {
     service
       .setPropertyStore(getDocumentProperties_())
-      .setCache(getDocumentCache_());
+      .setCache(getDocumentCache_())
+      .setExpirationMinutes('18');
   }
 
   return service;
