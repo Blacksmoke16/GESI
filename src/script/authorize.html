@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Authorize Character</title>
+    <script type="application/javascript">
+        function closeAuthModal() {
+            setTimeout( function() { google.script.host.close(); }, 500);
+        }
+    </script>
 </head>
 <body>
     <p>Click the link below to authorize a character for use in GESI:</p>
-    <a href="<?= authorizationUrl ?>" target="_blank"><img onclick="google.script.host.close();" alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png"/></a>
-    <br>
-    <p>NOTE: If using Firefox, right click on the link and open it in a new tab.</p>
+    <a href="<?= authorizationUrl ?>" target="_blank" onclick="closeAuthModal()"><img alt="Authorize with EVE SSO" src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-black-small.png"/></a>
 </body>
 </html>
