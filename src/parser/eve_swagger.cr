@@ -1,6 +1,5 @@
 require "json"
 require "http/client"
-require "json"
 
 module EveSwagger
   DIST_DIR = "../script"

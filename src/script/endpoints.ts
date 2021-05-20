@@ -2423,7 +2423,7 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/corporations/{corporation_id}/",
     "summary": "Get corporation information",
-    "version": "v4"
+    "version": "v5"
   },
   "corporations_corporation_alliancehistory": {
     "description": "Get a list of all the alliances a corporation has been a member of",
@@ -2454,7 +2454,7 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/corporations/{corporation_id}/alliancehistory/",
     "summary": "Get alliance history",
-    "version": "v2"
+    "version": "v3"
   },
   "corporations_corporation_assets": {
     "description": "Return a list of the corporation assets",
@@ -2583,7 +2583,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/blueprints/",
     "scope": "esi-corporations.read_blueprints.v1",
     "summary": "Get corporation blueprints",
-    "version": "v2"
+    "version": "v3"
   },
   "corporations_corporation_bookmarks": {
     "description": "A list of your corporation's bookmarks",
@@ -2748,7 +2748,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/containers/logs/",
     "scope": "esi-corporations.read_container_logs.v1",
     "summary": "Get all corporation ALSC logs",
-    "version": "v2"
+    "version": "v3"
   },
   "corporations_corporation_contracts": {
     "description": "Returns contracts available to a corporation, only if the corporation is issuer, acceptor or assignee. Only returns contracts no older than 30 days, or if the status is \"in_progress\".",
@@ -2976,7 +2976,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/divisions/",
     "scope": "esi-corporations.read_divisions.v1",
     "summary": "Get corporation divisions",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_facilities": {
     "description": "Return a corporation's facilities",
@@ -2997,7 +2997,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/facilities/",
     "scope": "esi-corporations.read_facilities.v1",
     "summary": "Get corporation facilities",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_fw_stats": {
     "description": "Statistics about a corporation involved in faction warfare",
@@ -3062,7 +3062,7 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/corporations/{corporation_id}/icons/",
     "summary": "Get corporation icon",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_industry_jobs": {
     "description": "List industry jobs run by a corporation",
@@ -3193,7 +3193,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/medals/",
     "scope": "esi-corporations.read_medals.v1",
     "summary": "Get corporation medals",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_medals_issued": {
     "description": "Returns medals issued by a corporation",
@@ -3223,7 +3223,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/medals/issued/",
     "scope": "esi-corporations.read_medals.v1",
     "summary": "Get corporation issued medals",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_members": {
     "description": "Return the current member list of a corporation, the token's character need to be a member of the corporation.",
@@ -3238,7 +3238,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/members/",
     "scope": "esi-corporations.read_corporation_membership.v1",
     "summary": "Get corporation members",
-    "version": "v3"
+    "version": "v4"
   },
   "corporations_corporation_members_limit": {
     "description": "Return a corporation's member limit, not including CEO himself",
@@ -3253,7 +3253,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/members/limit/",
     "scope": "esi-corporations.track_members.v1",
     "summary": "Get corporation member limit",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_members_titles": {
     "description": "Returns a corporation's members' titles",
@@ -3274,7 +3274,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/members/titles/",
     "scope": "esi-corporations.read_titles.v1",
     "summary": "Get corporation's members' titles",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_membertracking": {
     "description": "Returns additional information about a corporation's members which helps tracking their activities",
@@ -3307,7 +3307,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/membertracking/",
     "scope": "esi-corporations.track_members.v1",
     "summary": "Track corporation members",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_orders": {
     "description": "List open market orders placed on behalf of a corporation",
@@ -3487,7 +3487,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/roles/",
     "scope": "esi-corporations.read_corporation_membership.v1",
     "summary": "Get corporation member roles",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_roles_history": {
     "description": "Return how roles have changed for a coporation's members, up to a month",
@@ -3523,7 +3523,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/roles/history/",
     "scope": "esi-corporations.read_corporation_membership.v1",
     "summary": "Get corporation member roles history",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_shareholders": {
     "description": "Return the current shareholders of a corporation.",
@@ -3565,7 +3565,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/standings/",
     "scope": "esi-corporations.read_standings.v1",
     "summary": "Get corporation standings",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_starbases": {
     "description": "Returns list of corporation starbases (POSes)",
@@ -3601,7 +3601,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/starbases/",
     "scope": "esi-corporations.read_starbases.v1",
     "summary": "Get corporation starbases (POSes)",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_starbases_starbase": {
     "description": "Returns various settings and fuels of a starbase (POS)",
@@ -3674,7 +3674,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/starbases/{starbase_id}/",
     "scope": "esi-corporations.read_starbases.v1",
     "summary": "Get starbase (POS) detail",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_structures": {
     "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell-2.0-structures-changes-coming-on-february-13th",
@@ -3686,22 +3686,19 @@ function getEndpoints(): IEndpointList {
         "name": "fuel_expires"
       },
       {
+        "name": "name"
+      },
+      {
         "name": "next_reinforce_apply"
       },
       {
         "name": "next_reinforce_hour"
       },
       {
-        "name": "next_reinforce_weekday"
-      },
-      {
         "name": "profile_id"
       },
       {
         "name": "reinforce_hour"
-      },
-      {
-        "name": "reinforce_weekday"
       },
       {
         "name": "services",
@@ -3746,7 +3743,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/structures/",
     "scope": "esi-corporations.read_structures.v1",
     "summary": "Get corporation structures",
-    "version": "v3"
+    "version": "v4"
   },
   "corporations_corporation_titles": {
     "description": "Returns a corporation's titles",
@@ -3812,7 +3809,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/corporations/{corporation_id}/titles/",
     "scope": "esi-corporations.read_titles.v1",
     "summary": "Get corporation titles",
-    "version": "v1"
+    "version": "v2"
   },
   "corporations_corporation_wallets": {
     "description": "Get a corporation's wallets",
@@ -3957,7 +3954,7 @@ function getEndpoints(): IEndpointList {
     "parameters": [],
     "path": "/{version}/corporations/npccorps/",
     "summary": "Get npc corporations",
-    "version": "v1"
+    "version": "v2"
   },
   "dogma_attributes": {
     "description": "Get a list of dogma attribute ids",
