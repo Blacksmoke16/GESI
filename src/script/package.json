@@ -1,6 +1,6 @@
 {
     "name": "gesi",
-    "version": "8.3.0",
+    "version": "8.4.0",
     "description": "Google Sheets ESI Add-on",
     "scripts": {},
     "repository": {
@@ -21,7 +21,8 @@
     },
     "homepage": "https://github.com/Blacksmoke16/GESI#readme",
     "devDependencies": {
+        "@google/clasp": "2.*",
         "@types/google-apps-script-oauth2": "38.0.0",
-        "typescript": "^3.8.3"
+        "typescript": "4.*"
     }
 }

@@ -836,7 +836,7 @@ function corporation_corporation_mining_observers_observer(observer_id: number, 
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation(corporation_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function corporations_corporation(corporation_id: number, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
   return invoke('corporations_corporation', { corporation_id, show_column_headings, version })
 }
@@ -849,7 +849,7 @@ function corporations_corporation(corporation_id: number, show_column_headings: 
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_alliancehistory(corporation_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function corporations_corporation_alliancehistory(corporation_id: number, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
   return invoke('corporations_corporation_alliancehistory', { corporation_id, show_column_headings, version })
 }
@@ -902,7 +902,7 @@ function corporations_corporation_assets_names(item_ids: number[], name?: string
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function corporations_corporation_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke('corporations_corporation_blueprints', { name, show_column_headings, version })
 }
 
@@ -962,7 +962,7 @@ function corporations_corporation_contacts_labels(name?: string, show_column_hea
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_containers_logs(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function corporations_corporation_containers_logs(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke('corporations_corporation_containers_logs', { name, show_column_headings, version })
 }
 
@@ -1026,7 +1026,7 @@ function corporations_corporation_customs_offices(name?: string, show_column_hea
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_divisions(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_divisions(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_divisions', { name, show_column_headings, version })
 }
 
@@ -1038,7 +1038,7 @@ function corporations_corporation_divisions(name?: string, show_column_headings:
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_facilities(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_facilities(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_facilities', { name, show_column_headings, version })
 }
 
@@ -1062,7 +1062,7 @@ function corporations_corporation_fw_stats(name?: string, show_column_headings: 
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_icons(corporation_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_icons(corporation_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!corporation_id) throw new Error(`corporation_id is required`);
   return invoke('corporations_corporation_icons', { corporation_id, show_column_headings, version })
 }
@@ -1100,7 +1100,7 @@ function corporations_corporation_killmails_recent(name?: string, show_column_he
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_medals(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_medals(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_medals', { name, show_column_headings, version })
 }
 
@@ -1112,7 +1112,7 @@ function corporations_corporation_medals(name?: string, show_column_headings: bo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_medals_issued(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_medals_issued(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_medals_issued', { name, show_column_headings, version })
 }
 
@@ -1124,7 +1124,7 @@ function corporations_corporation_medals_issued(name?: string, show_column_headi
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_members(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function corporations_corporation_members(name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   return invoke('corporations_corporation_members', { name, show_column_headings, version })
 }
 
@@ -1136,7 +1136,7 @@ function corporations_corporation_members(name?: string, show_column_headings: b
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_members_limit(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_members_limit(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_members_limit', { name, show_column_headings, version })
 }
 
@@ -1148,7 +1148,7 @@ function corporations_corporation_members_limit(name?: string, show_column_headi
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_members_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_members_titles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_members_titles', { name, show_column_headings, version })
 }
 
@@ -1160,7 +1160,7 @@ function corporations_corporation_members_titles(name?: string, show_column_head
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_membertracking(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_membertracking(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_membertracking', { name, show_column_headings, version })
 }
 
@@ -1196,7 +1196,7 @@ function corporations_corporation_orders_history(name?: string, show_column_head
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_roles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_roles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_roles', { name, show_column_headings, version })
 }
 
@@ -1208,7 +1208,7 @@ function corporations_corporation_roles(name?: string, show_column_headings: boo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_roles_history(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_roles_history(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_roles_history', { name, show_column_headings, version })
 }
 
@@ -1232,7 +1232,7 @@ function corporations_corporation_shareholders(name?: string, show_column_headin
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_standings(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_standings(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_standings', { name, show_column_headings, version })
 }
 
@@ -1244,7 +1244,7 @@ function corporations_corporation_standings(name?: string, show_column_headings:
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_starbases(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_starbases(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_starbases', { name, show_column_headings, version })
 }
 
@@ -1258,7 +1258,7 @@ function corporations_corporation_starbases(name?: string, show_column_headings:
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_starbases_starbase(system_id: number, starbase_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_starbases_starbase(system_id: number, starbase_id: number, name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!system_id) throw new Error(`system_id is required`);
   if (!starbase_id) throw new Error(`starbase_id is required`);
   return invoke('corporations_corporation_starbases_starbase', { system_id, starbase_id, name, show_column_headings, version })
@@ -1273,7 +1273,7 @@ function corporations_corporation_starbases_starbase(system_id: number, starbase
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_structures(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
+function corporations_corporation_structures(language?: string, name?: string, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
   return invoke('corporations_corporation_structures', { language, name, show_column_headings, version })
 }
 
@@ -1285,7 +1285,7 @@ function corporations_corporation_structures(language?: string, name?: string, s
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_corporation_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_corporation_titles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_corporation_titles', { name, show_column_headings, version })
 }
 
@@ -1337,7 +1337,7 @@ function corporations_corporation_wallets_division_transactions(division: number
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function corporations_npccorps(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function corporations_npccorps(show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('corporations_npccorps', { show_column_headings, version })
 }
 
