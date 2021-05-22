@@ -21,7 +21,7 @@
     },
     "homepage": "https://github.com/Blacksmoke16/GESI#readme",
     "devDependencies": {
-        "@google/clasp": "2.*",
+        "@google/clasp": "github:google/clasp#master",
         "@types/google-apps-script-oauth2": "38.0.0",
         "typescript": "4.*"
     }
