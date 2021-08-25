@@ -98,7 +98,7 @@ class ESIClient {
       result = result.concat(
         data.map((obj) => {
           return endpoint.headers.map((header: IHeader) => typeof (obj[header.name]) === 'object' ? JSON.stringify(obj[header.name]) : obj[header.name]);
-        })
+        }),
       );
     } else if (data instanceof Object) {
       result.push(endpoint.headers.map((header: IHeader) => typeof (data[header.name]) === 'object' ? JSON.stringify(data[header.name]) : data[header.name]));
@@ -144,7 +144,9 @@ class ESIClient {
         if (param.type.includes('[]')) {
           payload = !Array.isArray(paramValue) ?
             [paramValue] :
-            paramValue.filter((item: any) => item[0]).map((item: any) => item[0]);
+            Array.isArray(paramValue[0]) ?
+              paramValue.filter((item: any) => item[0]).map((item: any) => item[0]) :
+              paramValue;
         } else {
           throw param.type + ' is an unexpected body type.';
         }
@@ -166,10 +168,10 @@ class ESIClient {
       method: endpoint.method,
       url: `${ESIClient.BASE_URL}${path.replace('{version}', params.version || endpoint.version)}`,
       headers: {
-        'user-agent': `GESI User ${this.characterData.character_id}`
+        'user-agent': `GESI User ${this.characterData.character_id}`,
       },
       contentType: 'application/json',
-      muteHttpExceptions: true
+      muteHttpExceptions: true,
     };
 
     if (payload) request.payload = JSON.stringify(payload);
