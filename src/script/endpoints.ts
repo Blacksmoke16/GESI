@@ -246,16 +246,13 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/characters/affiliation/",
     "summary": "Character affiliation",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character": {
     "description": "Public information about a character",
     "headers": [
       {
         "name": "alliance_id"
-      },
-      {
-        "name": "ancestry_id"
       },
       {
         "name": "birthday"
@@ -301,7 +298,7 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/characters/{character_id}/",
     "summary": "Get character's public information",
-    "version": "v4"
+    "version": "v5"
   },
   "characters_character_agents_research": {
     "description": "Return a list of agents research information for a character. The formula for finding the current research points with an agent is: currentPoints = remainderPoints + pointsPerDay * days(currentTime - researchStartDate)",
@@ -328,7 +325,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/agents_research/",
     "scope": "esi-characters.read_agents_research.v1",
     "summary": "Get agents research",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_assets": {
     "description": "Return a list of the characters assets",
@@ -493,7 +490,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/blueprints/",
     "scope": "esi-characters.read_blueprints.v1",
     "summary": "Get blueprints",
-    "version": "v2"
+    "version": "v3"
   },
   "characters_character_bookmarks": {
     "description": "A list of your character's personal bookmarks",
@@ -935,7 +932,7 @@ function getEndpoints(): IEndpointList {
     ],
     "path": "/{version}/characters/{character_id}/corporationhistory/",
     "summary": "Get corporation history",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_fatigue": {
     "description": "Return a character's jump activation and fatigue information",
@@ -956,7 +953,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/fatigue/",
     "scope": "esi-characters.read_fatigue.v1",
     "summary": "Get jump fatigue",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_fittings": {
     "description": "Return fittings of a character",
@@ -1400,7 +1397,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/medals/",
     "scope": "esi-characters.read_medals.v1",
     "summary": "Get medals",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_mining": {
     "description": "Paginated record of all mining done by a character for the past 30 days",
@@ -1484,7 +1481,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/notifications/contacts/",
     "scope": "esi-characters.read_notifications.v1",
     "summary": "Get new contact notifications",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_online": {
     "description": "Checks if the character is currently online",
@@ -1792,7 +1789,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/roles/",
     "scope": "esi-characters.read_corporation_roles.v1",
     "summary": "Get character corporation roles",
-    "version": "v2"
+    "version": "v3"
   },
   "characters_character_search": {
     "description": "Search for entities that match a given sub-string.",
@@ -2004,7 +2001,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/standings/",
     "scope": "esi-characters.read_standings.v1",
     "summary": "Get standings",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_titles": {
     "description": "Returns a character's titles",
@@ -2022,7 +2019,7 @@ function getEndpoints(): IEndpointList {
     "path": "/{version}/characters/{character_id}/titles/",
     "scope": "esi-characters.read_titles.v1",
     "summary": "Get character corporation titles",
-    "version": "v1"
+    "version": "v2"
   },
   "characters_character_wallet": {
     "description": "Returns a character's wallet balance",

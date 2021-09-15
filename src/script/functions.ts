@@ -80,7 +80,7 @@ function alliances_alliance_icons(alliance_id: number, show_column_headings: boo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_affiliation(characters: number[], show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_affiliation(characters: number[], show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!characters) throw new Error(`characters is required`);
   return invoke('characters_affiliation', { characters, show_column_headings, version })
 }
@@ -93,7 +93,7 @@ function characters_affiliation(characters: number[], show_column_headings: bool
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character(character_id: number, show_column_headings: boolean = true, version: string = "v4"): SheetsArray {
+function characters_character(character_id: number, show_column_headings: boolean = true, version: string = "v5"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
   return invoke('characters_character', { character_id, show_column_headings, version })
 }
@@ -106,7 +106,7 @@ function characters_character(character_id: number, show_column_headings: boolea
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_agents_research(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_agents_research(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_agents_research', { name, show_column_headings, version })
 }
 
@@ -170,7 +170,7 @@ function characters_character_attributes(name?: string, show_column_headings: bo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function characters_character_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke('characters_character_blueprints', { name, show_column_headings, version })
 }
 
@@ -323,7 +323,7 @@ function characters_character_contracts_contract_items(contract_id: number, name
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_corporationhistory(character_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_corporationhistory(character_id: number, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   if (!character_id) throw new Error(`character_id is required`);
   return invoke('characters_character_corporationhistory', { character_id, show_column_headings, version })
 }
@@ -336,7 +336,7 @@ function characters_character_corporationhistory(character_id: number, show_colu
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_fatigue(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_fatigue(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_fatigue', { name, show_column_headings, version })
 }
 
@@ -497,7 +497,7 @@ function characters_character_mail_mail(mail_id: number, name?: string, show_col
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_medals(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_medals(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_medals', { name, show_column_headings, version })
 }
 
@@ -533,7 +533,7 @@ function characters_character_notifications(name?: string, show_column_headings:
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_notifications_contacts(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_notifications_contacts(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_notifications_contacts', { name, show_column_headings, version })
 }
 
@@ -632,7 +632,7 @@ function characters_character_portrait(character_id: number, show_column_heading
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_roles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
+function characters_character_roles(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke('characters_character_roles', { name, show_column_headings, version })
 }
 
@@ -698,7 +698,7 @@ function characters_character_skills(name?: string, show_column_headings: boolea
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_standings(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_standings(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_standings', { name, show_column_headings, version })
 }
 
@@ -710,7 +710,7 @@ function characters_character_standings(name?: string, show_column_headings: boo
  * @param {string} version - Which ESI version to use for the request.
  * @customfunction
  */
-function characters_character_titles(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
+function characters_character_titles(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
   return invoke('characters_character_titles', { name, show_column_headings, version })
 }
 
