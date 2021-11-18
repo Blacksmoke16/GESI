@@ -87,11 +87,19 @@ class SheetStorage {
     // Just clear the row if there is only 1 character authed
     // since you cant delete all the rows in a sheet
     if (dataRange.getNumRows() === 1) {
-      return dataRange.clear();
+      dataRange.clear();
+      return;
+    }
+
+    const rowIndex = this.getRowIndex();
+
+    // If the row index could not be found, just return early since the row is already deleted
+    if (-1 === rowIndex) {
+      return;
     }
 
     // Otherwise, delete the row related to this character
-    this.authedCharactersSheet.deleteRow(this.getRowIndex() + 1);
+    this.authedCharactersSheet.deleteRow(rowIndex + 1);
   }
 
   private tokenToArray(token: IToken): CharacterRow {

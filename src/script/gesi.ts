@@ -154,27 +154,11 @@ function getAuthenticatedCharacters(): ICharacterMap {
   const properties = getDocumentProperties_().getProperties();
   const characterMap: ICharacterMap = {};
 
-  // Migrate characters object to new metadata format
-  if (properties.hasOwnProperty('characters')) {
-    const characters = JSON.parse(properties['characters']);
-
-    console.log(`migrating ${Object.keys(characters).length} characters`);
-
-    Object.keys(characters).forEach((characterName: string) => {
-      const characterData = characters[characterName];
-
-      setCharacterData_(characterName, characterData);
-      characterMap[characterName] = characterData;
-    });
-
-    getDocumentProperties_().deleteProperty('characters');
-  } else {
-    Object.keys(properties).forEach((key: string) => {
-      if (key.startsWith('character.')) {
-        characterMap[key.replace('character.', '')] = JSON.parse(properties[key]);
-      }
-    });
-  }
+  Object.keys(properties).forEach((key: string) => {
+    if (key.startsWith('character.')) {
+      characterMap[key.replace('character.', '')] = JSON.parse(properties[key]);
+    }
+  });
 
   return characterMap;
 }
@@ -330,7 +314,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   // If this character is already in the map,
   // Reset previous oauthService and delete character data
   if (characterData) {
-    getOAuthService_(JSON.parse(characterData).id).reset();
+    getClient(jwtToken.name).reset()
   }
 
   setCharacterData_(jwtToken.name, {
