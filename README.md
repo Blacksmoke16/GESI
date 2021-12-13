@@ -1,10 +1,10 @@
 # GESI
 
-Google Sheets add-on for interacting with EVE ESI API.  GESI provides an EVE Online SSO flow to authorize your character(s), as well as a wrapper around ESI in order to access your EVE Online data within Google Sheets; much like `=importXML()` worked with the old XML API.
+Google Sheets™ add-on for interacting with EVE ESI API.  GESI provides an EVE Online SSO flow to authorize your character(s), as well as a wrapper around ESI in order to access your EVE Online data within Google Sheets™; much like `=importXML()` worked with the old XML API.
 
 ## Setup:
 
-1. Install the add-on.  From within Sheets: Go to `Add-Ons` => `Get add-ons` => Search for `GESI`, click on it, and click `Install`.
+1. Install the add-on.  From within Google Sheets™: Go to `Add-Ons` => `Get add-ons` => Search for `GESI`, click on it, and click `Install`.
 1. Give the script access to what it needs.
 1. There will now be a GESI option under the `Add-Ons` option in the menu bar.  Click it and then click `GESI => Authorize Character`.
 1. Click the EVE SSO button in the modal.  Login => select what character you want to authorize => Authorize.
