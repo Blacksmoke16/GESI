@@ -1,13 +1,13 @@
 name: GESI
 
-version: 8.5.0
+version: 9.0.0
 
 crystal: '>=0.34.0'
 
 license: MIT
 
 description: |
-  Google Sheets ESI Add-on
+  Google Sheets™ ESI Add-on
 
 authors:
   - George Dietrich <george@dietrich.app>
