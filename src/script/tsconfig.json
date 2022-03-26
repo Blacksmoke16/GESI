@@ -11,7 +11,7 @@
         "endpoints.ts",
         "functions.ts",
         "gesi.ts",
-        "sheet_storage.ts",
+        "token_storage.ts",
         "esi_client.ts"
     ]
 }

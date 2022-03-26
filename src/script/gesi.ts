@@ -5,11 +5,11 @@
  * @Blacksmoke16#0016 @ Discord
  * https://discord.gg/eEAH2et
  */
-import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
 import CacheService = GoogleAppsScript.Cache.CacheService;
-import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
+import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import Properties = GoogleAppsScript.Properties.Properties;
+import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
 
 function getScriptProperties_(): Properties {
   return PropertiesService.getScriptProperties();
@@ -42,7 +42,6 @@ function onOpen(): void {
     .addItem('Authorize Character', 'showSSOModal')
     .addItem('Deauthorize Character', 'deauthorizeCharacter')
     .addItem('Set Main Character', 'setMainCharacter')
-    .addItem('Enable Sheet Auth Storage', 'setAuthStorage')
     .addItem('Reset', 'reset')
     .addToUi();
 }
@@ -77,19 +76,6 @@ function setMainCharacter() {
   setMainCharacter_(character.name);
 
   ui.alert(`${character.name} is now your main character.`);
-}
-
-function setAuthStorage() {
-  const ui = SpreadsheetApp.getUi();
-  const useSheetStorage: boolean = ui.alert(`Use sheet based authenticated character storage?\n\nYou probably don't want to do this unless you know what you're doing.`, ui.ButtonSet.YES_NO) === ui.Button.YES;
-
-  getDocumentProperties_().setProperty('SHEET_STORAGE', useSheetStorage ? 'true' : 'false');
-
-  ui.alert(
-    useSheetStorage ?
-      'You are now using sheet based storage.' :
-      'You are now using properties based storage.',
-  );
 }
 
 function reset() {
@@ -335,8 +321,8 @@ function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Servic
   return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
-function getOAuthService_(id: string, refreshToken?: string): OAuth2Service {
-  const service = OAuth2.createService(id)
+function getOAuthService_(id: string): OAuth2Service {
+  return OAuth2.createService(id)
     .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
     .setTokenUrl(getScriptProperties_().getProperty('TOKEN_URL')!)
     .setClientId(getScriptProperties_().getProperty('CLIENT_ID')!)
@@ -344,23 +330,10 @@ function getOAuthService_(id: string, refreshToken?: string): OAuth2Service {
     .setCallbackFunction('authCallback')
     .setParam('access_type', 'offline')
     .setParam('prompt', 'consent')
-    .setScope(getScopes());
-
-  if (isUsingSheetStorage_()) {
-    // @ts-ignore
-    service.storage_ = new SheetStorage(id, getDocumentCache_(), refreshToken);
-  } else {
-    service
-      .setPropertyStore(getDocumentProperties_())
-      .setCache(getDocumentCache_())
-      .setExpirationMinutes('18');
-  }
-
-  return service;
-}
-
-function isUsingSheetStorage_(): boolean {
-  return getDocumentProperties_().getProperty('SHEET_STORAGE') === 'true';
+    .setScope(getScopes())
+    .setPropertyStore(
+      new TokenStorage(getDocumentProperties_(), getDocumentCache_())
+    );
 }
 
 // endregion
