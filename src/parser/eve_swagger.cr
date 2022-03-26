@@ -145,12 +145,16 @@ module EveSwagger
       io << "function #{@name}("
       parameters.join(", ", io) { |param, join_io| param.to_s join_io }
       io.puts "): SheetsArray {"
-      parameters.select(&.required).each { |param| io.puts "  if (!#{param.name}) throw new Error(`#{param.name} is required`);" }
+
+      parameters.each do |p|
+        p.to_function io
+      end
+
       io << "  return invoke('#{@name}', { "
 
       parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
 
-      io << " })"
+      io << " });"
 
       io.puts "\n}"
     end
@@ -339,7 +343,7 @@ module EveSwagger
         io << '?' unless required
       end
 
-      io << ": #{self.type}"
+      io << ':' << ' ' << self.type_string
 
       @default_value.try do |default|
         io << ' ' << '=' << ' '
@@ -348,10 +352,20 @@ module EveSwagger
       end
     end
 
+    def type_string : String
+      return "" unless (type = @type)
+
+      type.ends_with?("[]") ? "#{type[0..-3]}|#{type}" : type
+    end
+
     def to_doc_s(io : IO) : Nil
-      io << " * @param {#{self.type}} #{@name} - "
+      io << " * @param {#{self.type_string}} #{@name} - "
 
       io.puts @description
+    end
+
+    def to_function(io : IO) : Nil
+      io.puts "  if (!#{@name}) throw new Error(`#{@name} is required.`);" if @required
     end
 
     def <=>(other : self) : Int32?
