@@ -203,6 +203,10 @@ function invokeRaw<T>(functionName: string, params: IFunctionParams = { show_col
  * @customfunction
  */
 function getClient(characterName?: string): ESIClient {
+  if (characterName !== undefined && typeof characterName !== 'string') {
+    throw new Error(`Expected optional argument name to be a string, but got ${typeof characterName}.`);
+  }
+
   const characterData = getCharacterData(characterName || getMainCharacter());
   const oauthService = getOAuthService_(characterData.id);
   return new ESIClient(oauthService, characterData);
