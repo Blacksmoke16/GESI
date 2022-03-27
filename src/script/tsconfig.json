@@ -5,13 +5,14 @@
         "sourceMap": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strict": true
+        "strict": true,
+        "rootDir": "src"
     },
-    "files": [
-        "endpoints.ts",
-        "functions.ts",
-        "gesi.ts",
-        "token_storage.ts",
-        "esi_client.ts"
+    "include": [
+        "src/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "spec/**/*.spec.ts"
     ]
 }
