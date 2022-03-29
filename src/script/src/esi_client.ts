@@ -7,6 +7,7 @@ import { getScriptProperties_, IAccessTokenData, IAuthenticatedCharacter, IEndpo
 
 interface IEndpointProvider {
   hasEndpoint(name: string): boolean;
+
   getEndpoint(name: string): IEndpoint;
 }
 
@@ -34,7 +35,7 @@ class ESIClient {
     oauthClient: OAuth2Service,
     private characterData: IAuthenticatedCharacter,
     private documentProperties: Properties,
-    endpointProvider?: IEndpointProvider
+    endpointProvider?: IEndpointProvider,
   ) {
     this.#oauthClient = oauthClient;
 
@@ -46,7 +47,7 @@ class ESIClient {
         getEndpoint(name: string): IEndpoint {
           return getEndpoints()[name];
         },
-      }
+      };
     } else {
       this.endpointProvider = endpointProvider;
     }
@@ -164,10 +165,17 @@ class ESIClient {
 
     // Process this endpoint's parameters
     endpoint.parameters.forEach((param: IParameter) => {
-      const paramValue = params[param.name];
+      let paramValue = params[param.name];
       const required = param.required ? 'required' : 'optional';
 
+      if (param.required && (null === paramValue || undefined === paramValue)) {
+        throw new Error(`Argument ${param.name} is required.`);
+      } else if (!param.required && (null === paramValue || undefined === paramValue)) {
+        return;
+      }
+
       let paramType = param.type;
+      let paramValueType = typeof paramValue;
       let isArrayType = false;
 
       if (paramType.endsWith('[]')) {
@@ -176,13 +184,27 @@ class ESIClient {
       }
 
       if (isArrayType && 'string' === paramType && '#NAME?' === paramValue) {
-        throw new Error(`Expected ${required} argument ${param.name} to be a string|string[], but got invalid named range. Put the value in double quotes.`);
+        throw new Error(`Expected ${required} argument ${param.name} to be a string|string[], but got invalid named range. Put the value(s) in double quotes.`);
       } else if (!isArrayType && 'string' === paramType && '#NAME?' === paramValue) {
         throw new Error(`Expected ${required} argument ${param.name} to be a string, but got invalid named range. Put the value in double quotes.`);
-      } else if (!isArrayType && (typeof paramValue !== paramType && (!param.required && undefined !== paramValue))) {
-        throw new Error(`Expected ${required} argument ${param.name} to be a ${paramType}, but got a ${typeof paramValue}.`);
-      } else if (isArrayType && (!Array.isArray(paramValue) && typeof paramValue !== paramType)) {
-        throw new Error(`Expected ${required} argument ${param.name} to be a ${paramType}|${paramType}[], but got a ${typeof paramValue}.`);
+      } else if (!isArrayType && '#NAME?' === paramValue) {
+        throw new Error(`Expected ${required} argument ${param.name} to be a ${param.type}, but got invalid named range.`);
+      } else if (isArrayType && (!Array.isArray(paramValue) && paramValueType !== paramType)) {
+        throw new Error(`Expected ${required} argument ${param.name} to be a ${paramType}|${paramType}[], but got a ${paramValueType}.`);
+      } else if (!isArrayType && (paramValueType !== paramType)) {
+        throw new Error(`Expected ${required} argument ${param.name} to be a ${paramType}, but got a ${paramValueType}.`);
+      }
+
+      if (isArrayType) {
+        paramValue = !Array.isArray(paramValue) ?
+          [paramValue] :
+          Array.isArray(paramValue[0]) ?
+            paramValue.filter((item: any) => item[0]).map((item: any) => item[0]) :
+            paramValue;
+
+        if (isArrayType && !paramValue.every((i: any) => typeof i === paramType)) {
+          throw new Error(`Expected ${required} argument ${param.name} to be a ${paramType}|${paramType}[], but not every item in the array is a ${paramType}.`);
+        }
       }
 
       if (param.in === 'path' && paramValue) {
@@ -190,16 +212,8 @@ class ESIClient {
       } else if (param.in === 'query' && paramValue) {
         path = ESIClient.addQueryParam(path, param.name, paramValue);
       } else if (param.in === 'body' && paramValue) {
-        if (param.type.includes('[]')) {
-          payload = !Array.isArray(paramValue) ?
-            [paramValue] :
-            Array.isArray(paramValue[0]) ?
-              paramValue.filter((item: any) => item[0]).map((item: any) => item[0]) :
-              paramValue;
-
-          if (isArrayType && !payload.every((i: any) => typeof i === paramType)) {
-            throw new Error(`Expected ${param.name} to be ${paramType}[], but not every item in the array is a ${paramType}.`);
-          }
+        if (isArrayType) {
+          payload = paramValue;
         } else {
           throw param.type + ' is an unexpected body type.';
         }
@@ -272,4 +286,4 @@ class ESIClient {
   }
 }
 
-export { ESIClient, IEndpointProvider }
+export { ESIClient, IEndpointProvider };
