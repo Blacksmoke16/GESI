@@ -290,6 +290,7 @@ function invokeMultipleRaw(functionName: string, characterNames: string | string
 
 // region oauth
 
+// @ts-ignore
 function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   const id: string = request.parameter.serviceName;
 
@@ -330,10 +331,12 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
   return HtmlService.createHtmlOutput(`Thank you for using GESI ${jwtToken.name}!  You may close this tab.`);
 }
 
+// @ts-ignore
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
   return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter, getDocumentProperties_())).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
+// @ts-ignore
 function getOAuthService_(id: string): OAuth2Service {
   return OAuth2.createService(id)
     .setAuthorizationBaseUrl(getScriptProperties_().getProperty('AUTHORIZE_URL')!)
@@ -351,18 +354,22 @@ function getOAuthService_(id: string): OAuth2Service {
 
 // endregion
 
+// @ts-ignore
 function setCharacterData_(characterName: string, characterData: IAuthenticatedCharacter): void {
   getDocumentProperties_().setProperty(`character.${characterName}`, JSON.stringify(characterData));
 }
 
+// @ts-ignore
 function setMainCharacter_(characterName: string): void {
   getDocumentProperties_().setProperty('MAIN_CHARACTER', characterName);
 }
 
+// @ts-ignore
 function normalizeResult_(result: any): any[] {
   return Array.isArray(result) ? result : [result];
 }
 
+// @ts-ignore
 function normalizeNames_(characterNames: string | string[] | string[][]): string[] {
   let normalizedNames: string[];
 
@@ -478,4 +485,4 @@ interface ICharacterAffiliation {
   readonly faction_id?: number;
 }
 
-export { IAuthenticatedCharacter, IFunctionParams, SheetsArray, IToken, IHeader, IEndpoint, IAccessTokenData, IParameter, IEndpointList, parseArray, getScriptProperties_ }
+export { IAuthenticatedCharacter, IFunctionParams, SheetsArray, IToken, IHeader, IEndpoint, IAccessTokenData, IParameter, IEndpointList, parseArray, getScriptProperties_, getClient, invoke, invokeRaw, invokeMultiple, invokeMultipleRaw, getAuthenticatedCharacters, getAuthenticatedCharacterNames }

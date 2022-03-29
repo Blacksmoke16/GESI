@@ -30,10 +30,10 @@ describe('EsiClient', () => {
       mockCharacterData,
       documentProperties,
       endpointProvider = {
-        hasEndpoint(name: string): boolean {
+        hasEndpoint(_name: string): boolean {
           return true;
         },
-        getEndpoint(name: string): IEndpoint {
+        getEndpoint(_name: string): IEndpoint {
           return endpoint;
         },
       },

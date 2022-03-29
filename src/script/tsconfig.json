@@ -8,6 +8,7 @@
         "strict": true,
         "rootDir": "src",
         "experimentalDecorators": true,
+        "removeComments": true,
         "plugins": [
             {
                 "transform": "ts-auto-mock/transformer",
