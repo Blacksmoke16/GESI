@@ -77,7 +77,95 @@ describe('TokenStorage', () => {
 
       it('should return null', function () {
         expect(documentPropertiesMock.getProperty).toHaveBeenCalledWith('foo');
+        expect(documentCacheMock.get).not.toHaveBeenCalled();
         expect(result).toBeNull();
+      });
+    });
+
+    describe('and there is a invalid JSON value string', () => {
+      beforeEach(() => {
+        documentPropertiesMock.getProperty = jest.fn().mockReturnValueOnce('bar');
+        result = tokenStorage.getProperty('foo');
+      });
+
+      it('should return the value as is', function () {
+        expect(documentPropertiesMock.getProperty).toHaveBeenCalledWith('foo');
+        expect(documentCacheMock.get).not.toHaveBeenCalled();
+        expect(result).toBe('bar')
+      });
+    });
+
+    describe('and the value is not the token object', () => {
+      beforeEach(() => {
+        documentPropertiesMock.getProperty = jest.fn().mockReturnValueOnce('{"foo":"bar"}');
+        result = tokenStorage.getProperty('foo');
+      });
+
+      it('should return the JSON string without `access_token`', function () {
+        expect(documentPropertiesMock.getProperty).toHaveBeenCalledWith('foo');
+        expect(documentCacheMock.get).not.toHaveBeenCalled();
+        expect(result).toBe('{"foo":"bar"}')
+      });
+    });
+
+    describe('and the value is the token object', () => {
+      beforeEach(() => {
+        documentPropertiesMock.getProperty = jest.fn().mockReturnValueOnce('{"token_type":"Bearer"}');
+        documentCacheMock.get = jest.fn().mockReturnValueOnce('TOKEN');
+        result = tokenStorage.getProperty('foo');
+      });
+
+      it('should return the JSON string without `access_token`', function () {
+        expect(documentPropertiesMock.getProperty).toHaveBeenCalledWith('foo');
+        expect(documentCacheMock.get).toHaveBeenCalledWith('foo');
+        expect(result).toBe('{"token_type":"Bearer","access_token":"TOKEN"}')
+      });
+    });
+  });
+
+  describe('#setProperty', () => {
+    describe('and the value is `null`', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        tokenStorage.setProperty('foo', null);
+      });
+
+      it('should delegate to decorated properties store', function () {
+        expect(documentPropertiesMock.setProperty).toHaveBeenCalledWith('foo', null);
+        expect(documentCacheMock.put).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('and there is a invalid JSON value string', () => {
+      beforeEach(() => {
+        tokenStorage.setProperty('foo', 'bar');
+      });
+
+      it('should delegate to decorated properties store', function () {
+        expect(documentPropertiesMock.setProperty).toHaveBeenCalledWith('foo', 'bar');
+        expect(documentCacheMock.put).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('and the value is a JSON string without an `access_token`', () => {
+      beforeEach(() => {
+        tokenStorage.setProperty('foo', '{"foo":"bar"}');
+      });
+
+      it('should delegate to decorated properties store', function () {
+        expect(documentPropertiesMock.setProperty).toHaveBeenCalledWith('foo', '{"foo":"bar"}');
+        expect(documentCacheMock.put).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('and the value is a JSON string with an `access_token`', () => {
+      beforeEach(() => {
+        tokenStorage.setProperty('foo', '{"token_type":"Bearer","access_token":"TOKEN"}');
+      });
+
+      it('should delegate to decorated properties store', function () {
+        expect(documentPropertiesMock.setProperty).toHaveBeenCalledWith('foo', '{"token_type":"Bearer"}');
+        expect(documentCacheMock.put).toHaveBeenCalledWith('foo', 'TOKEN', 1140)
       });
     });
   });

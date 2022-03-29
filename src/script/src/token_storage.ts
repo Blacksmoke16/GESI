@@ -66,7 +66,6 @@ class TokenStorage implements Properties {
   }
 
   public setProperty(key: string, value: string): Properties {
-
     if (null === value) {
       return this.documentProperties.setProperty(key, value);
     }
