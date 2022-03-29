@@ -2,7 +2,10 @@
     "name": "gesi",
     "version": "9.0.0",
     "description": "Google Sheets ESI Add-on",
-    "scripts": {},
+    "scripts": {
+        "test": "jest",
+        "push": "sed -e '/export/ s|^/*|//|' -i src/*.ts && clasp push && git checkout ."
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Blacksmoke16/GESI.git"
