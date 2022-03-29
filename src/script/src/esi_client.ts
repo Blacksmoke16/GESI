@@ -1,5 +1,14 @@
 import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
+import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
+import Properties = GoogleAppsScript.Properties.Properties;
+import { getEndpoints } from './endpoints';
+import { getScriptProperties_, IAccessTokenData, IAuthenticatedCharacter, IEndpoint, IFunctionParams, IHeader, IParameter, IToken, SheetsArray } from './gesi';
+
+interface IEndpointProvider {
+  hasEndpoint(name: string): boolean;
+  getEndpoint(name: string): IEndpoint;
+}
 
 class ESIClient {
   private static readonly BASE_URL = 'https://esi.evetech.net';
@@ -18,12 +27,29 @@ class ESIClient {
   }
 
   #oauthClient: OAuth2Service;
-  private characterData: IAuthenticatedCharacter;
   private endpoint?: IEndpoint;
+  private endpointProvider: IEndpointProvider;
 
-  constructor(oauthClient: OAuth2Service, characterData: IAuthenticatedCharacter) {
+  constructor(
+    oauthClient: OAuth2Service,
+    private characterData: IAuthenticatedCharacter,
+    private documentProperties: Properties,
+    endpointProvider?: IEndpointProvider
+  ) {
     this.#oauthClient = oauthClient;
-    this.characterData = characterData;
+
+    if (undefined === endpointProvider) {
+      this.endpointProvider = {
+        hasEndpoint(name: string): boolean {
+          return getEndpoints().hasOwnProperty(name);
+        },
+        getEndpoint(name: string): IEndpoint {
+          return getEndpoints()[name];
+        },
+      }
+    } else {
+      this.endpointProvider = endpointProvider;
+    }
   }
 
   /**
@@ -34,11 +60,11 @@ class ESIClient {
    * @customfunction
    */
   public setFunction(functionName: string): ESIClient {
-    if (!getEndpoints().hasOwnProperty(functionName)) {
+    if (!this.endpointProvider?.hasEndpoint(functionName)) {
       throw new Error(`Unknown endpoint: '${functionName}'`);
     }
 
-    this.endpoint = getEndpoints()[functionName];
+    this.endpoint = this.endpointProvider.getEndpoint(functionName);
 
     return this;
   }
@@ -74,7 +100,7 @@ class ESIClient {
    */
   public reset(): void {
     this.#oauthClient.reset();
-    getDocumentProperties_().deleteProperty(`character.${this.characterData.name}`);
+    this.documentProperties.deleteProperty(`character.${this.characterData.name}`);
   }
 
   /**
@@ -186,7 +212,7 @@ class ESIClient {
     }
 
     if (endpoint.scope) {
-      if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id.toString());
+      if (this.characterData.alliance_id && path.includes('{alliance_id}')) path = path.replace('{alliance_id}', this.characterData.alliance_id!.toString());
       if (path.includes('{character_id}')) path = path.replace('{character_id}', this.characterData.character_id.toString());
       if (path.includes('{corporation_id}')) path = path.replace('{corporation_id}', this.characterData.corporation_id.toString());
     }
@@ -202,7 +228,7 @@ class ESIClient {
     };
 
     if (payload) request.payload = JSON.stringify(payload);
-    if (endpoint.scope) request.headers['authorization'] = `Bearer ${this.#oauthClient.getAccessToken()}`;
+    if (endpoint.scope) request.headers!['authorization'] = `Bearer ${this.#oauthClient.getAccessToken()}`;
 
     return request;
   }
@@ -210,7 +236,7 @@ class ESIClient {
   private doRequest<T>(params: IFunctionParams): T {
     const request = this.buildRequest(params);
     const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
-    const headers = response.getHeaders();
+    const headers = response.getHeaders() as { [k: string]: string };
 
     // If the request was not successful, raise an error
     if (response.getResponseCode() !== 200) {
@@ -245,3 +271,5 @@ class ESIClient {
     return this.endpoint;
   }
 }
+
+export { ESIClient, IEndpointProvider }

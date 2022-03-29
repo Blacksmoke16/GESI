@@ -1,5 +1,3 @@
-/// <reference path="../node_modules/@types/google-apps-script/google-apps-script.properties.d.ts" />
-
 import Properties = GoogleAppsScript.Properties.Properties;
 import Cache = GoogleAppsScript.Cache.Cache;
 

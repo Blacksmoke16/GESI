@@ -1,3 +1,5 @@
+import { IEndpointList } from './gesi';
+
 function getScopes(): string[] {
   return [
   "esi-alliances.read_contacts.v1",
@@ -6603,3 +6605,5 @@ function getEndpoints(): IEndpointList {
   }
 }
 }
+
+export { getEndpoints, getScopes }

@@ -5,11 +5,14 @@
  * @Blacksmoke16#0016 @ Discord
  * https://discord.gg/eEAH2et
  */
-import CacheService = GoogleAppsScript.Cache.CacheService;
 import AppsScriptHttpRequestEvent = GoogleAppsScript.Events.AppsScriptHttpRequestEvent;
 import HtmlOutput = GoogleAppsScript.HTML.HtmlOutput;
 import Properties = GoogleAppsScript.Properties.Properties;
 import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
+import HttpMethod = GoogleAppsScript.URL_Fetch.HttpMethod;
+import { getEndpoints, getScopes } from './endpoints';
+import { ESIClient } from './esi_client';
+import { TokenStorage } from './token_storage';
 
 function getScriptProperties_(): Properties {
   return PropertiesService.getScriptProperties();
@@ -31,10 +34,12 @@ function getDocumentCache_(): GoogleAppsScript.Cache.Cache {
 
 // region UI
 
+// @ts-ignore
 function onInstall(): void {
   onOpen();
 }
 
+// @ts-ignore
 function onOpen(): void {
   SpreadsheetApp
     .getUi()
@@ -46,12 +51,14 @@ function onOpen(): void {
     .addToUi();
 }
 
+// @ts-ignore
 function showSSOModal(): void {
   const template = HtmlService.createTemplateFromFile('authorize');
   template.authorizationUrl = getOAuthService_(Utilities.getUuid()).getAuthorizationUrl();
   SpreadsheetApp.getUi().showModalDialog(template.evaluate().setWidth(400).setHeight(250), 'GESI EVE SSO');
 }
 
+// @ts-ignore
 function deauthorizeCharacter(): void {
   const ui = SpreadsheetApp.getUi();
   const response = ui.prompt('Deauthorize Character', 'Enter the name of the character you wish to deauthorize.', ui.ButtonSet.OK_CANCEL);
@@ -65,6 +72,7 @@ function deauthorizeCharacter(): void {
   ui.alert(`Successfully deauthorized ${character.name}.`);
 }
 
+// @ts-ignore
 function setMainCharacter() {
   const ui = SpreadsheetApp.getUi();
   const response = ui.prompt('Set Main Character', 'Enter the name of the character you wish to use as your main.', ui.ButtonSet.OK_CANCEL);
@@ -78,6 +86,7 @@ function setMainCharacter() {
   ui.alert(`${character.name} is now your main character.`);
 }
 
+// @ts-ignore
 function reset() {
   const ui = SpreadsheetApp.getUi();
   const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
@@ -209,7 +218,7 @@ function getClient(characterName?: string): ESIClient {
 
   const characterData = getCharacterData(characterName || getMainCharacter());
   const oauthService = getOAuthService_(characterData.id);
-  return new ESIClient(oauthService, characterData);
+  return new ESIClient(oauthService, characterData, getDocumentProperties_());
 }
 
 /**
@@ -322,7 +331,7 @@ function authCallback(request: AppsScriptHttpRequestEvent): HtmlOutput {
 }
 
 function getCharacterAffiliation_(characterId: number, oauthClient: OAuth2Service): ICharacterAffiliation {
-  return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter)).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
+  return (new ESIClient(oauthClient, {} as IAuthenticatedCharacter, getDocumentProperties_())).setFunction('characters_affiliation').executeRaw<ICharacterAffiliation[]>({ characters: [[characterId]], show_column_headings: false })[0];
 }
 
 function getOAuthService_(id: string): OAuth2Service {
@@ -394,7 +403,7 @@ interface IEndpoint {
   readonly headers: IHeader[];
 
   /** @description The HTTP method this endpoint uses */
-  readonly method: string;
+  readonly method: HttpMethod;
 
   /** @description Whether this endpoint is paginated */
   readonly paginated: boolean;
@@ -468,3 +477,5 @@ interface ICharacterAffiliation {
   readonly corporation_id: number;
   readonly faction_id?: number;
 }
+
+export { IAuthenticatedCharacter, IFunctionParams, SheetsArray, IToken, IHeader, IEndpoint, IAccessTokenData, IParameter, IEndpointList, parseArray, getScriptProperties_ }
