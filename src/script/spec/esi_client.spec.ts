@@ -21,7 +21,7 @@ describe('EsiClient', () => {
       name: 'Blacksmoke16',
       character_id: 2047918291,
       corporation_id: 98019139,
-      alliance_id: 1900696668
+      alliance_id: 1900696668,
     });
     documentProperties = createMock<Properties>();
 
@@ -85,8 +85,8 @@ describe('EsiClient', () => {
               'user-agent': 'GESI User 2047918291',
             },
             contentType: 'application/json',
-            muteHttpExceptions: true
-          })
+            muteHttpExceptions: true,
+          });
         });
       });
 
@@ -110,8 +110,8 @@ describe('EsiClient', () => {
               'user-agent': 'GESI User 2047918291',
             },
             contentType: 'application/json',
-            muteHttpExceptions: true
-          })
+            muteHttpExceptions: true,
+          });
         });
       });
 
@@ -135,8 +135,8 @@ describe('EsiClient', () => {
               'user-agent': 'GESI User 2047918291',
             },
             contentType: 'application/json',
-            muteHttpExceptions: true
-          })
+            muteHttpExceptions: true,
+          });
         });
       });
 
@@ -164,8 +164,8 @@ describe('EsiClient', () => {
               'authorization': 'Bearer TOKEN',
             },
             contentType: 'application/json',
-            muteHttpExceptions: true
-          })
+            muteHttpExceptions: true,
+          });
         });
       });
     });
@@ -181,14 +181,14 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'number',
-                    required: true
-                  }
+                    required: true,
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest())
-                .toThrow('Argument param is required.')
+                .toThrow('Argument param is required.');
             });
           });
 
@@ -200,14 +200,14 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'number',
-                    required: true
-                  }
+                    required: true,
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected required argument param to be a number, but got a boolean.')
+                .toThrow('Expected required argument param to be a number, but got a boolean.');
             });
           });
 
@@ -219,14 +219,14 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'boolean',
-                    required: true
-                  }
+                    required: true,
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams))
-                .not.toThrow()
+                .not.toThrow();
             });
           });
 
@@ -238,13 +238,13 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'string',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: '#NAME?', show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string, but got invalid named range. Put the value in double quotes.')
+                .toThrow('Expected optional argument param to be a string, but got invalid named range. Put the value in double quotes.');
             });
           });
 
@@ -256,7 +256,7 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'string',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
@@ -274,13 +274,13 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'string',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: 100, show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string, but got a number.')
+                .toThrow('Expected optional argument param to be a string, but got a number.');
             });
           });
 
@@ -292,13 +292,13 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'number',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: '#NAME?', show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a number, but got invalid named range.')
+                .toThrow('Expected optional argument param to be a number, but got invalid named range.');
             });
           });
 
@@ -310,7 +310,7 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'boolean',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
@@ -330,14 +330,14 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'number[]',
-                    required: true
-                  }
+                    required: true,
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected required argument param to be a number|number[], but got a boolean.')
+                .toThrow('Expected required argument param to be a number|number[], but got a boolean.');
             });
           });
 
@@ -349,13 +349,13 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: '#NAME?', show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string|string[], but got invalid named range. Put the value(s) in double quotes.')
+                .toThrow('Expected optional argument param to be a string|string[], but got invalid named range. Put the value(s) in double quotes.');
             });
           });
 
@@ -367,13 +367,13 @@ describe('EsiClient', () => {
                   {
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: 100, show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string|string[], but got a number.')
+                .toThrow('Expected optional argument param to be a string|string[], but got a number.');
             });
           });
 
@@ -386,13 +386,13 @@ describe('EsiClient', () => {
                     in: 'body',
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: [1, 2, 3], show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string|string[], but not every item in the array is a string.')
+                .toThrow('Expected optional argument param to be a string|string[], but not every item in the array is a string.');
             });
           });
 
@@ -405,13 +405,13 @@ describe('EsiClient', () => {
                     in: 'body',
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
 
               expect(() => esiClient.buildRequest({ param: ['1', 2, '3'], show_column_headings: false } as IFunctionParams))
-                .toThrow('Expected optional argument param to be a string|string[], but not every item in the array is a string.')
+                .toThrow('Expected optional argument param to be a string|string[], but not every item in the array is a string.');
             });
           });
 
@@ -424,7 +424,7 @@ describe('EsiClient', () => {
                     in: 'body',
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
@@ -443,7 +443,7 @@ describe('EsiClient', () => {
                     in: 'body',
                     name: 'param',
                     type: 'string[]',
-                  }
+                  },
                 ],
               } as IEndpoint;
               esiClient.setFunction('foo');
@@ -452,8 +452,102 @@ describe('EsiClient', () => {
                 .not.toThrow();
             });
           });
-        })
-      })
+        });
+      });
+
+      describe('path param', () => {
+        beforeEach(() => {
+          endpoint = {
+            path: '/{version}/route/{param}/',
+            version: 'v1',
+            method: 'get',
+            parameters: [
+              {
+                in: 'path',
+                name: 'param',
+                type: 'number',
+              },
+            ],
+          } as IEndpoint;
+          esiClient.setFunction('foo');
+          result = esiClient.buildRequest({ param: 10, show_column_headings: false } as IFunctionParams);
+        });
+
+        it('should sub the param into the path', () => {
+          expect(result).toEqual<URLFetchRequest>({
+            method: 'get',
+            url: 'https://esi.evetech.net/v1/route/10/',
+            headers: {
+              'user-agent': 'GESI User 2047918291',
+            },
+            contentType: 'application/json',
+            muteHttpExceptions: true,
+          });
+        });
+      });
+
+      describe('query param', () => {
+        beforeEach(() => {
+          endpoint = {
+            path: '/{version}/route/',
+            version: 'v1',
+            method: 'get',
+            parameters: [
+              {
+                in: 'query',
+                name: 'param',
+                type: 'number',
+              },
+            ],
+          } as IEndpoint;
+          esiClient.setFunction('foo');
+          result = esiClient.buildRequest({ param: 10, show_column_headings: false } as IFunctionParams);
+        });
+
+        it('add the value as a query param', () => {
+          expect(result).toEqual<URLFetchRequest>({
+            method: 'get',
+            url: 'https://esi.evetech.net/v1/route/?param=10',
+            headers: {
+              'user-agent': 'GESI User 2047918291',
+            },
+            contentType: 'application/json',
+            muteHttpExceptions: true,
+          });
+        });
+      });
+
+      describe('body param', () => {
+        beforeEach(() => {
+          endpoint = {
+            path: '/{version}/route/',
+            version: 'v1',
+            method: 'get',
+            parameters: [
+              {
+                in: 'body',
+                name: 'param',
+                type: 'number[]',
+              },
+            ],
+          } as IEndpoint;
+          esiClient.setFunction('foo');
+          result = esiClient.buildRequest({ param: 10, show_column_headings: false } as IFunctionParams);
+        });
+
+        it('add the payload as a JSON encoded value', () => {
+          expect(result).toEqual<URLFetchRequest>({
+            method: 'get',
+            url: 'https://esi.evetech.net/v1/route/',
+            payload: '[10]',
+            headers: {
+              'user-agent': 'GESI User 2047918291',
+            },
+            contentType: 'application/json',
+            muteHttpExceptions: true,
+          });
+        });
+      });
     });
   });
 });
