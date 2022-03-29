@@ -1,16 +1,22 @@
-class TokenStorage implements GoogleAppsScript.Properties.Properties {
+/// <reference path="../node_modules/@types/google-apps-script/google-apps-script.properties.d.ts" />
+
+import Properties = GoogleAppsScript.Properties.Properties;
+import Cache = GoogleAppsScript.Cache.Cache;
+
+class TokenStorage implements Properties {
   static readonly TOKEN_TTL = 1140; // 19 minutes in seconds
 
   public constructor(
-    private documentProperties: GoogleAppsScript.Properties.Properties,
-    private documentCache: GoogleAppsScript.Cache.Cache
+    private documentProperties: Properties,
+    private documentCache: Cache
   ) { }
 
-  public deleteAllProperties(): GoogleAppsScript.Properties.Properties {
-    throw new Error('deleteAllProperties is not implemented.');
+  public deleteAllProperties(): Properties {
+    this.documentProperties.deleteAllProperties();
+    return this;
   }
 
-  public deleteProperty(key: string): GoogleAppsScript.Properties.Properties {
+  public deleteProperty(key: string): Properties {
     this.documentProperties.deleteProperty(key);
     this.documentCache.remove(key);
 
@@ -18,7 +24,7 @@ class TokenStorage implements GoogleAppsScript.Properties.Properties {
   }
 
   public getKeys(): string[] {
-    throw new Error('getKeys is not implemented.');
+    return this.documentProperties.getKeys();
   }
 
   public getProperties(): { [p: string]: string } {
@@ -53,13 +59,13 @@ class TokenStorage implements GoogleAppsScript.Properties.Properties {
     return JSON.stringify(jsonData);
   }
 
-  public setProperties(properties: { [p: string]: string }): GoogleAppsScript.Properties.Properties;
-  public setProperties(properties: { [p: string]: string }, deleteAllOthers: boolean): GoogleAppsScript.Properties.Properties;
-  public setProperties(properties: { [p: string]: string }, deleteAllOthers?: boolean): GoogleAppsScript.Properties.Properties {
+  public setProperties(properties: { [p: string]: string }): Properties;
+  public setProperties(properties: { [p: string]: string }, deleteAllOthers: boolean): Properties;
+  public setProperties(_properties: { [p: string]: string }, _deleteAllOthers?: boolean): Properties {
     throw new Error('setProperties is not implemented.');
   }
 
-  public setProperty(key: string, value: string|null): GoogleAppsScript.Properties.Properties {
+  public setProperty(key: string, value: string): Properties {
 
     if (null === value) {
       return this.documentProperties.setProperty(key, value);
@@ -92,3 +98,5 @@ class TokenStorage implements GoogleAppsScript.Properties.Properties {
     return this;
   }
 }
+
+export { TokenStorage }

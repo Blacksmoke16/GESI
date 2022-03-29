@@ -1,18 +1,21 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "ES6",
+        "target": "ES2019",
         "sourceMap": false,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "rootDir": "src"
+        "rootDir": "src",
+        "experimentalDecorators": true,
+        "plugins": [
+            {
+                "transform": "ts-auto-mock/transformer",
+                "cacheBetweenTests": false
+            }
+        ]
     },
     "include": [
         "src/*"
-    ],
-    "exclude": [
-        "node_modules",
-        "spec/**/*.spec.ts"
     ]
 }
