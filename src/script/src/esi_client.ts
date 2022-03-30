@@ -133,7 +133,7 @@ class ESIClient {
     let result: SheetsArray = [];
 
     if (params.show_column_headings !== undefined && typeof params.show_column_headings !== 'boolean') {
-      throw new Error(`Expected optional argument show_column_headings to be a boolean, but got ${typeof params.show_column_headings}.`);
+      throw new Error(`Expected optional argument show_column_headings to be a boolean, but got a ${typeof params.show_column_headings}.`);
     }
 
     // Add the header row if its not set, or set to true

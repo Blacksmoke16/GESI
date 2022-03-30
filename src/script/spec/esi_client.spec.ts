@@ -1,6 +1,6 @@
 import { createMock } from 'ts-auto-mock';
 import { ESIClient, IEndpointProvider, IHTTPClient } from '../src/esi_client';
-import { IAuthenticatedCharacter, IEndpoint, IFunctionParams, IParameter } from '../src/gesi';
+import { SheetsArray, IAuthenticatedCharacter, IEndpoint, IFunctionParams, IParameter } from '../src/gesi';
 import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 import Properties = GoogleAppsScript.Properties.Properties;
@@ -570,6 +570,287 @@ describe('EsiClient', () => {
           });
         });
       });
+    });
+  });
+
+  describe('execute', () => {
+    it('invalid show_column_headings type', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '{"id":10}';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      // @ts-ignore
+      expect(() => esiClient.execute({ show_column_headings: 10 }))
+        .toThrow('Expected optional argument show_column_headings to be a boolean, but got a number.');
+    });
+
+    it('adds headers if desired', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'foo' },
+          { name: 'bar' },
+          { name: 'baz' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '[]';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute({ show_column_headings: true })).toEqual([
+        ['foo', 'bar', 'baz'],
+      ]);
+    });
+
+    it('does not add headers if not desired', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'foo' },
+          { name: 'bar' },
+          { name: 'baz' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '[]';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([]);
+    });
+
+    it('concats an array of numbers', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'foo' },
+          { name: 'bar' },
+          { name: 'baz' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '[1, 2, 3]';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([1, 2, 3]);
+    });
+
+    it('concats an array of singly nested objects', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'id' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '[{"id":1},{"id":2}]';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([[1], [2]]);
+    });
+
+    it('concats an array of singly doubly nested objects', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'id' },
+          { name: 'extra', sub_headers: ['subId'] },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '[{"id":1,"extra":{"subId":3}},{"id":2,"extra":{"subId":4}}]';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([[1, '{"subId":3}'], [2, '{"subId":4}']]);
+    });
+
+    it('handles a single object', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'id' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '{"id":1}';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([[1]]);
+    });
+
+    it('single object with nested data', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'id' },
+          { name: 'extra', sub_headers: ['subId'] },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '{"id":1,"extra":{"subId":3}}';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([[1, '{"subId":3}']]);
+    });
+
+    it('handles a value', () => {
+      endpoint = {
+        path: '/{version}/route/',
+        version: 'v1',
+        method: 'get',
+        headers: [
+          { name: 'id' },
+        ],
+        parameters: [] as IParameter[],
+      } as IEndpoint;
+      esiClient.setFunction('foo');
+
+      responses = [
+        {
+          getContentText() {
+            return '10';
+          },
+          getHeaders() {
+            return {};
+          },
+          getResponseCode() {
+            return 200;
+          },
+        },
+      ] as HTTPResponse[];
+      esiClient.setFunction('foo');
+
+      expect(esiClient.execute()).toEqual([[10]]);
     });
   });
 
