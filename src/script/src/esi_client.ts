@@ -7,7 +7,6 @@ import { getScriptProperties_, IAccessTokenData, IAuthenticatedCharacter, IEndpo
 
 interface IEndpointProvider {
   hasEndpoint(name: string): boolean;
-
   getEndpoint(name: string): IEndpoint;
 }
 
@@ -17,6 +16,8 @@ interface IHTTPClient {
 
 class ESIClient {
   private static readonly BASE_URL = 'https://esi.evetech.net';
+  private static readonly AUDIENCE = 'EVE Online';
+  private static readonly ISSUER = 'login.eveonline.com';
 
   public static addQueryParam(path: string, paramName: string, paramValue: any): string {
     path += path.includes('?') ? '&' : '?';
@@ -26,7 +27,8 @@ class ESIClient {
 
   public static parseToken(access_token: string): IAccessTokenData {
     const jwtToken: IAccessTokenData = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
-    if (jwtToken.iss !== 'login.eveonline.com') throw 'Access token validation error: invalid issuer';
+    if (jwtToken.iss !== ESIClient.ISSUER) throw 'Access token validation error: invalid issuer';
+    if (jwtToken.aud !== ESIClient.AUDIENCE) throw 'Access token validation error: invalid audience';
     if (jwtToken.azp !== getScriptProperties_().getProperty('CLIENT_ID')) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
   }

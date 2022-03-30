@@ -471,6 +471,7 @@ interface IToken {
 
 interface IAccessTokenData {
   readonly azp: string;
+  readonly aud: string;
   readonly exp: number;
   readonly iss: string;
   readonly name: string;

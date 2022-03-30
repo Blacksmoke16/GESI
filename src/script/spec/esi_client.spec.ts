@@ -1,6 +1,6 @@
 import { createMock } from 'ts-auto-mock';
-import { ESIClient, IEndpointProvider, IHTTPClient } from '../src/esi_client';
-import { SheetsArray, IAuthenticatedCharacter, IEndpoint, IFunctionParams, IParameter } from '../src/gesi';
+import { ESIClient, IEndpointProvider } from '../src/esi_client';
+import { IAuthenticatedCharacter, IEndpoint, IFunctionParams, IParameter } from '../src/gesi';
 import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
 import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 import Properties = GoogleAppsScript.Properties.Properties;
@@ -13,7 +13,6 @@ describe('EsiClient', () => {
   let mockCharacterData: IAuthenticatedCharacter;
   let documentProperties: Properties;
   let endpointProvider: IEndpointProvider;
-  let httpClient: IHTTPClient;
 
   let endpoint: IEndpoint;
   let responses: HTTPResponse[];
@@ -40,7 +39,7 @@ describe('EsiClient', () => {
           return endpoint;
         },
       },
-      httpClient = {
+      {
         fetchAll(_requests: URLFetchRequest[]): HTTPResponse[] {
           return responses;
         },
