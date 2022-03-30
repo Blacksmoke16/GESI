@@ -11,10 +11,14 @@ interface IEndpointProvider {
   getEndpoint(name: string): IEndpoint;
 }
 
+interface IHTTPClient {
+  fetchAll(requests: URLFetchRequest[]): HTTPResponse[];
+}
+
 class ESIClient {
   private static readonly BASE_URL = 'https://esi.evetech.net';
 
-  private static addQueryParam(path: string, paramName: string, paramValue: any): string {
+  public static addQueryParam(path: string, paramName: string, paramValue: any): string {
     path += path.includes('?') ? '&' : '?';
     path += paramName + '=' + (Array.isArray(paramValue) ? paramValue.join(',') : paramValue);
     return path;
@@ -30,12 +34,14 @@ class ESIClient {
   #oauthClient: OAuth2Service;
   private endpoint?: IEndpoint;
   private endpointProvider: IEndpointProvider;
+  private httpClient: IHTTPClient;
 
   constructor(
     oauthClient: OAuth2Service,
     private characterData: IAuthenticatedCharacter,
     private documentProperties: Properties,
     endpointProvider?: IEndpointProvider,
+    httpClient?: IHTTPClient,
   ) {
     this.#oauthClient = oauthClient;
 
@@ -50,6 +56,16 @@ class ESIClient {
       };
     } else {
       this.endpointProvider = endpointProvider;
+    }
+
+    if (undefined === httpClient) {
+      this.httpClient = {
+        fetchAll(requests: URLFetchRequest[]): HTTPResponse[] {
+          return UrlFetchApp.fetchAll(requests);
+        },
+      }
+    } else {
+      this.httpClient = httpClient;
     }
   }
 
@@ -249,7 +265,7 @@ class ESIClient {
 
   private doRequest<T>(params: IFunctionParams): T {
     const request = this.buildRequest(params);
-    const response: HTTPResponse = UrlFetchApp.fetchAll([request])[0];
+    const response: HTTPResponse = this.httpClient.fetchAll([request])[0];
     const headers = response.getHeaders() as { [k: string]: string };
 
     // If the request was not successful, raise an error
@@ -274,7 +290,13 @@ class ESIClient {
       requests.push(this.buildRequest(params));
     }
 
-    return result.concat(...UrlFetchApp.fetchAll(requests).map((response: HTTPResponse) => JSON.parse(response.getContentText())));
+    return result.concat(...this.httpClient.fetchAll(requests).map((response: HTTPResponse) => {
+      if (response.getResponseCode() !== 200) {
+        throw new Error(response.getContentText());
+      }
+
+      return JSON.parse(response.getContentText())
+    }));
   }
 
   private checkEndpoint(): IEndpoint {
@@ -286,4 +308,4 @@ class ESIClient {
   }
 }
 
-export { ESIClient, IEndpointProvider };
+export { ESIClient, IEndpointProvider, IHTTPClient };

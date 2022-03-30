@@ -1,7 +1,8 @@
 import { createMock } from 'ts-auto-mock';
-import { ESIClient, IEndpointProvider } from '../src/esi_client';
+import { ESIClient, IEndpointProvider, IHTTPClient } from '../src/esi_client';
 import { IAuthenticatedCharacter, IEndpoint, IFunctionParams, IParameter } from '../src/gesi';
 import OAuth2Service = GoogleAppsScriptOAuth2.OAuth2Service;
+import HTTPResponse = GoogleAppsScript.URL_Fetch.HTTPResponse;
 import Properties = GoogleAppsScript.Properties.Properties;
 import URLFetchRequest = GoogleAppsScript.URL_Fetch.URLFetchRequest;
 
@@ -12,8 +13,10 @@ describe('EsiClient', () => {
   let mockCharacterData: IAuthenticatedCharacter;
   let documentProperties: Properties;
   let endpointProvider: IEndpointProvider;
+  let httpClient: IHTTPClient;
 
   let endpoint: IEndpoint;
+  let responses: HTTPResponse[];
 
   beforeEach(() => {
     oauthServiceMock = createMock<OAuth2Service>();
@@ -37,7 +40,26 @@ describe('EsiClient', () => {
           return endpoint;
         },
       },
+      httpClient = {
+        fetchAll(_requests: URLFetchRequest[]): HTTPResponse[] {
+          return responses;
+        },
+      },
     );
+  });
+
+  describe('.addQueryParam', () => {
+    it('without any existing params', () => {
+      expect(ESIClient.addQueryParam('/path/', 'name', 'foo')).toBe('/path/?name=foo');
+    });
+
+    it('with existing param', () => {
+      expect(ESIClient.addQueryParam('/path/?name=foo', 'name', 'bar')).toBe('/path/?name=foo&name=bar');
+    });
+
+    it('with an array value', () => {
+      expect(ESIClient.addQueryParam('/path/', 'name', ['foo', 'bar'])).toBe('/path/?name=foo,bar');
+    });
   });
 
   describe('#setFunction', () => {
@@ -547,6 +569,199 @@ describe('EsiClient', () => {
             muteHttpExceptions: true,
           });
         });
+      });
+    });
+  });
+
+  // Also used to test doRequest
+  describe('#executeRaw', () => {
+    let result: any;
+
+    describe('and the response is a non 200 status', () => {
+      beforeEach(() => {
+        endpoint = {
+          path: '/{version}/route/',
+          version: 'v1',
+          method: 'get',
+          parameters: [] as IParameter[],
+        } as IEndpoint;
+        esiClient.setFunction('foo');
+
+        responses = [
+          {
+            getContentText() {
+              return 'ERR';
+            },
+            getHeaders() {
+              return {};
+            },
+            getResponseCode() {
+              return 500;
+            },
+          },
+        ] as HTTPResponse[];
+      });
+
+      it('should raise if the response is not 200', function () {
+        expect(() => esiClient.executeRaw()).toThrow('ERR');
+      });
+    });
+
+    describe('and the response does not have an x-pages header', () => {
+      beforeEach(() => {
+        endpoint = {
+          path: '/{version}/route/',
+          version: 'v1',
+          method: 'get',
+          parameters: [] as IParameter[],
+        } as IEndpoint;
+        esiClient.setFunction('foo');
+
+        responses = [
+          {
+            getContentText() {
+              return '{"foo":"bar"}';
+            },
+            getHeaders() {
+              return {};
+            },
+            getResponseCode() {
+              return 200;
+            },
+          },
+        ] as HTTPResponse[];
+
+        result = esiClient.executeRaw();
+      });
+
+      it('should that object as is', function () {
+        expect(result).toEqual({ foo: 'bar' });
+      });
+    });
+
+    describe('and the response only has 1 page', () => {
+      beforeEach(() => {
+        endpoint = {
+          path: '/{version}/route/',
+          version: 'v1',
+          method: 'get',
+          parameters: [] as IParameter[],
+        } as IEndpoint;
+        esiClient.setFunction('foo');
+
+        responses = [
+          {
+            getContentText() {
+              return '{"foo":"bar"}';
+            },
+            getHeaders() {
+              return {
+                'x-pages': 1,
+              };
+            },
+            getResponseCode() {
+              return 200;
+            },
+          },
+        ] as HTTPResponse[];
+
+        result = esiClient.executeRaw();
+      });
+
+      it('should that object as is', function () {
+        expect(result).toEqual({ foo: 'bar' });
+      });
+    });
+
+    describe('and the response has more than 1 page', () => {
+      beforeEach(() => {
+        endpoint = {
+          path: '/{version}/route/',
+          version: 'v1',
+          method: 'get',
+          parameters: [] as IParameter[],
+        } as IEndpoint;
+        esiClient.setFunction('foo');
+
+        responses = [
+          {
+            getContentText() {
+              return '[{"foo":"bar"}]';
+            },
+            getHeaders() {
+              return {
+                'x-pages': 3,
+              };
+            },
+            getResponseCode() {
+              return 200;
+            },
+          },
+          {
+            getContentText() {
+              return '[{"biz":"baz"}]';
+            },
+            getHeaders() {
+              return {
+                'x-pages': 3,
+              };
+            },
+            getResponseCode() {
+              return 200;
+            },
+          },
+        ] as HTTPResponse[];
+
+        result = esiClient.executeRaw();
+      });
+
+      it('should return a concatenated array of the results', function () {
+        expect(result).toEqual([{ foo: 'bar' }, { foo: 'bar' }, { biz: 'baz' }]);
+      });
+    });
+
+    describe('and one of the subsequent requests a non 200 response', () => {
+      beforeEach(() => {
+        endpoint = {
+          path: '/{version}/route/',
+          version: 'v1',
+          method: 'get',
+          parameters: [] as IParameter[],
+        } as IEndpoint;
+        esiClient.setFunction('foo');
+
+        responses = [
+          {
+            getContentText() {
+              return '[{"foo":"bar"}]';
+            },
+            getHeaders() {
+              return {
+                'x-pages': 3,
+              };
+            },
+            getResponseCode() {
+              return 200;
+            },
+          },
+          {
+            getContentText() {
+              return 'ERR';
+            },
+            getHeaders() {
+              return {
+                'x-pages': 3,
+              };
+            },
+            getResponseCode() {
+              return 500;
+            },
+          },
+        ] as HTTPResponse[];
+      });
+
+      it('should return a concatenated array of the results', function () {
+        expect(() => esiClient.executeRaw()).toThrow('ERR');
       });
     });
   });
