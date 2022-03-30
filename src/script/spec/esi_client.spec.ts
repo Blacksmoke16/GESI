@@ -233,11 +233,14 @@ describe('EsiClient', () => {
           });
 
           describe('required boolean with false', () => {
-            it('should throw the proper error', () => {
+            it('replace the placeholder with false', () => {
               endpoint = {
-                path: '/{version}/route/',
+                path: '/{version}/route/{param}/',
+                version: 'v1',
+                method: 'get',
                 parameters: [
                   {
+                    in: 'path',
                     name: 'param',
                     type: 'boolean',
                     required: true,
@@ -246,8 +249,15 @@ describe('EsiClient', () => {
               } as IEndpoint;
               esiClient.setFunction('foo');
 
-              expect(() => esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams))
-                .not.toThrow();
+              expect(esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams)).toEqual<URLFetchRequest>({
+                url: 'https://esi.evetech.net/v1/route/false/',
+                method: 'get',
+                headers: {
+                  'user-agent': 'GESI User 2047918291',
+                },
+                contentType: 'application/json',
+                muteHttpExceptions: true,
+              });
             });
           });
 
@@ -269,12 +279,15 @@ describe('EsiClient', () => {
             });
           });
 
-          describe('string param with undefined value', () => {
+          describe('string param with null value', () => {
             it('should throw the proper error', () => {
               endpoint = {
-                path: '/{version}/route/',
+                path: '/{version}/route/{param}/',
+                version: 'v1',
+                method: 'get',
                 parameters: [
                   {
+                    in: 'path',
                     name: 'param',
                     type: 'string',
                   },
@@ -282,8 +295,99 @@ describe('EsiClient', () => {
               } as IEndpoint;
               esiClient.setFunction('foo');
 
-              expect(() => esiClient.buildRequest({ param: undefined, show_column_headings: false } as IFunctionParams))
-                .not.toThrow();
+              expect(esiClient.buildRequest({ param: null, show_column_headings: false } as IFunctionParams)).toEqual<URLFetchRequest>({
+                url: 'https://esi.evetech.net/v1/route/{param}/',
+                method: 'get',
+                headers: {
+                  'user-agent': 'GESI User 2047918291',
+                },
+                contentType: 'application/json',
+                muteHttpExceptions: true,
+              });
+            });
+          });
+
+          describe('string param with empty string value', () => {
+            it('should be skipped', () => {
+              endpoint = {
+                path: '/{version}/route/{param}/',
+                version: 'v1',
+                method: 'get',
+                parameters: [
+                  {
+                    in: 'path',
+                    name: 'param',
+                    type: 'string',
+                  },
+                ],
+              } as IEndpoint;
+              esiClient.setFunction('foo');
+
+              expect(esiClient.buildRequest({ param: '', show_column_headings: false } as IFunctionParams)).toEqual<URLFetchRequest>({
+                method: 'get',
+                url: 'https://esi.evetech.net/v1/route/{param}/',
+                headers: {
+                  'user-agent': 'GESI User 2047918291',
+                },
+                contentType: 'application/json',
+                muteHttpExceptions: true,
+              });
+            });
+          });
+
+          describe('string param with undefined value', () => {
+            it('should be skipped', () => {
+              endpoint = {
+                path: '/{version}/route/{param}/',
+                version: 'v1',
+                method: 'get',
+                parameters: [
+                  {
+                    in: 'path',
+                    name: 'param',
+                    type: 'string',
+                  },
+                ],
+              } as IEndpoint;
+              esiClient.setFunction('foo');
+
+              expect(esiClient.buildRequest({ param: undefined, show_column_headings: false } as IFunctionParams)).toEqual<URLFetchRequest>({
+                method: 'get',
+                url: 'https://esi.evetech.net/v1/route/{param}/',
+                headers: {
+                  'user-agent': 'GESI User 2047918291',
+                },
+                contentType: 'application/json',
+                muteHttpExceptions: true,
+              });
+            });
+          });
+
+          describe('boolean param with boolean value', () => {
+            it('should be skipped', () => {
+              endpoint = {
+                path: '/{version}/route/{param}/',
+                version: 'v1',
+                method: 'get',
+                parameters: [
+                  {
+                    in: 'path',
+                    name: 'param',
+                    type: 'boolean',
+                  },
+                ],
+              } as IEndpoint;
+              esiClient.setFunction('foo');
+
+              expect(esiClient.buildRequest({ param: false, show_column_headings: false } as IFunctionParams)).toEqual<URLFetchRequest>({
+                method: 'get',
+                url: 'https://esi.evetech.net/v1/route/false/',
+                headers: {
+                  'user-agent': 'GESI User 2047918291',
+                },
+                contentType: 'application/json',
+                muteHttpExceptions: true,
+              });
             });
           });
 
@@ -853,7 +957,7 @@ describe('EsiClient', () => {
     });
   });
 
-  // Also used to test doRequest
+// Also used to test doRequest
   describe('#executeRaw', () => {
     let result: any;
 
@@ -1045,4 +1149,5 @@ describe('EsiClient', () => {
       });
     });
   });
-});
+})
+;

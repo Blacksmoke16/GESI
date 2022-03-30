@@ -186,9 +186,9 @@ class ESIClient {
       let paramValue = params[param.name];
       const required = param.required ? 'required' : 'optional';
 
-      if (param.required && (null === paramValue || undefined === paramValue)) {
+      if (param.required && !paramValue && false !== paramValue) {
         throw new Error(`Argument ${param.name} is required.`);
-      } else if (!param.required && (null === paramValue || undefined === paramValue)) {
+      } else if (!param.required && !paramValue && false !== paramValue) {
         return;
       }
 
@@ -225,11 +225,11 @@ class ESIClient {
         }
       }
 
-      if (param.in === 'path' && paramValue) {
+      if (param.in === 'path') {
         path = path.replace(`{${param.name}}`, paramValue);
-      } else if (param.in === 'query' && paramValue) {
+      } else if (param.in === 'query') {
         path = ESIClient.addQueryParam(path, param.name, paramValue);
-      } else if (param.in === 'body' && paramValue) {
+      } else if (param.in === 'body') {
         if (isArrayType) {
           payload = paramValue;
         } else {
