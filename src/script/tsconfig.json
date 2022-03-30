@@ -1,17 +1,22 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "ES6",
-        "sourceMap": false,
+        "target": "ES2019",
+        "sourceMap": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strict": true
+        "strict": true,
+        "rootDir": "src",
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "plugins": [
+            {
+                "transform": "ts-auto-mock/transformer",
+                "cacheBetweenTests": false
+            }
+        ]
     },
-    "files": [
-        "endpoints.ts",
-        "functions.ts",
-        "gesi.ts",
-        "token_storage.ts",
-        "esi_client.ts"
+    "include": [
+        "src/*"
     ]
 }
