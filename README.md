@@ -124,7 +124,7 @@ GESI will automatically update when a new version is released.  To see what chan
 
 ### How do I know what functions are available?
 
-Check out [functions.ts](https://github.com/Blacksmoke16/GESI/blob/master/src/script/functions.ts).  This file lists all the available functions, as well as a description of what they return and the available parameters.
+Check out [functions.ts](https://github.com/Blacksmoke16/GESI/blob/master/src/script/src/functions.ts).  This file lists all the available functions, as well as a description of what they return and the available parameters.
 
 ### What if I want to use a specific ESI route version?
 
