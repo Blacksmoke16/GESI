@@ -41,11 +41,12 @@ function onInstall(): void {
 
 // @ts-ignore
 function onOpen(): void {
-  var authChar = isItemEnabled("Authorize Character");
-  var deauthChar = isItemEnabled("Deauthorize Character");
-  var setMain = isItemEnabled("Set Main Character");
-  var allowReset = isItemEnabled("Reset");
+  var authChar = isMenuItemEnabled("Authorize Character");
+  var deauthChar = isMenuItemEnabled("Deauthorize Character");
+  var setMain = isMenuItemEnabled("Set Main Character");
+  var allowReset = isMenuItemEnabled("Reset");
   var menu = SpreadsheetApp.getUi().createAddonMenu();
+
   if (authChar)
     menu.addItem('Authorize Character', 'showSSOModal');
   if (deauthChar)
@@ -54,6 +55,10 @@ function onOpen(): void {
     menu.addItem('Set Main Character', 'setMainCharacter');
   if (allowReset)
     menu.addItem('Reset', 'reset');
+
+  if (!authChar && !deauthChar && !setMain && !allowReset)
+    menu.addSeparator(); // in this scenario all the menu items are disabled. need something there at least
+
   menu.addToUi();
 }
 
@@ -95,9 +100,9 @@ function setMainCharacter() {
 // @ts-ignore
 function reset() {
   const ui = SpreadsheetApp.getUi();
-  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
+  const response = ui.alert('Reset?', 'Are you sure you want to reset ALL of the character data?', ui.ButtonSet.YES_NO);
 
-  if (response === ui.Button.NO) return;
+  if (response !== ui.Button.YES) return;
 
   Object.keys(getAuthenticatedCharacters()).forEach((characterName: string) => {
     getClient(characterName).reset();
@@ -393,22 +398,52 @@ function normalizeNames_(characterNames: string | string[] | string[][]): string
   return normalizedNames.map(name => name.trim());
 }
 
-function isItemEnabled(inputStr: string): boolean {
-  var target = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("GESI_ADMIN");
-  if (target !== null) {
-    for (var i = 1; i < target.getLastRow(); i++) {
-      var value = target.getRange(i, 1).getValue();
-
-      if (value == inputStr) {
-        var inputStrValue = target.getRange(i, 2).getValue();
-        if (inputStrValue === false)
-          return false;
-      }
+function isMenuItemEnabled(menuItemName: string): boolean {
+  var itemEnabled = true;
+  try
+  {
+    var adminSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("GESI_ADMIN");
+    
+    if (adminSheet !== null) {
+        for (var i = 1; i <= adminSheet.getLastRow(); i++) {
+            var menuItem = adminSheet.getRange(i, 1).getValue();
+            if (menuItem == menuItemName) {
+                var menuItemNameValue = adminSheet.getRange(i, 2).getValue();                
+                if (menuItemNameValue === false)
+                {
+                  // this menu item has been found in the spreadsheet and is marked as false (to not show on menu)
+                  // check if there are any emails that can ovveride this value and if the user accessing the sheet is one of those users
+                  return checkOverrides(adminSheet.getRange(i, 3).getValue());                  
+                }            
+            }            
+        }
     }
+    else Logger.log("GESI_ADMIN sheet not found.");     
+  } catch (e)
+  {
+    Logger.log("Caught exception " + e);
   }
-  return true;
+  return itemEnabled;
 }
 
+function checkOverrides(overrides: string): boolean {
+  if (overrides)
+  {
+    try
+    {
+      var u = Session.getEffectiveUser().getEmail().toLowerCase();
+      for (const email of overrides.split(","))
+      {
+        if (email.trim().toLowerCase() === u)
+          return true;
+      };
+    } catch(e)
+    {
+       Logger.log("Caught exception in checkOverrides.  default of false will be returned");
+    }
+  }
+  return false;
+}
 
 interface IHeader {
   readonly name: string;
