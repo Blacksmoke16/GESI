@@ -41,14 +41,20 @@ function onInstall(): void {
 
 // @ts-ignore
 function onOpen(): void {
-  SpreadsheetApp
-    .getUi()
-    .createAddonMenu()
-    .addItem('Authorize Character', 'showSSOModal')
-    .addItem('Deauthorize Character', 'deauthorizeCharacter')
-    .addItem('Set Main Character', 'setMainCharacter')
-    .addItem('Reset', 'reset')
-    .addToUi();
+  var authChar = isItemEnabled("Authorize Character");
+  var deauthChar = isItemEnabled("Deauthorize Character");
+  var setMain = isItemEnabled("Set Main Character");
+  var allowReset = isItemEnabled("Reset");
+  var menu = SpreadsheetApp.getUi().createAddonMenu();
+  if (authChar)
+    menu.addItem('Authorize Character', 'showSSOModal');
+  if (deauthChar)
+    menu.addItem('Deauthorize Character', 'deauthorizeCharacter');
+  if (setMain)
+    menu.addItem('Set Main Character', 'setMainCharacter');
+  if (allowReset)
+    menu.addItem('Reset', 'reset');
+  menu.addToUi();
 }
 
 // @ts-ignore
@@ -386,6 +392,23 @@ function normalizeNames_(characterNames: string | string[] | string[][]): string
 
   return normalizedNames.map(name => name.trim());
 }
+
+function isItemEnabled(inputStr: string): boolean {
+  var target = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("GESI_ADMIN");
+  if (target !== null) {
+    for (var i = 1; i < target.getLastRow(); i++) {
+      var value = target.getRange(i, 1).getValue();
+
+      if (value == inputStr) {
+        var inputStrValue = target.getRange(i, 2).getValue();
+        if (inputStrValue === false)
+          return false;
+      }
+    }
+  }
+  return true;
+}
+
 
 interface IHeader {
   readonly name: string;
