@@ -90,8 +90,7 @@ function setMainCharacter() {
 function reset() {
   const ui = SpreadsheetApp.getUi();
 
-  if (SpreadsheetApp.getActiveSpreadsheet().getOwner()?.getEmail() != Session.getEffectiveUser().getEmail() )
-  {
+  if (SpreadsheetApp.getActiveSpreadsheet().getOwner()?.getEmail() != Session.getEffectiveUser().getEmail() ) {
     ui.alert('Reset is available only to sheet owner');
     return;
   }
