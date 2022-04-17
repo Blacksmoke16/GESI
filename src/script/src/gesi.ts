@@ -47,7 +47,7 @@ function onOpen(): void {
     .addItem('Authorize Character', 'showSSOModal')
     .addItem('Deauthorize Character', 'deauthorizeCharacter')
     .addItem('Set Main Character', 'setMainCharacter')
-    .addItem('Reset', 'reset')
+    .addItem('Reset', 'resetGateway')
     .addToUi();
 }
 
@@ -87,17 +87,64 @@ function setMainCharacter() {
 }
 
 // @ts-ignore
+function resetGateway() {
+  var resetPermissions = true;
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheetOwner = ss.getOwner();
+  
+  if (sheetOwner)
+  {
+    // standard case of a sheet in a user folder
+    var sheetOwnerEmail = sheetOwner.getEmail();
+    var userEmail = Session.getEffectiveUser().getEmail();
+
+    // check that email of sheet owner is the same as the user. if there is an error getting the email it means the script does not have permissions to execute this function and is probably not the owner
+    if (sheetOwnerEmail === "" || userEmail === "" || sheetOwnerEmail != userEmail)    
+      resetPermissions = false;
+  }
+  else
+  {
+      // sheet is in a shared drive and has no owner. alternatively, get the permissions of the first sheet.  if this user is able to edit this sheet then they have permissions to reset
+      try
+      {
+        var firstSheet = ss.getSheets()[0];
+        if (firstSheet)
+        {
+          var protection = firstSheet.getProtections(SpreadsheetApp.ProtectionType.SHEET)[0];
+          if (protection && !protection.canEdit())
+              resetPermissions = false;
+        }
+      }
+      catch (e)
+      {
+        // throwing an exception means user does not have proper permissions in this sheet
+        resetPermissions = false;
+      }
+  } 
+  
+  if (!resetPermissions)
+  {
+    SpreadsheetApp.getUi().alert('Reset is available only to sheet owner');
+    return;
+  }
+
+  reset();
+}
+// @ts-ignore
 function reset() {
   const ui = SpreadsheetApp.getUi();
-  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
+  const response = ui.alert('Reset?', 'Are you sure you want to reset ALL your character data?', ui.ButtonSet.YES_NO);
 
-  if (response === ui.Button.NO) return;
+  if (response !== ui.Button.YES) { ui.alert("Reset aborted"); return; }
+
+  Logger.log("Reset initiated by user " + Session.getEffectiveUser().getEmail()); // audit this reset request 
 
   Object.keys(getAuthenticatedCharacters()).forEach((characterName: string) => {
     getClient(characterName).reset();
   });
 
   getDocumentProperties_().deleteAllProperties();
+  ui.alert("Reset completed");
 }
 
 // endregion
