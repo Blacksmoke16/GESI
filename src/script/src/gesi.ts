@@ -421,7 +421,7 @@ function isMenuItemEnabled(menuItemName: string): boolean {
     else Logger.log("GESI_ADMIN sheet not found.");     
   } catch (e)
   {
-    Logger.log("Caught exception " + e);
+    Logger.log("Caught exception in isMenuItemEnabled. Returning default (true)");
   }
   return itemEnabled;
 }
@@ -439,7 +439,7 @@ function checkOverrides(overrides: string): boolean {
       };
     } catch(e)
     {
-       Logger.log("Caught exception in checkOverrides.  default of false will be returned");
+       Logger.log("Caught exception in checkOverrides. Returning default (false)");
     }
   }
   return false;
