@@ -90,9 +90,9 @@ function setMainCharacter() {
 function reset() {
   const ui = SpreadsheetApp.getUi();
 
-  const response = ui.alert('Reset?', 'Are you sure you want to reset ALL character data in this project?', ui.ButtonSet.YES_NO);
+  const response = ui.alert('Reset?', 'Are you sure you want to reset the authentication data of ALL characters on this sheet, including those added by other users?', ui.ButtonSet.YES_NO);
 
-  if (response !== ui.Button.YES) { ui.alert("Reset aborted"); return; }
+  if (response !== ui.Button.YES) { return; }
 
   var authenticatedCharacters = getAuthenticatedCharacters();
   var numChars = authenticatedCharacters ? getAuthenticatedCharacters.length : 0;
@@ -110,7 +110,6 @@ function reset() {
   });
 
   getDocumentProperties_().deleteAllProperties();
-  Logger.log("Reset performed successfully"); // audit this reset request 
   ui.alert("Reset performed successfully");
 }
 
