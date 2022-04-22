@@ -89,15 +89,28 @@ function setMainCharacter() {
 // @ts-ignore
 function reset() {
   const ui = SpreadsheetApp.getUi();
-  const response = ui.alert('Reset?', 'Are you sure you want to reset your data?', ui.ButtonSet.YES_NO);
 
-  if (response === ui.Button.NO) return;
+  const response = ui.alert('Reset?', 'Are you sure you want to reset the authentication data of ALL characters on this sheet, including those added by other users?', ui.ButtonSet.YES_NO);
 
-  Object.keys(getAuthenticatedCharacters()).forEach((characterName: string) => {
+  if (response !== ui.Button.YES) { return; }
+
+  var authenticatedCharacters = getAuthenticatedCharacters();
+  var numChars = authenticatedCharacters ? getAuthenticatedCharacters.length : 0;
+
+  if (!numChars) { ui.alert("There are no characters authenticated."); return; }  
+
+  const reallySure = ui.prompt('Verify full reset', `Continuing will result in ${numChars} character(s) being wiped. To confirm, enter the number of characters that will be reset:`, ui.ButtonSet.OK_CANCEL);
+
+  if (reallySure.getSelectedButton() !== ui.Button.OK) return;
+
+  if (reallySure.getResponseText() != numChars.toString()) { ui.alert("Incorrect response received.  RESET aborted."); return; }
+
+  Object.keys(authenticatedCharacters).forEach((characterName: string) => {
     getClient(characterName).reset();
   });
 
   getDocumentProperties_().deleteAllProperties();
+  ui.alert("Reset performed successfully");
 }
 
 // endregion
