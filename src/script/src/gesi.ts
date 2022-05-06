@@ -94,23 +94,26 @@ function reset() {
 
   if (response !== ui.Button.YES) { return; }
 
-  var authenticatedCharacters = getAuthenticatedCharacters();
-  var numChars = authenticatedCharacters ? getAuthenticatedCharacters.length : 0;
+  const authenticatedCharacters = getAuthenticatedCharacters();
+  const numChars = Object.keys(authenticatedCharacters).length;
 
-  if (!numChars) { ui.alert("There are no characters authenticated."); return; }  
+  if (0 === numChars) {
+    ui.alert('There are no characters authenticated.');
+    return;
+  }
 
   const reallySure = ui.prompt('Verify full reset', `Continuing will result in ${numChars} character(s) being wiped. To confirm, enter the number of characters that will be reset:`, ui.ButtonSet.OK_CANCEL);
 
   if (reallySure.getSelectedButton() !== ui.Button.OK) return;
 
-  if (reallySure.getResponseText() != numChars.toString()) { ui.alert("Incorrect response received.  RESET aborted."); return; }
+  if (reallySure.getResponseText() !== numChars.toString()) { ui.alert('Incorrect response received.  RESET aborted.'); return; }
 
   Object.keys(authenticatedCharacters).forEach((characterName: string) => {
     getClient(characterName).reset();
   });
 
   getDocumentProperties_().deleteAllProperties();
-  ui.alert("Reset performed successfully");
+  ui.alert('Reset performed successfully');
 }
 
 // endregion
