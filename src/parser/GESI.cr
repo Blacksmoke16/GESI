@@ -5,7 +5,7 @@ base = EveSwagger.load
 
 # Save the function list
 File.open("#{EveSwagger::DIST_DIR}/functions.ts", "w") do |file|
-  base.endpoints.join("\n", file) { |endpoint, io| endpoint.to_function io }
+  base.endpoints.join(file, "\n") { |endpoint, io| endpoint.to_function io }
 end
 
 # Save the endpoint list

@@ -2,7 +2,7 @@ require "json"
 require "http/client"
 
 module EveSwagger
-  DIST_DIR = "../script"
+  DIST_DIR = "../script/src"
   # Base url for the swagger spec
   ESI_HOST      = "https://esi.evetech.net"
   IGNORE_PARAMS = %w(user_agent X-User-Agent token If-None-Match Accept-Language datasource)
@@ -139,11 +139,11 @@ module EveSwagger
       io.puts "/**"
       io.puts " * #{@description}"
       io.puts " *"
-      parameters.join("", io) { |param, join_io| param.to_doc_s join_io }
+      parameters.join(io, "") { |param, join_io| param.to_doc_s join_io }
       io.puts " * @customfunction"
       io.puts " */"
       io << "function #{@name}("
-      parameters.join(", ", io) { |param, join_io| param.to_s join_io }
+      parameters.join(io, ", ") { |param, join_io| param.to_s join_io }
       io.puts "): SheetsArray {"
 
       parameters.each do |p|
@@ -152,7 +152,7 @@ module EveSwagger
 
       io << "  return invoke('#{@name}', { "
 
-      parameters.join(", ", io) { |param, join_io| param.name.to_s join_io }
+      parameters.join(io, ", ") { |param, join_io| param.name.to_s join_io }
 
       io << " });"
 
@@ -192,9 +192,6 @@ module EveSwagger
         next unless (success = route.responses.success)
 
         endpoint_name = route.operation_id.gsub(/^post_|^get_|_id/, "")
-
-        # Rename search endpoint to not conflict with Sheets' `Search` function
-        endpoint_name = "eve_search" if endpoint_name == "search"
 
         # Rename universes to universe_ids due to regex matching `_ids`
         endpoint_name = "universe_ids" if endpoint_name == "universes"

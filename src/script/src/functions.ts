@@ -1405,23 +1405,6 @@ function dogma_effects_effect(effect_id: number, show_column_headings: boolean =
 }
 
 /**
- * Search for entities that match a given sub-string.
- *
- * @param {string} search - The string to search on
- * @param {string|string[]} categories - Type of entities to search for
- * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {boolean} strict - Whether the search should be a strict match
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function eve_search(search: string, categories: string|string[], language?: string, strict?: boolean, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  if (!search) throw new Error(`search is required.`);
-  if (!categories) throw new Error(`categories is required.`);
-  return invoke('eve_search', { search, categories, language, strict, show_column_headings, version });
-}
-
-/**
  * EVE Server status
  *
  * @param {boolean} show_column_headings - If column headings should be shown.
