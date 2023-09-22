@@ -30,7 +30,7 @@ class ESIClient {
     const clientId: string = getScriptProperties_().getProperty('CLIENT_ID')!;
 
     if (jwtToken.iss !== ESIClient.ISSUER) throw 'Access token validation error: invalid issuer';
-    if (jwtToken.aud !== [clientId, ESIClient.AUDIENCE]) throw 'Access token validation error: invalid audience';
+    if (jwtToken.aud[0] !== clientId || jwtToken.aud[1] !== ESIClient.AUDIENCE) throw 'Access token validation error: invalid audience';
     if (jwtToken.azp !== clientId) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
   }
