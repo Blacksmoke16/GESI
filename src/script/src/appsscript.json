@@ -9,6 +9,6 @@
     },
     "exceptionLogging": "NONE",
     "oauthScopes": ["https://www.googleapis.com/auth/script.container.ui", "https://www.googleapis.com/auth/script.external_request", "https://www.googleapis.com/auth/script.scriptapp", "https://www.googleapis.com/auth/spreadsheets.currentonly"],
-    "urlFetchWhitelist": ["https://login.eveonline.com/", "https://esi.evetech.net/"],
+    "urlFetchWhitelist": ["https://login.eveonline.com/", "https://esi.evetech.net/", "https://www.fuzzwork.co.uk/"],
     "runtimeVersion": "V8"
 }
