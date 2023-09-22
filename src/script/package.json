@@ -1,6 +1,6 @@
 {
     "name": "gesi",
-    "version": "9.2.0",
+    "version": "9.2.1",
     "description": "Google Sheets ESI Add-on",
     "scripts": {
         "test": "jest",
@@ -26,13 +26,13 @@
     "devDependencies": {
         "@google/clasp": "2.4.*",
         "@types/google-apps-script-oauth2": "38.0.0",
-        "@types/jest": "^27.4.1",
-        "jest": "^27.5.1",
-        "jest-ts-auto-mock": "^2.1.0",
-        "ts-auto-mock": "^3.5.0",
-        "ts-jest": "^27.1.4",
-        "ttypescript": "^1.5.13",
-        "typescript": "^4.6.3"
+        "@types/jest": "~27.4.1",
+        "jest": "~27.5.1",
+        "jest-ts-auto-mock": "~2.1.0",
+        "ts-auto-mock": "~3.5.0",
+        "ts-jest": "~27.1.4",
+        "ttypescript": "~1.5.13",
+        "typescript": "~4.6.3"
     },
     "jest": {
         "preset": "ts-jest",
