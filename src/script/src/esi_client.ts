@@ -17,7 +17,7 @@ interface IHTTPClient {
 class ESIClient {
   private static readonly BASE_URL = 'https://esi.evetech.net';
   private static readonly AUDIENCE = 'EVE Online';
-  private static readonly ISSUER = 'login.eveonline.com';
+  private static readonly ISSUER = 'https://login.eveonline.com';
 
   public static addQueryParam(path: string, paramName: string, paramValue: any): string {
     path += path.includes('?') ? '&' : '?';
