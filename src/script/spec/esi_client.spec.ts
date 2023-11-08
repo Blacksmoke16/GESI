@@ -61,6 +61,65 @@ describe('EsiClient', () => {
     });
   });
 
+  describe('.parseToken', () => {
+    beforeEach(() => {
+      global.PropertiesService.getScriptProperties = jest.fn().mockReturnValueOnce(
+        createMock<GoogleAppsScript.Properties.Properties>({
+          getProperty(): string {
+            return 'CLIENT_ID';
+          },
+        }),
+      );
+    });
+
+    it('with valid token', () => {
+      global.Utilities.newBlob = jest.fn().mockReturnValueOnce(
+        createMock<GoogleAppsScript.Base.Blob>({
+          getDataAsString(): string {
+            return '{"aud": ["CLIENT_ID", "EVE Online"], "azp": "CLIENT_ID", "iss": "login.eveonline.com"}';
+          },
+        }),
+      );
+
+      expect(ESIClient.parseToken('HEADER.BODY.SIG')).toEqual({
+        aud: ['CLIENT_ID', 'EVE Online'],
+        azp: 'CLIENT_ID',
+        iss: 'login.eveonline.com',
+      });
+      expect(global.Utilities.base64DecodeWebSafe).toHaveBeenCalledWith('BODY');
+    });
+
+    it('with new issuer', () => {
+      global.Utilities.newBlob = jest.fn().mockReturnValueOnce(
+        createMock<GoogleAppsScript.Base.Blob>({
+          getDataAsString(): string {
+            return '{"aud": ["CLIENT_ID", "EVE Online"], "azp": "CLIENT_ID", "iss": "https://login.eveonline.com"}';
+          },
+        }),
+      );
+
+      expect(ESIClient.parseToken('HEADER.BODY.SIG')).toEqual({
+        aud: ['CLIENT_ID', 'EVE Online'],
+        azp: 'CLIENT_ID',
+        iss: 'https://login.eveonline.com',
+      });
+      expect(global.Utilities.base64DecodeWebSafe).toHaveBeenCalledWith('BODY');
+    });
+
+    it('with invalid issuer', () => {
+      global.Utilities.newBlob = jest.fn().mockReturnValueOnce(
+        createMock<GoogleAppsScript.Base.Blob>({
+          getDataAsString(): string {
+            return '{"aud": ["CLIENT_ID", "EVE Online"], "azp": "CLIENT_ID", "iss": "login.eveonline.net"}';
+          },
+        }),
+      );
+
+      expect(() => ESIClient.parseToken('HEADER.BODY.SIG')).toThrow('Access token validation error: invalid issuer');
+      expect(global.Utilities.base64DecodeWebSafe).toHaveBeenCalledWith('BODY');
+    });
+  });
+
   describe('#setFunction', () => {
     beforeEach(() => {
       endpointProvider.hasEndpoint = jest.fn().mockReturnValueOnce(false);
