@@ -18,6 +18,7 @@ class ESIClient {
   private static readonly BASE_URL = 'https://esi.evetech.net';
   private static readonly AUDIENCE = 'EVE Online';
   private static readonly ISSUER = 'login.eveonline.com';
+  private static readonly ISSUER_URL_SCHEMA = 'https://login.eveonline.com';
 
   public static addQueryParam(path: string, paramName: string, paramValue: any): string {
     path += path.includes('?') ? '&' : '?';
@@ -29,7 +30,7 @@ class ESIClient {
     const jwtToken: IAccessTokenData = JSON.parse(Utilities.newBlob(Utilities.base64DecodeWebSafe(access_token.split('.')[1])).getDataAsString());
     const clientId: string = getScriptProperties_().getProperty('CLIENT_ID')!;
 
-    if (jwtToken.iss !== ESIClient.ISSUER) throw 'Access token validation error: invalid issuer';
+    if (jwtToken.iss !== ESIClient.ISSUER && jwtToken.iss !== ESIClient.ISSUER_URL_SCHEMA) throw 'Access token validation error: invalid issuer';
     if (jwtToken.aud[0] !== clientId || jwtToken.aud[1] !== ESIClient.AUDIENCE) throw 'Access token validation error: invalid audience';
     if (jwtToken.azp !== clientId) throw 'Access token validation error: invalid authorized party';
     return jwtToken;
