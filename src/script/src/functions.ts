@@ -1265,7 +1265,7 @@ function corporations_corporation_starbases_starbase(system_id: number, starbase
 }
 
 /**
- * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell-2.0-structures-changes-coming-on-february-13th
+ * Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/news/view/upwell-2.0-structures-changes-coming-on-february-13th
  *
  * @param {string} language - Language to use in the response, takes precedence over Accept-Language
  * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
