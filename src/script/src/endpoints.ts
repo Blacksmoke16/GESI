@@ -3676,7 +3676,7 @@ function getEndpoints(): IEndpointList {
     "version": "v2"
   },
   "corporations_corporation_structures": {
-    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/article/upwell-2.0-structures-changes-coming-on-february-13th",
+    "description": "Get a list of corporation structures. This route's version includes the changes to structures detailed in this blog: https://www.eveonline.com/news/view/upwell-2.0-structures-changes-coming-on-february-13th",
     "headers": [
       {
         "name": "corporation_id"
