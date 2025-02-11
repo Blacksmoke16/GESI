@@ -175,30 +175,6 @@ function characters_character_blueprints(name?: string, show_column_headings: bo
 }
 
 /**
- * A list of your character's personal bookmarks
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function characters_character_bookmarks(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke('characters_character_bookmarks', { name, show_column_headings, version });
-}
-
-/**
- * A list of your character's personal bookmark folders
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function characters_character_bookmarks_folders(name?: string, show_column_headings: boolean = true, version: string = "v2"): SheetsArray {
-  return invoke('characters_character_bookmarks_folders', { name, show_column_headings, version });
-}
-
-/**
  * Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event
  *
  * @param {number} from_event - The event ID to retrieve events from
@@ -904,30 +880,6 @@ function corporations_corporation_assets_names(item_ids: number|number[], name?:
  */
 function corporations_corporation_blueprints(name?: string, show_column_headings: boolean = true, version: string = "v3"): SheetsArray {
   return invoke('corporations_corporation_blueprints', { name, show_column_headings, version });
-}
-
-/**
- * A list of your corporation's bookmarks
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function corporations_corporation_bookmarks(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke('corporations_corporation_bookmarks', { name, show_column_headings, version });
-}
-
-/**
- * A list of your corporation's bookmark folders
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function corporations_corporation_bookmarks_folders(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke('corporations_corporation_bookmarks_folders', { name, show_column_headings, version });
 }
 
 /**

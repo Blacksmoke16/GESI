@@ -1,6 +1,6 @@
 name: GESI
 
-version: 9.2.1
+version: 10.0.0
 
 crystal: '>=0.34.0'
 
@@ -10,7 +10,7 @@ description: |
   Google Sheets™ ESI Add-on
 
 authors:
-  - George Dietrich <george@dietrich.app>
+  - George Dietrich <dev@dietrich.pub>
 
 targets:
   gesi:

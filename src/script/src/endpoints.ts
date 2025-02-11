@@ -5,8 +5,6 @@ function getScopes(): string[] {
   "esi-alliances.read_contacts.v1",
   "esi-assets.read_assets.v1",
   "esi-assets.read_corporation_assets.v1",
-  "esi-bookmarks.read_character_bookmarks.v1",
-  "esi-bookmarks.read_corporation_bookmarks.v1",
   "esi-calendar.read_calendar_events.v1",
   "esi-calendar.respond_calendar_events.v1",
   "esi-characters.read_agents_research.v1",
@@ -493,72 +491,6 @@ function getEndpoints(): IEndpointList {
     "scope": "esi-characters.read_blueprints.v1",
     "summary": "Get blueprints",
     "version": "v3"
-  },
-  "characters_character_bookmarks": {
-    "description": "A list of your character's personal bookmarks",
-    "headers": [
-      {
-        "name": "bookmark_id"
-      },
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "item",
-        "sub_headers": [
-          "item_id",
-          "type_id"
-        ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
-      }
-    ],
-    "method": "get",
-    "paginated": true,
-    "parameters": [],
-    "path": "/{version}/characters/{character_id}/bookmarks/",
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "List bookmarks",
-    "version": "v2"
-  },
-  "characters_character_bookmarks_folders": {
-    "description": "A list of your character's personal bookmark folders",
-    "headers": [
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "get",
-    "paginated": true,
-    "parameters": [],
-    "path": "/{version}/characters/{character_id}/bookmarks/folders/",
-    "scope": "esi-bookmarks.read_character_bookmarks.v1",
-    "summary": "List bookmark folders",
-    "version": "v2"
   },
   "characters_character_calendar": {
     "description": "Get 50 event summaries from the calendar. If no from_event ID is given, the resource will return the next 50 chronological event summaries from now. If a from_event ID is specified, it will return the next 50 chronological event summaries from after that event",
@@ -2583,75 +2515,6 @@ function getEndpoints(): IEndpointList {
     "scope": "esi-corporations.read_blueprints.v1",
     "summary": "Get corporation blueprints",
     "version": "v3"
-  },
-  "corporations_corporation_bookmarks": {
-    "description": "A list of your corporation's bookmarks",
-    "headers": [
-      {
-        "name": "bookmark_id"
-      },
-      {
-        "name": "coordinates",
-        "sub_headers": [
-          "x",
-          "y",
-          "z"
-        ]
-      },
-      {
-        "name": "created"
-      },
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "item",
-        "sub_headers": [
-          "item_id",
-          "type_id"
-        ]
-      },
-      {
-        "name": "label"
-      },
-      {
-        "name": "location_id"
-      },
-      {
-        "name": "notes"
-      }
-    ],
-    "method": "get",
-    "paginated": true,
-    "parameters": [],
-    "path": "/{version}/corporations/{corporation_id}/bookmarks/",
-    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List corporation bookmarks",
-    "version": "v1"
-  },
-  "corporations_corporation_bookmarks_folders": {
-    "description": "A list of your corporation's bookmark folders",
-    "headers": [
-      {
-        "name": "creator_id"
-      },
-      {
-        "name": "folder_id"
-      },
-      {
-        "name": "name"
-      }
-    ],
-    "method": "get",
-    "paginated": true,
-    "parameters": [],
-    "path": "/{version}/corporations/{corporation_id}/bookmarks/folders/",
-    "scope": "esi-bookmarks.read_corporation_bookmarks.v1",
-    "summary": "List corporation bookmark folders",
-    "version": "v1"
   },
   "corporations_corporation_contacts": {
     "description": "Return contacts of a corporation",
