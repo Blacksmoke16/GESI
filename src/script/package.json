@@ -4,7 +4,7 @@
     "description": "Google Sheets ESI Add-on",
     "scripts": {
         "test": "jest",
-        "push": "sed -E -e '/^(export|import)/ s|^/*|//|' -i src/*.ts && clasp push && sed -E -e '/^(\\/\\/export|\\/\\/import)/ s|^/*||' -i src/*.ts"
+        "push": "sed -E -e '/^(export|import)/ s|^/*|//|' -i src/*.ts && npx clasp push && sed -E -e '/^(\\/\\/export|\\/\\/import)/ s|^/*||' -i src/*.ts"
     },
     "repository": {
         "type": "git",
