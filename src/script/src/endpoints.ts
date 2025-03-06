@@ -1,5 +1,3 @@
-import { IEndpointList } from './gesi';
-
 function getScopes(): string[] {
   return [
   "esi-alliances.read_contacts.v1",
@@ -16,7 +14,6 @@ function getScopes(): string[] {
   "esi-characters.read_loyalty.v1",
   "esi-characters.read_medals.v1",
   "esi-characters.read_notifications.v1",
-  "esi-characters.read_opportunities.v1",
   "esi-characters.read_standings.v1",
   "esi-characters.read_titles.v1",
   "esi-characters.write_contacts.v1",
@@ -1440,24 +1437,6 @@ function getEndpoints(): IEndpointList {
     "scope": "esi-location.read_online.v1",
     "summary": "Get character online",
     "version": "v2"
-  },
-  "characters_character_opportunities": {
-    "description": "Return a list of tasks finished by a character",
-    "headers": [
-      {
-        "name": "completed_at"
-      },
-      {
-        "name": "task_id"
-      }
-    ],
-    "method": "get",
-    "paginated": false,
-    "parameters": [],
-    "path": "/{version}/characters/{character_id}/opportunities/",
-    "scope": "esi-characters.read_opportunities.v1",
-    "summary": "Get a character's completed tasks",
-    "version": "v1"
   },
   "characters_character_orders": {
     "description": "List open market orders placed by a character",
@@ -4845,115 +4824,6 @@ function getEndpoints(): IEndpointList {
     "summary": "List orders in a structure",
     "version": "v1"
   },
-  "opportunities_groups": {
-    "description": "Return a list of opportunities groups",
-    "headers": [
-      {
-        "name": "group_ids"
-      }
-    ],
-    "method": "get",
-    "paginated": false,
-    "parameters": [],
-    "path": "/{version}/opportunities/groups/",
-    "summary": "Get opportunities groups",
-    "version": "v1"
-  },
-  "opportunities_groups_group": {
-    "description": "Return information of an opportunities group",
-    "headers": [
-      {
-        "name": "connected_groups",
-        "sub_headers": [
-          "connected_groups"
-        ]
-      },
-      {
-        "name": "description"
-      },
-      {
-        "name": "group_id"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "notification"
-      },
-      {
-        "name": "required_tasks",
-        "sub_headers": [
-          "required_tasks"
-        ]
-      }
-    ],
-    "method": "get",
-    "paginated": false,
-    "parameters": [
-      {
-        "description": "ID of an opportunities group",
-        "in": "path",
-        "name": "group_id",
-        "type": "number",
-        "required": true
-      },
-      {
-        "description": "Language to use in the response, takes precedence over Accept-Language",
-        "in": "query",
-        "name": "language",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "path": "/{version}/opportunities/groups/{group_id}/",
-    "summary": "Get opportunities group",
-    "version": "v1"
-  },
-  "opportunities_tasks": {
-    "description": "Return a list of opportunities tasks",
-    "headers": [
-      {
-        "name": "task_ids"
-      }
-    ],
-    "method": "get",
-    "paginated": false,
-    "parameters": [],
-    "path": "/{version}/opportunities/tasks/",
-    "summary": "Get opportunities tasks",
-    "version": "v1"
-  },
-  "opportunities_tasks_task": {
-    "description": "Return information of an opportunities task",
-    "headers": [
-      {
-        "name": "description"
-      },
-      {
-        "name": "name"
-      },
-      {
-        "name": "notification"
-      },
-      {
-        "name": "task_id"
-      }
-    ],
-    "method": "get",
-    "paginated": false,
-    "parameters": [
-      {
-        "description": "ID of an opportunities task",
-        "in": "path",
-        "name": "task_id",
-        "type": "number",
-        "required": true
-      }
-    ],
-    "path": "/{version}/opportunities/tasks/{task_id}/",
-    "summary": "Get opportunities task",
-    "version": "v1"
-  },
   "route_origin_destination": {
     "description": "Get the systems between origin and destination",
     "headers": [
@@ -6368,5 +6238,3 @@ function getEndpoints(): IEndpointList {
   }
 }
 }
-
-export { getEndpoints, getScopes }

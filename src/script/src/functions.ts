@@ -526,18 +526,6 @@ function characters_character_online(name?: string, show_column_headings: boolea
 }
 
 /**
- * Return a list of tasks finished by a character
- *
- * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function characters_character_opportunities(name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke('characters_character_opportunities', { name, show_column_headings, version });
-}
-
-/**
  * List open market orders placed by a character
  *
  * @param {string} name - Name of the character used for auth. Defaults to the first authenticated character.
@@ -1642,55 +1630,6 @@ function markets_region_types(region_id: number, show_column_headings: boolean =
 function markets_structures_structure(structure_id: number, name?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
   if (!structure_id) throw new Error(`structure_id is required.`);
   return invoke('markets_structures_structure', { structure_id, name, show_column_headings, version });
-}
-
-/**
- * Return a list of opportunities groups
- *
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function opportunities_groups(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke('opportunities_groups', { show_column_headings, version });
-}
-
-/**
- * Return information of an opportunities group
- *
- * @param {number} group_id - ID of an opportunities group
- * @param {string} language - Language to use in the response, takes precedence over Accept-Language
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function opportunities_groups_group(group_id: number, language?: string, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  if (!group_id) throw new Error(`group_id is required.`);
-  return invoke('opportunities_groups_group', { group_id, language, show_column_headings, version });
-}
-
-/**
- * Return a list of opportunities tasks
- *
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function opportunities_tasks(show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  return invoke('opportunities_tasks', { show_column_headings, version });
-}
-
-/**
- * Return information of an opportunities task
- *
- * @param {number} task_id - ID of an opportunities task
- * @param {boolean} show_column_headings - If column headings should be shown.
- * @param {string} version - Which ESI version to use for the request.
- * @customfunction
- */
-function opportunities_tasks_task(task_id: number, show_column_headings: boolean = true, version: string = "v1"): SheetsArray {
-  if (!task_id) throw new Error(`task_id is required.`);
-  return invoke('opportunities_tasks_task', { task_id, show_column_headings, version });
 }
 
 /**
